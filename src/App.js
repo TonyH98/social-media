@@ -2,8 +2,9 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import { useState, useEffect } from "react";
-import Login from './Components/Login';
-import Signup from './Components/Signup';
+import Signup from './Components/Registration/Signup';
+import Login from './Components/Registration/Login';
+import Nav from './Components/Nav/Nav';
 import axios from "axios";
 
 const API = process.env.REACT_APP_API_URL;
@@ -29,8 +30,13 @@ console.log(user)
 
   return (
     <div className="App">
+
+
     <Router>
-     
+    {user ? 
+    <Nav/>: null
+    
+  }
       <main>
         <Routes>
         <Route path="/login" element={<Login newLogin={newLogin}/>}/>

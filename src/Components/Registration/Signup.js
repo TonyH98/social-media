@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import "./Signup.css"
+
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -58,16 +60,18 @@ function Signup(){
         }
       }
 
-console.log(user)
-
 
       return(
         <div className="signup-section">
     
             
           <form onSubmit={handleSubmit} className="signup-form">
+
           <h1>Sign Up Form</h1>
-            <label htmlFor="username" className='label-signup'>Username:</label>
+
+          <div className='input-container'>
+
+            <label htmlFor="username" className='label-signup'>Username:
             
             <input
               id="username"
@@ -75,12 +79,14 @@ console.log(user)
               value={user.username}
               type="text"
               onChange={handleTextChange}
+              
               required
             />
+            </label>
+            
           
            
-            <label htmlFor="firstname" className='label-signup'>First Name:</label>
-      
+            <label htmlFor="firstname" className='label-signup'>First Name:
             <input
               id="firstname"
               className='signup-input'
@@ -89,9 +95,12 @@ console.log(user)
               value={user.firstname}
               onChange={handleTextChange}
             />
+            
+            </label>
       
-             <label htmlFor="lastname" className='label-signup'>Last Name:</label>
-     
+      
+             <label htmlFor="lastname" className='label-signup'>Last Name:
+             
             <input
               id="lastname"
               type="text"
@@ -100,9 +109,11 @@ console.log(user)
               value={user.lastname}
               onChange={handleTextChange}
             />
+             </label>
+     
          
-             <label htmlFor="email" className='label-signup'>Email:</label>
-       
+             <label htmlFor="email" className='label-signup'>Email:
+             
             <input
               id="email"
               type="email"
@@ -111,8 +122,9 @@ console.log(user)
               value={user.email}
               onChange={handleTextChange}
             />
-          <label htmlFor='DOB' className='label-signup'>Date of Birth:</label>
-    
+             </label>
+       
+          <label htmlFor='DOB' className='label-signup'>Date of Birth:
           <input
               id="DOB"
               type="date"
@@ -121,10 +133,12 @@ console.log(user)
               value={user.DOB}
               onChange={handleTextChange}
             />
+          </label>
+    
 
 
-        <label htmlFor='profile_name' className='label-signup'>Profile Name:</label>
-            
+        <label htmlFor='profile_name' className='label-signup'>Profile Name:
+        
             <input
                 id="profile_name"
                 type="text"
@@ -133,8 +147,10 @@ console.log(user)
                 value={user.profile_name}
                 onChange={handleTextChange}
             />
+        </label>
             
-            <label htmlFor="password" className='label-signup'>Password:</label>
+            
+            <label htmlFor="password" className='label-signup'>Password:
      
             <input
               id="password"
@@ -145,17 +161,28 @@ console.log(user)
               placeholder="******"
               onChange={handleTextChange}
               />
+            
+            </label>
               
+
+          </div>
           
     
+            <div className='show-password-container'>
+
             <input
             type="checkbox"
             onClick={handleType}
             />
-            <span style={{color: "white"}}>{type === "password" ? "Show Password" : "Hide Password"} </span>
-            <input type="submit" />
+
+            <span >{type === "password" ? "Show Password" : "Hide Password"}</span>
+
+            </div>
+
+
+            <button type='submit' className='login-submit'>Signup</button>
       
-          <Link to="/login">
+          <Link to="/">
           <button className='sign-btn'>Sign In</button>
           </Link>
     

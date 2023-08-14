@@ -20,7 +20,7 @@ function Nav(){
   useEffect(() => {
     const loggedUser = JSON.parse(window.localStorage.getItem('user'));
     setUser(loggedUser);
-  }, [user , navigate]);
+  }, []);
 
 
   const handleLogout = () => {
@@ -31,7 +31,7 @@ function Nav(){
       credentials: "include",
     })
       .then(() => {
-        navigate("/login");
+        navigate("/");
       })
       .catch((error) => {
         console.error(error);

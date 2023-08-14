@@ -42,7 +42,7 @@ console.log(user)
         <Routes>
         <Route path="/" element={<Home newLogin={newLogin}/>}/>
         <Route path="/signup" element={<Signup/>}/>
-        <Route path={`/profile/${user?.id}`} element={<Profile/>}/>
+        <Route path={`/profile/${user?.id}`} element={<Profile user={user}/>}/>
         </Routes>
       </main>
 

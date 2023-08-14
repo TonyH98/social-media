@@ -1,0 +1,88 @@
+
+.profile_page{
+    display: flex;
+    flex-direction: row;
+    gap: 700px;
+}
+
+
+.banner_img{
+    width: 280%;
+    height: 150px;
+}
+
+
+
+
+.profile_img{
+    width: 140px;
+    border: 2px solid black;
+    height: 130px;
+    border-radius: 50%;
+    margin-left: 230px;
+}
+
+
+
+.profile_img {
+    width: 140px;
+    border: 2px solid black;
+    height: 130px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.profile_names_container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 230px;
+}
+
+
+.update_btns_container {
+   position: fixed;
+   right: 30px;
+   left: 630px;
+}
+
+.profile_search_container{
+    margin-top: 15px;
+}
+
+
+.search_section{
+width: 200px;
+height: 30px;
+border-radius: 20px;
+text-align: center;
+font-size: 20px;
+}
+
+
+.update_profile_btns{
+    border: 2px solid black;
+    height: 50px;
+    width: 130px;
+    border-radius: 25px;
+    background-color: blue;
+    color: white;
+}
+
+.profile_second_container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100%; /* Make sure the container takes up the full height */
+}
+
+.profile_search_container {
+    text-align: center; /* Center the content horizontally */
+}
+
+
+.profile_container{
+    display: flex;
+}
+
+
+

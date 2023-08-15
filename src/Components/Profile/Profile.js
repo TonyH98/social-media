@@ -7,6 +7,8 @@ const API = process.env.REACT_APP_API_URL;
 function Profile({user}){
 
     let [profile , setProfile] = useState({})
+    let [following , setFollowering] = useState([])
+
 
     useEffect(() => {
         if(user)
@@ -16,52 +18,88 @@ function Profile({user}){
         })
     }, [user])
 
-console.log(profile)
+
+
+    useEffect(() => {
+        if(user){
+            axios.get(`${API}/follow/${user?.id}`)
+            .then((res) => {
+                setFollowering(res.data)
+            })
+        }
+    }, [user])
+
+
+
+    
 
     return(
+        <div className="profile">
 
-        <div className="profile_page">
+        <div className="profile_first_half">
 
-      <div className="profile-first-container">
+        <div className="profile_banner_container">
 
-        <div className="banner-container">
-            <img src={profile?.banner_img} alt={profile?.banner_img} className="banner_img"/>
+        <img src={profile?.banner_img} 
+        alt={profile?.banner_img} 
+        className="profile_banner_img"/>
+
         </div>
 
-        <div className="profile_container">
+        <div className="profile_info_container">
 
-            <div className="profile_info_container">
-            <img src={profile?.profile_img} alt={profile?.profile_img} className="profile_img"/>
+        <div className="profile_img_container">
 
+        <img src={profile?.profile_img} className="profile_img"/>
+
+        </div>
+        
         <div className="profile_names_container">
-
-        <p>{profile?.profile_name}</p>
-        <p>@{profile?.username}</p>
-        </div>
-
-
-            </div>
-
-        <div className="update_btns_container">
-                <button className="update_profile_btns">Setup Profile</button>
-            </div>
+            <h3>{profile?.profile_name}</h3>
+            <div>@{profile?.username}</div>
 
         </div>
 
+        <div className="profile_bio_container">
 
-      </div>
-
-
-    <div className="profile_second_container">
-
-        <div className="profile_search_container">
-        <input type="text" className="search_section" placeholder="Search"/>
+            <p>{profile?.bio}</p>
 
         </div>
 
-    </div>
+
+        <div className="profile_followers_container">
+
+            <div>{following.length} Following</div>
+            <div>{following.length} Following</div>
+            
 
         </div>
+
+        </div>
+
+        <div className="profile_selected_options">
+
+        <div className="options">Posts</div>
+        <div className="options">Replies</div>
+        <div className="options">Favorites</div>
+
+        </div>
+
+
+        </div>
+
+
+        <div className="profile_second_half"></div>
+
+        <div className="profile_search_input_container">
+
+        <input type="text" className="profile_search_bar" placeholder="Search"/>
+
+        </div>
+
+        </div>
+      
+
 
     )
 }

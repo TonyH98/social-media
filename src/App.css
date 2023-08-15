@@ -1,6 +1,17 @@
 .App {
-  text-align: center;
+  display: flex;
+  height: 100vh;
+  overflow: hidden; /* Prevent content overflow */
 }
+
+
+.content {
+  flex: 1;
+  overflow-y: auto; /* Allow content scrolling if needed */
+ 
+  box-sizing: border-box;
+}
+
 
 .App-logo {
   height: 40vmin;

@@ -31,21 +31,17 @@ console.log(user)
 
   return (
     <div className="App">
-
-
     <Router>
-    {user ? 
-    <Nav/>: null
-    
-  }
-      <main>
+      <div className="navbar">
+        {user ? <Nav /> : null}
+      </div>
+      <main className="content">
         <Routes>
-        <Route path="/" element={<Home newLogin={newLogin}/>}/>
-        <Route path="/signup" element={<Signup/>}/>
-        <Route path={`/profile/${user?.id}`} element={<Profile user={user}/>}/>
+          <Route path="/" element={<Home newLogin={newLogin} />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path={`/profile/${user?.id}`} element={<Profile user={user} />} />
         </Routes>
       </main>
-
     </Router>
   </div>
   );

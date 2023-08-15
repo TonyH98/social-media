@@ -1,0 +1,28 @@
+.modal-container{
+    border: black 1px solid;
+    max-width: 600px;
+    width: 500px;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    background-color: white;
+    box-shadow: 1px 2px 1px black;
+    overflow: hidden;
+    position: absolute;
+    height: 300px;
+  }
+
+.posts_header{
+  text-align: center;
+}
+
+
+.modalLeft{
+  margin-left: 5px;
+}
+
+.closeBtn{
+  color: red;
+}

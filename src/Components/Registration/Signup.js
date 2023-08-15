@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState , useEffect} from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import "./Signup.css"
@@ -38,8 +38,13 @@ function Signup(){
        password: ""
       });
 
-
-
+      useEffect(() => {
+        setUser((prevUser) => ({
+          ...prevUser,
+          profile_name: prevUser.firstname + " " + prevUser.lastname, // Combine firstname and lastname
+        }));
+      }, [user.firstname, user.lastname]); // Run this effect whenever firstname or lastname changes
+      
       const handleTextChange = (event) => {
         setUser({ ...user, [event.target.id]: event.target.value });
       };
@@ -60,6 +65,8 @@ function Signup(){
         }
       }
 
+      console.log(user)
+
 
       return(
         <div className="signup-section">
@@ -70,22 +77,7 @@ function Signup(){
           <h1>Sign Up Form</h1>
 
           <div className='input-container'>
-
-            <label htmlFor="username" className='label-signup'>Username:
             
-            <input
-              id="username"
-              className='signup-input'
-              value={user.username}
-              type="text"
-              onChange={handleTextChange}
-              
-              required
-            />
-            </label>
-            
-          
-           
             <label htmlFor="firstname" className='label-signup'>First Name:
             <input
               id="firstname"
@@ -111,6 +103,22 @@ function Signup(){
             />
              </label>
      
+
+            <label htmlFor="username" className='label-signup'>Username:
+            
+            <input
+              id="username"
+              className='signup-input'
+              value={user.username}
+              type="text"
+              onChange={handleTextChange}
+              
+              required
+            />
+            </label>
+            
+          
+           
          
              <label htmlFor="email" className='label-signup'>Email:
              
@@ -134,22 +142,7 @@ function Signup(){
               onChange={handleTextChange}
             />
           </label>
-    
-
-
-        <label htmlFor='profile_name' className='label-signup'>Profile Name:
-        
-            <input
-                id="profile_name"
-                type="text"
-                className='signup-input'
-                required
-                value={user.profile_name}
-                onChange={handleTextChange}
-            />
-        </label>
-            
-            
+   
             <label htmlFor="password" className='label-signup'>Password:
      
             <input

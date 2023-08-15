@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import "./Profile.css"
-
+import {BsPencilSquare} from "react-icons/bs"
 import axios from "axios";
+import Post from "../PostForm/Post";
+
 
 const API = process.env.REACT_APP_API_URL;
 function Profile({user}){
 
     let [profile , setProfile] = useState({})
     let [following , setFollowering] = useState([])
-
+    const [modal , setModal] = useState(false)
 
     useEffect(() => {
         if(user)
@@ -44,7 +46,19 @@ function Profile({user}){
         alt={profile?.banner_img} 
         className="profile_banner_img"/>
 
+        <div className="profile_btns_container">
+
+        <button className="create_post_btns" 
+        onClick={() => setModal(true)}
+        >Post</button>
+
+        <button className="profile-edit-btns"><BsPencilSquare size={20}/></button>
         </div>
+
+        </div>
+
+        <Post open={modal} onClose={() => setModal(false)} profile={profile}/>
+
 
         <div className="profile_info_container">
 
@@ -70,7 +84,7 @@ function Profile({user}){
         <div className="profile_followers_container">
 
             <div>{following.length} Following</div>
-            <div>{following.length} Following</div>
+            <div>{following.length} Followers</div>
             
 
         </div>

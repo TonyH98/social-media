@@ -69,3 +69,42 @@ border: 2px solid black;
     font-size: 20px;
 }
 
+
+.profile_btns_container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end; /* Align items to the bottom of the container */
+    flex-direction: column; 
+    gap: 20px;
+    margin-top: 10px;
+    box-sizing: border-box; /* Include padding and border in the element's total width/height */
+  }
+
+
+  .create_post_btns {
+    width: 130px;
+    border-radius: 25px;
+    border: none;
+    background-color: blue;
+    color: white;
+    height: 30px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .create_post_btns:hover {
+    background-color: darkblue; /* Change background color on hover */
+  }
+
+
+  .profile-edit-btns{
+    border: none;
+    background-color: transparent;
+    color: blue
+  }
+  
+

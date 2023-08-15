@@ -3,14 +3,17 @@ import "./Profile.css"
 import {BsPencilSquare} from "react-icons/bs"
 import axios from "axios";
 import Post from "../PostForm/Post";
-
+import ProfileEdit from "../ProfileEdit/ProfileEdit";
 
 const API = process.env.REACT_APP_API_URL;
 function Profile({user}){
 
     let [profile , setProfile] = useState({})
     let [following , setFollowering] = useState([])
+
     const [modal , setModal] = useState(false)
+
+    const [modal2 , setModal2] = useState(false)
 
     useEffect(() => {
         if(user)
@@ -52,10 +55,13 @@ function Profile({user}){
         onClick={() => setModal(true)}
         >Post</button>
 
-        <button className="profile-edit-btns"><BsPencilSquare size={20}/></button>
+        <button className="profile-edit-btns"  onClick={() => setModal2(true)}>
+        <BsPencilSquare size={20}/></button>
         </div>
 
         </div>
+
+        <ProfileEdit open2={modal2} onClose={() => setModal2(false)} profile={profile}/>
 
         <Post open={modal} onClose={() => setModal(false)} profile={profile}/>
 

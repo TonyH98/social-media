@@ -61,7 +61,7 @@ function Profile({user}){
 
         </div>
 
-        <ProfileEdit open2={modal2} onClose={() => setModal2(false)} profile={profile}/>
+        <ProfileEdit open2={modal2} onClose={() => setModal2(false)} profile={profile} setProfile={setProfile}/>
 
         <Post open={modal} onClose={() => setModal(false)} profile={profile}/>
 

@@ -6,7 +6,7 @@ import axios from 'axios';
 
 
 const API = process.env.REACT_APP_API_URL;
-function Post ({open, onClose, profile}){
+function PostForm ({open, onClose, profile}){
 
     
     let [posts, setPosts] = useState({
@@ -150,4 +150,4 @@ console.log(posts)
 
 }
 
-export default Post
+export default PostForm

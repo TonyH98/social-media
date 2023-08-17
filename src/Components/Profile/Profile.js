@@ -2,17 +2,17 @@ import { useState, useEffect } from "react";
 import "./Profile.css"
 import {BsPencilSquare} from "react-icons/bs"
 import axios from "axios";
-import Post from "../PostForm/Post";
+import PostForm from "../PostForm/PostForm";
 import ProfileEdit from "../ProfileEdit/ProfileEdit";
-
+import Post from "../PostForm/PostForm";
 const API = process.env.REACT_APP_API_URL;
 function Profile({user}){
 
     let [profile , setProfile] = useState({})
     let [following , setFollowering] = useState([])
-
+    let [option , setOption] = useState(0)
     const [modal , setModal] = useState(false)
-
+    const [posts , setPosts] = useState([])
     const [modal2 , setModal2] = useState(false)
 
     useEffect(() => {
@@ -35,8 +35,38 @@ function Profile({user}){
     }, [user])
 
 
+    useEffect(() => {
+        if(profile){
+            axios.get(`${API}/users/${profile?.username}/posts`)
+            .then((res) => {
+                setPosts(res.data)
+            })
+        }
 
+    }, [profile])
+
+    let options = ["Posts", "Replies", "Favorites"]
+
+    function optionContent (selected){
+
+    if(selected === 0){
+        return(
+
+        <div className="option-content-holder">
+
+       
+           
+   
+
+        </div>
+        )
+    }
+
+    }
     
+
+    console.log(option)
+
 
     return(
         <div className="profile">
@@ -63,7 +93,7 @@ function Profile({user}){
 
         <ProfileEdit open2={modal2} onClose={() => setModal2(false)} profile={profile} setProfile={setProfile}/>
 
-        <Post open={modal} onClose={() => setModal(false)} profile={profile}/>
+        <PostForm open={modal} onClose={() => setModal(false)} profile={profile}/>
 
 
         <div className="profile_info_container">
@@ -99,10 +129,16 @@ function Profile({user}){
 
         <div className="profile_selected_options">
 
-        <div className="options">Posts</div>
-        <div className="options">Replies</div>
-        <div className="options">Favorites</div>
+        <div className="three_options_container">
+        {options.map((option , index) => {
+            return(
+                <div onClick={() => setOption(index)} className="options">{option}</div>
+            )
+        })}
 
+        </div>
+
+{optionContent(option)}
         </div>
 
 

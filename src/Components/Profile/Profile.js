@@ -69,7 +69,7 @@ function Profile({user}){
 
 
     return(
-        <div className="profile">
+        <div className="profil">
 
         <div className="profile_first_half">
 

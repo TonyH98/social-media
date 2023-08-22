@@ -1,11 +1,15 @@
 import "./ProfileEdit.css"
 
 import { useState , useEffect} from 'react';
-import axios from 'axios';
+import { editProfile} from "../../Store/userActions";
+import { useDispatch } from "react-redux";
 
 
 const API = process.env.REACT_APP_API_URL;
-function ProfileEdit({onClose , profile, open2, setProfile}){
+function ProfileEdit({onClose , users, open2, fetchUsers }){
+
+
+    const dispatch = useDispatch();
 
     let [edit , setEdit] = useState({
         profile_name: "",
@@ -17,12 +21,13 @@ function ProfileEdit({onClose , profile, open2, setProfile}){
         profile_img: "",
         banner_img: ""
     })
+    
 
 useEffect(() => {
-    if(profile){
-        setEdit(profile)
+    if(users){
+        setEdit(users)
     }
-}, [profile])
+}, [users])
 
 const handleTextChange = (event) => {
     if(event.target.id === "profile_img"){
@@ -78,20 +83,11 @@ const handleSubmit = (event) => {
         formData.append("banner_img", edit?.banner_img);
     }
 
-    axios
-        .put(`${API}/users/${profile?.id}`, formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        })
-        .then(() => {
-            axios.get(`${API}/users/${profile?.id}`)
-            .then((res) => {
-                setProfile(edit)
-                onClose()
-            })
-        })
-        .catch((c) => console.warn("catch", c));
+     dispatch(editProfile(users , formData))
+     .then(() => {
+        dispatch(fetchUsers(users?.id))
+        onClose()
+     })
 };
 
 

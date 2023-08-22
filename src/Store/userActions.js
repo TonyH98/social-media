@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+
 
 
 const API = process.env.REACT_APP_API_URL;
@@ -84,3 +84,29 @@ export const createPost = (profile, post) => async (dispatch) => {
     console.log(error); 
   })
 } 
+
+
+
+
+export const EDIT_PROFILE_SUCCESS = "EDIT_PROFILE_SUCCESS"
+export const EDIT_PROFILE_FAIL = "EDIT_PROFILE_FAIL"
+
+
+export const editProfile = (profile, edit) => async (dispatch) => {
+
+  axios
+   .put(`${API}/users/${profile?.id}`, edit, {
+      headers: {
+          "Content-Type": "multipart/form-data",
+        },
+     })
+    .then(() => {
+      dispatch({type: EDIT_PROFILE_SUCCESS})
+      dispatch(fetchUsers(profile?.id))
+    })
+    .catch((error) => {
+      dispatch({ type: EDIT_PROFILE_FAIL, error: error.message });
+      console.log(error); 
+    })
+
+}

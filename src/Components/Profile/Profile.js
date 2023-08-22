@@ -11,7 +11,6 @@ const API = process.env.REACT_APP_API_URL;
 
 function Profile({user}){
 
-    let [profile , setProfile] = useState({})
     let [following , setFollowering] = useState([])
     let [option , setOption] = useState(0)
     const [modal , setModal] = useState(false)
@@ -94,7 +93,7 @@ function Profile({user}){
 
         </div>
 
-        <ProfileEdit open2={modal2} onClose={() => setModal2(false)} profile={profile} setProfile={setProfile}/>
+        <ProfileEdit open2={modal2} fetchUsers={fetchUsers} onClose={() => setModal2(false)} users={users}/>
 
         <PostForm open={modal} onClose={() => setModal(false)} users={users}/>
 

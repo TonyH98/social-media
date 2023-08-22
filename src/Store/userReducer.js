@@ -2,6 +2,9 @@ import { FETCH_USERS_ERROR , FETCH_USERS_SUCCESS } from "./userActions";
 import { SIGNUP_SUCCESS , SIGNUP_FAILURE } from "./userActions";
 import { LOGIN_FAILURE , LOGIN_SUCCESS } from "./userActions";
 import { POST_FAIL, POST_SUCCESS } from "./userActions";
+import { EDIT_PROFILE_FAIL, EDIT_PROFILE_SUCCESS } from "./userActions";
+
+
 const initialState = {
 
     users: [],
@@ -110,3 +113,32 @@ switch(action.type){
 }
 
 }
+
+
+
+const initialEDIT = {
+  editSuccess : false,
+  editFail : null
+}
+
+
+export const userEdit = (state = initialEDIT, action) => {
+
+  switch(action.type){
+    case EDIT_PROFILE_SUCCESS:
+      return{
+        ...state,
+        editSuccess: true,
+        editFail: null
+      }
+    case EDIT_PROFILE_FAIL:
+      return{
+        ...state,
+        editSuccess: false,
+        editFail: action.error
+      }
+    default:
+      return state
+  }
+  
+  }

@@ -8,6 +8,7 @@ import Post from "../PostForm/PostForm";
 import { useDispatch , useSelector } from "react-redux";
 import { fetchUsers } from "../../Store/userActions";
 const API = process.env.REACT_APP_API_URL;
+
 function Profile({user}){
 
     let [profile , setProfile] = useState({})
@@ -47,117 +48,116 @@ function Profile({user}){
 
     // }, [profile])
 
-    // let options = ["Posts", "Replies", "Favorites"]
+    let options = ["Posts", "Replies", "Favorites"]
 
-    // function optionContent (selected){
+    function optionContent (selected){
 
-    // if(selected === 0){
-    //     return(
+    if(selected === 0){
+        return(
 
-    //     <div className="option-content-holder">
+        <div className="option-content-holder">
 
        
            
    
 
-    //     </div>
-    //     )
-    // }
+        </div>
+        )
+    }
 
-    // }
+    }
     
 
     console.log(option)
 
 
     return(
-//         <div className="profil">
+        <div className="profil">
 
-//         <div className="profile_first_half">
+        <div className="profile_first_half">
 
-//         <div className="profile_banner_container">
+        <div className="profile_banner_container">
 
-//         <img src={profile?.banner_img} 
-//         alt={profile?.banner_img} 
-//         className="profile_banner_img"/>
+        <img src={users?.banner_img} 
+        alt={users?.banner_img} 
+        className="profile_banner_img"/>
 
-//         <div className="profile_btns_container">
+        <div className="profile_btns_container">
 
-//         <button className="create_post_btns" 
-//         onClick={() => setModal(true)}
-//         >Post</button>
+        <button className="create_post_btns" 
+        onClick={() => setModal(true)}
+        >Post</button>
 
-//         <button className="profile-edit-btns"  onClick={() => setModal2(true)}>
-//         <BsPencilSquare size={20}/></button>
-//         </div>
+        <button className="profile-edit-btns"  onClick={() => setModal2(true)}>
+        <BsPencilSquare size={20}/></button>
+        </div>
 
-//         </div>
+        </div>
 
-//         <ProfileEdit open2={modal2} onClose={() => setModal2(false)} profile={profile} setProfile={setProfile}/>
+        <ProfileEdit open2={modal2} onClose={() => setModal2(false)} profile={profile} setProfile={setProfile}/>
 
-//         <PostForm open={modal} onClose={() => setModal(false)} profile={profile}/>
+        <PostForm open={modal} onClose={() => setModal(false)} users={users}/>
 
 
-//         <div className="profile_info_container">
+        <div className="profile_info_container">
 
-//         <div className="profile_img_container">
+        <div className="profile_img_container">
 
-//         <img src={profile?.profile_img} className="profile_img"/>
+        <img src={users?.profile_img} className="profile_img"/>
 
-//         </div>
+        </div>
         
-//         <div className="profile_names_container">
-//             <h3>{profile?.profile_name}</h3>
-//             <div>@{profile?.username}</div>
+        <div className="profile_names_container">
+            <h3>{users?.profile_name}</h3>
+            <div>@{users?.username}</div>
 
-//         </div>
+        </div>
 
-//         <div className="profile_bio_container">
+        <div className="profile_bio_container">
 
-//             <p>{profile?.bio}</p>
+            <p>{users?.bio}</p>
 
-//         </div>
+        </div>
 
 
-//         <div className="profile_followers_container">
+        <div className="profile_followers_container">
 
-//             <div>{following.length} Following</div>
-//             <div>{following.length} Followers</div>
+            <div>{following.length} Following</div>
+            <div>{following.length} Followers</div>
             
 
-//         </div>
+        </div>
 
-//         </div>
+        </div>
 
-//         <div className="profile_selected_options">
+        <div className="profile_selected_options">
 
-//         <div className="three_options_container">
-//         {options.map((option , index) => {
-//             return(
-//                 <div onClick={() => setOption(index)} className="options">{option}</div>
-//             )
-//         })}
+        <div className="three_options_container">
+        {options.map((option , index) => {
+            return(
+                <div onClick={() => setOption(index)} className="options">{option}</div>
+            )
+        })}
 
-//         </div>
+        </div>
 
-// {optionContent(option)}
-//         </div>
-
-
-//         </div>
+{optionContent(option)}
+        </div>
 
 
-//         <div className="profile_second_half"></div>
+        </div>
 
-//         <div className="profile_search_input_container">
 
-//         <input type="text" className="profile_search_bar" placeholder="Search"/>
+        <div className="profile_second_half"></div>
 
-//         </div>
+        <div className="profile_search_input_container">
 
-//         </div>
-      
-null
+        <input type="text" className="profile_search_bar" placeholder="Search"/>
+
+        </div>
+
+        </div>
+
 
     )
 }

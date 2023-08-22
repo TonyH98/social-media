@@ -62,3 +62,25 @@ axios.post(`${API}/users/login`, login)
 
 
 }
+
+
+
+export const POST_SUCCESS = "POST_SUCCESS"
+export const POST_FAIL = "POST_FAIL"
+
+export const createPost = (profile, post) => async (dispatch) => {
+
+  axios
+  .post(`${API}/users/${profile?.username}/posts`, post, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  })
+  .then(() => {
+    dispatch({type: POST_SUCCESS})
+  })
+  .catch((error) => {
+    dispatch({ type: POST_FAIL, error: error.message });
+    console.log(error); 
+  })
+} 

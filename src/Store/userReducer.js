@@ -1,7 +1,7 @@
 import { FETCH_USERS_ERROR , FETCH_USERS_SUCCESS } from "./userActions";
 import { SIGNUP_SUCCESS , SIGNUP_FAILURE } from "./userActions";
 import { LOGIN_FAILURE , LOGIN_SUCCESS } from "./userActions";
-
+import { POST_FAIL, POST_SUCCESS } from "./userActions";
 const initialState = {
 
     users: [],
@@ -80,6 +80,33 @@ switch(action.type){
 
   default: 
   return state 
+}
+
+}
+
+
+const initialPost = {
+  postSuccess : false,
+  postFail : null
+}
+
+export const userPost = (state = initialPost, action) => {
+
+switch(action.type){
+  case POST_SUCCESS:
+    return{
+      ...state,
+      postSuccess: true,
+      postFail: null
+    }
+  case POST_FAIL:
+    return{
+      ...state,
+      postSuccess: false,
+      postFail: action.error
+    }
+  default:
+    return state
 }
 
 }

@@ -3,12 +3,15 @@ import "./Post.css"
 import { useState , useEffect} from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-
+import { useDispatch } from 'react-redux';
+import { createPost } from "../../Store/userActions";
 
 const API = process.env.REACT_APP_API_URL;
-function PostForm ({open, onClose, profile}){
+function PostForm ({open, onClose, users}){
 
-    
+  const dispatch = useDispatch();
+
+
     let [posts, setPosts] = useState({
         user_name: "",
         content: "",
@@ -17,14 +20,14 @@ function PostForm ({open, onClose, profile}){
     });
     
     useEffect(() => {
-        if (profile?.id) {
+        if (users?.id) {
             setPosts((prevPost) => ({
                 ...prevPost,
-                user_id: profile?.id,
-                user_name: profile?.username
+                user_id: users?.id,
+                user_name: users?.username
             }));
         }
-    }, [profile?.id]);
+    }, [users?.id]);
     
     
     const handleTextChange = (event) => {
@@ -52,10 +55,10 @@ function PostForm ({open, onClose, profile}){
         }
     };
     
-    const handleClearImage = () => {
-        const newKey = Date.now(); // Generate a new key to trigger a re-render
-        setPosts({ ...posts, posts_img: null, imageKey: newKey });
-      };
+    // const handleClearImage = () => {
+    //     const newKey = Date.now(); // Generate a new key to trigger a re-render
+    //     setPosts({ ...posts, posts_img: null, imageKey: newKey });
+    //   };
     
 
       const handleSubmit = (event) => {
@@ -63,14 +66,9 @@ function PostForm ({open, onClose, profile}){
         const formData = new FormData();
         formData.append("content", posts?.content);
         formData.append("posts_img", posts.posts_img === "" ? null : posts.posts_img);
-        formData.append("user_id", profile?.id);
-        formData.append("user_name", profile?.username)
-        axios
-          .post(`${API}/users/${profile?.username}/posts`, formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          })
+        formData.append("user_id", users?.id);
+        formData.append("user_name", users?.username)
+        dispatch(createPost(users, formData))
           .then(
             (response) => {
               onClose()

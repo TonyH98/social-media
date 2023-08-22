@@ -1,29 +1,18 @@
 import { useState , useEffect} from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { createUser } from '../../Store/userActions';
+
 import "./Signup.css"
 
 
-const API = process.env.REACT_APP_API_URL;
-
 function Signup(){
 
+    const navigate = useNavigate()
+
+   const dispatch = useDispatch();
+
     const [type, setType]=useState('password');
-
-    let navigate = useNavigate()
-
-    const addUser = (newUser) => {
-        axios
-      .post(`${API}/users/signup`, newUser)
-      .then(
-        () => {
-          navigate(`/login`);
-        },
-        (error) => console.error(error)
-      )
-      .catch((c) => console.warn('catch', c));
-    }
-
 
     const [user, setUser] = useState({
        username: "",
@@ -52,7 +41,13 @@ function Signup(){
 
       const handleSubmit = (event) => {
         event.preventDefault();
-         addUser(user);
+        try{
+          dispatch(createUser(user))
+          navigate('/')
+        }
+        catch(error){
+          console.log(error)
+        }
       };
 
 

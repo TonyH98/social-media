@@ -6,9 +6,7 @@ import Signup from './Components/Registration/Signup';
 import Nav from './Components/Nav/Nav';
 import Home from './Components/LandingPage/Home';
 import Profile from './Components/Profile/Profile';
-import axios from "axios";
 
-const API = process.env.REACT_APP_API_URL;
 function App() {
 
   const [user, setUser] = useState();
@@ -37,7 +35,7 @@ console.log(user)
       </div>
       <main className="content">
         <Routes>
-          <Route path="/" element={<Home newLogin={newLogin} />} />
+          <Route path="/" element={<Home newLogin={newLogin} isLogged={isLogged} setUser={setUser} user={user}/>} />
           <Route path="/signup" element={<Signup />} />
           <Route path={`/profile/${user?.id}`} element={<Profile user={user} />} />
         </Routes>

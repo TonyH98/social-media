@@ -1,4 +1,6 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -31,4 +33,32 @@ export const createUser = (user) => async (dispatch) => {
   .catch((error) => {
     dispatch({type: SIGNUP_FAILURE, error: error.message})
   })
+}
+
+
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS"
+export const LOGIN_FAILURE = "LOGIN_FAILURE"
+
+
+export const loginUser = (login , newLogin) => async (dispatch) => {
+
+
+
+axios.post(`${API}/users/login`, login)
+.then((res) => {
+  dispatch({type: LOGIN_SUCCESS})
+  newLogin()
+  window.localStorage.setItem(
+    'user',
+    JSON.stringify({ email: res.data.email, id: res.data.id })
+  );
+
+  return `/profile/${res.data.id}`;
+})
+.catch((error) => {
+  dispatch({ type: LOGIN_FAILURE, error: error.message });
+    console.log(error); // You can still log the error here if needed
+})
+
+
 }

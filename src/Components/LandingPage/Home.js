@@ -1,56 +1,51 @@
-import { useState } from 'react';
-import { Link , useNavigate} from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch , useSelector } from 'react-redux';
+import { loginUser } from '../../Store/userActions';
 import "./Home.css"
 
-import axios from 'axios';
+function Home({ newLogin, user, isLogged, setUser }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const loginUsers = useSelector((state) => state.login.loginSuccess); 
+  const [login, setLogin] = useState({
+    email: '',
+    password: '',
+  });
 
-const API = process.env.REACT_APP_API_URL;
+  const [type, setType] = useState('password');
 
-function Home({newLogin}){
+  const handleTextChange = (event) => {
+    setLogin({ ...login, [event.target.id]: event.target.value });
+  };
 
-    const [login, setLogin] = useState({
-        email: '',
-        password: '',
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    dispatch(loginUser(login, newLogin))
+      .then(() => {
+        if (loginUsers) {
+          // Navigate to the profile if login was successful
+          navigate(`/profile/${user?.id}`);
+        } else {
+          // Handle the case where login was not successful
+          console.log("Login failed");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
       });
+  };
+  
 
-      let navigate = useNavigate()
+  useEffect(() => {
+    const loggedUser = JSON.parse(window.localStorage.getItem('user'));
+    setUser(loggedUser);
+    
+  }, [isLogged, newLogin]);
 
-
-      const [type, setType]=useState('password');
-
-      const handleTextChange = (event) => {
-        setLogin({ ...login, [event.target.id]: event.target.value });
-      };
-
-
-      const handleSubmit = (event) => {
-        event.preventDefault();
-        axios
-          .post(`${API}/users/login`, login)
-          .then((res) => {
-            newLogin();
-            window.localStorage.setItem(
-              'user',
-              JSON.stringify({ email: res.data.email, id: res.data.id })
-            );
-            navigate(`/profile/${res.data.id}`);
-          })
-          .catch((err) => {
-           console.log(err)
-          });
-      };
-
-
-
-      const handleType =() => {
-        if(type === 'password'){
-          setType('text')
-        }
-        else if (type === "text"){
-          setType('password')
-        }
-      }
-
+  const handleType = () => {
+    setType(type === 'password' ? 'text' : 'password');
+  };
 
 
 

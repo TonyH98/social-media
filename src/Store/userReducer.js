@@ -1,6 +1,6 @@
 import { FETCH_USERS_ERROR , FETCH_USERS_SUCCESS } from "./userActions";
 import { SIGNUP_SUCCESS , SIGNUP_FAILURE } from "./userActions";
-
+import { LOGIN_FAILURE , LOGIN_SUCCESS } from "./userActions";
 
 const initialState = {
 
@@ -52,3 +52,34 @@ const initialUser = {
         return state;
     }
   };
+
+
+const initialLogin = {
+
+loginSuccess:  false,
+loginFailure: null
+
+}
+
+
+export const userLogin = (state = initialLogin, action) => {
+
+switch(action.type){
+  case LOGIN_SUCCESS:
+    return{
+      ...state,
+      loginSuccess: true,
+      loginFailure: null
+    }
+  case LOGIN_FAILURE:
+    return {
+      ...state,
+      loginSuccess: false,
+      loginFailure: action.error
+    }
+
+  default: 
+  return state 
+}
+
+}

@@ -110,3 +110,17 @@ export const editProfile = (profile, edit) => async (dispatch) => {
     })
 
 }
+
+
+
+export const POST_GET_SUCCESS = "POST_GET_SUCCESS"
+export const POST_GET_FAIL = "POST_GET_FAIL"
+
+export const fetchPosts = (user) => async (dispatch) => {
+  try {
+    const response = await axios.get(`${API}/users/${user}/posts`);
+    dispatch({ type: POST_GET_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispatch({ type: POST_GET_FAIL, payload: error.message });
+  }
+};

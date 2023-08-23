@@ -3,7 +3,7 @@ import { SIGNUP_SUCCESS , SIGNUP_FAILURE } from "./userActions";
 import { LOGIN_FAILURE , LOGIN_SUCCESS } from "./userActions";
 import { POST_FAIL, POST_SUCCESS } from "./userActions";
 import { EDIT_PROFILE_FAIL, EDIT_PROFILE_SUCCESS } from "./userActions";
-
+import { POST_GET_FAIL, POST_GET_SUCCESS } from "./userActions";
 
 const initialState = {
 
@@ -30,6 +30,30 @@ export const userReducer = (state = initialState, action) => {
     }
 }
 
+
+const initialGetPosts = {
+  posts: [],
+  error: null
+} 
+
+export const userGetPost = (state = initialGetPosts, action) => {
+  switch (action.type){
+      case POST_GET_SUCCESS:
+          return {
+              ...state,
+              posts: action.payload,
+              error:null
+          };
+      case POST_GET_FAIL:
+          return {
+              ...state,
+              posts: [],
+              error: action.payload
+          }
+      default:
+          return state
+  }
+}
 
 const initialUser = {
     signupSuccess: false,

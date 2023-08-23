@@ -6,7 +6,7 @@ import PostForm from "../PostForm/PostForm";
 import ProfileEdit from "../ProfileEdit/ProfileEdit";
 import Post from "../PostForm/PostForm";
 import { useDispatch , useSelector } from "react-redux";
-import { fetchUsers } from "../../Store/userActions";
+import { fetchUsers, fetchPosts } from "../../Store/userActions";
 const API = process.env.REACT_APP_API_URL;
 
 function Profile({user}){
@@ -14,38 +14,28 @@ function Profile({user}){
     let [following , setFollowering] = useState([])
     let [option , setOption] = useState(0)
     const [modal , setModal] = useState(false)
-    const [posts , setPosts] = useState([])
+
     const [modal2 , setModal2] = useState(false)
 
     const dispatch = useDispatch();
     const users = useSelector((state) => state.user.users);
-
+    const getPosts = useSelector((state) => state.posts_get.posts)
 
     useEffect(() => {
        dispatch(fetchUsers(user?.id))
     }, [dispatch])
 
-    console.log(users)
 
-    // useEffect(() => {
-    //     if(user){
-    //         axios.get(`${API}/follow/${user?.id}`)
-    //         .then((res) => {
-    //             setFollowering(res.data)
-    //         })
-    //     }
-    // }, [user])
+    useEffect(() => {
+    if(users){
+        dispatch(fetchPosts(users?.username))
+    }
+    }, [dispatch, users])
 
 
-    // useEffect(() => {
-    //     if(profile){
-    //         axios.get(`${API}/users/${profile?.username}/posts`)
-    //         .then((res) => {
-    //             setPosts(res.data)
-    //         })
-    //     }
+    console.log(getPosts)
 
-    // }, [profile])
+   
 
     let options = ["Posts", "Replies", "Favorites"]
 

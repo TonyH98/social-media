@@ -65,8 +65,48 @@ axios.post(`${API}/users/login`, login)
 
 
 
+export const EDIT_PROFILE_SUCCESS = "EDIT_PROFILE_SUCCESS"
+export const EDIT_PROFILE_FAIL = "EDIT_PROFILE_FAIL"
+
+
+export const editProfile = (profile, edit) => async (dispatch) => {
+  
+  axios
+  .put(`${API}/users/${profile?.id}`, edit, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  })
+  .then(() => {
+    dispatch({type: EDIT_PROFILE_SUCCESS})
+    dispatch(fetchUsers(profile?.id))
+  })
+  .catch((error) => {
+    dispatch({ type: EDIT_PROFILE_FAIL, error: error.message });
+    console.log(error); 
+  })
+  
+}
+
+
+
+export const POST_GET_SUCCESS = "POST_GET_SUCCESS"
+export const POST_GET_FAIL = "POST_GET_FAIL"
+
+export const fetchPosts = (user) => async (dispatch) => {
+  try {
+    const response = await axios.get(`${API}/users/${user}/posts`);
+    dispatch({ type: POST_GET_SUCCESS, payload: response.data })
+    
+  } catch (error) {
+    dispatch({ type: POST_GET_FAIL, payload: error.message });
+  }
+};
+
 export const POST_SUCCESS = "POST_SUCCESS"
 export const POST_FAIL = "POST_FAIL"
+
+
 
 export const createPost = (profile, post) => async (dispatch) => {
 
@@ -78,49 +118,10 @@ export const createPost = (profile, post) => async (dispatch) => {
   })
   .then(() => {
     dispatch({type: POST_SUCCESS})
+    dispatch(fetchPosts(profile?.username))
   })
   .catch((error) => {
     dispatch({ type: POST_FAIL, error: error.message });
     console.log(error); 
   })
 } 
-
-
-
-
-export const EDIT_PROFILE_SUCCESS = "EDIT_PROFILE_SUCCESS"
-export const EDIT_PROFILE_FAIL = "EDIT_PROFILE_FAIL"
-
-
-export const editProfile = (profile, edit) => async (dispatch) => {
-
-  axios
-   .put(`${API}/users/${profile?.id}`, edit, {
-      headers: {
-          "Content-Type": "multipart/form-data",
-        },
-     })
-    .then(() => {
-      dispatch({type: EDIT_PROFILE_SUCCESS})
-      dispatch(fetchUsers(profile?.id))
-    })
-    .catch((error) => {
-      dispatch({ type: EDIT_PROFILE_FAIL, error: error.message });
-      console.log(error); 
-    })
-
-}
-
-
-
-export const POST_GET_SUCCESS = "POST_GET_SUCCESS"
-export const POST_GET_FAIL = "POST_GET_FAIL"
-
-export const fetchPosts = (user) => async (dispatch) => {
-  try {
-    const response = await axios.get(`${API}/users/${user}/posts`);
-    dispatch({ type: POST_GET_SUCCESS, payload: response.data });
-  } catch (error) {
-    dispatch({ type: POST_GET_FAIL, payload: error.message });
-  }
-};

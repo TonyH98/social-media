@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import "./Profile.css"
 import {BsPencilSquare} from "react-icons/bs"
-import axios from "axios";
+
 import PostForm from "../PostForm/PostForm";
 import ProfileEdit from "../ProfileEdit/ProfileEdit";
 import Post from "../PostForm/PostForm";
+import Posts from "../Posts/Posts";
 import { useDispatch , useSelector } from "react-redux";
 import { fetchUsers, fetchPosts } from "../../Store/userActions";
 const API = process.env.REACT_APP_API_URL;
@@ -45,10 +46,13 @@ function Profile({user}){
         return(
 
         <div className="option-content-holder">
-
-       
-           
-   
+            {getPosts.map((posts) => {
+                return(
+                    <div key={posts.id} className="posts-border-container">
+                        <Posts posts={posts} />
+                    </div>
+                )
+            })}
 
         </div>
         )
@@ -61,7 +65,7 @@ function Profile({user}){
 
 
     return(
-        <div className="profil">
+        <div className="profile">
 
         <div className="profile_first_half">
 
@@ -124,7 +128,7 @@ function Profile({user}){
         <div className="three_options_container">
         {options.map((option , index) => {
             return(
-                <div onClick={() => setOption(index)} className="options">{option}</div>
+                <div onClick={() => setOption(index)} className="options" key={index}>{option}</div>
             )
         })}
 
@@ -137,7 +141,7 @@ function Profile({user}){
         </div>
 
 
-        <div className="profile_second_half"></div>
+       
 
         <div className="profile_search_input_container">
 

@@ -1,0 +1,36 @@
+
+.post_user_profile{
+
+height: 50px;
+width: 60px;
+border-radius: 50%;
+
+}
+
+
+.option-content-holder{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+.posts_content{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.post_user_profile{
+    display: inline;
+}
+
+.mention{
+    color: blue;
+}
+
+.posts_img{
+    width: 100px;
+    height: 100px;
+}
+

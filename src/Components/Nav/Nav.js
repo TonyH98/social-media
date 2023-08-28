@@ -10,10 +10,13 @@ import {CgProfile} from "react-icons/cg"
 import { useNavigate, Link } from "react-router-dom";
 
 import { useState, useEffect } from "react";
+import Verifications from "./Verifications";
 
 function Nav(){
 
     const [user, setUser] = useState();
+
+    const [modal , setModal] = useState(false)
 
     const navigate = useNavigate();
 
@@ -65,11 +68,12 @@ return(
         </div>
 
 
-        <div class="nav-content">
+        <div class="nav-content" onClick={() => setModal(true)}>
         <LuVerified class="icon" size={30} />
         <span class="text">Verified</span>
         </div>
 
+        <Verifications open={modal} onClose={() => setModal(false)} user={user}/>
 
         <button onClick={handleLogout} className="logout nav-content">Logout</button>
 

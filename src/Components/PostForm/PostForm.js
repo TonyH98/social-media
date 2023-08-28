@@ -55,11 +55,7 @@ function PostForm ({open, onClose, users}){
         }
     };
     
-    // const handleClearImage = () => {
-    //     const newKey = Date.now(); // Generate a new key to trigger a re-render
-    //     setPosts({ ...posts, posts_img: null, imageKey: newKey });
-    //   };
-    
+
 
       const handleSubmit = (event) => {
         event.preventDefault();
@@ -85,7 +81,7 @@ function PostForm ({open, onClose, users}){
     };
 
 
-console.log(posts)
+
 
 
     

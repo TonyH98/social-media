@@ -1,42 +1,41 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import "./Profile.css"
 import {BsPencilSquare} from "react-icons/bs"
-
 import PostForm from "../PostForm/PostForm";
 import ProfileEdit from "../ProfileEdit/ProfileEdit";
-import Post from "../PostForm/PostForm";
 import Posts from "../Posts/Posts";
 import { useDispatch , useSelector } from "react-redux";
-import { fetchUsers, fetchPosts } from "../../Store/userActions";
-const API = process.env.REACT_APP_API_URL;
+import { fetchUsers, fetchPosts, getTags } from "../../Store/userActions";
+import { Link } from "react-router-dom";
+
 
 function Profile({user}){
 
     let [following , setFollowering] = useState([])
     let [option , setOption] = useState(0)
     const [modal , setModal] = useState(false)
-
+    const [search, setSearch] = useState("");
     const [modal2 , setModal2] = useState(false)
 
     const dispatch = useDispatch();
     const users = useSelector((state) => state.user.users);
     const getPosts = useSelector((state) => state.posts_get.posts)
-
+    const getAllTags = useSelector((state) => state.get_tags.tags)
+    const [filter , setFilter] = useState([])
     useEffect(() => {
        dispatch(fetchUsers(user?.id))
+       dispatch(getTags())
     }, [dispatch])
-
-
+    
     useEffect(() => {
-    if(users){
-        dispatch(fetchPosts(users?.username))
-    }
-    }, [dispatch, users])
+        if(users){
+            dispatch(fetchPosts(users?.username))
+        }
 
+    }, [dispatch , users])
+    
+    console.log(getAllTags)
 
-    console.log(getPosts)
-
-   
 
     let options = ["Posts", "Replies", "Favorites"]
 
@@ -61,7 +60,22 @@ function Profile({user}){
     }
     
 
-    console.log(option)
+    function handleFilter(event) {
+        let searchResult = event.target.value;
+        setSearch(searchResult);
+        const filter = getAllTags.filter((tags) => {
+          return tags.tag_names.toLowerCase().includes(searchResult.toLowerCase());
+        });
+        if (searchResult === "") {
+          setFilter([]);
+        } else {
+          setFilter(filter);
+        }
+      }
+
+
+
+ 
 
 
     return(
@@ -145,7 +159,24 @@ function Profile({user}){
 
         <div className="profile_search_input_container">
 
-        <input type="text" className="profile_search_bar" placeholder="Search"/>
+        <input type="text" className="profile_search_bar" placeholder="Search" value={search} onChange={handleFilter}/>
+        {filter.length !== 0 && (
+            <div className="dataResult">
+                {filter.slice(0, 10).map((tag) => {
+
+                  return(
+                    <div className="search-link">
+                        <Link to={`/posts/${tag?.tag_names.slice(1)}`}>
+                  <p className="dropdown-link">{tag?.tag_names}</p>
+                        </Link>
+             
+                  </div>
+                  )      
+
+
+                })}
+            </div>
+        )}
 
         </div>
 

@@ -6,6 +6,7 @@ import Signup from './Components/Registration/Signup';
 import Nav from './Components/Nav/Nav';
 import Home from './Components/LandingPage/Home';
 import Profile from './Components/Profile/Profile';
+import SearchPosts from './Components/SearchPosts/SearchPosts';
 
 function App() {
 
@@ -38,6 +39,7 @@ console.log(user)
           <Route path="/" element={<Home newLogin={newLogin} isLogged={isLogged} setUser={setUser} user={user}/>} />
           <Route path="/signup" element={<Signup />} />
           <Route path={`/profile/${user?.id}`} element={<Profile user={user} />} />
+          <Route path="/posts/:tag_name" element={<SearchPosts/>}/>
         </Routes>
       </main>
     </Router>

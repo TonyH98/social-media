@@ -4,7 +4,8 @@ import { LOGIN_FAILURE , LOGIN_SUCCESS } from "./userActions";
 import { POST_FAIL, POST_SUCCESS } from "./userActions";
 import { EDIT_PROFILE_FAIL, EDIT_PROFILE_SUCCESS } from "./userActions";
 import { POST_GET_FAIL, POST_GET_SUCCESS } from "./userActions";
-
+import { GET_TAG_SUCCESS, GET_TAG_FAIL } from "./userActions";
+import { GET_SEARCH_POST_SUCCESS, GET_SEARCH_POST_FAIL } from "./userActions";
 const initialState = {
 
     users: [],
@@ -166,3 +167,55 @@ export const userEdit = (state = initialEDIT, action) => {
   }
   
   }
+
+
+  const initialGetTag = {
+
+    tags: [],
+    error: null
+}
+
+export const getAllTags = (state = initialGetTag, action) => {
+  switch (action.type){
+      case GET_TAG_SUCCESS:
+          return {
+              ...state,
+              tags: action.payload,
+              error:null
+          };
+      case GET_TAG_FAIL:
+          return {
+              ...state,
+              tags: [],
+              error: action.payload
+          }
+      default:
+          return state
+  }
+}
+
+
+const initialGetSearchPost = {
+
+  searchPost: [],
+  error: null
+}
+
+export const getSearchPost = (state = initialGetSearchPost, action) => {
+switch (action.type){
+    case GET_SEARCH_POST_SUCCESS:
+        return {
+            ...state,
+            searchPost: action.payload,
+            error:null
+        };
+    case GET_SEARCH_POST_FAIL:
+        return {
+            ...state,
+            searchPost: [],
+            error: action.payload
+        }
+    default:
+        return state
+}
+}

@@ -19,11 +19,16 @@ function formatDate(inputDate){
 
 function highlightMentions(content) {
     const mentionPattern = /@(\w+)/g;
+    const hashtagPattern = /#(\w+)(?=\W|$)/g; 
     
-    const highlightedContent = content.replace(mentionPattern, '<span class="mention">$&</span>');
+    const highlightedContent = content
+        .replace(mentionPattern, '<span class="mention">$&</span>')
+        .replace(hashtagPattern, '<span class="hashtag" style="color: blue;">$&</span>');
     
     return <div dangerouslySetInnerHTML={{ __html: highlightedContent }} />;
-  }
+}
+
+
   
 
 

@@ -6,6 +6,9 @@ import { userLogin } from "./userReducer";
 import { userPost } from "./userReducer";
 import { userEdit } from "./userReducer";
 import { userGetPost } from "./userReducer";
+import { getAllTags } from "./userReducer";
+import { getSearchPost } from "./userReducer";
+
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -13,7 +16,10 @@ const rootReducer = combineReducers({
   login: userLogin,
   post: userPost,
   edit: userEdit,
-  posts_get: userGetPost
+  posts_get: userGetPost,
+  get_tags: getAllTags,
+  get_search: getSearchPost
+
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));

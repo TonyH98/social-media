@@ -124,4 +124,32 @@ export const createPost = (profile, post) => async (dispatch) => {
     dispatch({ type: POST_FAIL, error: error.message });
     console.log(error); 
   })
-} 
+}
+
+
+export const GET_TAG_SUCCESS = "GET_TAG_SUCCESS"
+export const GET_TAG_FAIL = "GET_TAG_FAIL"
+
+export const getTags = () => async(dispatch) => {
+  try {
+    const response = await axios.get(`${API}/tags`);
+    dispatch({ type: GET_TAG_SUCCESS, payload: response.data })
+    
+  } catch (error) {
+    dispatch({ type: GET_TAG_FAIL, payload: error.message });
+  }
+}
+
+
+export const GET_SEARCH_POST_SUCCESS = "GET_SEARCH_SUCCESS"
+export const GET_SEARCH_POST_FAIL = "GET_SEACH_FAIL"
+
+export const getSearchPost = (tagName) => async(dispatch) => {
+  try {
+    const response = await axios.get(`${API}/search/post/${tagName}`);
+    dispatch({ type: GET_SEARCH_POST_SUCCESS, payload: response.data })
+    
+  } catch (error) {
+    dispatch({ type: GET_SEARCH_POST_FAIL, payload: error.message });
+  }
+}

@@ -4,6 +4,8 @@ import { useDispatch , useSelector } from "react-redux";
 import { getVerify } from "../../Store/userActions";
 import { useEffect } from "react";
 
+const API = process.env.REACT_APP_API_URL;
+
 function Verifications({open , onClose, user}){
 
 const dispatch = useDispatch();
@@ -16,6 +18,38 @@ dispatch(getVerify())
 console.log(getPlans)
 
 if(!open) return null
+
+
+const buyNow = async () => {
+  
+ 
+    const lineItems = [{
+    product_name: getPlans.product_name,
+    image: getPlans.images,
+     price: getPlans.price,
+     quantity: 1
+    }]
+    
+      const response = await fetch(`${API}/create-checkout-session`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          items: lineItems,
+        }),
+      });
+    
+      const data = await response.json();
+    
+      if (data.url) {
+        window.location.assign(data.url);
+      }
+  
+
+
+}
+
 
 return(
     <div className="overlay2">
@@ -38,7 +72,7 @@ return(
                 <p>${getPlans.price.toFixed(2)}</p>
             </div>
             
-            <button className="purchase_verfication">Purchase</button>
+            <button className="purchase_verfication" onClick={buyNow}>Purchase</button>
 
             </div>
 

@@ -172,22 +172,31 @@ export const PURCHASE_PLAN_SUCCESS = "PURCHASE_PLAN_SUCCESS"
 export const PURCHASE_PLAN_FAIL = "PURCHASE_PLAN_FAIL"
 
 
-export const purchasePlan = (profile, post) => async (dispatch) => {
+export const purchasePlan = (itemPurchase) => async (dispatch) => {
 
-  axios
-  .post(`${API}/users/${profile?.username}/posts`, post, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
+  const lineItems = [{
+    product_name: itemPurchase.product_name,
+    image: itemPurchase.image,
+    price: itemPurchase.price,
+    quantity: 1
+  }]
+
+ const res = await fetch(`${API}/create-checkout-session`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    items: lineItems
   })
-  .then(() => {
-    dispatch({type: POST_SUCCESS})
-    dispatch(fetchPosts(profile?.username))
-  })
-  .catch((error) => {
-    dispatch({ type: POST_FAIL, error: error.message });
-    console.log(error); 
-  })
+ })
+
+const data = await res.json()
+
+if(data.url){
+  window.location.assign(data.url);
+}
+
 }
 
 

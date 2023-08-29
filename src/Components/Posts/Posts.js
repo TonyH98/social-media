@@ -1,5 +1,5 @@
 import "./Posts.css"
-import {Link} from "react-router-dom"
+import YouTube from "react-youtube";
 function Posts ({posts}){
 
 
@@ -19,19 +19,21 @@ function formatDate(inputDate){
 
 function highlightMentions(content) {
     const mentionPattern = /@(\w+)/g;
-    const hashtagPattern = /#(\w+)(?=\W|$)/g; 
+    const hashtagPattern = /#(\w+)(?=\W|$)/g;
     
     const highlightedContent = content
-        .replace(mentionPattern, '<span class="mention">$&</span>')
-        .replace(hashtagPattern, `<span class="hashtag" style="color: blue;">$&</span>`)
-    
+    .replace(mentionPattern, '<span class="mention">$&</span>')
+    .replace(hashtagPattern, `<span class="hashtag" style="color: blue;">$&</span>`)
     return <div dangerouslySetInnerHTML={{ __html: highlightedContent }} />;
 }
 
+const youtubeLinkPattern = /https:\/\/www\.youtube\.com\/watch\?v=([\w-]+)/g;
+
+
+const matches = posts.content.match(youtubeLinkPattern);
+
 
   
-
-
     return(
         <div className="posts_content">
 
@@ -47,7 +49,7 @@ function highlightMentions(content) {
 
         <div className="post_user_profile">
 
-        {posts.creator.profile_name} | {posts.creator.username} | {formatDate(posts.time)}
+        {posts.creator.profile_name} | @{posts.creator.username} | {formatDate(posts.time)}
 
         </div>
 
@@ -64,15 +66,30 @@ function highlightMentions(content) {
             )}
 
             </div>
+        
+        {matches ? (
+            matches.map((video) => {
+                console.log(video.split('=')[1])
+                return(
+                    <YouTube
+                    videoId={video.split('=')[1]}
+                    className={"youtube-video"}
+                    sandbox="allow-forms allow-scripts allow-pointer-lock allow-same-origin allow-top-navigation allow-presentation"
+                    />
 
-        </div>
-
-        </div>
-
-
-        </div>
-    )
-}
-
-
-export default Posts
+                )
+            })
+        
+         ): null}
+         
+         </div>
+         
+         </div>
+         
+         
+         </div>
+         )
+        }
+        
+        
+        export default Posts

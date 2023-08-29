@@ -6,6 +6,9 @@ import { EDIT_PROFILE_FAIL, EDIT_PROFILE_SUCCESS } from "./userActions";
 import { POST_GET_FAIL, POST_GET_SUCCESS } from "./userActions";
 import { GET_TAG_SUCCESS, GET_TAG_FAIL } from "./userActions";
 import { GET_SEARCH_POST_SUCCESS, GET_SEARCH_POST_FAIL } from "./userActions";
+import { GET_VERIFICATION_INFO, GET_VERIFICATION_INFO_FAIL } from "./userActions";
+
+
 const initialState = {
 
     users: [],
@@ -213,6 +216,33 @@ switch (action.type){
         return {
             ...state,
             searchPost: [],
+            error: action.payload
+        }
+    default:
+        return state
+}
+}
+
+
+
+const initialPlans = {
+
+  plans: [],
+  error: null
+}
+
+export const getPlan = (state = initialPlans, action) => {
+switch (action.type){
+    case GET_VERIFICATION_INFO:
+        return {
+            ...state,
+            plans: action.payload,
+            error:null
+        };
+    case GET_VERIFICATION_INFO_FAIL:
+        return {
+            ...state,
+            plans: [],
             error: action.payload
         }
     default:

@@ -153,3 +153,80 @@ export const getSearchPost = (tagName) => async(dispatch) => {
     dispatch({ type: GET_SEARCH_POST_FAIL, payload: error.message });
   }
 }
+
+export const GET_VERIFICATION_INFO = "GET_VERIFICATION_INFO"
+export const GET_VERIFICATION_INFO_FAIL = "GET_VERIFICATION_INFO"
+
+export const getVerify = () => async(dispatch) => {
+  try {
+    const response = await axios.get(`${API}/plans/1`);
+    dispatch({ type: GET_VERIFICATION_INFO, payload: response.data })
+    
+  } catch (error) {
+    dispatch({ type: GET_VERIFICATION_INFO_FAIL, payload: error.message });
+  }
+}
+
+
+export const PURCHASE_PLAN_SUCCESS = "PURCHASE_PLAN_SUCCESS"
+export const PURCHASE_PLAN_FAIL = "PURCHASE_PLAN_FAIL"
+
+
+export const purchasePlan = (profile, post) => async (dispatch) => {
+
+  axios
+  .post(`${API}/users/${profile?.username}/posts`, post, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  })
+  .then(() => {
+    dispatch({type: POST_SUCCESS})
+    dispatch(fetchPosts(profile?.username))
+  })
+  .catch((error) => {
+    dispatch({ type: POST_FAIL, error: error.message });
+    console.log(error); 
+  })
+}
+
+
+// const buyNow = async () => {
+  
+//   if(user){
+//     const lineItems = [{
+//     product_name: product.product_name,
+//     image: product.image,
+//      price: product.price,
+//      quantity: 1
+//     }]
+    
+//       const response = await fetch(`${API}/create-checkout-session`, {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({
+//           items: lineItems,
+//         }),
+//       });
+    
+//       const data = await response.json();
+    
+//       if (data.url) {
+//         window.location.assign(data.url);
+//       }
+
+
+//       if (response.ok) {
+//             await axios.post(`${API}/users/${user?.id}/purchases/${product.id}`, product);
+    
+//       }
+
+//   }
+// else{
+//   navigate("/login")
+// }
+
+
+// }

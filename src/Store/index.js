@@ -8,6 +8,8 @@ import { userEdit } from "./userReducer";
 import { userGetPost } from "./userReducer";
 import { getAllTags } from "./userReducer";
 import { getSearchPost } from "./userReducer";
+import { getPlan } from "./userReducer";
+
 
 
 const rootReducer = combineReducers({
@@ -18,7 +20,8 @@ const rootReducer = combineReducers({
   edit: userEdit,
   posts_get: userGetPost,
   get_tags: getAllTags,
-  get_search: getSearchPost
+  get_search: getSearchPost,
+  plan: getPlan
 
 });
 

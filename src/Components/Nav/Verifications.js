@@ -1,7 +1,19 @@
 
 import "./Verifications.css"
+import { useDispatch , useSelector } from "react-redux";
+import { getVerify } from "../../Store/userActions";
+import { useEffect } from "react";
 
 function Verifications({open , onClose, user}){
+
+const dispatch = useDispatch();
+const getPlans = useSelector((state) => state.plan.plans)
+
+useEffect(() => {
+dispatch(getVerify())
+}, [ dispatch])
+
+console.log(getPlans)
 
 if(!open) return null
 
@@ -21,10 +33,12 @@ return(
 
             <div className="verified-option">
 
-                <h4>Standard Option</h4>
-                <p>Receive verification badge, and have an increase of posts length.</p>
-                <p>$1.00</p>
+                <h4>{getPlans.product_name}</h4>
+                <p>{getPlans.description}</p>
+                <p>${getPlans.price.toFixed(2)}</p>
             </div>
+            
+            <button className="purchase_verfication">Purchase</button>
 
             </div>
 

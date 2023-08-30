@@ -183,3 +183,36 @@ catch(error){
 
 }
 
+export const REPLY_GET_SUCCESS = "REPLY_GET_SUCCESS"
+export const REPLY_GET_FAIL = "REPLY_GET_FAIL"
+
+export const fetchReplies = (username, id) => async (dispatch) => {
+  try {
+    const response = await axios.get(`${API}/users/${username}/posts/${id}/reply`);
+    dispatch({ type: REPLY_GET_SUCCESS, payload: response.data })
+    
+  } catch (error) {
+    dispatch({ type: REPLY_GET_FAIL, payload: error.message });
+  }
+};
+
+
+
+
+export const CREATE_REPLIES_SUCCESS = "CREATE_REPLIES_SUCCESS"
+export const CREATE_REPLIES_FAIL = "CREATE_REPLIES_FAIL"
+
+export const createRplies = (username, id, post) => async (dispatch) => {
+
+  axios
+  .post(`${API}/users/${username}/posts/${id}/reply`, post)
+  .then(() => {
+    dispatch({type: CREATE_REPLIES_SUCCESS})
+    dispatch(fetchReplies(username, id))
+  })
+  .catch((error) => {
+    dispatch({ type: CREATE_REPLIES_FAIL, error: error.message });
+    console.log(error); 
+  })
+}
+

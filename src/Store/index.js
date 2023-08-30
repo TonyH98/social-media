@@ -10,6 +10,8 @@ import { getAllTags } from "./userReducer";
 import { getSearchPost } from "./userReducer";
 import { getPlan } from "./userReducer";
 import { getPostDetails } from "./userReducer";
+import { getReplies } from "./userReducer";
+import { userReplies } from "./userReducer";
 
 
 const rootReducer = combineReducers({
@@ -22,7 +24,9 @@ const rootReducer = combineReducers({
   get_tags: getAllTags,
   get_search: getSearchPost,
   plan: getPlan,
-  postsDetail: getPostDetails
+  postsDetail: getPostDetails,
+  replies: getReplies,
+  replyPost: userReplies
 
 });
 

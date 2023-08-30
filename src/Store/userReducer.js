@@ -8,6 +8,9 @@ import { GET_TAG_SUCCESS, GET_TAG_FAIL } from "./userActions";
 import { GET_SEARCH_POST_SUCCESS, GET_SEARCH_POST_FAIL } from "./userActions";
 import { GET_VERIFICATION_INFO, GET_VERIFICATION_INFO_FAIL } from "./userActions";
 import { GET_POSTS_DETAILS , GET_POSTS_DETAILS_FAIL } from "./userActions";
+import { REPLY_GET_SUCCESS, REPLY_GET_FAIL } from "./userActions";
+import { CREATE_REPLIES_SUCCESS, CREATE_REPLIES_FAIL } from "./userActions";
+
 
 const initialState = {
 
@@ -277,3 +280,58 @@ export const getPostDetails = (state = initialPostDetails, action) => {
           return state
   }
   }
+
+
+  const initialReplies = {
+
+    replies: [],
+    error: null
+    
+    }
+    
+    
+    export const getReplies = (state = initialReplies, action) => {
+      switch (action.type){
+          case REPLY_GET_SUCCESS:
+              return {
+                  ...state,
+                  replies: action.payload,
+                  error:null
+              };
+          case REPLY_GET_FAIL:
+              return {
+                  ...state,
+                  replies: [],
+                  error: action.payload
+              }
+          default:
+              return state
+      }
+      }
+
+
+      const initialReplyPost = {
+        replyPost : false,
+        replyFail : null
+      }
+      
+      export const userReplies = (state = initialReplyPost, action) => {
+      
+      switch(action.type){
+        case CREATE_REPLIES_SUCCESS:
+          return{
+            ...state,
+            replyPost: true,
+            replyFail: null
+          }
+        case CREATE_REPLIES_FAIL:
+          return{
+            ...state,
+            replyPost: false,
+            replyFail: action.error
+          }
+        default:
+          return state
+      }
+      
+      }

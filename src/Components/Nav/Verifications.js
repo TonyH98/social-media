@@ -15,7 +15,7 @@ useEffect(() => {
 dispatch(getVerify())
 }, [ dispatch])
 
-console.log(getPlans)
+
 
 if(!open) return null
 

@@ -43,7 +43,6 @@ const matches = posts.content.match(youtubeLinkPattern);
 
   
     return(
-        <Link to={`/posts/${posts.creator.username}/${posts?.id}`} className="link-style">
         <div className="posts_content">
 
             <div className="post_user_profile_container">
@@ -62,6 +61,7 @@ const matches = posts.content.match(youtubeLinkPattern);
 
         </div>
 
+            <Link to={`/posts/${posts.creator.username}/${posts?.id}`} className="link-style">
         <div className="posts_content_text_container">
 
             <div className="post_text">
@@ -92,6 +92,7 @@ const matches = posts.content.match(youtubeLinkPattern);
          ): null}
          
          </div>
+        </Link>
          
          </div>
          
@@ -101,12 +102,11 @@ const matches = posts.content.match(youtubeLinkPattern);
              <SlBubble size={20} color="black" />
             </button>
             </div>
-            <ReplyForm open={show} onClose={(e) => {e.preventDefault(); setShow(false)}} users={users} posts={posts}/>
+            <ReplyForm open={show} onClose={() =>  setShow(false)} users={users} posts={posts}/>
          </div>
          
          </div>
 
-        </Link>
          )
         }
         

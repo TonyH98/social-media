@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { useDispatch , useSelector } from "react-redux";
 import { useEffect , useState} from "react";
 import { getPostDetails } from "../../Store/userActions";
+import {fetchReplies} from "../../Store/userActions";
+
 
 function PostsDetails(){
 
@@ -12,13 +14,15 @@ const dispatch = useDispatch()
 
 const getPostsDetail = useSelector((state) => state.postsDetail.postDetail);
 
+const getReplies = useSelector((state) => state.replies.replies)
 
 useEffect(() => {
 dispatch(getPostDetails(username , id))
+dispatch(fetchReplies(username, id))
 }, [dispatch])
 
 
-console.log(getPostsDetail)
+
 
 return(
     <div>

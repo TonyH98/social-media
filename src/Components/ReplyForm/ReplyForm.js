@@ -1,6 +1,19 @@
-
+import { useState} from 'react';
+import { useDispatch } from 'react-redux';
+import {createRplies}  from "../../Store/userActions";
 
 function ReplyForm({open , onClose, users, posts }){
+
+  const dispatch = useDispatch()
+
+  let [replies, setReplies] = useState({
+    content: "",
+    user_id: users?.id,
+    posts_id: posts.id, 
+    })
+
+
+
 
     function formatDate(inputDate){
         const months = [
@@ -25,6 +38,31 @@ function ReplyForm({open , onClose, users, posts }){
         return <div dangerouslySetInnerHTML={{ __html: highlightedContent }} />;
     }
 
+
+    const handleTextChange = (event) => {
+        setReplies({...replies, [event.target.id]: event.target.value})
+    };
+
+
+    const handleSubmit = (event) => {
+      event.preventDefault()
+      dispatch(createRplies(users?.username, posts.id, replies))
+      .then((res) => {
+        onClose()
+        setReplies({
+          content: "",
+          user_id: users?.id,
+          posts_id: posts.id, 
+        })
+      })
+    }
+
+    const handleTextareaClick = (event) => {
+      event.preventDefault()
+  };
+
+
+  
 if(!open) return null
 
     return(
@@ -75,7 +113,7 @@ className="post_user_profile"
 </div>
 
 
-<form  className="signup-form">
+<form  className="signup-form" onSubmit={handleSubmit}>
 
 <h2>Reply Back:</h2>
 
@@ -85,21 +123,14 @@ className="post_user_profile"
   <textarea
     id="content"
     required
+    value={replies.content}
+    onChange={handleTextChange}
+    onClick={handleTextareaClick}
   />
   
   </label>
 
-  <label htmlFor="posts_img" className='label-signup'>
-          Post Image
-          <input
-         
-            id="posts_img"
-            name="posts_img"
-            type="file"
-            className="file-input"
-            accept=".png, .jpg, .jpeg"
-          />
-        </label>
+
 
 </div>
 

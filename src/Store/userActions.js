@@ -167,3 +167,19 @@ export const getVerify = () => async(dispatch) => {
   }
 }
 
+
+export const GET_POSTS_DETAILS = "GET_POSTS_DETAILS"
+export const GET_POSTS_DETAILS_FAIL = "GET_POSTS_DETAILS_FAIL"
+
+export const getPostDetails = (username , id) => async(dispatch) => {
+
+try{
+  const res = await axios.get(`${API}/users/${username}/posts/${id}`)
+  dispatch({ type: GET_POSTS_DETAILS, payload: res.data })
+}
+catch(error){
+  dispatch({ type: GET_POSTS_DETAILS_FAIL, payload: error.message });
+}
+
+}
+

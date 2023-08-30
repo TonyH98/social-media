@@ -7,6 +7,7 @@ import Nav from './Components/Nav/Nav';
 import Home from './Components/LandingPage/Home';
 import Profile from './Components/Profile/Profile';
 import SearchPosts from './Components/SearchPosts/SearchPosts';
+import PostsDetails from './Components/PostsDetails/PostsDetails';
 
 function App() {
 
@@ -40,6 +41,7 @@ console.log(user)
           <Route path="/signup" element={<Signup />} />
           <Route path={`/profile/${user?.id}`} element={<Profile user={user} />} />
           <Route path="/posts/:tag_name" element={<SearchPosts/>}/>
+          <Route path={`/posts/:username/:id`} element={<PostsDetails user={user}/>}/>
         </Routes>
       </main>
     </Router>

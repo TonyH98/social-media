@@ -34,3 +34,18 @@ border-radius: 50%;
     height: 100px;
 }
 
+
+/* Apply styles to the link itself */
+.link-style {
+    color: inherit; /* Inherit color from parent element */
+    text-decoration: none; /* Remove default underline */
+  }
+  
+  
+  
+  /* Apply styles to the link when visited */
+  .link-style:visited {
+    color: inherit; /* Inherit color from parent element */
+    text-decoration: none; /* Remove default underline for visited links */
+  }
+  

@@ -48,7 +48,7 @@ function Profile({user}){
             {getPosts.map((posts) => {
                 return(
                     <div key={posts.id} className="posts-border-container">
-                        <Posts posts={posts} />
+                        <Posts posts={posts} users={users} />
                     </div>
                 )
             })}

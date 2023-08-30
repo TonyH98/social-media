@@ -1,6 +1,14 @@
 import "./Posts.css"
 import YouTube from "react-youtube";
-function Posts ({posts}){
+import {Link} from "react-router-dom"
+import {SlBubble} from "react-icons/sl"
+import {useState} from "react"
+import ReplyForm from "../ReplyForm/ReplyForm";
+
+function Posts ({posts, users}){
+
+let [show , setShow] = useState(false)
+
 
 
 function formatDate(inputDate){
@@ -35,6 +43,7 @@ const matches = posts.content.match(youtubeLinkPattern);
 
   
     return(
+        <Link to={`/posts/${posts.creator.username}/${posts?.id}`} className="link-style">
         <div className="posts_content">
 
             <div className="post_user_profile_container">
@@ -86,8 +95,18 @@ const matches = posts.content.match(youtubeLinkPattern);
          
          </div>
          
+         <div className="posts-options-container">
+            <div className="posts-reply-button">
+            <button onClick={(e) => { e.preventDefault(); setShow(true); }}>
+             <SlBubble size={20} color="black" />
+            </button>
+            </div>
+            <ReplyForm open={show} onClose={(e) => {e.preventDefault(); setShow(false)}} users={users} posts={posts}/>
+         </div>
          
          </div>
+
+        </Link>
          )
         }
         

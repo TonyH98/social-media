@@ -7,7 +7,7 @@ import { POST_GET_FAIL, POST_GET_SUCCESS } from "./userActions";
 import { GET_TAG_SUCCESS, GET_TAG_FAIL } from "./userActions";
 import { GET_SEARCH_POST_SUCCESS, GET_SEARCH_POST_FAIL } from "./userActions";
 import { GET_VERIFICATION_INFO, GET_VERIFICATION_INFO_FAIL } from "./userActions";
-
+import { GET_POSTS_DETAILS , GET_POSTS_DETAILS_FAIL } from "./userActions";
 
 const initialState = {
 
@@ -249,3 +249,31 @@ switch (action.type){
         return state
 }
 }
+
+
+const initialPostDetails = {
+
+postDetail: [],
+error: null
+
+}
+
+
+export const getPostDetails = (state = initialPostDetails, action) => {
+  switch (action.type){
+      case GET_POSTS_DETAILS:
+          return {
+              ...state,
+              postDetail: action.payload,
+              error:null
+          };
+      case GET_POSTS_DETAILS_FAIL:
+          return {
+              ...state,
+              postDetail: [],
+              error: action.payload
+          }
+      default:
+          return state
+  }
+  }

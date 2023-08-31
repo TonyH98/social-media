@@ -27,7 +27,7 @@ function App() {
   }, [isLogged]);
   
 
-console.log(user)
+
 
   return (
     <div className="App">

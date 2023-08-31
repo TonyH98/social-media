@@ -36,12 +36,12 @@ function Home({ newLogin, user, isLogged, setUser }) {
       });
   };
   
-
   useEffect(() => {
     const loggedUser = JSON.parse(window.localStorage.getItem('user'));
     setUser(loggedUser);
     
-  }, [isLogged, newLogin]);
+  }, [isLogged]);
+
 
   const handleType = () => {
     setType(type === 'password' ? 'text' : 'password');

@@ -12,7 +12,7 @@ import { getPlan } from "./userReducer";
 import { getPostDetails } from "./userReducer";
 import { getReplies } from "./userReducer";
 import { userReplies } from "./userReducer";
-
+import { userFav } from "./userReducer";
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -26,7 +26,8 @@ const rootReducer = combineReducers({
   plan: getPlan,
   postsDetail: getPostDetails,
   replies: getReplies,
-  replyPost: userReplies
+  replyPost: userReplies,
+  favorites: userFav
 
 });
 

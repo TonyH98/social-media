@@ -216,3 +216,37 @@ export const createRplies = (username, id, post) => async (dispatch) => {
   })
 }
 
+
+
+export const GET_FAVORITES = "GET_FAVORITES"
+export const GET_FAVORITES_FAIL = "GET_FAVORITE_FAIL"
+
+export const getFavorites = (user) => async(dispatch) => {
+
+  try {
+    const response = await axios.get(`${API}/favorites/${user}`);
+    dispatch({ type: GET_FAVORITES, payload: response.data })
+    
+  } catch (error) {
+    dispatch({ type: GET_FAVORITES_FAIL, payload: error.message });
+  }
+
+} 
+
+
+export const ADD_FAV = "ADD_FAV"
+export const ADD_FAV_FAIL = "ADD_FAV_FAIL"
+
+export const addFav = (user, postId, fav) => async (dispatch) => {
+
+  axios
+  .post(`${API}/favorites/${user}/fav/${postId}`, fav)
+  .then(() => {
+    dispatch({type: ADD_FAV})
+    dispatch(getFavorites(user))
+  })
+  .catch((error) => {
+    dispatch({ type: ADD_FAV_FAIL, error: error.message });
+    console.log(error); 
+  })
+}

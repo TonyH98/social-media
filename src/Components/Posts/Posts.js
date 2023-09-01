@@ -2,12 +2,23 @@ import "./Posts.css"
 import YouTube from "react-youtube";
 import {Link} from "react-router-dom"
 import {SlBubble} from "react-icons/sl"
-import {useState} from "react"
 import ReplyForm from "../ReplyForm/ReplyForm";
+import {AiFillHeart} from "react-icons/ai"
+import {AiOutlineHeart} from "react-icons/ai"
+import { useEffect , useState } from "react";
+import { useDispatch , useSelector } from "react-redux";
+
+
 
 function Posts ({posts, users}){
 
 let [show , setShow] = useState(false)
+
+let [fav , setFav] = useState({
+    creator_id: posts.creator.id
+})
+
+let dispatch = useDispatch()
 
 
 
@@ -102,6 +113,12 @@ const matches = posts.content.match(youtubeLinkPattern);
              <SlBubble size={20} color="black" />
             </button>
             </div>
+
+            <div className="favorite_posts_container">
+                
+            </div>
+
+
             <ReplyForm open={show} onClose={() =>  setShow(false)} users={users} posts={posts}/>
          </div>
          

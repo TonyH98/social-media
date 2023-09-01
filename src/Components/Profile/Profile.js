@@ -1,11 +1,12 @@
 import { useState, useEffect} from "react";
 import "./Profile.css"
 import {BsPencilSquare} from "react-icons/bs"
+import Favorites from "../Favorites/Favorites";
 import PostForm from "../PostForm/PostForm";
 import ProfileEdit from "../ProfileEdit/ProfileEdit";
 import Posts from "../Posts/Posts";
 import { useDispatch , useSelector } from "react-redux";
-import { fetchUsers, fetchPosts, getTags } from "../../Store/userActions";
+import { fetchUsers, fetchPosts, getTags, getFavorites } from "../../Store/userActions";
 import { Link } from "react-router-dom";
 
 
@@ -21,6 +22,9 @@ function Profile({user}){
     const users = useSelector((state) => state.user.users);
     const getPosts = useSelector((state) => state.posts_get.posts)
     const getAllTags = useSelector((state) => state.get_tags.tags)
+    const favorites = useSelector((state) => state.favorites.fav)
+
+
     const [filter , setFilter] = useState([])
     useEffect(() => {
        dispatch(fetchUsers(user?.id))
@@ -28,13 +32,14 @@ function Profile({user}){
     }, [dispatch])
     
     useEffect(() => {
-        if(users){
+        if(users && users?.id){
             dispatch(fetchPosts(users?.username))
+            dispatch(getFavorites(users?.id))
         }
 
     }, [dispatch , users])
     
-    console.log(getAllTags)
+    console.log(favorites)
 
 
     let options = ["Posts", "Replies", "Favorites"]
@@ -48,13 +53,25 @@ function Profile({user}){
             {getPosts.map((posts) => {
                 return(
                     <div key={posts.id} className="posts-border-container">
-                        <Posts posts={posts} users={users} />
+                        <Posts posts={posts} users={users} favorites={favorites} />
                     </div>
                 )
             })}
 
         </div>
         )
+    }
+    if(selected === 1){
+        <div className="option-content-holder">
+        {favorites.map((fav) => {
+            return(
+                <div key={fav.id} className="posts-border-container">
+                    <Favorites fav={fav} users={users} />
+                </div>
+            )
+        })}
+
+    </div>
     }
 
     }

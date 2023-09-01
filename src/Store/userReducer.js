@@ -10,6 +10,8 @@ import { GET_VERIFICATION_INFO, GET_VERIFICATION_INFO_FAIL } from "./userActions
 import { GET_POSTS_DETAILS , GET_POSTS_DETAILS_FAIL } from "./userActions";
 import { REPLY_GET_SUCCESS, REPLY_GET_FAIL } from "./userActions";
 import { CREATE_REPLIES_SUCCESS, CREATE_REPLIES_FAIL } from "./userActions";
+import { GET_FAVORITES, GET_FAVORITES_FAIL } from "./userActions";
+import { ADD_FAV, ADD_FAV_FAIL } from "./userActions";
 
 
 const initialState = {
@@ -335,3 +337,56 @@ export const getPostDetails = (state = initialPostDetails, action) => {
       }
       
       }
+
+
+
+      const initialFavorites = {
+        fav: [],
+        error: null
+      } 
+      
+      export const userFav = (state = initialFavorites, action) => {
+        switch (action.type){
+            case GET_FAVORITES:
+                return {
+                    ...state,
+                    fav: action.payload,
+                    error:null
+                };
+            case GET_FAVORITES_FAIL:
+                return {
+                    ...state,
+                    fav: [],
+                    error: action.payload
+                }
+            default:
+                return state
+        }
+      }
+
+
+      const initialAddFav = {
+        fav: false,
+        error: null,
+      };
+      
+    
+     export const addUserFav = (state = initialAddFav, action) => {
+        switch (action.type) {
+          case ADD_FAV:
+            return {
+              ...state,
+              fav: true,
+              error: null,
+            };
+          case ADD_FAV_FAIL:
+            return {
+              ...state,
+              fav: false,
+              error: action.error,
+            };
+          default:
+            return state;
+        }
+      };
+    

@@ -240,13 +240,31 @@ export const ADD_FAV_FAIL = "ADD_FAV_FAIL"
 export const addFav = (user, postId, fav) => async (dispatch) => {
 
   axios
-  .post(`${API}/favorites/${user.id}/fav/${postId}`, fav)
+  .post(`${API}/favorites/${user?.id}/fav/${postId}`, fav)
   .then(() => {
     dispatch({type: ADD_FAV})
-    dispatch(getFavorites(user.username))
   })
   .catch((error) => {
     dispatch({ type: ADD_FAV_FAIL, error: error.message });
+    console.log(error); 
+  })
+}
+
+
+
+export const DELETE_FAV = "DELETE_FAV"
+export const DELETE_FAV_FAIL = "DELETE_FAV_FAIL"
+
+export const deleteFav = (user, postId) => async (dispatch) => {
+
+  axios
+  .delete(`${API}/favorites/${user.id}/delete/${postId}`)
+  .then(() => {
+    dispatch({type: DELETE_FAV})
+    dispatch(getFavorites(user.username))
+  })
+  .catch((error) => {
+    dispatch({ type: DELETE_FAV_FAIL, error: error.message });
     console.log(error); 
   })
 }

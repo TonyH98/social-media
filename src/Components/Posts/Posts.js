@@ -7,7 +7,7 @@ import {AiFillHeart} from "react-icons/ai"
 import {AiOutlineHeart} from "react-icons/ai"
 import { useEffect , useState } from "react";
 import { useDispatch , useSelector } from "react-redux";
-import { addFav } from "../../Store/userActions";
+import { addFav , deleteFav} from "../../Store/userActions";
 
 
 function Posts ({posts, users, favorites}){
@@ -60,7 +60,10 @@ function handleAddFav(e){
     dispatch(addFav(users, posts.id, fav))
 }
 
-
+function handleDeleteFav(e){
+    e.preventDefault()
+    dispatch(deleteFav(users, posts.id))
+}
     return(
         <div className="posts_content">
 
@@ -124,7 +127,7 @@ function handleAddFav(e){
 
             <div className="favorite_posts_container">
                 {users && inFav.includes(posts?.id) ? 
-                <button><AiFillHeart size={30}/></button>
+                <button onClick={handleDeleteFav}><AiFillHeart size={30}/></button>
                 : <button onClick={handleAddFav}><AiOutlineHeart size={30}/></button>}
 
             </div>

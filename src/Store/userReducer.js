@@ -12,7 +12,7 @@ import { REPLY_GET_SUCCESS, REPLY_GET_FAIL } from "./userActions";
 import { CREATE_REPLIES_SUCCESS, CREATE_REPLIES_FAIL } from "./userActions";
 import { GET_FAVORITES, GET_FAVORITES_FAIL } from "./userActions";
 import { ADD_FAV, ADD_FAV_FAIL } from "./userActions";
-
+import { DELETE_FAV, DELETE_FAV_FAIL } from "./userActions";
 
 const initialState = {
 
@@ -390,3 +390,29 @@ export const getPostDetails = (state = initialPostDetails, action) => {
         }
       };
     
+
+
+      const initialDeleteFav = {
+        fav: false,
+        error: null,
+      };
+      
+    
+     export const deleteUserFav = (state = initialDeleteFav, action) => {
+        switch (action.type) {
+          case DELETE_FAV:
+            return {
+              ...state,
+              fav: true,
+              error: null,
+            };
+          case DELETE_FAV_FAIL:
+            return {
+              ...state,
+              fav: false,
+              error: action.error,
+            };
+          default:
+            return state;
+        }
+      };

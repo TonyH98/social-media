@@ -7,12 +7,13 @@ import {AiFillHeart} from "react-icons/ai"
 import {AiOutlineHeart} from "react-icons/ai"
 import { useEffect , useState } from "react";
 import { useDispatch , useSelector } from "react-redux";
+import { addFav } from "../../Store/userActions";
 
 
-
-function Posts ({posts, users}){
+function Posts ({posts, users, favorites}){
 
 let [show , setShow] = useState(false)
+
 
 let [fav , setFav] = useState({
     creator_id: posts.creator.id
@@ -20,7 +21,7 @@ let [fav , setFav] = useState({
 
 let dispatch = useDispatch()
 
-
+console.log(fav)
 
 function formatDate(inputDate){
     const months = [
@@ -51,8 +52,15 @@ const youtubeLinkPattern = /https:\/\/www\.youtube\.com\/watch\?v=([\w-]+)/g;
 
 const matches = posts.content.match(youtubeLinkPattern);
 
-
+const inFav = Array.isArray(favorites) ? favorites.map(fav => fav?.posts_id) : [];
   
+
+function handleAddFav(e){
+    e.preventDefault()
+    dispatch(addFav(users, posts.id, fav))
+}
+
+
     return(
         <div className="posts_content">
 
@@ -115,7 +123,10 @@ const matches = posts.content.match(youtubeLinkPattern);
             </div>
 
             <div className="favorite_posts_container">
-                
+                {users && inFav.includes(posts?.id) ? 
+                <button><AiFillHeart size={30}/></button>
+                : <button onClick={handleAddFav}><AiOutlineHeart size={30}/></button>}
+
             </div>
 
 

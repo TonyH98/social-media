@@ -240,10 +240,10 @@ export const ADD_FAV_FAIL = "ADD_FAV_FAIL"
 export const addFav = (user, postId, fav) => async (dispatch) => {
 
   axios
-  .post(`${API}/favorites/${user}/fav/${postId}`, fav)
+  .post(`${API}/favorites/${user.id}/fav/${postId}`, fav)
   .then(() => {
     dispatch({type: ADD_FAV})
-    dispatch(getFavorites(user))
+    dispatch(getFavorites(user.username))
   })
   .catch((error) => {
     dispatch({ type: ADD_FAV_FAIL, error: error.message });

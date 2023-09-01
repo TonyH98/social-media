@@ -21,7 +21,7 @@ let [fav , setFav] = useState({
 
 let dispatch = useDispatch()
 
-console.log(fav)
+
 
 function formatDate(inputDate){
     const months = [

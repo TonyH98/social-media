@@ -8,6 +8,7 @@ import Home from './Components/LandingPage/Home';
 import Profile from './Components/Profile/Profile';
 import SearchPosts from './Components/SearchPosts/SearchPosts';
 import PostsDetails from './Components/PostsDetails/PostsDetails';
+import OtherProfile from './Components/OtherProfile/OtherProfile'
 
 function App() {
 
@@ -42,6 +43,7 @@ function App() {
           <Route path={`/profile/${user?.id}`} element={<Profile user={user} />} />
           <Route path="/posts/:tag_name" element={<SearchPosts/>}/>
           <Route path={`/posts/:username/:id`} element={<PostsDetails user={user}/>}/>
+          <Route path={`/profiles/:username`} element={<OtherProfile/>}/>
         </Routes>
       </main>
     </Router>

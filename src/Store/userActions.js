@@ -17,6 +17,18 @@ export const fetchUsers = (userId) => async (dispatch) => {
   }
 };
 
+export const FETCH_USER_SUCCESS = "FETCH_USER_SUCCESS";
+export const FETCH_USER_ERROR = "FETCH_USER_ERROR";
+
+export const fetchUser = () => async (dispatch) => {
+  try {
+    const response = await axios.get(`${API}/users`);
+    dispatch({ type: FETCH_USER_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispatch({ type: FETCH_USER_ERROR, payload: error.message });
+  }
+};
+
 
 
 

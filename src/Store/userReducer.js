@@ -13,6 +13,8 @@ import { CREATE_REPLIES_SUCCESS, CREATE_REPLIES_FAIL } from "./userActions";
 import { GET_FAVORITES, GET_FAVORITES_FAIL } from "./userActions";
 import { ADD_FAV, ADD_FAV_FAIL } from "./userActions";
 import { DELETE_FAV, DELETE_FAV_FAIL } from "./userActions";
+import { FETCH_USER_SUCCESS , FETCH_USER_ERROR } from "./userActions";
+
 
 const initialState = {
 
@@ -38,6 +40,35 @@ export const userReducer = (state = initialState, action) => {
             return state
     }
 }
+
+
+const initialAllUsers = {
+
+  users: [],
+  error: null
+}
+
+export const getUsers = (state = initialAllUsers, action) => {
+  switch (action.type){
+      case FETCH_USER_SUCCESS:
+          return {
+              ...state,
+              users: action.payload,
+              error:null
+          };
+      case FETCH_USER_ERROR:
+          return {
+              ...state,
+              users: [],
+              error: action.payload
+          }
+      default:
+          return state
+  }
+}
+
+
+
 
 
 const initialGetPosts = {

@@ -2,6 +2,8 @@ import axios from "axios";
 
 
 
+
+
 const API = process.env.REACT_APP_API_URL;
 
 
@@ -277,6 +279,40 @@ export const deleteFav = (user, postId) => async (dispatch) => {
   })
   .catch((error) => {
     dispatch({ type: DELETE_FAV_FAIL, error: error.message });
+    console.log(error); 
+  })
+}
+
+
+export const GET_Following = "GET_Following"
+export const GET_Following_FAIL = "GET_Following_FAIL"
+
+export const getFollowing = (user) => async(dispatch) => {
+
+  try {
+    const response = await axios.get(`${API}/follow/${user}`);
+    dispatch({ type: GET_Following, payload: response.data })
+    
+  } catch (error) {
+    dispatch({ type: GET_Following_FAIL, payload: error.message });
+  }
+
+} 
+
+
+
+export const ADD_Following = "ADD_FAV"
+export const ADD_Following_FAIL = "ADD_FAV_FAIL"
+
+export const addFollowing = (user, followId) => async (dispatch) => {
+
+  axios
+  .post(`${API}/follow/${user}/follow/${followId}`)
+  .then(() => {
+    dispatch({type: ADD_Following})
+  })
+  .catch((error) => {
+    dispatch({ type: ADD_Following_FAIL, error: error.message });
     console.log(error); 
   })
 }

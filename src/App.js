@@ -28,14 +28,14 @@ function App() {
   }, [isLogged]);
   
 
-
+console.log(user)
 
   return (
     <div className="App">
     <Router>
-      <div className="navbar">
+      {/* <div className="navbar">
         {user ? <Nav /> : null}
-      </div>
+      </div> */}
       <main className="content">
         <Routes>
           <Route path="/" element={<Home newLogin={newLogin} isLogged={isLogged} setUser={setUser} user={user}/>} />
@@ -43,7 +43,7 @@ function App() {
           <Route path={`/profile/${user?.id}`} element={<Profile user={user} />} />
           <Route path="/posts/:tag_name" element={<SearchPosts/>}/>
           <Route path={`/posts/:username/:id`} element={<PostsDetails user={user}/>}/>
-          <Route path={`/profiles/:username`} element={<OtherProfile/>}/>
+          <Route path={`/profiles/:id`} element={<OtherProfile user={user}/>}/>
         </Routes>
       </main>
     </Router>

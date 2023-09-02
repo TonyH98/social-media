@@ -14,6 +14,9 @@ import { GET_FAVORITES, GET_FAVORITES_FAIL } from "./userActions";
 import { ADD_FAV, ADD_FAV_FAIL } from "./userActions";
 import { DELETE_FAV, DELETE_FAV_FAIL } from "./userActions";
 import { FETCH_USER_SUCCESS , FETCH_USER_ERROR } from "./userActions";
+import { ADD_Following, ADD_Following_FAIL } from "./userActions";
+import { GET_Following , GET_Following_FAIL } from "./userActions";
+
 
 
 const initialState = {
@@ -447,3 +450,61 @@ export const getPostDetails = (state = initialPostDetails, action) => {
             return state;
         }
       };
+
+
+
+      const initialFollowing = {
+        fol: [],
+        error: null
+      } 
+      
+      export const userFollowing = (state = initialFollowing, action) => {
+        switch (action.type){
+            case GET_Following:
+                return {
+                    ...state,
+                    fol: action.payload,
+                    error:null
+                };
+            case GET_Following_FAIL:
+                return {
+                    ...state,
+                    fol: [],
+                    error: action.payload
+                }
+            default:
+                return state
+        }
+      }
+
+
+
+
+
+
+
+      const initialAddFollowing = {
+        fol: false,
+        error: null,
+      };
+      
+    
+     export const addUserFollowing = (state = initialAddFollowing, action) => {
+        switch (action.type) {
+          case ADD_Following:
+            return {
+              ...state,
+              fol: true,
+              error: null,
+            };
+          case ADD_Following_FAIL:
+            return {
+              ...state,
+              fol: false,
+              error: action.error,
+            };
+          default:
+            return state;
+        }
+      };
+    

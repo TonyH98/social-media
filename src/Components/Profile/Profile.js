@@ -23,7 +23,7 @@ function Profile({user}){
     const getPosts = useSelector((state) => state.posts_get.posts)
     const getAllTags = useSelector((state) => state.get_tags.tags)
     const favorites = useSelector((state) => state.favorites.fav)
-    const allUsers = useSelector((state) => state.users.users)
+    let allUsers = useSelector((state) => state.users.users)
 
     const [filter , setFilter] = useState([])
     useEffect(() => {
@@ -104,10 +104,10 @@ function Profile({user}){
     }
 
 
-      console.log(filter)
+      console.log(users)
 
  
-
+   allUsers = allUsers.filter((user) => user.id !== users.id)
 
     return(
         <div className="profile">
@@ -207,7 +207,7 @@ function Profile({user}){
                                 // Display users
                                 return (
                                     <div className="search-link" key={index}>
-                                        <Link to={`/profiles/${result.username}`}>
+                                        <Link to={`/profiles/${result.id}`}>
                                             <p className="dropdown-link">@{result.username}</p>
                                         </Link>
                                     </div>

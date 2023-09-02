@@ -16,7 +16,7 @@ import { DELETE_FAV, DELETE_FAV_FAIL } from "./userActions";
 import { FETCH_USER_SUCCESS , FETCH_USER_ERROR } from "./userActions";
 import { ADD_Following, ADD_Following_FAIL } from "./userActions";
 import { GET_Following , GET_Following_FAIL } from "./userActions";
-
+import { DELETE_FOLLOWING, DELETE_FOLLOWING_FAIL } from "./userActions";
 
 
 const initialState = {
@@ -498,6 +498,32 @@ export const getPostDetails = (state = initialPostDetails, action) => {
               error: null,
             };
           case ADD_Following_FAIL:
+            return {
+              ...state,
+              fol: false,
+              error: action.error,
+            };
+          default:
+            return state;
+        }
+      };
+    
+
+      const initialDeleteFollowing = {
+        fol: false,
+        error: null,
+      };
+      
+    
+     export const deleteUserFollowing = (state = initialDeleteFollowing, action) => {
+        switch (action.type) {
+          case DELETE_FOLLOWING:
+            return {
+              ...state,
+              fol: true,
+              error: null,
+            };
+          case DELETE_FOLLOWING_FAIL:
             return {
               ...state,
               fol: false,

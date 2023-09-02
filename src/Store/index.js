@@ -17,6 +17,8 @@ import { deleteUserFav } from "./userReducer";
 import { getUsers } from "./userReducer";
 import { addUserFollowing } from "./userReducer";
 import { userFollowing } from "./userReducer";
+import { deleteUserFollowing } from "./userReducer";
+
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -35,7 +37,8 @@ const rootReducer = combineReducers({
   deleteFav: deleteUserFav,
   users: getUsers,
   follow: userFollowing,
-  addFollow: addUserFollowing
+  addFollow: addUserFollowing,
+  deleteFollow: deleteUserFollowing
 
 });
 

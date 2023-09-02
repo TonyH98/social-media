@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useDispatch , useSelector } from "react-redux";
-import { fetchUsers, fetchPosts, getFavorites, addFollowing, getFollowing } from "../../Store/userActions";
+import { fetchUsers, fetchPosts, getFavorites, addFollowing, getFollowing, deleteFol  } from "../../Store/userActions";
 import { useState, useEffect} from "react";
 
 
@@ -23,12 +23,18 @@ function OtherProfile({user}){
         e.preventDefault()
         dispatch(addFollowing(user?.id, users?.id))
     }
+
+
+    function handleDeleteFollow(e){
+        e.preventDefault()
+        dispatch(deleteFol(user?.id, users?.id))
+    }
      const inFav = Array.isArray(following) ? following.map(fol => fol?.following_id) : [];
 
 return(
     <div>
         {user && inFav.includes(users?.id) ? 
-         <button>Unfollow</button>
+         <button onClick={handleDeleteFollow}>Unfollow</button>
         : <button onClick={handleFollow}>Follow</button>}
     </div>
 )

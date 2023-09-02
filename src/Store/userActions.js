@@ -316,3 +316,21 @@ export const addFollowing = (user, followId) => async (dispatch) => {
     console.log(error); 
   })
 }
+
+
+export const DELETE_FOLLOWING = "DELETE_FOL"
+export const DELETE_FOLLOWING_FAIL = "DELETE_FOL_FAIL"
+
+export const deleteFol = (user, followingId) => async (dispatch) => {
+
+  axios
+  .delete(`${API}/follow/${user}/delete/${followingId}`)
+  .then(() => {
+    dispatch({type: DELETE_FOLLOWING})
+    dispatch(getFollowing(user))
+  })
+  .catch((error) => {
+    dispatch({ type: DELETE_FOLLOWING_FAIL, error: error.message });
+    console.log(error); 
+  })
+}

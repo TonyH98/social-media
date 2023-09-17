@@ -300,6 +300,22 @@ export const getFollowing = (user) => async(dispatch) => {
 } 
 
 
+export const GET_FOLLOWER = "GET_FOLLOWER"
+export const GET_FOLLOWER_FAIL = "GET_FOLLOWER_FAIL"
+
+export const getFollower = (user) => async(dispatch) => {
+
+  try {
+    const response = await axios.get(`${API}/follow/${user}/followers`);
+    dispatch({ type: GET_FOLLOWER, payload: response.data })
+    
+  } catch (error) {
+    dispatch({ type: GET_FOLLOWER_FAIL, payload: error.message });
+  }
+
+}
+
+
 
 export const ADD_Following = "ADD_FAV"
 export const ADD_Following_FAIL = "ADD_FAV_FAIL"

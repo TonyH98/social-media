@@ -6,13 +6,13 @@ import PostForm from "../PostForm/PostForm";
 import ProfileEdit from "../ProfileEdit/ProfileEdit";
 import Posts from "../Posts/Posts";
 import { useDispatch , useSelector } from "react-redux";
-import { fetchUsers, fetchPosts, getTags, getFavorites ,  fetchUser} from "../../Store/userActions";
+import { fetchUsers, fetchPosts, getTags, getFavorites ,  fetchUser, getFollowing, getFollower} from "../../Store/userActions";
 import { Link } from "react-router-dom";
 
 
 function Profile({user}){
 
-    let [following , setFollowering] = useState([])
+
     let [option , setOption] = useState(0)
     const [modal , setModal] = useState(false)
     const [search, setSearch] = useState("");
@@ -24,12 +24,17 @@ function Profile({user}){
     const getAllTags = useSelector((state) => state.get_tags.tags)
     const favorites = useSelector((state) => state.favorites.fav)
     let allUsers = useSelector((state) => state.users.users)
+    let following = useSelector((state) => state.follow.fol)
+    let follower = useSelector((state) => state.follower.fol)
+
 
     const [filter , setFilter] = useState([])
     useEffect(() => {
        dispatch(fetchUsers(user?.id))
        dispatch(getTags())
        dispatch(fetchUser())
+       dispatch(getFollowing(user?.id))
+       dispatch(getFollower(user?.id))
     }, [dispatch])
     
 
@@ -160,8 +165,13 @@ function Profile({user}){
 
         <div className="profile_followers_container">
 
+            <Link to={`/${user?.id}/following`}>
             <div>{following.length} Following</div>
-            <div>{following.length} Followers</div>
+            </Link>
+
+            <Link ti={`/${user?.id}/follower`}>
+            <div>{follower.length} Followers</div>
+            </Link>
             
 
         </div>

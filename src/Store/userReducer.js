@@ -17,7 +17,7 @@ import { FETCH_USER_SUCCESS , FETCH_USER_ERROR } from "./userActions";
 import { ADD_Following, ADD_Following_FAIL } from "./userActions";
 import { GET_Following , GET_Following_FAIL } from "./userActions";
 import { DELETE_FOLLOWING, DELETE_FOLLOWING_FAIL } from "./userActions";
-
+import { GET_FOLLOWER , GET_FOLLOWER_FAIL } from "./userActions";
 
 const initialState = {
 
@@ -534,3 +534,27 @@ export const getPostDetails = (state = initialPostDetails, action) => {
         }
       };
     
+
+      const initialFollower = {
+        fol: [],
+        error: null
+      } 
+      
+      export const userFollower = (state = initialFollower, action) => {
+        switch (action.type){
+            case GET_FOLLOWER:
+                return {
+                    ...state,
+                    fol: action.payload,
+                    error:null
+                };
+            case GET_FOLLOWER_FAIL:
+                return {
+                    ...state,
+                    fol: [],
+                    error: action.payload
+                }
+            default:
+                return state
+        }
+      }

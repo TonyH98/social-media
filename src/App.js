@@ -9,6 +9,8 @@ import Profile from './Components/Profile/Profile';
 import SearchPosts from './Components/SearchPosts/SearchPosts';
 import PostsDetails from './Components/PostsDetails/PostsDetails';
 import OtherProfile from './Components/OtherProfile/OtherProfile'
+import Following from './Components/Following/Following';
+import Follower from './Components/Following/Follower'
 
 function App() {
 
@@ -33,9 +35,9 @@ console.log(user)
   return (
     <div className="App">
     <Router>
-      {/* <div className="navbar">
+      <div className="navbar">
         {user ? <Nav /> : null}
-      </div> */}
+      </div>
       <main className="content">
         <Routes>
           <Route path="/" element={<Home newLogin={newLogin} isLogged={isLogged} setUser={setUser} user={user}/>} />
@@ -44,6 +46,8 @@ console.log(user)
           <Route path="/posts/:tag_name" element={<SearchPosts/>}/>
           <Route path={`/posts/:username/:id`} element={<PostsDetails user={user}/>}/>
           <Route path={`/profiles/:id`} element={<OtherProfile user={user}/>}/>
+          <Route path={`/:id/following`} element={<Following/>}/>
+          <Route path={`/:id/follower`} element={<Follower/>}/>
         </Routes>
       </main>
     </Router>

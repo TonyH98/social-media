@@ -62,10 +62,12 @@ return(
 
         </Link>
 
+        <Link to={`/notifications/${user?.id}`}>
         <div class="nav-content">
         <IoIosNotifications class="icon" size={30} />
         <span class="text">Notifications</span>
         </div>
+        </Link>
 
 
         <div class="nav-content" onClick={() => setModal(true)}>

@@ -11,6 +11,7 @@ import PostsDetails from './Components/PostsDetails/PostsDetails';
 import OtherProfile from './Components/OtherProfile/OtherProfile'
 import Following from './Components/Following/Following';
 import Follower from './Components/Following/Follower'
+import Notifications from './Components/Notifications/Notifications';
 
 function App() {
 
@@ -48,6 +49,7 @@ console.log(user)
           <Route path={`/profiles/:id`} element={<OtherProfile user={user}/>}/>
           <Route path={`/:id/following`} element={<Following/>}/>
           <Route path={`/:id/follower`} element={<Follower/>}/>
+          <Route path={`/notifications/:id`} element={<Notifications/>}/>
         </Routes>
       </main>
     </Router>

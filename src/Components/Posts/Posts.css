@@ -104,7 +104,7 @@ border-radius: 50%;
   
   .posts-reply-button:hover .hidden-text, 
   .like-container .hidden-text,
-   .dislike-container .hidden-text{
+   .dislike-container .hidden-text, .favorite_posts_container  .hidden-text{
     display: block; 
   }
 
@@ -143,6 +143,24 @@ border-radius: 50%;
   }
   
   .dislike-container:hover .hidden-text {
+    display: block;
+  }
+
+
+  .favorite_posts_container .hidden-text {
+    display: none;
+    position: absolute;
+    width: 110%;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 4px;
+  }
+  
+  .favorite_posts_container {
+    position: relative;
+  }
+  
+  .favorite_posts_container:hover .hidden-text {
     display: block;
   }
   

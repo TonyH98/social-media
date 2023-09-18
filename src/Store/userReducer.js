@@ -18,6 +18,7 @@ import { ADD_Following, ADD_Following_FAIL } from "./userActions";
 import { GET_Following , GET_Following_FAIL } from "./userActions";
 import { DELETE_FOLLOWING, DELETE_FOLLOWING_FAIL } from "./userActions";
 import { GET_FOLLOWER , GET_FOLLOWER_FAIL } from "./userActions";
+import { FETCH_NOTIFICATIONS , FETCH_NOTIFICATIONS_FAIL } from "./userActions";
 
 const initialState = {
 
@@ -552,6 +553,30 @@ export const getPostDetails = (state = initialPostDetails, action) => {
                 return {
                     ...state,
                     fol: [],
+                    error: action.payload
+                }
+            default:
+                return state
+        }
+      }
+  
+      const initialNote = {
+        note: [],
+        error: null
+      } 
+      
+      export const userNote = (state = initialNote, action) => {
+        switch (action.type){
+            case FETCH_NOTIFICATIONS:
+                return {
+                    ...state,
+                    note: action.payload,
+                    error:null
+                };
+            case FETCH_NOTIFICATIONS_FAIL:
+                return {
+                    ...state,
+                    note: [],
                     error: action.payload
                 }
             default:

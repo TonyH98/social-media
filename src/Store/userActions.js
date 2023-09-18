@@ -350,3 +350,20 @@ export const deleteFol = (user, followingId) => async (dispatch) => {
     console.log(error); 
   })
 }
+
+
+
+export const FETCH_NOTIFICATIONS = "NOTIFICATIONS"
+export const FETCH_NOTIFICATIONS_FAIL = "NOTIFICATIONS_FAIL"
+
+export const getNotifications = (user) => async(dispatch) => {
+
+  try {
+    const response = await axios.get(`${API}/notifications/${user}/posts`);
+    dispatch({ type: FETCH_NOTIFICATIONS, payload: response.data })
+    
+  } catch (error) {
+    dispatch({ type: FETCH_NOTIFICATIONS_FAIL, payload: error.message });
+  }
+
+}

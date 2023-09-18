@@ -367,3 +367,38 @@ export const getNotifications = (user) => async(dispatch) => {
   }
 
 }
+
+
+
+export const FETCH_POSTS_REACTIONS = "REACTIONS"
+export const FETCH_POSTS_REACTIONS_FAIL = "REACTIONS_FAIL"
+
+export const getReactions = (user, id) => async(dispatch) => {
+
+  try {
+    const response = await axios.get(`${API}/users/${user}/posts/${id}/reactions`);
+    dispatch({ type: FETCH_POSTS_REACTIONS, payload: response.data })
+    
+  } catch (error) {
+    dispatch({ type: FETCH_POSTS_REACTIONS_FAIL , payload: error.message });
+  }
+
+}
+
+
+
+export const ADD_POSTS_REACTIONS = "POSTS_REACTIONS"
+export const ADD_POSTS_REACTIONS_FAIL = "POSTS_REACTIONS_FAIL"
+
+export const addReaction = (creatorName , userId , postId, reactions) => async (dispatch) => {
+
+  axios
+  .post(`${API}/users/${creatorName}/posts/${userId}/react/${postId}`, reactions)
+  .then(() => {
+    dispatch({type: ADD_POSTS_REACTIONS})
+  })
+  .catch((error) => {
+    dispatch({ type: ADD_POSTS_REACTIONS_FAIL, error: error.message });
+    console.log(error); 
+  })
+}

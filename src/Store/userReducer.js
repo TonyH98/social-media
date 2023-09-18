@@ -19,6 +19,9 @@ import { GET_Following , GET_Following_FAIL } from "./userActions";
 import { DELETE_FOLLOWING, DELETE_FOLLOWING_FAIL } from "./userActions";
 import { GET_FOLLOWER , GET_FOLLOWER_FAIL } from "./userActions";
 import { FETCH_NOTIFICATIONS , FETCH_NOTIFICATIONS_FAIL } from "./userActions";
+import {FETCH_POSTS_REACTIONS , FETCH_POSTS_REACTIONS_FAIL} from "./userActions";
+import { ADD_POSTS_REACTIONS , ADD_POSTS_REACTIONS_FAIL } from "./userActions";
+
 
 const initialState = {
 
@@ -583,3 +586,54 @@ export const getPostDetails = (state = initialPostDetails, action) => {
                 return state
         }
       }
+
+      const initialReaction = {
+        react: [],
+        error: null
+      } 
+      
+      export const userReact = (state = initialReaction, action) => {
+        switch (action.type){
+            case FETCH_POSTS_REACTIONS:
+                return {
+                    ...state,
+                    react: action.payload,
+                    error:null
+                };
+            case FETCH_POSTS_REACTIONS_FAIL:
+                return {
+                    ...state,
+                    react: [],
+                    error: action.payload
+                }
+            default:
+                return state
+        }
+      }
+
+
+
+      const initialAddReactions = {
+        react: false,
+        error: null,
+      };
+      
+    
+     export const addUserReactions = (state = initialAddReactions, action) => {
+        switch (action.type) {
+          case ADD_POSTS_REACTIONS:
+            return {
+              ...state,
+              react: true,
+              error: null,
+            };
+          case ADD_POSTS_REACTIONS_FAIL:
+            return {
+              ...state,
+              react: false,
+              error: action.error,
+            };
+          default:
+            return state;
+        }
+      };

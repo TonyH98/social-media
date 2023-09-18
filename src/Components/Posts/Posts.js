@@ -7,21 +7,33 @@ import {AiFillHeart} from "react-icons/ai"
 import {AiOutlineHeart} from "react-icons/ai"
 import { useEffect , useState } from "react";
 import { useDispatch , useSelector } from "react-redux";
-import { addFav , deleteFav} from "../../Store/userActions";
-
+import { addFav , deleteFav, getReactions, addReaction} from "../../Store/userActions";
+import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
 
 function Posts ({posts, users, favorites}){
 
 let [show , setShow] = useState(false)
 
 
-let [fav , setFav] = useState({
+let [fav] = useState({
     creator_id: posts.creator.id
 })
 
+let [likes] = useState({
+    reaction: "like"
+})
+
+let [dislike] = useState({
+    reaction: "dislike"
+})
+
+const reaction = useSelector((state) => state.react.react)
+
 let dispatch = useDispatch()
 
-
+useEffect(() => {
+dispatch(getReactions(posts.creator.username , posts?.id))
+}, [dispatch])
 
 function formatDate(inputDate){
     const months = [
@@ -64,6 +76,19 @@ function handleDeleteFav(e){
     e.preventDefault()
     dispatch(deleteFav(users, posts.id))
 }
+
+
+function handleLike(e){
+    e.preventDefault()
+    dispatch(addReaction(posts.creator.username, users.id, posts.id, likes))
+}
+
+function handleDislike(e){
+    e.preventDefault()
+    dispatch(addReaction(posts.creator.username, users.id, posts.id, dislike))
+}
+
+
     return(
         <div className="posts_content">
 
@@ -130,6 +155,11 @@ function handleDeleteFav(e){
                 <button onClick={handleDeleteFav}><AiFillHeart size={30}/></button>
                 : <button onClick={handleAddFav}><AiOutlineHeart size={30}/></button>}
 
+            </div>
+
+            <div className="like-dislike-container">
+            <button onClick={handleLike}><AiOutlineLike size={30}/> {reaction.likes}</button>
+            <button onClick={handleDislike}><AiOutlineDislike size={30}/> {reaction.dislikes}</button>
             </div>
 
 

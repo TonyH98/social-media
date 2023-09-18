@@ -18,7 +18,7 @@ dispatch(getNotifications(id))
 
 }, [dispatch])
 
-console.log(note)
+
 
     return(
         null

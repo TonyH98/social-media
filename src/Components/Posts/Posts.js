@@ -92,6 +92,8 @@ function handleDislike(e){
     return(
         <div className="posts_content">
 
+            <div className="posts_extra_container">
+
             <div className="post_user_profile_container">
             <img
             src={posts.creator.profile_img}
@@ -99,7 +101,7 @@ function handleDislike(e){
             className="post_user_profile"
             />
             </div>
-            
+
         <div className="post_user_info_date_container">
 
         <div className="post_user_profile">
@@ -142,26 +144,46 @@ function handleDislike(e){
         </Link>
          
          </div>
+
+            </div>
+            
          
          <div className="posts-options-container">
-            <div className="posts-reply-button">
-            <button onClick={(e) => { e.preventDefault(); setShow(true); }}>
-             <SlBubble size={20} color="black" />
-            </button>
-            </div>
+
+         <div className="posts-reply-button">
+  <button className="no_br reply_btn" onClick={(e) => { e.preventDefault(); setShow(true); }}>
+    <SlBubble size={20} />
+    <span className="hidden-text">Reply</span>
+  </button>
+</div>
+
+
 
             <div className="favorite_posts_container">
                 {users && inFav.includes(posts?.id) ? 
-                <button onClick={handleDeleteFav}><AiFillHeart size={30}/></button>
-                : <button onClick={handleAddFav}><AiOutlineHeart size={30}/></button>}
+                <button className="no_br fav_btn" onClick={handleDeleteFav}><AiFillHeart size={20} color="red"/>
+                <span className="hidden-text">Disike</span>
+                </button>
+
+                : <button className="no_br fav_btn" onClick={handleAddFav}><AiOutlineHeart size={20}/>
+                <span className="hidden-text">Like</span>
+                </button>}
 
             </div>
 
-            <div className="like-dislike-container">
-            <button onClick={handleLike}><AiOutlineLike size={30}/> {reaction.likes}</button>
-            <button onClick={handleDislike}><AiOutlineDislike size={30}/> {reaction.dislikes}</button>
-            </div>
+            <div className="like-container">
 
+            <button className="no_br react_btn" onClick={handleLike}><AiOutlineLike size={20}/> {reaction.likes}
+            <span className="hidden-text">Like</span>
+            </button>
+           
+            </div>
+            
+            <div className="dislike-container">
+            <button  className="no_br react_btn" onClick={handleDislike}><AiOutlineDislike size={20}/> {reaction.dislikes}
+            <span className="hidden-text">Dislike</span>
+            </button>
+            </div>
 
             <ReplyForm open={show} onClose={() =>  setShow(false)} users={users} posts={posts}/>
          </div>

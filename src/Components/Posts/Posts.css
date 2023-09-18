@@ -14,11 +14,32 @@ border-radius: 50%;
     gap: 20px;
 }
 
-
-.posts_content{
+.posts_extra_container{
     display: flex;
     flex-direction: row;
     gap: 20px;
+}
+
+.posts_content{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.no_br{
+    border: none;
+    background-color: transparent;
+}
+.no_br:hover{
+    cursor: pointer;
+}
+
+.posts-options-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 80px;
 }
 
 .post_user_profile{
@@ -49,3 +70,80 @@ border-radius: 50%;
     text-decoration: none; /* Remove default underline for visited links */
   }
   
+  
+  .reply_btn:hover {
+    color: blue;
+    background-color: rgba(0, 0, 255, 0.3); /* Translucent blue background */
+    border-radius: 50%;
+  }
+
+  .fav_btn:hover {
+    color: red; /* Text color */
+    background-color: rgba(255, 0, 0, 0.3); /* Translucent red background */
+    border-radius: 50%;
+}
+
+.react_btn:hover {
+    color: green; 
+    background-color: rgba(0, 255, 0, 0.3); 
+    border-radius: 50%;
+}
+
+.posts-reply-button .hidden-text{
+    display: none; 
+    position: absolute; 
+    width: 100%; 
+    background-color: rgba(0, 0, 0, 0.7); 
+    color: white; 
+    padding: 4px; 
+  }
+  
+  .posts-reply-button , .like-container, .dislike-container, .favorite_posts_container{
+    position: relative; 
+  }
+  
+  .posts-reply-button:hover .hidden-text, 
+  .like-container .hidden-text,
+   .dislike-container .hidden-text{
+    display: block; 
+  }
+
+
+
+
+  .like-container .hidden-text {
+    display: none;
+    position: absolute;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 4px;
+  }
+  
+  .like-container {
+    position: relative;
+  }
+  
+  .like-container:hover .hidden-text {
+    display: block;
+  }
+  
+
+  .dislike-container .hidden-text {
+    display: none;
+    position: absolute;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 4px;
+  }
+  
+  .dislike-container {
+    position: relative;
+  }
+  
+  .dislike-container:hover .hidden-text {
+    display: block;
+  }
+  
+

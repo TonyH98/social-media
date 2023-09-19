@@ -12,6 +12,8 @@ import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
 
 function Posts ({posts, users, favorites}){
 
+
+
 let [show , setShow] = useState(false)
 
 
@@ -88,6 +90,7 @@ function handleDislike(e){
     dispatch(addReaction(posts.creator.username, users.id, posts.id, dislike))
 }
 
+console.log(posts.time)
 
     return(
         <div className="posts_content">

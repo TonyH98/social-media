@@ -1,7 +1,7 @@
 import { useState, useEffect} from "react";
 import "./Profile.css"
 import {BsPencilSquare} from "react-icons/bs"
-import Favorites from "../Favorites/Favorites";
+import Favorites from "../Favorites/Favorites"
 import PostForm from "../PostForm/PostForm";
 import ProfileEdit from "../ProfileEdit/ProfileEdit";
 import Posts from "../Posts/Posts";
@@ -53,41 +53,42 @@ function Profile({user}){
 
     let options = ["Posts", "Replies", "Favorites"]
 
-    function optionContent (selected){
-
-    if(selected === 0){
-        return(
-
-        <div className="option-content-holder">
-            {getPosts.map((posts) => {
-                return(
-                    <div key={posts.id} className="posts-border-container">
-                        <Posts posts={posts} users={users} favorites={favorites} />
-                    </div>
-                )
-            })}
-
-        </div>
-        )
-    }
-    if(selected === 1){
-        <div className="option-content-holder">
-        {favorites.map((fav) => {
-            return(
-                <div key={fav.id} className="posts-border-container">
+    function optionContent(selected) {
+        if (selected === 0) {
+          return (
+            <div className="option-content-holder">
+              {getPosts.map((posts) => {
+                return (
+                  <div key={posts.id} className="posts-border-container">
+                    <Posts posts={posts} users={users} favorites={favorites} />
+                  </div>
+                );
+              })}
+            </div>
+          );
+        }
+        if (selected === 2) {
+          return ( 
+            <div className="option-content-holder">
+              {favorites.map((fav) => {
+                return (
+                  <div key={fav.id} className="posts-border-container">
                     <Favorites fav={fav} users={users} />
-                </div>
-            )
-        })}
+                  </div>
+                );
+              })}
+            </div>
+          );
+        }
+ 
+      }
+      
 
-    </div>
-    }
 
-    }
-    
 
-    function handleFilter(event) {
-        let searchResult = event.target.value;
+
+function handleFilter(event) {
+    let searchResult = event.target.value;
         setSearch(searchResult);
 
         const filterTag = getAllTags.filter((tags) => {
@@ -109,7 +110,7 @@ function Profile({user}){
     }
 
 
-      console.log(users)
+
 
  
    allUsers = allUsers.filter((user) => user.id !== users.id)
@@ -183,7 +184,7 @@ function Profile({user}){
         <div className="three_options_container">
         {options.map((option , index) => {
             return(
-                <div onClick={() => setOption(index)} className="options" key={index}>{option}</div>
+                <button onClick={() => setOption(index)} className="options" key={index}>{option}</button>
             )
         })}
 

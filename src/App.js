@@ -36,7 +36,7 @@ console.log(user)
   return (
     <div className="App">
     <Router>
-      <div className="navbar">
+    <div className="navbar">
         {user ? <Nav /> : null}
       </div>
       <main className="content">

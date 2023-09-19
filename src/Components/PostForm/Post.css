@@ -1,28 +1,88 @@
-.modal-container{
-    border: black 1px solid;
-    max-width: 600px;
-    width: 500px;
-    position: fixed;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    background-color: white;
-    box-shadow: 1px 2px 1px black;
-    overflow: hidden;
-    position: absolute;
-    height: 300px;
-  }
-
-.posts_header{
-  text-align: center;
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it's above other elements */
 }
 
-
-.modalLeft{
-  margin-left: 5px;
+.modal-container {
+  max-width: 500px;
+  width: 90%;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
-.closeBtn{
+.modalLeft {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.closeBtn {
   color: red;
+  cursor: pointer;
+}
+
+.content {
+  padding: 20px;
+}
+
+.posts_header {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.input-container {
+  margin-bottom: 20px;
+}
+
+.label-signup {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical;
+}
+
+.text-red-700 {
+  color: red;
+}
+
+.file-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button[type='submit'] {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button[type='submit']:hover {
+  background-color: #0056b3;
 }

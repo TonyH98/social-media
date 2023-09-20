@@ -63,13 +63,13 @@ return(
 
        {highlightMentions(fav.post_creator.content)}
     </div>
-    {/* <div className="posts_img_container">
-    {posts.posts_img === "null" ? null : (
+    <div className="posts_img_container">
+    {fav.post_creator.image === "null" ? null : (
 
-        <img src={posts.posts_img} alt={posts.posts_img} className="posts_img"/>
+        <img src={fav.post_creator.image} alt={fav.post_creator.image} className="posts_img"/>
     )}
 
-    </div> */}
+    </div>
 
 {matches ? (
     matches.map((video) => {

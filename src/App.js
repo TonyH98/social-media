@@ -12,6 +12,8 @@ import OtherProfile from './Components/OtherProfile/OtherProfile'
 import Following from './Components/Following/Following';
 import Follower from './Components/Following/Follower'
 import Notifications from './Components/Notifications/Notifications';
+import Footer from './Components/Footer/Footer';
+
 
 function App() {
 
@@ -52,6 +54,9 @@ console.log(user)
           <Route path={`/notifications/:id`} element={<Notifications/>}/>
         </Routes>
       </main>
+      <div className="footer">
+        {user ? <Footer user={user}/> : null}
+      </div>
     </Router>
   </div>
   );

@@ -45,7 +45,7 @@ function formatDate(inputDate){
 
     const [month, day, year] = inputDate.split("/").map(Number);
     const formattedMonth = months[month - 1]
-    const formattedYear = year.toString().slice(-2)
+    const formattedYear = year.toString()
 
     return `${formattedMonth} ${day}, ${formattedYear}`
 }

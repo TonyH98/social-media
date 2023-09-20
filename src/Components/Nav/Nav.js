@@ -7,7 +7,7 @@ import {LuVerified} from "react-icons/lu"
 import {CgProfile} from "react-icons/cg"
 
 
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 
 import { useState, useEffect } from "react";
 import Verifications from "./Verifications";
@@ -24,6 +24,12 @@ function Nav(){
     const loggedUser = JSON.parse(window.localStorage.getItem('user'));
     setUser(loggedUser);
   }, []);
+
+  const location = useLocation()
+
+  const isActive = (path) => {
+    return location.pathname === path ? 'active2' : ''
+  }
 
 
   const handleLogout = () => {
@@ -54,7 +60,7 @@ return(
 
         <div className="nav-content-container">
 
-        <Link to={`/profile/${user?.id}`}>
+        <Link to={`/profile/${user?.id}`} className={isActive(`/profile/${user?.id}`)}>
         <div class="nav-content">
         <CgProfile class="icon" size={30} />
         <span class="text">Profile</span>
@@ -62,7 +68,7 @@ return(
 
         </Link>
 
-        <Link to={`/notifications/${user?.id}`}>
+        <Link to={`/notifications/${user?.id}`} className={isActive(`/notifications/${user?.id}`)}>
         <div class="nav-content">
         <IoIosNotifications class="icon" size={30} />
         <span class="text">Notifications</span>

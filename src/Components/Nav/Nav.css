@@ -39,3 +39,27 @@ nav {
 }
 
 
+
+
+a{
+  text-decoration: none;
+  color: black;
+}
+
+.active2{
+  color: rgb(13, 13, 169);
+}
+
+
+.logout{
+  background-color: transparent;
+  border: none;
+}
+
+.logout:hover{
+  cursor: pointer;
+}
+
+.nav-content:hover{
+  cursor: pointer;
+}

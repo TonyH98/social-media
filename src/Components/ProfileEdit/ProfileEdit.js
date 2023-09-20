@@ -119,17 +119,20 @@ const handleSubmit = (event) => {
             
             </label>
 
-             <label className='label-signup'  htmlFor="bio">Bio:
-                <textarea
-                    require
-                    id="bio"
-                    value={edit.bio}
-                    onChange={handleTextChange}
-                />
-                <p className={`${edit?.bio.length >= 250 ? 'text-red-700' : null}`}>
-                        {edit?.bio.length}/250 characters
-                </p>
-                </label>
+            <label className='label-signup' htmlFor="bio">
+  Bio:
+  <textarea
+    required
+    id="bio"
+    value={edit.bio}
+    onChange={handleTextChange}
+  />
+  <p className={`${edit?.bio.length >= 250 ? 'text-red-700' : null}`}>
+    {edit?.bio.length}/250 characters
+  </p>
+</label>
+
+                
             <label htmlFor="profile_img" className='label-signup'>
                     Profile Image
                     <input

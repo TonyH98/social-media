@@ -110,7 +110,12 @@ function handleFilter(event) {
     }
 
 
-
+    const parseBio = (bio) => {
+        const urlRegex = /(https?:\/\/[^\s]+)/g;
+        return bio.replace(urlRegex, (url) => {
+          return `<a href="${url}" target="_blank" style="color: blue;">${url}</a>`;
+        });
+      };
 
  
    allUsers = allUsers.filter((user) => user.id !== users.id)
@@ -158,10 +163,12 @@ function handleFilter(event) {
         </div>
 
         <div className="profile_bio_container">
-
-            <p>{users?.bio}</p>
-
-        </div>
+      <p
+        dangerouslySetInnerHTML={{
+          __html: users ? parseBio(users.bio) : '',
+        }}
+      />
+    </div>
 
 
         <div className="profile_followers_container">
@@ -182,9 +189,9 @@ function handleFilter(event) {
         <div className="profile_selected_options">
 
         <div className="three_options_container">
-        {options.map((option , index) => {
+        {options.map((opt , index) => {
             return(
-                <button onClick={() => setOption(index)} className="options" key={index}>{option}</button>
+                <button onClick={() => setOption(index)} className={index === option ? `active options` : 'options'} key={index}>{opt}</button>
             )
         })}
 
@@ -192,41 +199,6 @@ function handleFilter(event) {
 
 {optionContent(option)}
         </div>
-
-
-        </div>
-
-
-       
-
-        <div className="profile_search_input_container">
-
-        <input type="text" className="profile_search_bar" placeholder="Search" value={search} onChange={handleFilter}/>
-        {filter.length !== 0 && (
-                    <div className="dataResult">
-                        {filter.slice(0, 10).map((result, index) => {
-                            if (result.tag_names) {
-                                // Display tags
-                                return (
-                                    <div className="search-link" key={index}>
-                                        <Link to={`/posts/${result.tag_names.slice(1)}`}>
-                                            <p className="dropdown-link">{result.tag_names}</p>
-                                        </Link>
-                                    </div>
-                                );
-                            } else if (result.username) {
-                                // Display users
-                                return (
-                                    <div className="search-link" key={index}>
-                                        <Link to={`/profiles/${result.id}`}>
-                                            <p className="dropdown-link">@{result.username}</p>
-                                        </Link>
-                                    </div>
-                                );
-                            }
-                        })}
-                    </div>
-                )}
 
 
         </div>

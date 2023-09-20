@@ -1,0 +1,10 @@
+.onClose{
+    background-color: transparent;
+    color: red;
+    border: none;
+    font-size: 15px;
+}
+
+.onClose:hover{
+    cursor: pointer;
+}

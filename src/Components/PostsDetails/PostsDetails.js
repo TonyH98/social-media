@@ -4,7 +4,7 @@ import { useDispatch , useSelector } from "react-redux";
 import { useEffect , useState} from "react";
 import { getPostDetails } from "../../Store/userActions";
 import {fetchReplies} from "../../Store/userActions";
-import YouTube from "react-youtube";
+
 import Replies from "../Replies/Replies";
 
 
@@ -64,10 +64,6 @@ function highlightMentions() {
     }
 }
 
-const youtubeLinkPattern = /https:\/\/www\.youtube\.com\/watch\?v=([\w-]+)/g;
-
-
-const matches = posts?.content?.match(youtubeLinkPattern);
 
 console.log(getReplies)
 
@@ -105,20 +101,7 @@ return(
 
     </div>
 
-    {matches ? (
-            matches.map((video) => {
-                console.log(video.split('=')[1])
-                return(
-                    <YouTube
-                    videoId={video.split('=')[1]}
-                    className={"youtube-video"}
-                    sandbox="allow-forms allow-scripts allow-pointer-lock allow-same-origin allow-top-navigation allow-presentation"
-                    />
 
-                )
-            })
-        
-         ): null}
  
  </div>
 

@@ -1,7 +1,7 @@
 import { useState} from 'react';
 import { useDispatch } from 'react-redux';
 import {createRplies}  from "../../Store/userActions";
-
+import "./Reply.css"
 function ReplyForm({open , onClose, users, posts }){
 
   const dispatch = useDispatch()
@@ -69,10 +69,12 @@ if(!open) return null
         <div className="overlay">
            <div className="modal-container">
             <div className="modalLeft">
-            <button className="onClose" onClick={ onClose}>X</button>
+            <button className="onClose" onClick={onClose}>X</button>
             </div>
            <div className="content">
            <div className="posts_content">
+
+<div className="posts_extra_container">
 
 <div className="post_user_profile_container">
 <img
@@ -90,6 +92,7 @@ className="post_user_profile"
 
 </div>
 
+
 <div className="posts_content_text_container">
 
 <div className="post_text">
@@ -105,10 +108,13 @@ className="post_user_profile"
 </div>
 
 
+</div>
+
 
 </div>
 
 </div>
+
 
 </div>
 

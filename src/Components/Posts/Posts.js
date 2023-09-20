@@ -1,5 +1,5 @@
 import "./Posts.css"
-import YouTube from "react-youtube";
+
 import {Link} from "react-router-dom"
 import {SlBubble} from "react-icons/sl"
 import ReplyForm from "../ReplyForm/ReplyForm";
@@ -61,10 +61,7 @@ function highlightMentions(content) {
     return <div dangerouslySetInnerHTML={{ __html: highlightedContent }} />;
 }
 
-const youtubeLinkPattern = /https:\/\/www\.youtube\.com\/watch\?v=([\w-]+)/g;
 
-
-const matches = posts.content.match(youtubeLinkPattern);
 
 const inFav = Array.isArray(favorites) ? favorites.map(fav => fav?.posts_id) : [];
   
@@ -128,21 +125,6 @@ console.log(posts.time)
 
             </div>
         
-        {matches ? (
-            matches.map((video) => {
-                console.log(video.split('=')[1])
-                return(
-                    <YouTube
-                    videoId={video.split('=')[1]}
-                    className={"youtube-video"}
-                    sandbox="allow-forms allow-scripts allow-pointer-lock allow-same-origin allow-top-navigation allow-presentation"
-                    />
-
-                )
-            })
-        
-         ): null}
-         
          </div>
         </Link>
          

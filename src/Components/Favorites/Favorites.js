@@ -1,4 +1,4 @@
-import YouTube from "react-youtube";
+
 import {Link} from "react-router-dom"
 
 function Favorites({fav}){
@@ -27,10 +27,10 @@ function Favorites({fav}){
         return <div dangerouslySetInnerHTML={{ __html: highlightedContent }} />;
     }
     
-    const youtubeLinkPattern = /https:\/\/www\.youtube\.com\/watch\?v=([\w-]+)/g;
+
     
     
-    const matches = fav.post_creator.content.match(youtubeLinkPattern);
+
 
 console.log(fav.post_creator.date_created)
 
@@ -71,20 +71,7 @@ return(
 
     </div>
 
-{matches ? (
-    matches.map((video) => {
-        console.log(video.split('=')[1])
-        return(
-            <YouTube
-            videoId={video.split('=')[1]}
-            className={"youtube-video"}
-            sandbox="allow-forms allow-scripts allow-pointer-lock allow-same-origin allow-top-navigation allow-presentation"
-            />
 
-        )
-    })
-
- ): null}
  
  </div>
 </Link>

@@ -112,7 +112,7 @@ function handleFilter(event) {
 
     const parseBio = (bio) => {
         const urlRegex = /(https?:\/\/[^\s]+)/g;
-        return bio.replace(urlRegex, (url) => {
+        return bio?.replace(urlRegex, (url) => {
           return `<a href="${url}" target="_blank" style="color: blue;">${url}</a>`;
         });
       };

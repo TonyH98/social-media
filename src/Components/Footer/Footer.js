@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch , useSelector } from "react-redux";
 import { fetchUsers, getTags, fetchUser} from "../../Store/userActions";
-
+import {PiMagnifyingGlassLight} from "react-icons/pi"
+import {MdClear} from "react-icons/md"
 function Footer({user}){
 
     const dispatch = useDispatch();
@@ -21,7 +22,10 @@ function Footer({user}){
         dispatch(fetchUser())
      }, [dispatch])
 
-
+     function clear() {
+        setFilter([]);
+        setSearch("");
+      }
 
     function handleFilter(event) {
         let searchResult = event.target.value;
@@ -50,7 +54,24 @@ function Footer({user}){
     return(
         <div className="profile_search_input_container">
 
-        <input type="text" className="profile_search_bar" placeholder="Search" value={search} onChange={handleFilter}/>
+<div className={search.length > 0 ? `search_active search_container` : `search_container`}>
+<div className="searchIcon">
+    {search.length === 0 ? (
+      <PiMagnifyingGlassLight size={25} color="black" />
+    ) : (
+      <MdClear onClick={clear} size={25} color="black" className="clear-bar" />
+    )}
+  </div>
+  <input
+    type="text"
+    className="profile_search_bar"
+    placeholder="Search"
+    value={search}
+    onChange={handleFilter}
+  />
+</div>
+
+
         {filter.length !== 0 && (
                     <div className="dataResult">
                         {filter.slice(0, 10).map((result, index) => {

@@ -1,9 +1,23 @@
-
+import "./Replies.css"
 function Replies({reply}){
 
+    function formatDate(inputDate){
+        const months = [
+            "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+          ];
+    
+        const [month, day, year] = inputDate.split("/").map(Number);
+        const formattedMonth = months[month - 1]
+        const formattedYear = year.toString()
+    
+        return `${formattedMonth} ${day}, ${formattedYear}`
+    }
+
+console.log(reply)
 return(
 
-<div className="posts_content posts_details_content">
+<div className="posts_content replies">
 
 <div className="post_user_profile_container">
 <img
@@ -17,7 +31,7 @@ className="post_user_profile"
 
 <div className="post_user_profile">
 
-{reply?.creator?.profile_name} | @{reply?.creator?.username} | {}
+{reply?.creator?.profile_name} | @{reply?.creator?.username} | {formatDate(reply.time)}
 
 </div>
 
@@ -28,14 +42,6 @@ className="post_user_profile"
 
    {reply.content}
 </div>
-{/* <div className="posts_img_container">
-{reply.posts_img === "null" ? null : (
-
-    <img src={reply?.posts_img} alt={posts?.posts_img} className="posts_img"/>
-)}
-
-</div> */}
-
 
 
 </div>

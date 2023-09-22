@@ -39,7 +39,7 @@ function formatDate() {
             const [month, day, year] = splitDate.map(Number);
             
             let formatMonth = months[month - 1]
-            const formattedYear = year.toString().slice(-2)
+            const formattedYear = year.toString()
 
             return `${formatMonth} ${day}, ${formattedYear}`
 
@@ -68,21 +68,24 @@ function highlightMentions() {
 console.log(getReplies)
 
 return(
-    <div className="posts_content posts_details_content">
+    <div className="posts_content">
+
+<div className="posts_main_container">
+    <div className="posts_extra_container">
 
     <div className="post_user_profile_container">
     <img
-    src={posts?.creator?.profile_img}
-    alt={posts?.creator?.profile_img}
+    src={posts.creator.profile_img}
+    alt={posts.creator.profile_img}
     className="post_user_profile"
     />
     </div>
-    
+
 <div className="post_user_info_date_container">
 
 <div className="post_user_profile">
 
-{posts?.creator?.profile_name} | @{posts?.creator?.username} | {formatDate()}
+{posts.creator.profile_name} | @{posts.creator.username} | {formatDate(posts.time)}
 
 </div>
 
@@ -91,35 +94,35 @@ return(
 
     <div className="post_text">
 
-       {highlightMentions(posts?.content)}
+       {highlightMentions(posts.content)}
     </div>
     <div className="posts_img_container">
     {posts.posts_img === "null" ? null : (
 
-        <img src={posts?.posts_img} alt={posts?.posts_img} className="posts_img"/>
+        <img src={posts.posts_img} alt={posts.posts_img} className="posts_img"/>
     )}
 
     </div>
 
-
- 
  </div>
 
  
  </div>
- 
+
+    </div>
+
+</div>
+    
 <div className="replies_container">
     {getReplies.map((reply) => {
         return(
-
-        <div className="replies_border" key={reply.id}>
             <Replies reply={reply}/>
-        </div>
         )
     })}
 </div>
  
  </div>
+
 
 )
 

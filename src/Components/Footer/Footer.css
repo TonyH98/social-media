@@ -63,3 +63,7 @@
 .clear-bar:hover{
     cursor: pointer;
 }
+
+.footer{
+    border-left: black solid 1px;
+}

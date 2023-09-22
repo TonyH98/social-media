@@ -1,6 +1,4 @@
-.posts_details_content{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 30px;
+.posts_main_container, .replies_container {
+   margin-left: 200px;
 }
+

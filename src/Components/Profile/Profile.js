@@ -15,20 +15,18 @@ function Profile({user}){
 
     let [option , setOption] = useState(0)
     const [modal , setModal] = useState(false)
-    const [search, setSearch] = useState("");
+
     const [modal2 , setModal2] = useState(false)
 
     const dispatch = useDispatch();
     const users = useSelector((state) => state.user.users);
     const getPosts = useSelector((state) => state.posts_get.posts)
-    const getAllTags = useSelector((state) => state.get_tags.tags)
     const favorites = useSelector((state) => state.favorites.fav)
-    let allUsers = useSelector((state) => state.users.users)
     let following = useSelector((state) => state.follow.fol)
     let follower = useSelector((state) => state.follower.fol)
 
 
-    const [filter , setFilter] = useState([])
+  
     useEffect(() => {
        dispatch(fetchUsers(user?.id))
        dispatch(getTags())
@@ -85,31 +83,6 @@ function Profile({user}){
       
 
 
-
-
-function handleFilter(event) {
-    let searchResult = event.target.value;
-        setSearch(searchResult);
-
-        const filterTag = getAllTags.filter((tags) => {
-            return tags.tag_names.toLowerCase().includes(searchResult.toLowerCase());
-        });
-
-        const filterUsers = allUsers.filter((user) => {
-            return user.username.toLowerCase().includes(searchResult.toLowerCase());
-        });
-
-        // Combine filterTag and filterUsers into a single array
-        const combinedFilter = [...filterTag, ...filterUsers];
-
-        if (searchResult === "") {
-            setFilter([]);
-        } else {
-            setFilter(combinedFilter);
-        }
-    }
-
-
     const parseBio = (bio) => {
         const urlRegex = /(https?:\/\/[^\s]+)/g;
         return bio?.replace(urlRegex, (url) => {
@@ -118,7 +91,7 @@ function handleFilter(event) {
       };
 
  
-   allUsers = allUsers.filter((user) => user.id !== users.id)
+
 
     return(
         <div className="profile">

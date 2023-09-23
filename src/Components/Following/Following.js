@@ -1,47 +1,43 @@
-import { useState, useEffect} from "react";
-import { fetchUsers } from "../../Store/userActions";
-import { useDispatch , useSelector } from "react-redux";
-import { useNavigate, Link, useLocation } from "react-router-dom";
-import "./Following.css"
-function Following({user , following}){
+import { useEffect, useState } from "react"
 
+function Following({fol}) {
+  let [bio, setBio] = useState(fol.bio)
 
-    const location = useLocation()
-    const isActive = (path) => {
-        return location.pathname === path ? 'active2' : ''
-      }
+  useEffect(() => {
+    if (bio.length >= 250) {
+      setBio(bio.slice(0, 20) + "...")
+    }
+  }, [fol.bio , bio]) 
 
-const dispatch = useDispatch();
-const users = useSelector((state) => state.user.users);
-
-useEffect(() => {
-    dispatch(fetchUsers(user?.id))
-
- }, [dispatch])
-
-
-
-return(
-
-    <div className="users_following_container">
-        <div className="following_first_section">
-
-            <div className="user_names_container">
-            <h2>{users?.profile_name}</h2>
-            <span>@{users?.username}</span>
-            </div>
-
-            <div className="followe_links">
-                <button>Following</button>
-                <button>Followers</button>
-            </div>
-        
+  return (
+    <div className="following_border">
+      <div className="following_content_first">
+        <div className="following_img_container">
+          <img
+            src={fol?.profile_img}
+            alt={fol?.username}
+            className="following_img"
+          />
         </div>
+        <div className="following_names_container">
+          <div className="profile_name">{fol.profile_name}</div>
+          <div className="fol_username">@{fol.username}</div>
+        </div>
+      </div>
+      <div className="following_content_second">
+        <div className="following_bio_container">
+          <p className="following_bio">{bio}</p>
+        </div>
+      </div>
 
+    <div className="following_content_third">
+        <div className="following_button_container">
+            <button className="follow_button">Follow</button>
+        </div>
     </div>
 
-)
-
+    </div>
+  )
 }
 
 export default Following

@@ -4,13 +4,19 @@ import { useDispatch , useSelector } from "react-redux";
 import { useEffect , useState} from "react";
 import { getPostDetails } from "../../Store/userActions";
 import {fetchReplies} from "../../Store/userActions";
-
+import ReplyForm from "../ReplyForm/ReplyForm"
 import Replies from "../Replies/Replies";
+import {SlBubble} from "react-icons/sl"
+import {AiFillHeart} from "react-icons/ai"
+import {AiOutlineHeart} from "react-icons/ai"
+import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
+import { addFav , deleteFav, getReactions, addReaction} from "../../Store/userActions";
 
-
-function PostsDetails(){
+function PostsDetails({user}){
 
 const {username , id} = useParams()
+
+let [show , setShow] = useState(false)
 
 const dispatch = useDispatch()
 
@@ -18,11 +24,15 @@ const posts = useSelector((state) => state.postsDetail.postDetail);
 
 const getReplies = useSelector((state) => state.replies.replies)
 
-useEffect(() => {
+const reaction = useSelector((state) => state.react.react)
 
-    dispatch(getPostDetails(username , id))
-    dispatch(fetchReplies(username, id))
-}, [dispatch])
+useEffect(() => {
+    if(username && id){
+        dispatch(getPostDetails(username , id))
+        dispatch(fetchReplies(username, id))
+        dispatch(getReactions(username , posts?.id))
+    }
+}, [dispatch . username , id])
 
 function formatDate() {
     const months = [
@@ -65,9 +75,10 @@ function highlightMentions() {
 }
 
 
-console.log(getReplies)
+console.log(posts)
 
 return(
+
     <div className="posts_content">
 
 <div className="posts_main_container">
@@ -75,8 +86,8 @@ return(
 
     <div className="post_user_profile_container">
     <img
-    src={posts.creator.profile_img}
-    alt={posts.creator.profile_img}
+    src={posts.creator?.profile_img}
+    alt={posts.creator?.profile_img}
     className="post_user_profile"
     />
     </div>
@@ -85,7 +96,7 @@ return(
 
 <div className="post_user_profile">
 
-{posts.creator.profile_name} | @{posts.creator.username} | {formatDate(posts.time)}
+{posts.creator?.profile_name} | @{posts.creator?.username} | {formatDate(posts.time)}
 
 </div>
 
@@ -105,7 +116,45 @@ return(
     </div>
 
  </div>
+ <div className="posts-options-container">
 
+<div className="posts-reply-button">
+<button className="no_br reply_btn" onClick={(e) => { e.preventDefault(); setShow(true); }}>
+<SlBubble size={20} />
+<span className="hidden-text">Reply</span>
+</button>
+</div>
+
+
+
+   <div className="favorite_posts_container">
+       {user  ? 
+       <button className="no_br fav_btn" ><AiFillHeart size={20} color="red"/>
+       <span className="hidden-text">Disike</span>
+       </button>
+
+       : <button className="no_br fav_btn" ><AiOutlineHeart size={20}/>
+       <span className="hidden-text">Like</span>
+       </button>}
+
+   </div>
+
+   <div className="like-container">
+
+   <button className="no_br react_btn"><AiOutlineLike size={20}/> {reaction.likes}
+   <span className="hidden-text">Like</span>
+   </button>
+  
+   </div>
+   
+   <div className="dislike-container">
+   <button  className="no_br react_btn"><AiOutlineDislike size={20}/> {reaction.dislikes}
+   <span className="hidden-text">Dislike</span>
+   </button>
+   </div>
+
+   <ReplyForm open={show} onClose={() =>  setShow(false)}  posts={posts}/>
+</div>
  
  </div>
 

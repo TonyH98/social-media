@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch , useSelector } from "react-redux";
-import { deleteFol , addFollowing } from "../../Store/userActions"
+import { deleteFol } from "../../Store/userActions"
 function Following({fol, users}) {
 
   let [bio, setBio] = useState(fol.bio)

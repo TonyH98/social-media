@@ -2,10 +2,9 @@ import { useState, useEffect} from "react";
 import { fetchUsers } from "../../Store/userActions";
 import { useDispatch , useSelector } from "react-redux";
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import Following from "./Following";
-import "./Following.css"
-function Followings({user , following}){
+import Follower from "./Follwer";
 
+function Followers({user , follower}){
 
     const location = useLocation()
 
@@ -22,11 +21,8 @@ useEffect(() => {
 
  }, [dispatch])
 
-
-
-return(
-
-    <div className="users_following_container">
+    return(
+        <div className="users_following_container">
         <div className="following_first_section">
 
             <div className="user_names_container">
@@ -47,23 +43,22 @@ return(
         </div>
 
         <div className="following_second_section">
-            {following.length === 0 ? <h1>Empty</h1> : 
-                <div>
-                    {following.map((fol) => {
-                        return(
-                            <Following fol={fol} users={users}/>
-                        )
-                    })}
+            {follower.length === 0 ? <h1>No Followers</h1> :
+            
+            <div>
+                {follower.map((fol) => {
+                    return(
+                        <Follower fol={fol}/>
+                    )
+                })}
 
-                </div>
-
-            }
+            </div>
+                }
         </div>
 
     </div>
-
-)
-
+    )
 }
 
-export default Followings
+
+export default Followers

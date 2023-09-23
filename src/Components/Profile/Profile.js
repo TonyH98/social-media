@@ -150,7 +150,7 @@ console.log(following)
             <div>{following.length} Following</div>
             </Link>
 
-            <Link ti={`/${user?.id}/follower`}>
+            <Link to={`/${user?.id}/follower`}>
             <div>{follower.length} Followers</div>
             </Link>
             

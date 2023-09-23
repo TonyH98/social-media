@@ -2,10 +2,10 @@ import { useState , useEffect} from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { createUser } from '../../Store/userActions';
-
+import axios from "axios";
 import "./Signup.css"
 
-
+const API = process.env.REACT_APP_API_URL;
 function Signup(){
 
     const navigate = useNavigate()
@@ -13,6 +13,14 @@ function Signup(){
    const dispatch = useDispatch();
 
     const [type, setType]=useState('password');
+
+    const [passwordError, setPasswordError] = useState("");
+
+    const [emailError, setEmailError] = useState("");
+
+    let [userError , setUserError] = useState("")
+     
+    let [emailError2 , setEmailError2] = useState("")
 
     const [user, setUser] = useState({
        username: "",
@@ -39,15 +47,77 @@ function Signup(){
       };
 
 
+      function validatePassword(){
+        const validate = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$#!%*?&])[0-9a-zA-Z@$!%*?&]{8,}$/
+ 
+        return validate.test(user.password)
+       }
+ 
+       function validateEmail(){
+         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+ 
+         if(!regex.test(user.email)){
+           return false
+         }
+         return true
+       }
+
+
+       function checkUserName() {
+        return axios.get(`${API}/users?username=${user.username}`)
+          .then((res) => {
+            return res.data.length === 0;
+          })
+          .catch((error) => {
+            console.error(error);
+            return false;
+          });
+      }
+
+      function checkEmail(){
+        return axios.get(`${API}/users?email=${user.email}`)
+        .then((res) => {
+          return res.data.length === 0;
+        })
+        .catch((error) => {
+          console.error(error);
+          return false;
+        });
+      }
+
       const handleSubmit = (event) => {
         event.preventDefault();
-        try{
-          dispatch(createUser(user))
-          navigate('/')
+
+        let isValid = true
+
+        if(!validateEmail){
+          setEmailError("Please enter a valid email address")
+          isValid = false
         }
-        catch(error){
-          console.log(error)
+        if(!validatePassword){
+          setPasswordError("Password must have at least 8 characters long, 1 uppercase letter, 1 lowercase letter, 1 number, and a special character ");
+          isValid = false;
         }
+  Promise.all([checkUserName(), checkEmail()]).then(([isUsernameAvailable, isEmailAvailable]) => {
+    if (!isUsernameAvailable) {
+      setUserError("Username was already taken");
+      isValid = false;
+    }
+
+    if (!isEmailAvailable) {
+      setEmailError2("Email was already taken");
+      isValid = false;
+    }
+
+    if (isValid) {
+      dispatch(createUser(user))
+      navigate('/')
+      
+    }
+  }).catch((error) => {
+    console.error(error);
+  });
+      
       };
 
 
@@ -107,9 +177,9 @@ function Signup(){
               value={user.username}
               type="text"
               onChange={handleTextChange}
-              
               required
             />
+            {userError && <p style={{color:"red"}}>{userError}</p>}
             </label>
             
           
@@ -125,6 +195,8 @@ function Signup(){
               value={user.email}
               onChange={handleTextChange}
             />
+             {emailError && <p style={{color:"red"}}>{emailError}</p>}
+             {emailError2 && <p style={{color:"red"}}>{emailError2}</p>}
              </label>
        
           <label htmlFor='DOB' className='label-signup'>Date of Birth:
@@ -149,7 +221,7 @@ function Signup(){
               placeholder="******"
               onChange={handleTextChange}
               />
-            
+             {passwordError && <p style={{color:"red"}}>{passwordError}</p>}
             </label>
               
 

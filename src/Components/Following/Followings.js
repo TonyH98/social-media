@@ -49,7 +49,7 @@ return(
         <div className="following_second_section">
             {following.map((fol) => {
                 return(
-                    <Following fol={fol}/>
+                    <Following fol={fol} users={users}/>
                 )
             })}
         </div>

@@ -37,6 +37,11 @@ border-radius: 50%;
 .following_border{
     display: flex;
     flex-direction: column;
+    border: black 1px solid;
+    width: 240px;
+    height: 210px;
+    align-items: flex-start;
+    border-radius: 10px;
 }
 
 
@@ -50,3 +55,23 @@ border-radius: 50%;
 .follow_button:hover{
     cursor: pointer;
 }
+
+.following_content_first{
+    margin-top: 10px;
+}
+
+.following_content_third{
+    display: flex;
+    margin-top: auto;
+    margin-bottom: 10px;
+}
+
+.following_content_first ,
+ .following_content_second, 
+ .following_content_third{
+
+margin-left: 10px;
+
+}
+
+

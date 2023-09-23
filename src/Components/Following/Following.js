@@ -1,13 +1,24 @@
 import { useEffect, useState } from "react"
+import { useDispatch , useSelector } from "react-redux";
+import { deleteFol , addFollowing } from "../../Store/userActions"
+function Following({fol, users}) {
 
-function Following({fol}) {
   let [bio, setBio] = useState(fol.bio)
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (bio.length >= 250) {
       setBio(bio.slice(0, 20) + "...")
     }
   }, [fol.bio , bio]) 
+
+
+function handleDeleteFollow(e){
+    e.preventDefault()
+    dispatch(deleteFol(users?.id, fol?.following_id))
+}
+
 
   return (
     <div className="following_border">
@@ -32,7 +43,7 @@ function Following({fol}) {
 
     <div className="following_content_third">
         <div className="following_button_container">
-            <button className="follow_button">Follow</button>
+            <button onClick={handleDeleteFollow} className="follow_button">Remove</button>
         </div>
     </div>
 

@@ -22,6 +22,8 @@ function Signup(){
      
     let [emailError2 , setEmailError2] = useState("")
 
+    let [ageError , setAgeError] = useState("")
+
     const [user, setUser] = useState({
        username: "",
        firstname: "",
@@ -85,6 +87,35 @@ function Signup(){
         });
       }
 
+
+      function getAge(){
+        const dateOfBirth = new Date(user.DOB)
+        const currentDate = new Date();
+        const age = currentDate.getFullYear() - dateOfBirth.getFullYear()
+
+        if (
+          currentDate.getMonth() < dateOfBirth.getMonth() ||
+          (currentDate.getMonth() === dateOfBirth.getMonth() &&
+            currentDate.getDate() < dateOfBirth.getDate())
+        ) {
+          age--;
+        }
+        
+        return age 
+
+      }
+
+      function checkAge(){
+        if(getAge() < 15){
+          return false
+        }
+        else{
+          return true
+        }
+      }
+ 
+      console.log(checkAge())
+
       const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -97,6 +128,10 @@ function Signup(){
         if(!validatePassword){
           setPasswordError("Password must have at least 8 characters long, 1 uppercase letter, 1 lowercase letter, 1 number, and a special character ");
           isValid = false;
+        }
+        if(!checkAge()){
+          setAgeError("Has to be 15 years or older")
+          isValid = false
         }
   Promise.all([checkUserName(), checkEmail()]).then(([isUsernameAvailable, isEmailAvailable]) => {
     if (!isUsernameAvailable) {
@@ -208,6 +243,7 @@ function Signup(){
               value={user.DOB}
               onChange={handleTextChange}
             />
+            {ageError && <p style={{color:"red"}}>{ageError}</p>}
           </label>
    
             <label htmlFor="password" className='label-signup'>Password:

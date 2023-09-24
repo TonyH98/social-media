@@ -34,8 +34,12 @@ const reaction = useSelector((state) => state.react.react)
 let dispatch = useDispatch()
 
 useEffect(() => {
+
 dispatch(getReactions(posts.creator.username , posts?.id))
+    
 }, [dispatch])
+
+console.log(reaction)
 
 function formatDate(inputDate){
     const months = [
@@ -87,7 +91,7 @@ function handleDislike(e){
     dispatch(addReaction(posts.creator.username, users.id, posts.id, dislike))
 }
 
-console.log(posts.time)
+
 
     return(
         <div className="posts_content">
@@ -156,19 +160,22 @@ console.log(posts.time)
 
             </div>
 
+            
             <div className="like-container">
-
             <button className="no_br react_btn" onClick={handleLike}><AiOutlineLike size={20}/> {reaction.likes}
             <span className="hidden-text">Like</span>
             </button>
            
             </div>
             
+            
+
+      
             <div className="dislike-container">
             <button  className="no_br react_btn" onClick={handleDislike}><AiOutlineDislike size={20}/> {reaction.dislikes}
             <span className="hidden-text">Dislike</span>
             </button>
-            </div>
+            </div> 
 
             <ReplyForm open={show} onClose={() =>  setShow(false)} users={users} posts={posts}/>
          </div>

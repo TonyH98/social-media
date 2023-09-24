@@ -14,7 +14,7 @@ function Replies({reply}){
         return `${formattedMonth} ${day}, ${formattedYear}`
     }
 
-console.log(reply)
+
 return(
 
 <div className="posts_content replies">

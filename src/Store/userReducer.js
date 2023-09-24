@@ -21,7 +21,7 @@ import { GET_FOLLOWER , GET_FOLLOWER_FAIL } from "./userActions";
 import { FETCH_NOTIFICATIONS , FETCH_NOTIFICATIONS_FAIL } from "./userActions";
 import {FETCH_POSTS_REACTIONS , FETCH_POSTS_REACTIONS_FAIL} from "./userActions";
 import { ADD_POSTS_REACTIONS , ADD_POSTS_REACTIONS_FAIL } from "./userActions";
-
+import { GET_FAVORITE , GET_FAVORITE_FAIL } from "./userActions";
 
 const initialState = {
 
@@ -637,3 +637,28 @@ export const getPostDetails = (state = initialPostDetails, action) => {
             return state;
         }
       };
+
+
+      const initialFavorite = {
+        fav: [],
+        error: null
+      } 
+      
+      export const usersFav = (state = initialFavorite, action) => {
+        switch (action.type){
+            case GET_FAVORITE:
+                return {
+                    ...state,
+                    fav: action.payload,
+                    error:null
+                };
+            case GET_FAVORITE_FAIL:
+                return {
+                    ...state,
+                    fav: [],
+                    error: action.payload
+                }
+            default:
+                return state
+        }
+      }

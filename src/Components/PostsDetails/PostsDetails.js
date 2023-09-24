@@ -10,13 +10,22 @@ import {SlBubble} from "react-icons/sl"
 import {AiFillHeart} from "react-icons/ai"
 import {AiOutlineHeart} from "react-icons/ai"
 import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
-import { addFav , deleteFav, getReactions, addReaction} from "../../Store/userActions";
+import { addFav , deleteFav, getReactions, addReaction, getFavorite} from "../../Store/userActions";
 
 function PostsDetails({user}){
 
 const {username , id} = useParams()
 
 let [show , setShow] = useState(false)
+
+let [likes] = useState({
+    reaction: "like"
+})
+
+let [dislike] = useState({
+    reaction: "dislike"
+})
+
 
 const dispatch = useDispatch()
 
@@ -26,13 +35,22 @@ const getReplies = useSelector((state) => state.replies.replies)
 
 const reaction = useSelector((state) => state.react.react)
 
+const favorite = useSelector((state) => state.idFav.fav)
+
+
+
+
+
 useEffect(() => {
     if(username && id){
         dispatch(getPostDetails(username , id))
         dispatch(fetchReplies(username, id))
         dispatch(getReactions(username , posts?.id))
+        dispatch(getFavorite(user?.id , id))
     }
-}, [dispatch . username , id])
+}, [dispatch . username , id, posts?.id, user?.id])
+
+
 
 function formatDate() {
     const months = [
@@ -74,8 +92,34 @@ function highlightMentions() {
     }
 }
 
+function handleLike(e){
+    e.preventDefault()
+    dispatch(addReaction(posts.creator.username, user.id, posts.id, likes))
+}
 
-console.log(posts)
+function handleDislike(e){
+    e.preventDefault()
+    dispatch(addReaction(posts.creator.username, user.id, posts.id, dislike))
+}
+
+console.log(posts?.creator?.id)
+
+let [fav] = useState({
+    creator_id: posts?.creator?.id
+})
+
+
+function handleAddFav(e){
+    e.preventDefault()
+    dispatch(addFav(user, posts.id, fav))
+}
+
+function handleDeleteFav(e){
+    e.preventDefault()
+    dispatch(deleteFav(user, posts.id))
+}
+
+
 
 return(
 
@@ -128,12 +172,12 @@ return(
 
 
    <div className="favorite_posts_container">
-       {user  ? 
-       <button className="no_br fav_btn" ><AiFillHeart size={20} color="red"/>
+       {favorite && favorite?.favorites ?
+       <button className="no_br fav_btn" onClick={handleDeleteFav} ><AiFillHeart size={20} color="red"/>
        <span className="hidden-text">Disike</span>
        </button>
 
-       : <button className="no_br fav_btn" ><AiOutlineHeart size={20}/>
+       : <button onClick={handleAddFav} className="no_br fav_btn"><AiOutlineHeart size={20}/>
        <span className="hidden-text">Like</span>
        </button>}
 
@@ -141,14 +185,14 @@ return(
 
    <div className="like-container">
 
-   <button className="no_br react_btn"><AiOutlineLike size={20}/> {reaction.likes}
+   <button className="no_br react_btn" onClick={handleLike}><AiOutlineLike size={20}/> {reaction.likes}
    <span className="hidden-text">Like</span>
    </button>
   
    </div>
    
    <div className="dislike-container">
-   <button  className="no_br react_btn"><AiOutlineDislike size={20}/> {reaction.dislikes}
+   <button  className="no_br react_btn" onClick={handleDislike}><AiOutlineDislike size={20}/> {reaction.dislikes}
    <span className="hidden-text">Dislike</span>
    </button>
    </div>

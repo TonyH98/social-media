@@ -29,11 +29,6 @@ function Favorites({fav}){
     
 
     
-    
-
-
-console.log(fav.post_creator.date_created)
-
 
 return(
     <div className="posts_content">

@@ -18,7 +18,7 @@ dispatch(getSearchPost(tag_name))
 }, [dispatch])
 
 
-console.log(getPosts)
+
 
     return(
         <div>Hello</div>

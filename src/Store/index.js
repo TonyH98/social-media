@@ -22,7 +22,7 @@ import { userFollower } from "./userReducer";
 import { userNote } from "./userReducer";
 import { userReact } from "./userReducer";
 import {addUserReactions}  from "./userReducer";
-
+import { usersFav } from "./userReducer";
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -46,7 +46,8 @@ const rootReducer = combineReducers({
   follower: userFollower,
   note: userNote,
   react: userReact,
-  reactions: addUserReactions
+  reactions: addUserReactions,
+  idFav: usersFav
 
 });
 

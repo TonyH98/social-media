@@ -248,6 +248,24 @@ export const getFavorites = (user) => async(dispatch) => {
 } 
 
 
+
+export const GET_FAVORITE = "GET_FAVORITES"
+export const GET_FAVORITE_FAIL = "GET_FAVORITE_FAIL"
+
+export const getFavorite = (user , post) => async(dispatch) => {
+
+  try {
+    const response = await axios.get(`${API}/favorites/${user}/post/${post}`);
+    dispatch({ type: GET_FAVORITES, payload: response.data })
+    
+  } catch (error) {
+    dispatch({ type: GET_FAVORITES_FAIL, payload: error.message });
+  }
+
+} 
+
+
+
 export const ADD_FAV = "ADD_FAV"
 export const ADD_FAV_FAIL = "ADD_FAV_FAIL"
 

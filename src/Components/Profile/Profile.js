@@ -36,7 +36,7 @@ function Profile({user}){
     }, [dispatch])
     
 
-console.log(following)
+
 
     useEffect(() => {
         if(users && users?.id){

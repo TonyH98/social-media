@@ -114,7 +114,7 @@ function Signup(){
         }
       }
  
-      console.log(checkAge())
+   
 
       const handleSubmit = (event) => {
         event.preventDefault();
@@ -165,7 +165,7 @@ function Signup(){
         }
       }
 
-      console.log(user)
+
 
 
       return(

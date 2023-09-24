@@ -1,4 +1,4 @@
-import { useState} from 'react';
+import { useState , useEffect} from 'react';
 import { useDispatch } from 'react-redux';
 import {createRplies}  from "../../Store/userActions";
 import "./Reply.css"
@@ -12,8 +12,17 @@ function ReplyForm({open , onClose, users, posts }){
     posts_id: posts.id, 
     })
 
+    useEffect(() => {
+      if (users?.id && posts?.id) {
+        setReplies((prevReplies) => ({
+          ...prevReplies,
+          user_id: users?.id,
+          posts_id: posts?.id
+        }));
+      }
+    }, [users?.id, posts?.id]);
 
-
+console.log(replies)
 
     function formatDate(inputDate){
         const months = [

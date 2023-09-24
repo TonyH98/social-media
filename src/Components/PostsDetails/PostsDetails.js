@@ -197,7 +197,7 @@ return(
    </button>
    </div>
 
-   <ReplyForm open={show} onClose={() =>  setShow(false)}  posts={posts}/>
+   <ReplyForm open={show} onClose={() =>  setShow(false)} users={user}  posts={posts}/>
 </div>
  
  </div>

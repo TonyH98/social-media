@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch , useSelector } from 'react-redux';
 import { loginUser } from '../../Store/userActions';
+
 import "./Home.css"
 
 function Home({ newLogin, user, isLogged, setUser }) {
@@ -14,6 +15,7 @@ function Home({ newLogin, user, isLogged, setUser }) {
   });
 
   const [type, setType] = useState('password');
+  let [error , setError] = useState(null)
 
   const handleTextChange = (event) => {
     setLogin({ ...login, [event.target.id]: event.target.value });
@@ -22,20 +24,19 @@ function Home({ newLogin, user, isLogged, setUser }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(loginUser(login, newLogin))
-      .then(() => {
-        if (loginUsers) {
-          // Navigate to the profile if login was successful
-          navigate(`/profile/${user?.id}`);
-        } else {
-          // Handle the case where login was not successful
-          console.log("Login failed");
-        }
+      .then((redirectUrl) => {
+        window.location.href = redirectUrl;
       })
       .catch((error) => {
-        console.log(error);
+        if(error.response.status === 401){
+          setError("Wrong Email or Password")
+        }
       });
   };
   
+  
+
+
   useEffect(() => {
     const loggedUser = JSON.parse(window.localStorage.getItem('user'));
     setUser(loggedUser);
@@ -46,7 +47,6 @@ function Home({ newLogin, user, isLogged, setUser }) {
   const handleType = () => {
     setType(type === 'password' ? 'text' : 'password');
   };
-
 
 
 return(
@@ -113,8 +113,10 @@ return(
 
     </div>
     
-    <button type='submit' className='login-submit'>Login</button>
-   
+    <button  disabled={error} type='submit' className='login-submit'>Login</button>
+
+   {error && <p style={{color: "red"}}>{error}</p>}
+
    <div className='signup-option'>
     <p>Don't Have an Account</p>
     <Link to="/signup">

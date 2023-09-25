@@ -164,7 +164,7 @@ return(
 
 <div className="posts-reply-button">
 <button className="no_br reply_btn" onClick={(e) => { e.preventDefault(); setShow(true); }}>
-<SlBubble size={20} />
+<SlBubble size={20} /> {getReplies.length}
 <span className="hidden-text">Reply</span>
 </button>
 </div>

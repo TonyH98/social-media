@@ -53,29 +53,24 @@ export const createUser = (user) => async (dispatch) => {
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS"
 export const LOGIN_FAILURE = "LOGIN_FAILURE"
 
+export const loginUser = (login, newLogin) => async (dispatch) => {
+  try {
+    const res = await axios.post(`${API}/users/login`, login);
+    dispatch({ type: LOGIN_SUCCESS });
+    newLogin();
+    window.localStorage.setItem(
+      'user',
+      JSON.stringify({ email: res.data.email, id: res.data.id })
+    );
 
-export const loginUser = (login , newLogin) => async (dispatch) => {
+    const redirectUrl = `/profile/${res.data.id}`;
+    return Promise.resolve(redirectUrl);
+  } catch (error) {
+    dispatch({ type: LOGIN_FAILURE, error: error.message });
+    return Promise.reject(error);
+  }
+};
 
-
-
-axios.post(`${API}/users/login`, login)
-.then((res) => {
-  dispatch({type: LOGIN_SUCCESS})
-  newLogin()
-  window.localStorage.setItem(
-    'user',
-    JSON.stringify({ email: res.data.email, id: res.data.id })
-  );
-
-  return `/profile/${res.data.id}`;
-})
-.catch((error) => {
-  dispatch({ type: LOGIN_FAILURE, error: error.message });
-    console.log(error); // You can still log the error here if needed
-})
-
-
-}
 
 
 

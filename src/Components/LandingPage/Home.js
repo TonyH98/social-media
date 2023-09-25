@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch , useSelector } from 'react-redux';
+import { Link} from 'react-router-dom';
+import { useDispatch} from 'react-redux';
 import { loginUser } from '../../Store/userActions';
 
 import "./Home.css"
 
 function Home({ newLogin, user, isLogged, setUser }) {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const loginUsers = useSelector((state) => state.login.loginSuccess); 
+
+  
   const [login, setLogin] = useState({
     email: '',
     password: '',
@@ -16,22 +16,25 @@ function Home({ newLogin, user, isLogged, setUser }) {
 
   const [type, setType] = useState('password');
   let [error , setError] = useState(null)
+  let [capsLockOn, setCapsLockOn] = useState(false)
 
   const handleTextChange = (event) => {
     setLogin({ ...login, [event.target.id]: event.target.value });
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    dispatch(loginUser(login, newLogin))
-      .then((redirectUrl) => {
-        window.location.href = redirectUrl;
-      })
-      .catch((error) => {
-        if(error.response.status === 401){
-          setError("Wrong Email or Password")
-        }
-      });
+    if(!capsLockOn){
+      event.preventDefault();
+      dispatch(loginUser(login, newLogin))
+        .then((redirectUrl) => {
+          window.location.href = redirectUrl;
+        })
+        .catch((error) => {
+          if(error.response.status === 401){
+            setError("Wrong Email or Password")
+          }
+        });
+    }
   };
   
   
@@ -48,6 +51,13 @@ function Home({ newLogin, user, isLogged, setUser }) {
     setType(type === 'password' ? 'text' : 'password');
   };
 
+
+  function checkCapsLock(event){
+    const key = event.key
+    console.log(key)
+    const isCapsLockOn = key === key.toUpperCase() && key !== key.toLowerCase()
+    setCapsLockOn(isCapsLockOn)
+  }
 
 return(
 
@@ -84,6 +94,7 @@ return(
         onChange={handleTextChange}
         className="input-login"
         required
+        onKeyDown={checkCapsLock} 
       />
       </label>
   
@@ -96,6 +107,7 @@ return(
         className="input-login"
         placeholder="******"
         onChange={handleTextChange}
+        onKeyDown={checkCapsLock} 
       />
       </label>
 
@@ -114,6 +126,7 @@ return(
     </div>
     
     <button  disabled={error} type='submit' className='login-submit'>Login</button>
+  {capsLockOn && <p style={{ color: 'red' }}>Caps Lock is ON</p>}
 
    {error && <p style={{color: "red"}}>{error}</p>}
 

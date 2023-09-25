@@ -24,6 +24,8 @@ function Signup(){
 
     let [ageError , setAgeError] = useState("")
 
+    let [capsLockOn, setCapsLockOn] = useState(false)
+
     const [user, setUser] = useState({
        username: "",
        firstname: "",
@@ -86,7 +88,12 @@ function Signup(){
           return false;
         });
       }
-
+      function checkCapsLock(event){
+        const key = event.key
+        console.log(key)
+        const isCapsLockOn = key === key.toUpperCase() && key !== key.toLowerCase()
+        setCapsLockOn(isCapsLockOn)
+      }
 
       function getAge(){
         const dateOfBirth = new Date(user.DOB)
@@ -131,6 +138,9 @@ function Signup(){
         }
         if(!checkAge()){
           setAgeError("Has to be 15 years or older")
+          isValid = false
+        }
+        if(checkCapsLock()){
           isValid = false
         }
   Promise.all([checkUserName(), checkEmail()]).then(([isUsernameAvailable, isEmailAvailable]) => {
@@ -186,6 +196,7 @@ function Signup(){
               required
               value={user.firstname}
               onChange={handleTextChange}
+              onKeyDown={checkCapsLock} 
             />
             
             </label>
@@ -200,6 +211,7 @@ function Signup(){
               required
               value={user.lastname}
               onChange={handleTextChange}
+              onKeyDown={checkCapsLock} 
             />
              </label>
      
@@ -212,6 +224,7 @@ function Signup(){
               value={user.username}
               type="text"
               onChange={handleTextChange}
+              onKeyDown={checkCapsLock} 
               required
             />
             {userError && <p style={{color:"red"}}>{userError}</p>}
@@ -229,6 +242,7 @@ function Signup(){
               required
               value={user.email}
               onChange={handleTextChange}
+              onKeyDown={checkCapsLock} 
             />
              {emailError && <p style={{color:"red"}}>{emailError}</p>}
              {emailError2 && <p style={{color:"red"}}>{emailError2}</p>}
@@ -242,6 +256,7 @@ function Signup(){
               required
               value={user.DOB}
               onChange={handleTextChange}
+              onKeyDown={checkCapsLock} 
             />
             {ageError && <p style={{color:"red"}}>{ageError}</p>}
           </label>
@@ -256,6 +271,7 @@ function Signup(){
               value={user.password}
               placeholder="******"
               onChange={handleTextChange}
+              onKeyDown={checkCapsLock} 
               />
              {passwordError && <p style={{color:"red"}}>{passwordError}</p>}
             </label>
@@ -275,7 +291,7 @@ function Signup(){
 
             </div>
 
-
+            {capsLockOn && <p style={{ color: 'red' }}>Caps Lock is ON</p>}
             <button type='submit' className='login-submit'>Signup</button>
       
           <Link to="/">

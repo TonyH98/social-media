@@ -52,12 +52,13 @@ function Home({ newLogin, user, isLogged, setUser }) {
   };
 
 
-  function checkCapsLock(event){
-    const key = event.key
-    console.log(key)
-    const isCapsLockOn = key === key.toUpperCase() && key !== key.toLowerCase()
-    setCapsLockOn(isCapsLockOn)
-  }
+  const checkCapsLock = (event) => {
+    const key = event.key;
+    const isCapsLockOn = key === key.toUpperCase() && key !== key.toLowerCase() && !event.getModifierState('Shift');
+    setCapsLockOn(isCapsLockOn);
+  };
+  
+  
 
 return(
 

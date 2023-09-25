@@ -5,6 +5,7 @@ import { createUser } from '../../Store/userActions';
 import axios from "axios";
 import "./Signup.css"
 
+
 const API = process.env.REACT_APP_API_URL;
 function Signup(){
 
@@ -88,13 +89,17 @@ function Signup(){
           return false;
         });
       }
-      function checkCapsLock(event){
-        const key = event.key
-        console.log(key)
-        const isCapsLockOn = key === key.toUpperCase() && key !== key.toLowerCase()
-        setCapsLockOn(isCapsLockOn)
-      }
+      const checkCapsLock = (event) => {
+        const key = event.key;
+        const isCapsLockOn = key === key.toUpperCase() && key !== key.toLowerCase() && !event.getModifierState('Shift');
+        console.log(isCapsLockOn)
+        if(isCapsLockOn){
+          setCapsLockOn(isCapsLockOn);
+          return true
+        }
+      };
 
+      console.log(checkCapsLock)
       function getAge(){
         const dateOfBirth = new Date(user.DOB)
         const currentDate = new Date();
@@ -140,7 +145,7 @@ function Signup(){
           setAgeError("Has to be 15 years or older")
           isValid = false
         }
-        if(checkCapsLock()){
+        if(!checkCapsLock){
           isValid = false
         }
   Promise.all([checkUserName(), checkEmail()]).then(([isUsernameAvailable, isEmailAvailable]) => {

@@ -31,8 +31,6 @@ useEffect(() => {
 
 const applyFilters = () => {
     let filteredNote = note;
-  
-
     if (searchFilter) {
       const filterText = searchFilter.toLowerCase();
       filteredNote = filteredNote.filter(
@@ -54,7 +52,7 @@ const applyFilters = () => {
     if (selected === 0) {
       return (
         <div>
-          {filterNote.map((notes) => {
+          {note.map((notes) => {
             return (
               <div  className="posts-border-container">
                 <Notification users={users} notes={notes}/>
@@ -80,7 +78,9 @@ const applyFilters = () => {
     
   }
   
-  console.log(note)
+  console.log("post", note)
+
+  console.log("reply", noteR)
 
     return(
         <div className="note_page">

@@ -381,8 +381,8 @@ export const getNotifications = (user) => async(dispatch) => {
 
 }
 
-export const FETCH_NOTIFICATIONS2 = "NOTIFICATIONS"
-export const FETCH_NOTIFICATIONS_FAIL2 = "NOTIFICATIONS_FAIL"
+export const FETCH_NOTIFICATIONS2 = "NOTIFICATIONS2"
+export const FETCH_NOTIFICATIONS_FAIL2 = "NOTIFICATIONS_FAIL2"
 
 export const getNotificationsReplies = (user) => async(dispatch) => {
 

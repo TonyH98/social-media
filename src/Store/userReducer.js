@@ -22,7 +22,7 @@ import { FETCH_NOTIFICATIONS , FETCH_NOTIFICATIONS_FAIL } from "./userActions";
 import {FETCH_POSTS_REACTIONS , FETCH_POSTS_REACTIONS_FAIL} from "./userActions";
 import { ADD_POSTS_REACTIONS , ADD_POSTS_REACTIONS_FAIL } from "./userActions";
 import { GET_FAVORITE , GET_FAVORITE_FAIL } from "./userActions";
-
+import { FETCH_NOTIFICATIONS_FAIL2 , FETCH_NOTIFICATIONS2 } from "./userActions";
 const initialState = {
 
     users: [],
@@ -656,6 +656,33 @@ export const getPostDetails = (state = initialPostDetails, action) => {
                 return {
                     ...state,
                     fav: [],
+                    error: action.payload
+                }
+            default:
+                return state
+        }
+      }
+
+
+
+
+      const initialNote2 = {
+        note2: [],
+        error: null
+      } 
+      
+      export const userNote2 = (state = initialNote2, action) => {
+        switch (action.type){
+            case FETCH_NOTIFICATIONS2:
+                return {
+                    ...state,
+                    note2: action.payload,
+                    error:null
+                };
+            case FETCH_NOTIFICATIONS_FAIL2:
+                return {
+                    ...state,
+                    note2: [],
                     error: action.payload
                 }
             default:

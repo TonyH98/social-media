@@ -381,6 +381,20 @@ export const getNotifications = (user) => async(dispatch) => {
 
 }
 
+export const FETCH_NOTIFICATIONS2 = "NOTIFICATIONS"
+export const FETCH_NOTIFICATIONS_FAIL2 = "NOTIFICATIONS_FAIL"
+
+export const getNotificationsReplies = (user) => async(dispatch) => {
+
+  try {
+    const response = await axios.get(`${API}/notifications/${user}/reply`);
+    dispatch({ type: FETCH_NOTIFICATIONS2, payload: response.data })
+    
+  } catch (error) {
+    dispatch({ type: FETCH_NOTIFICATIONS_FAIL2, payload: error.message });
+  }
+
+}
 
 
 export const FETCH_POSTS_REACTIONS = "REACTIONS"

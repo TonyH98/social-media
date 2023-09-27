@@ -1,8 +1,9 @@
 import { useParams } from "react-router-dom";
-import {getNotifications , fetchUsers} from "../../Store/userActions";
+import {getNotifications , fetchUsers, getNotificationsReplies} from "../../Store/userActions";
 import { useDispatch , useSelector } from "react-redux";
 import { useState, useEffect} from "react";
 import Notification from "./Notification";
+import RepliesNote from "./RepliesNote";
 import "./Notifications.css"
 
 
@@ -18,13 +19,14 @@ const {id} = useParams()
 const dispatch = useDispatch();
 
 const note = useSelector((state) => state.note.note)
+const noteR = useSelector((state) => state.note2.note2)
 const users = useSelector((state) => state.user.users);
 
 useEffect(() => {
-dispatch(fetchUsers(id))
-dispatch(getNotifications(id))
-setFilterNote(note)
-
+    dispatch(fetchUsers(id))
+    dispatch(getNotifications(id))
+    setFilterNote(note)
+    dispatch(getNotificationsReplies(id))
 }, [dispatch])
 
 const applyFilters = () => {
@@ -35,7 +37,7 @@ const applyFilters = () => {
       const filterText = searchFilter.toLowerCase();
       filteredNote = filteredNote.filter(
         (notes) =>
-          notes.post_content.username.toLowerCase().includes(filterText)
+          notes.post_content.username.toLowerCase().includes(filterText) || notes.post_content.profile_name.toLowerCase().includes(filterText)
          
       );
     }
@@ -52,7 +54,7 @@ const applyFilters = () => {
     if (selected === 0) {
       return (
         <div>
-          {note.map((notes) => {
+          {filterNote.map((notes) => {
             return (
               <div  className="posts-border-container">
                 <Notification users={users} notes={notes}/>
@@ -62,9 +64,23 @@ const applyFilters = () => {
         </div>
       );
     }
+    if (selected === 1) {
+      return (
+        <div>
+          {noteR.map((notes) => {
+            return (
+              <div  className="posts-border-container">
+                <RepliesNote users={users} notes={notes}/>
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
     
   }
   
+  console.log(note)
 
     return(
         <div className="note_page">

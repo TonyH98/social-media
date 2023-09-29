@@ -429,3 +429,18 @@ export const addReaction = (creatorName , userId , postId, reactions) => async (
     console.log(error); 
   })
 }
+
+
+export const FETCH_SEARCH_REPLIES = "SEARCH_REPLIES_SUCCESS"
+export const FETCH_SEARCH_REPLIES_FAIL= "SEARCH_REPLIES_FAIL"
+
+export const getSearchReplies = (tag) => async(dispatch) => {
+
+  try {
+    const response = await axios.get(`${API}/search/replies/${tag}`);
+    dispatch({ type: FETCH_SEARCH_REPLIES, payload: response.data })
+  } catch (error) {
+    dispatch({ type: FETCH_SEARCH_REPLIES_FAIL , payload: error.message });
+  }
+
+}

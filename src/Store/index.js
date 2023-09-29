@@ -24,7 +24,7 @@ import { userReact } from "./userReducer";
 import {addUserReactions}  from "./userReducer";
 import { usersFav } from "./userReducer";
 import { userNote2 } from "./userReducer";
-
+import { searchReplies } from "./userReducer";
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -50,7 +50,8 @@ const rootReducer = combineReducers({
   react: userReact,
   reactions: addUserReactions,
   idFav: usersFav,
-  note2: userNote2
+  note2: userNote2,
+  search2: searchReplies
 
 });
 

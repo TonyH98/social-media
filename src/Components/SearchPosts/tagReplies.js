@@ -1,6 +1,6 @@
 
 
-function TagPosts({tag}){
+function TagReplies({tag}){
 
     function highlightMentions(content) {
         const mentionPattern = /@(\w+)/g;
@@ -25,8 +25,6 @@ function TagPosts({tag}){
         return `${formattedMonth} ${day}, ${formattedYear}`
     }
 
-
-    
     return(
         <div className="posts_content">
 
@@ -55,13 +53,13 @@ function TagPosts({tag}){
 
            {highlightMentions(tag.posts_details.content)}
         </div>
-         <div className="posts_img_container">
+         {/* <div className="posts_img_container">
         {tag.posts_details?.image === "null" ? null : (
 
             <img src={tag.posts_details?.image} alt={tag.posts_details?.image} className="posts_img"/>
         )}
 
-        </div> 
+        </div>  */}
     
      </div>
 
@@ -74,4 +72,4 @@ function TagPosts({tag}){
     )
 }
 
-export default TagPosts
+export default TagReplies

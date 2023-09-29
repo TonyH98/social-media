@@ -1,8 +1,9 @@
 import { useDispatch , useSelector } from "react-redux";
-import { getSearchPost } from "../../Store/userActions";
+import { getSearchPost , getSearchReplies } from "../../Store/userActions";
 import { useParams } from "react-router-dom";
 import { useEffect , useState } from "react";
 import TagPosts from "./tagPosts";
+import TagReplies from "./tagReplies";
 import "./SearchPosts.css"
 
 function SearchPosts(){
@@ -15,17 +16,19 @@ let options = ["Posts", "Replies", "All"]
 const dispatch = useDispatch();
 
 const getPosts = useSelector((state) => state.get_search.searchPost);
+const getReplies = useSelector((state) => state.search2.search)
 
 
 useEffect(() => {
 dispatch(getSearchPost(tag_name))
+dispatch(getSearchReplies(tag_name))
 }, [dispatch])
 
 
 function optionContent(selected) {
     if (selected === 0) {
       return (
-        <div>
+        <div className="search_post_container">
           {getPosts.map((tag) => {
             return (
               <div  className="posts-border-container">
@@ -36,12 +39,24 @@ function optionContent(selected) {
         </div>
       );
     }
-    
+    if(selected === 1){
+      return (
+        <div className="search_post_container">
+          {getReplies.map((tag) => {
+            return (
+              <div  className="posts-border-container">
+                <TagReplies tag={tag}/>
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
     
   }
 
 
-
+console.log(getReplies)
 
     return(
       <div className="search_post_page">

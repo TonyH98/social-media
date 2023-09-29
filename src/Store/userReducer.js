@@ -23,6 +23,9 @@ import {FETCH_POSTS_REACTIONS , FETCH_POSTS_REACTIONS_FAIL} from "./userActions"
 import { ADD_POSTS_REACTIONS , ADD_POSTS_REACTIONS_FAIL } from "./userActions";
 import { GET_FAVORITE , GET_FAVORITE_FAIL } from "./userActions";
 import { FETCH_NOTIFICATIONS_FAIL2 , FETCH_NOTIFICATIONS2 } from "./userActions";
+import { FETCH_SEARCH_REPLIES , FETCH_SEARCH_REPLIES_FAIL } from "./userActions";
+
+
 const initialState = {
 
     users: [],
@@ -663,9 +666,6 @@ export const getPostDetails = (state = initialPostDetails, action) => {
         }
       }
 
-
-
-
       const initialNote2 = {
         note2: [],
         error: null
@@ -683,6 +683,31 @@ export const getPostDetails = (state = initialPostDetails, action) => {
                 return {
                     ...state,
                     note2: [],
+                    error: action.payload
+                }
+            default:
+                return state
+        }
+      }
+
+
+      const initialSearchReplies = {
+        search: [],
+        error: null
+      } 
+      
+      export const searchReplies= (state = initialSearchReplies, action) => {
+        switch (action.type){
+            case FETCH_SEARCH_REPLIES:
+                return {
+                    ...state,
+                    search: action.payload,
+                    error: null
+                };
+            case FETCH_SEARCH_REPLIES_FAIL:
+                return {
+                    ...state,
+                    search: [],
                     error: action.payload
                 }
             default:

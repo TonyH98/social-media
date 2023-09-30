@@ -2,6 +2,7 @@ import { useParams , Link } from "react-router-dom";
 import { useState, useEffect} from "react";
 import { useDispatch , useSelector } from "react-redux";
 import { addFollowing, getFollowing, deleteFol , getFollower, getFavorites } from "../../Store/userActions";
+import Favorites from "../Favorites/Favorites"
 import Posts from "../Posts/Posts";
 import axios from "axios";
 
@@ -21,6 +22,7 @@ function OtherProfile({user}){
  
     let [following , setFollowing] = useState([])
     let [follower , setFollower] = useState([])
+    let [favorites , setFavorites] = useState([])
 
 useEffect(() => {
   axios.get(`${API}/users/${id}`)
@@ -53,6 +55,10 @@ useEffect(() => {
   .then((res) => {
     setFollower(res.data)
   })
+  axios.get(`${API}/favorites/${id}`)
+  .then((res) => {
+    setFavorites(res.data)
+  })
 }, [id])
 
 useEffect(() => {
@@ -62,7 +68,7 @@ useEffect(() => {
 
 
 
-console.log(posts)
+
 
     function optionContent(selected) {
       if (selected === 0) {
@@ -78,20 +84,19 @@ console.log(posts)
           </div>
         );
       }
-      // if (selected === 2) {
-      //   return ( 
-      //     <div className="option-content-holder">
-      //       {favorites.map((fav) => {
-      //         return (
-      //           <div key={fav.id} className="posts-border-container">
-      //             <Favorites fav={fav} users={users} />
-      //           </div>
-      //         );
-      //       })}
-      //     </div>
-      //   );
-      // }
-
+      if (selected === 2) {
+        return ( 
+          <div className="option-content-holder">
+            {favorites.map((fav) => {
+              return (
+                <div key={fav.id} className="posts-border-container">
+                  <Favorites fav={fav} users={users} />
+                </div>
+              );
+            })}
+          </div>
+        );
+      }
     }
 
 

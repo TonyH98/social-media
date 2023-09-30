@@ -1,7 +1,7 @@
 import { useParams , Link } from "react-router-dom";
 import { useState, useEffect} from "react";
 import { useDispatch , useSelector } from "react-redux";
-import { addFollowing, getFollowing, deleteFol , getFollower } from "../../Store/userActions";
+import { addFollowing, getFollowing, deleteFol , getFollower, getFavorites } from "../../Store/userActions";
 import Posts from "../Posts/Posts";
 import axios from "axios";
 
@@ -9,15 +9,19 @@ const API = process.env.REACT_APP_API_URL;
 
 function OtherProfile({user}){
 
-  let usersFollowing = useSelector((state) => state.follow.fol)
-
+    let usersFollowing = useSelector((state) => state.follow.fol)
+    let userFavorites = useSelector((state) => state.favorites.fav)
     let options = ["Posts", "Replies", "Favorites"]
+
     let [option , setOption] = useState(0)
     let [users , setUsers] = useState([])
     let [posts , setPosts] = useState([])
     let dispatch = useDispatch()
     const {id} = useParams()
  
+    let [following , setFollowing] = useState([])
+    let [follower , setFollower] = useState([])
+
 useEffect(() => {
   axios.get(`${API}/users/${id}`)
   .then((res) => {
@@ -38,10 +42,22 @@ useEffect(() => {
     console.log(err)
   })
 } , [users.username])
- 
+
+
+useEffect(() => {
+  axios.get(`${API}/follow/${id}`)
+  .then((res) => {
+    setFollowing(res.data)
+  })
+  axios.get(`${API}/follow/${id}/followers`)
+  .then((res) => {
+    setFollower(res.data)
+  })
+}, [id])
 
 useEffect(() => {
   dispatch(getFollowing(user?.id))
+  dispatch(getFavorites(user?.id))
 }, [dispatch, user])
 
 
@@ -55,7 +71,7 @@ console.log(posts)
             {posts.map((posts) => {
               return (
                 <div key={posts.id} className="posts-border-container">
-                  <Posts posts={posts} users={users}  />
+                  <Posts posts={posts} users={user} favorites={userFavorites} />
                 </div>
               );
             })}
@@ -148,11 +164,11 @@ return(
         <div className="profile_followers_container">
 
             <Link to={`/${users?.id}/following`}>
-            <div>0 Following</div>
+            <div>{following.length} Following</div>
             </Link>
 
             <Link to={`/${users?.id}/follower`}>
-            <div>0 Followers</div>
+            <div>{follower.length} Followers</div>
             </Link>
             
 

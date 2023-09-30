@@ -1,15 +1,21 @@
 import { useParams , Link } from "react-router-dom";
 import { useState, useEffect} from "react";
+import { useDispatch , useSelector } from "react-redux";
+import { addFollowing, getFollowing, deleteFol , getFollower } from "../../Store/userActions";
 import Posts from "../Posts/Posts";
 import axios from "axios";
 
 const API = process.env.REACT_APP_API_URL;
+
 function OtherProfile({user}){
+
+  let usersFollowing = useSelector((state) => state.follow.fol)
 
     let options = ["Posts", "Replies", "Favorites"]
     let [option , setOption] = useState(0)
     let [users , setUsers] = useState([])
     let [posts , setPosts] = useState([])
+    let dispatch = useDispatch()
     const {id} = useParams()
  
 useEffect(() => {
@@ -33,6 +39,13 @@ useEffect(() => {
   })
 } , [users.username])
  
+
+useEffect(() => {
+  dispatch(getFollowing(user?.id))
+}, [dispatch, user])
+
+
+
 console.log(posts)
 
     function optionContent(selected) {
@@ -68,17 +81,17 @@ console.log(posts)
 
 
 
-  //   function handleFollow(e){
-  //       e.preventDefault()
-  //       dispatch(addFollowing(user?.id, users?.id))
-  //   }
+    function handleFollow(e){
+        e.preventDefault()
+        dispatch(addFollowing(user?.id, users?.id))
+    }
 
 
-  //   function handleDeleteFollow(e){
-  //       e.preventDefault()
-  //       dispatch(deleteFol(user?.id, users?.id))
-  //   }
-  //    const inFav = Array.isArray(usersFollowing) ? usersFollowing.map(fol => fol?.following_id) : [];
+    function handleDeleteFollow(e){
+        e.preventDefault()
+        dispatch(deleteFol(user?.id, users?.id))
+    }
+     const inFav = Array.isArray(usersFollowing) ? usersFollowing.map(fol => fol?.following_id) : [];
 
    const parseBio = (bio) => {
         const urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -98,11 +111,11 @@ return(
         alt={users?.banner_img} 
         className="profile_banner_img"/>
 
-        {/* <div className="profile_btns_container">
+        <div className="profile_btns_container">
             {user && inFav.includes(users?.id) ? 
-            <button onClick={handleDeleteFollow}>Unfollow</button>
-            : <button onClick={handleFollow}>Follow</button>}
-        </div> */}
+            <button onClick={handleDeleteFollow} className="follow_btn">Unfollow</button>
+            : <button onClick={handleFollow} className="follow_btn">Follow</button>}
+        </div>
 
         </div>
 

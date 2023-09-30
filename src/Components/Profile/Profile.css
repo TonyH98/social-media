@@ -83,7 +83,7 @@ border-bottom: solid rgb(59, 174, 212) 3px;
     margin-top: -30px;
   }
 
-  .create_post_btns {
+  .create_post_btns, .follow_btn {
     width: 130px;
     border-radius: 25px;
     border: none;

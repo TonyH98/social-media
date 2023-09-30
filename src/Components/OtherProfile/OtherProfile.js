@@ -1,40 +1,84 @@
 import { useParams , Link } from "react-router-dom";
-import { useDispatch , useSelector } from "react-redux";
-import { fetchUsers, fetchPosts, getFavorites, addFollowing, getFollowing, deleteFol , getFollower } from "../../Store/userActions";
 import { useState, useEffect} from "react";
+import Posts from "../Posts/Posts";
+import axios from "axios";
 
-
+const API = process.env.REACT_APP_API_URL;
 function OtherProfile({user}){
 
     let options = ["Posts", "Replies", "Favorites"]
     let [option , setOption] = useState(0)
-
+    let [users , setUsers] = useState([])
+    let [posts , setPosts] = useState([])
     const {id} = useParams()
-    const dispatch = useDispatch();
-
-    const users = useSelector((state) => state.user.users);
-    let usersFollowing = useSelector((state) => state.follow.fol)
-    let follower = useSelector((state) => state.follower.fol)
-
-    useEffect(() => {
-        dispatch(fetchUsers(id))
-        dispatch(getFollowing(user?.id))
-        dispatch(getFollower(id))
-     }, [dispatch, user])
-
-
  
-    function handleFollow(e){
-        e.preventDefault()
-        dispatch(addFollowing(user?.id, users?.id))
+useEffect(() => {
+  axios.get(`${API}/users/${id}`)
+  .then((res) => {
+    setUsers(res.data)
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+} , [id])
+    
+
+useEffect(() => {
+  axios.get(`${API}/users/${users.username}/posts`)
+  .then((res) => {
+    setPosts(res.data)
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+} , [users.username])
+ 
+console.log(posts)
+
+    function optionContent(selected) {
+      if (selected === 0) {
+        return (
+          <div className="option-content-holder">
+            {posts.map((posts) => {
+              return (
+                <div key={posts.id} className="posts-border-container">
+                  <Posts posts={posts} users={users}  />
+                </div>
+              );
+            })}
+          </div>
+        );
+      }
+      // if (selected === 2) {
+      //   return ( 
+      //     <div className="option-content-holder">
+      //       {favorites.map((fav) => {
+      //         return (
+      //           <div key={fav.id} className="posts-border-container">
+      //             <Favorites fav={fav} users={users} />
+      //           </div>
+      //         );
+      //       })}
+      //     </div>
+      //   );
+      // }
+
     }
 
 
-    function handleDeleteFollow(e){
-        e.preventDefault()
-        dispatch(deleteFol(user?.id, users?.id))
-    }
-     const inFav = Array.isArray(usersFollowing) ? usersFollowing.map(fol => fol?.following_id) : [];
+
+
+  //   function handleFollow(e){
+  //       e.preventDefault()
+  //       dispatch(addFollowing(user?.id, users?.id))
+  //   }
+
+
+  //   function handleDeleteFollow(e){
+  //       e.preventDefault()
+  //       dispatch(deleteFol(user?.id, users?.id))
+  //   }
+  //    const inFav = Array.isArray(usersFollowing) ? usersFollowing.map(fol => fol?.following_id) : [];
 
    const parseBio = (bio) => {
         const urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -54,11 +98,11 @@ return(
         alt={users?.banner_img} 
         className="profile_banner_img"/>
 
-        <div className="profile_btns_container">
+        {/* <div className="profile_btns_container">
             {user && inFav.includes(users?.id) ? 
             <button onClick={handleDeleteFollow}>Unfollow</button>
             : <button onClick={handleFollow}>Follow</button>}
-        </div>
+        </div> */}
 
         </div>
 
@@ -113,14 +157,15 @@ return(
         })}
 
         </div>
+        {optionContent(option)}
+
+        </div>
 
 
         </div>
 
-
         </div>
-
-        </div>
+    
 )
 
 }

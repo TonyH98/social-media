@@ -1,10 +1,12 @@
-import { useState, useEffect} from "react";
-import { fetchUsers } from "../../Store/userActions";
+import {  useEffect} from "react";
+import { fetchUsers, getFollowing, getFollower } from "../../Store/userActions";
 import { useDispatch , useSelector } from "react-redux";
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import Follower from "./Follwer";
 
-function Followers({user , follower}){
+function Followers(){
+
+    let {id} = useParams()
 
     const location = useLocation()
 
@@ -14,12 +16,19 @@ function Followers({user , follower}){
 
 const dispatch = useDispatch();
 const users = useSelector((state) => state.user.users);
+let follower = useSelector((state) => state.follower.fol)
 
 useEffect(() => {
     
-    dispatch(fetchUsers(user?.id))
+    dispatch(fetchUsers(id))
 
- }, [dispatch])
+ }, [dispatch , id])
+
+ useEffect(() => { 
+    if(id){
+      dispatch(getFollower(id))
+    }
+ }, [dispatch, id])
 
     return(
         <div className="users_following_container">
@@ -31,11 +40,11 @@ useEffect(() => {
             </div>
 
             <div className="followe_links">
-                <Link to={`/${user?.id}/following`} className={isActive(`/${user?.id}/following`)}>
+                <Link to={`/${users?.id}/following`} className={isActive(`/${users?.id}/following`)}>
                 <button className="follow_link">Following</button>
                 </Link>
 
-                <Link to={`/${user?.id}/follower`} className={isActive(`/${user?.id}/follower`)}>
+                <Link to={`/${users?.id}/follower`} className={isActive(`/${users?.id}/follower`)}>
                 <button className="follow_link">Followers</button>
                 </Link>
             </div>

@@ -12,7 +12,7 @@ function Follower({fol}){
     }, [fol.bio , bio]) 
   
   
-
+console.log(fol)
 
 
 return(

@@ -13,8 +13,8 @@ import Followings from './Components/Following/Followings';
 import Followers from './Components/Following/Followers';
 import Notifications from './Components/Notifications/Notifications';
 import Footer from './Components/Footer/Footer';
-import { useDispatch , useSelector } from "react-redux";
-import { getFollowing, getFollower } from './Store/userActions';
+
+
 
 function App() {
 
@@ -34,18 +34,6 @@ function App() {
   }, [isLogged]);
 
 
-  let following = useSelector((state) => state.follow.fol)
-  let follower = useSelector((state) => state.follower.fol)
-
-  const dispatch = useDispatch();
-
-
-  useEffect(() => { 
-    if(user?.id){
-      dispatch(getFollower(user?.id))
-      dispatch(getFollowing(user?.id))
-    }
- }, [dispatch, user?.id])
 
 
   return (
@@ -62,8 +50,8 @@ function App() {
           <Route path="/posts/:tag_name" element={<SearchPosts/>}/>
           <Route path={`/posts/:username/:id`} element={<PostsDetails user={user}/>}/>
           <Route path={`/profiles/:id`} element={<OtherProfile user={user}/>}/>
-          <Route path={`/:id/following`} element={<Followings user={user} following={following}/>}/>
-          <Route path={`/:id/follower`} element={<Followers follower={follower} user={user}/>}/>
+          <Route path={`/:id/following`} element={<Followings />}/>
+          <Route path={`/:id/follower`} element={<Followers/>}/>
           <Route path={`/notifications/:id`} element={<Notifications/>}/>
         </Routes>
       </main>

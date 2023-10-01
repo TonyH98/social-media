@@ -18,6 +18,18 @@
     margin-left: 200px;
 }
 
+.member_badge{
+  width: 30px;
+  height: 30px;
+  margin-top: 16px;
+}
+
+.profile_name{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
 
 .profile_img{
 width: 140px;

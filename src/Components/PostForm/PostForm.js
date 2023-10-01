@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { createPost } from "../../Store/userActions";
 
 const API = process.env.REACT_APP_API_URL;
-function PostForm ({open, onClose, users}){
+function PostForm ({open, onClose, users, plan}){
 
   const dispatch = useDispatch();
 
@@ -42,6 +42,20 @@ function PostForm ({open, onClose, users}){
         }
         
         else if(event.target.id === "content"){
+          if(plan?.images){
+            const {value} = event.target
+            if(value.length <=400){
+              setPosts((prevEvent) => ({
+                ...prevEvent,
+                content: value,
+              }));
+            } 
+            else{
+              event.target.value = value.substr(0,400)
+            }
+
+          }
+          else{
             const {value} = event.target
             if(value.length <=250){
               setPosts((prevEvent) => ({
@@ -52,6 +66,7 @@ function PostForm ({open, onClose, users}){
             else{
               event.target.value = value.substr(0,250)
             }
+          }
         }
     };
     
@@ -86,7 +101,7 @@ function PostForm ({open, onClose, users}){
 
     
     if(!open) return null
-    
+    console.log(plan)
     
     return(
         <div className="overlay">
@@ -110,9 +125,12 @@ function PostForm ({open, onClose, users}){
     onChange={handleTextChange}
   />
   
-  <p className={`${posts?.content.length >= 250 ? 'text-red-700' : null}`}>
-                        {posts?.content.length}/250 characters
- </p>
+  <p className={`${plan?.images ? 
+    (posts?.content.length >= 400 ? 'text-red-700' : null) 
+    : (posts?.content.length >= 250 ? 'text-red-700' : null)}`}>
+  {posts?.content.length} / {plan?.images ? 400 : 250} characters
+</p>
+
   </label>
 
   <label htmlFor="posts_img" className='label-signup'>

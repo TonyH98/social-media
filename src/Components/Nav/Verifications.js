@@ -3,7 +3,7 @@ import "./Verifications.css"
 import { useDispatch , useSelector } from "react-redux";
 import { getVerify } from "../../Store/userActions";
 import { useEffect } from "react";
-
+import axios from "axios";
 const API = process.env.REACT_APP_API_URL;
 
 function Verifications({open , onClose, user}){
@@ -45,10 +45,11 @@ const buyNow = async () => {
       if (data.url) {
         window.location.assign(data.url);
       }
-  
-
-
+      if(response.ok){
+        await axios.post(`${API}/plans/${user?.id}/plan/${getPlans.id}`)
+      }
 }
+
 
 
 return(

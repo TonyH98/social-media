@@ -22,7 +22,7 @@ function ReplyForm({open , onClose, users, posts }){
       }
     }, [users?.id, posts?.id]);
 
-console.log(replies)
+
 
     function formatDate(inputDate){
         const months = [

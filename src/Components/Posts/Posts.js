@@ -39,7 +39,7 @@ dispatch(getReactions(posts.creator.username , posts?.id))
     
 }, [dispatch])
 
-console.log(reaction)
+
 
 function formatDate(inputDate){
     const months = [

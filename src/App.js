@@ -13,13 +13,14 @@ import Followings from './Components/Following/Followings';
 import Followers from './Components/Following/Followers';
 import Notifications from './Components/Notifications/Notifications';
 import Footer from './Components/Footer/Footer';
+import axios from 'axios';
 
 
-
+const API = process.env.REACT_APP_API_URL;
 function App() {
 
   const [user, setUser] = useState();
-
+  const [plan , setPlan] = useState({})
 
   const [isLogged, setIsLogged] = useState(false);
 
@@ -34,19 +35,37 @@ function App() {
   }, [isLogged]);
 
 
+  useEffect(() => {
+    if (user?.id) {
+      axios.get(`${API}/plans/${user?.id}/plan`)
+        .then((res) => {
+          if (res.data) {
+            setPlan(res.data);
+          } else {
+            setPlan(false);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching plan data:", error);
+
+        });
+    }
+  }, [user?.id, isLogged]);
+  
+
 
 
   return (
     <div className="App">
     <Router>
     <div className="navbar">
-        {user ? <Nav /> : null}
+        {user ? <Nav user={user}/> : null}
       </div>
       <main className="content">
         <Routes>
           <Route path="/" element={<Home newLogin={newLogin} isLogged={isLogged} setUser={setUser} user={user}/>} />
           <Route path="/signup" element={<Signup />} />
-          <Route path={`/profile/${user?.id}`} element={<Profile user={user} />} />
+          <Route path={`/profile/${user?.id}`} element={<Profile user={user} plan={plan}/>} />
           <Route path="/posts/:tag_name" element={<SearchPosts/>}/>
           <Route path={`/posts/:username/:id`} element={<PostsDetails user={user}/>}/>
           <Route path={`/profiles/:id`} element={<OtherProfile user={user}/>}/>

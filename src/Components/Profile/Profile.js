@@ -10,7 +10,7 @@ import { fetchUsers, fetchPosts, getTags, getFavorites ,  fetchUser, getFollowin
 import { Link } from "react-router-dom";
 
 
-function Profile({user}){
+function Profile({user , plan}){
 
 
     let [option , setOption] = useState(0)
@@ -91,7 +91,7 @@ function Profile({user}){
       };
 
  
-
+      console.log(plan)
 
     return(
         <div className="profile">
@@ -118,7 +118,7 @@ function Profile({user}){
 
         <ProfileEdit open2={modal2} fetchUsers={fetchUsers} onClose={() => setModal2(false)} users={users}/>
 
-        <PostForm open={modal} onClose={() => setModal(false)} users={users}/>
+        <PostForm open={modal} onClose={() => setModal(false)} users={users} plan={plan}/>
 
 
         <div className="profile_info_container">
@@ -130,7 +130,12 @@ function Profile({user}){
         </div>
         
         <div className="profile_names_container">
-            <h3>{users?.profile_name}</h3>
+
+            <div className="profile_name">
+           <h3>{users?.profile_name}</h3> 
+            {plan?.images ? <img src={plan.images} alt={plan.images} className="member_badge"/> : null}
+            </div>
+
             <div>@{users?.username}</div>
 
         </div>

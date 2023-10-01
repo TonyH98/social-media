@@ -12,7 +12,7 @@ import {AiOutlineHeart} from "react-icons/ai"
 import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
 import { addFav , deleteFav, getReactions, addReaction, getFavorite} from "../../Store/userActions";
 
-function PostsDetails({user}){
+function PostsDetails({user , plan}){
 
 const {username , id} = useParams()
 
@@ -197,7 +197,7 @@ return(
    </button>
    </div>
 
-   <ReplyForm open={show} onClose={() =>  setShow(false)} users={user}  posts={posts}/>
+   <ReplyForm open={show} onClose={() =>  setShow(false)} users={user}  posts={posts} plan={plan}/>
 </div>
  
  </div>

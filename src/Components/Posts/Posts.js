@@ -10,7 +10,7 @@ import { useDispatch , useSelector } from "react-redux";
 import { addFav , deleteFav, getReactions, addReaction} from "../../Store/userActions";
 import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
 
-function Posts ({posts, users, favorites}){
+function Posts ({posts, users, favorites, plan}){
 
 
 
@@ -177,7 +177,7 @@ function handleDislike(e){
             </button>
             </div> 
 
-            <ReplyForm open={show} onClose={() =>  setShow(false)} users={users} posts={posts}/>
+            <ReplyForm open={show} onClose={() =>  setShow(false)} users={users} posts={posts} plan={plan}/>
          </div>
          
          </div>

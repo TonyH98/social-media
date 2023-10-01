@@ -2,7 +2,7 @@ import { useState , useEffect} from 'react';
 import { useDispatch } from 'react-redux';
 import {createRplies}  from "../../Store/userActions";
 import "./Reply.css"
-function ReplyForm({open , onClose, users, posts }){
+function ReplyForm({open , onClose, users, posts, plan }){
 
   const dispatch = useDispatch()
 
@@ -49,7 +49,31 @@ function ReplyForm({open , onClose, users, posts }){
 
 
     const handleTextChange = (event) => {
-        setReplies({...replies, [event.target.id]: event.target.value})
+      if(plan?.images){
+        const {value} = event.target
+        if(value.length <=400){
+          setReplies((prevEvent) => ({
+            ...prevEvent,
+            content: value,
+          }));
+        } 
+        else{
+          event.target.value = value.substr(0,400)
+        }
+
+      }
+      else{
+        const {value} = event.target
+        if(value.length <=250){
+          setReplies((prevEvent) => ({
+            ...prevEvent,
+            content: value,
+          }));
+        } 
+        else{
+          event.target.value = value.substr(0,250)
+        }
+      }
     };
 
 
@@ -142,7 +166,11 @@ className="post_user_profile"
     onChange={handleTextChange}
     onClick={handleTextareaClick}
   />
-  
+    <p className={`${plan?.images ? 
+    (replies?.content.length >= 400 ? 'text-red-700' : null) 
+    : (replies?.content.length >= 250 ? 'text-red-700' : null)}`}>
+  {replies?.content.length} / {plan?.images ? 400 : 250} characters
+</p>
   </label>
 
 

@@ -1,101 +1,140 @@
 
-
-.Home-Page {
-    display: flex;
-    justify-content: center; 
-    align-items: center; 
-    height: 100vh; 
-    gap: 50px;
-    margin-left: 50px;
-}
-
-
-.app-blurb {
-    display: flex;
-    flex-direction: column;
+@media(min-width: 993px){
+    .Home-Page {
+        display: flex;
+        justify-content: center; 
+        align-items: center; 
+        height: 100vh; 
+        gap: 50px;
+        margin-left: 50px;
+    }
+    
+    
+    .app-blurb {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        padding: 20px;
+    }
+    
+    .app-short {
+        font-size: 20px;
+        line-height: 1.7;
+        margin-top: 10px; /* Add some spacing between the heading and the paragraph */
+    }
+    
+    .app-blurb h1 {
+        font-size: 32px;
+        margin-bottom: 10px; /* Add spacing below the heading */
+    }
+    
+    .app-blurb p {
+        margin-bottom: 0;
+        width: 600px;
+    }
+    
+    
+    .login-form{
+        display: flex;
+        flex-direction: column;
+        margin-right: 40px;
+    }
+    
+    .label-signup{
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        gap: 3px;
+    }
+    
+    
+    .login-h3{
+        text-align: left;
+    }
+    
+    .input-container{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .input-login{
+    font-size: 17px;
+    height: 40px;
+    border-radius: 6px;
+    
+    }
+    
+    .show-password-container{
     text-align: left;
-    padding: 20px;
-}
-
-.app-short {
-    font-size: 20px;
-    line-height: 1.7;
-    margin-top: 10px; /* Add some spacing between the heading and the paragraph */
-}
-
-.app-blurb h1 {
-    font-size: 32px;
-    margin-bottom: 10px; /* Add spacing below the heading */
-}
-
-.app-blurb p {
-    margin-bottom: 0;
-    width: 600px;
-}
-
-
-.login-form{
-    display: flex;
-    flex-direction: column;
-    margin-right: 40px;
-}
-
-.label-signup{
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    gap: 3px;
-}
-
-
-.login-h3{
-    text-align: left;
-}
-
-.input-container{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.input-login{
-font-size: 17px;
-height: 40px;
-border-radius: 6px;
-
-}
-
-.show-password-container{
-text-align: left;
-margin-bottom: 20px;
-
-}
-
-.login-submit{
-
-width: 80px;
-height: 30px;
-border: none;
-background-color: blue;
-color: white;
-border-radius: 15px;
-
-}
-
-
-.signup-option{
-    border-top: black solid 1px;
-    margin-top: 14px;
-    text-align: left;
-}
-
-.registory-btn{
-
+    margin-bottom: 20px;
+    
+    }
+    
+    .login-submit{
+    
     width: 80px;
     height: 30px;
     border: none;
     background-color: blue;
     color: white;
     border-radius: 15px;
+    
+    }
+    
+    
+    .signup-option{
+        border-top: black solid 1px;
+        margin-top: 14px;
+        text-align: left;
+    }
+    
+    .registory-btn{
+    
+        width: 80px;
+        height: 30px;
+        border: none;
+        background-color: blue;
+        color: white;
+        border-radius: 15px;
+    
+    }
 
+}
+
+
+@media (min-width: 320px) and (max-width: 992px){
+    .Home-Page {
+        display: flex;
+        flex-direction: column;
+        justify-content: center; 
+        align-items: center; 
+  
+        gap: 20px;
+        margin-left: 50px;
+    }
+    .login-form{
+        display: flex;
+        flex-direction: column;
+        margin-right: 40px;
+    }
+
+    .signup-option{
+        border-top: black solid 1px;
+        margin-top: 14px;
+        text-align: left;
+    }
+
+    .app-short {
+        font-size: 20px;
+        line-height: 1.7;
+        margin-top: 10px; /* Add some spacing between the heading and the paragraph */
+    }
+
+    .input-login{
+        font-size: 17px;
+        height: 40px;
+        border-radius: 6px;
+        
+        }
 }

@@ -8,7 +8,7 @@ import axios from "axios";
 
 const API = process.env.REACT_APP_API_URL;
 
-function OtherProfile({user}){
+function OtherProfile({user , plan}){
 
     let usersFollowing = useSelector((state) => state.follow.fol)
     let userFavorites = useSelector((state) => state.favorites.fav)
@@ -77,7 +77,7 @@ useEffect(() => {
             {posts.map((posts) => {
               return (
                 <div key={posts.id} className="posts-border-container">
-                  <Posts posts={posts} users={user} favorites={userFavorites} />
+                  <Posts posts={posts} users={user} favorites={userFavorites} plan={plan}/>
                 </div>
               );
             })}

@@ -58,9 +58,9 @@ function App() {
   return (
     <div className="App">
     <Router>
-    {/* <div className="navbar">
+    <div className="navbar">
         {user ? <Nav user={user}/> : null}
-      </div> */}
+      </div>
       <main className="content">
         <Routes>
           <Route path="/" element={<Home newLogin={newLogin} isLogged={isLogged} setUser={setUser} user={user}/>} />

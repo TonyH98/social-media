@@ -5,6 +5,8 @@ import { getTags, fetchUser} from "../../Store/userActions";
 import {PiMagnifyingGlassLight} from "react-icons/pi"
 import {MdClear} from "react-icons/md"
 
+import "./SearchModal.css"
+
 function SearchModal({open , onClose , user}){
     const dispatch = useDispatch();
     let allUsers = useSelector((state) => state.users.users)
@@ -51,7 +53,7 @@ function SearchModal({open , onClose , user}){
     if(!open) return null
 
     return(
-    <div className="overlay">
+    <div className="overlay searchModal">
     <div className="modal-container">
      <div className="modalLeft">
      <button className="onClose" onClick={onClose}>X</button>

@@ -12,6 +12,7 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import SearchModal from "../SearchModal/SearchModal"
 import Verifications from "./Verifications";
+import LogoutModal from "../Logout/LogoutModal"
 
 function Nav(){
 
@@ -21,7 +22,9 @@ function Nav(){
 
     const [modal2 , setModal2] = useState(false)
 
-    const navigate = useNavigate();
+    const [modal3 , setModal3] = useState(false)
+
+
 
   useEffect(() => {
     const loggedUser = JSON.parse(window.localStorage.getItem('user'));
@@ -35,20 +38,7 @@ function Nav(){
   }
 
 
-  const handleLogout = () => {
-    localStorage.clear();
-
-    fetch("/logout", {
-      method: "POST",
-      credentials: "include",
-    })
-      .then(() => {
-        navigate("/");
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+ 
 
 
 
@@ -91,8 +81,9 @@ return(
         <span class="text">Search</span>
         </div>
         <SearchModal open={modal2} onClose={() => setModal2(false)} user={user} />
-        <button onClick={handleLogout} className="logout nav-content">Logout</button>
 
+        <button className="logout nav-content" onClick={() => setModal3(true)}>Logout</button>
+        <LogoutModal open={modal3} onClose={() => setModal3(false)} user={user}/>
         </div>
 
     </div>

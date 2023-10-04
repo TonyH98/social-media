@@ -1,0 +1,28 @@
+
+.logout_buttons_container{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.lg_btn{ 
+    border: none;
+    font-size: 20px;
+    height: 40px;
+    width: 100px;
+    color: white;
+    border-radius: 8px;
+}
+
+.lg_btn:hover{
+    cursor: pointer;
+}
+
+.logout_button{
+    background-color: red;
+ 
+}
+
+.logout_cancel_button{
+    background-color: blue;
+}

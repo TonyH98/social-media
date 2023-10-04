@@ -23,7 +23,8 @@ function App() {
   const [plan , setPlan] = useState({})
 
   const [isLogged, setIsLogged] = useState(false);
-
+  
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const newLogin = () => {
     setIsLogged(!isLogged);
   };
@@ -53,6 +54,19 @@ function App() {
   }, [user?.id, isLogged]);
   
 
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    // Attach the event listener
+    window.addEventListener('resize', handleResize);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
 
   return (
@@ -74,9 +88,9 @@ function App() {
           <Route path={`/notifications/:id`} element={<Notifications/>}/>
         </Routes>
       </main>
-      {/* <div className="footer">
-        {user ? <Footer user={user}/> : null}
-      </div> */}
+      <div className="footer" style={{ display: screenWidth >= 993 ? 'block' : 'none' }}>
+          {user ? <Footer user={user} /> : null}
+        </div>
     </Router>
   </div>
   );

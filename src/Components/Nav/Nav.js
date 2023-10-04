@@ -5,11 +5,12 @@ import {IoIosNotifications} from "react-icons/io"
 import {LuVerified} from "react-icons/lu"
 
 import {CgProfile} from "react-icons/cg"
-
+import {CiSearch} from "react-icons/ci"
 
 import { useNavigate, Link, useLocation } from "react-router-dom";
 
 import { useState, useEffect } from "react";
+import SearchModal from "../SearchModal/SearchModal"
 import Verifications from "./Verifications";
 
 function Nav(){
@@ -17,6 +18,8 @@ function Nav(){
     const [user, setUser] = useState();
 
     const [modal , setModal] = useState(false)
+
+    const [modal2 , setModal2] = useState(false)
 
     const navigate = useNavigate();
 
@@ -83,6 +86,11 @@ return(
 
         <Verifications open={modal} onClose={() => setModal(false)} user={user}/>
 
+        <div className="nav-content nav-search" onClick={() => setModal2(true)}>
+        <CiSearch class="icon" size={30} />
+        <span class="text">Search</span>
+        </div>
+        <SearchModal open={modal2} onClose={() => setModal2(false)} user={user} />
         <button onClick={handleLogout} className="logout nav-content">Logout</button>
 
         </div>

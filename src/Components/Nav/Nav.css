@@ -66,6 +66,10 @@
   .nav-content:hover{
     cursor: pointer;
   }
+
+  .nav-search{
+    display: none;
+  }
 }
 
 

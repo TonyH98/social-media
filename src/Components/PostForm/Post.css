@@ -17,10 +17,12 @@
   background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
-  overflow: hidden;
+  max-height: 90vh; /* Adjust to your preference */
+  overflow-y: auto; /* Enable vertical scrolling if content overflows */
   position: relative;
   display: flex;
   flex-direction: column;
+
 }
 
 .modalLeft {

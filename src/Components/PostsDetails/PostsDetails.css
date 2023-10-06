@@ -1,4 +1,8 @@
-.posts_main_container, .replies_container {
-   margin-left: 200px;
+
+@media(min-width: 993px){
+
+   .posts_main_container, .replies_container {
+      margin-left: 200px;
+   }
 }
 

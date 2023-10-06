@@ -73,7 +73,7 @@ function App() {
     <div className="App">
     <Router>
     <div className="navbar">
-        {user ? <Nav user={user}/> : null}
+        {user ? <Nav user={user} plan={plan}/> : null}
       </div>
       <main className="content">
         <Routes>

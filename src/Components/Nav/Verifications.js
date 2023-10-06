@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import axios from "axios";
 const API = process.env.REACT_APP_API_URL;
 
-function Verifications({open , onClose, user}){
+function Verifications({open , onClose, user , plan}){
 
 const dispatch = useDispatch();
 const getPlans = useSelector((state) => state.plan.plans)
@@ -73,7 +73,10 @@ return(
                 <p>${getPlans.price.toFixed(2)}</p>
             </div>
             
+            {plan?.images ? <span className="check_member">Alraedy a member</span> :
+            
             <button className="purchase_verfication" onClick={buyNow}>Purchase</button>
+            }
 
             </div>
 

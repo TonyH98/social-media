@@ -7,14 +7,14 @@ import {LuVerified} from "react-icons/lu"
 import {CgProfile} from "react-icons/cg"
 import {CiSearch} from "react-icons/ci"
 
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import {  Link, useLocation } from "react-router-dom";
 
 import { useState, useEffect } from "react";
 import SearchModal from "../SearchModal/SearchModal"
 import Verifications from "./Verifications";
 import LogoutModal from "../Logout/LogoutModal"
 
-function Nav(){
+function Nav({plan}){
 
     const [user, setUser] = useState();
 
@@ -36,10 +36,6 @@ function Nav(){
   const isActive = (path) => {
     return location.pathname === path ? 'active2' : ''
   }
-
-
- 
-
 
 
 return(
@@ -74,7 +70,7 @@ return(
         <span class="text">Verified</span>
         </div>
 
-        <Verifications open={modal} onClose={() => setModal(false)} user={user}/>
+        <Verifications open={modal} onClose={() => setModal(false)} user={user} plan={plan}/>
 
         <div className="nav-content nav-search" onClick={() => setModal2(true)}>
         <CiSearch class="icon" size={30} />

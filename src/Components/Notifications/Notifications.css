@@ -1,5 +1,9 @@
-.note_page{
-    margin-left: 200px;
+
+ .label-note{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-weight: bold;
 }
 
 .note_input{
@@ -7,23 +11,41 @@
     height: 20px;
 }
 
-.label-note{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    font-weight: bold;
+@media(min-width: 993px){
+    
+    .note_page{
+        margin-left: 200px;
+    }
+    
+  
+    
+    .label-note{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        font-weight: bold;
+    }
+    
+    .note_first_section{
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    
+    .note_options_button{
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+    }
+
 }
 
-.note_first_section{
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+
+@media (min-width: 320px) and (max-width: 992px){
+
+.note_input_bar_container{
+    margin-bottom: 20px;
 }
 
-
-.note_options_button{
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
 }
-

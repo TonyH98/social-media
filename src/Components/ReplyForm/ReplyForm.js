@@ -8,6 +8,7 @@ function ReplyForm({open , onClose, users, posts, plan }){
 
   let [replies, setReplies] = useState({
     content: "",
+    posts_img: null,
     user_id: users?.id,
     posts_id: posts.id, 
     })
@@ -49,7 +50,16 @@ function ReplyForm({open , onClose, users, posts, plan }){
 
 
     const handleTextChange = (event) => {
-      if(plan?.images){
+      if(event.target.id === "posts_img"){
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        
+        reader.onload = () => {
+            setReplies({...replies, posts_img: reader.result})
+        }
+        reader.readAsDataURL(file)
+    }
+      else if(plan?.images){
         const {value} = event.target
         if(value.length <=400){
           setReplies((prevEvent) => ({
@@ -79,7 +89,12 @@ function ReplyForm({open , onClose, users, posts, plan }){
 
     const handleSubmit = (event) => {
       event.preventDefault()
-      dispatch(createRplies(users?.username, posts.id, replies))
+      const formData = new FormData();
+        formData.append("content", replies?.content);
+        formData.append("posts_img", replies.posts_img === "" ? null : replies.posts_img);
+        formData.append("user_id", users?.id);
+        formData.append("posts_id", posts.id)
+      dispatch(createRplies(users?.username, posts.id, formData))
       .then((res) => {
         onClose()
         setReplies({
@@ -173,7 +188,18 @@ className="post_user_profile"
 </p>
   </label>
 
-
+  <label htmlFor="posts_img" className='label-signup'>
+          Post Image
+          <input
+            key={replies.imageKey}
+            id="posts_img"
+            name="posts_img"
+            type="file"
+            className="file-input"
+            accept=".png, .jpg, .jpeg"
+            onChange={handleTextChange}
+          />
+        </label>
 
 </div>
 

@@ -2,7 +2,7 @@ import { useNavigate} from "react-router-dom";
 
 import "./LogoutModal.css"
 
-function LogoutModal({open , onClose , user}){
+function LogoutModal({open , onClose}){
 
     const navigate = useNavigate();
 

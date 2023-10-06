@@ -14,7 +14,7 @@ function Replies({reply}){
         return `${formattedMonth} ${day}, ${formattedYear}`
     }
 
-
+console.log(reply)
 return(
 
 <div className="posts_content replies">
@@ -42,7 +42,13 @@ className="post_user_profile"
 
    {reply.content}
 </div>
+<div className="posts_img_container">
+            {reply.posts_img === null || reply.posts_img === "null" ? null : (
 
+                <img src={reply.posts_img} alt={reply.posts_img} className="posts_img"/>
+            )}
+
+            </div>
 
 </div>
 

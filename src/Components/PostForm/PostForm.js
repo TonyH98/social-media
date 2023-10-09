@@ -14,6 +14,10 @@ function PostForm ({open, onClose, users, plan}){
 
     let [mentionUsers , setMentionUsers] = useState([])
 
+    let [tags , setTags] = useState([])
+
+    let[filterTags , setFilterTags] = useState([])
+
     const textareaRef = useRef(null);
 
 
@@ -39,8 +43,13 @@ function PostForm ({open, onClose, users, plan}){
       .then((res) => {
         setOtherUsers(res.data)
       })
+
+      axios.get(`${API}/tags`)
+      .then((res) => {
+        setTags(res.data)
+      })
     }, [API])
-  
+  console.log(tags)
 
     const handleTextChange = (event) => {
         if(event.target.id === "posts_img"){
@@ -91,6 +100,17 @@ function PostForm ({open, onClose, users, plan}){
               setMentionUsers([]);
             }
 
+            const hashtags = value.match(/#(\w+)/g);
+            if (hashtags) {
+              const searchTags = hashtags.map((tags) => tags.substring(1));
+              const filteredTags = tags.filter((tag) =>
+                searchTags.some((hash) => tag.tag_names.toLowerCase().includes(hash.toLowerCase()))
+              );
+              setFilterTags(filteredTags);
+            } else {
+              setFilterTags([]);
+            }
+
           }
         }
     };
@@ -103,6 +123,15 @@ function PostForm ({open, onClose, users, plan}){
       setPosts({ ...posts, content: newContent });
     
       setMentionUsers([]); // Clear mention suggestions
+    };
+
+    const handleTags = (tag) => {
+   
+      const newContent = `${tag.tag_names}`
+    
+      setPosts({ ...posts, content: newContent });
+    
+      setFilterTags([]); // Clear mention suggestions
     };
 
       const handleSubmit = (event) => {
@@ -170,6 +199,16 @@ function PostForm ({open, onClose, users, plan}){
       {mentionUsers.map((user) => (
         <li key={user.id} onClick={() => handleMention(user)}>
           @{user.username}
+        </li>
+      ))}
+    </ul>
+  )}
+
+{filterTags.length > 0 && (
+    <ul className="mention-suggestions">
+      {filterTags.map((tag) => (
+        <li key={tag.id} onClick={() => handleTags(tag)}>
+          {tag.tag_names}
         </li>
       ))}
     </ul>

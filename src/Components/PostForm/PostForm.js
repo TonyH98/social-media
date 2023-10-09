@@ -185,7 +185,7 @@ function PostForm ({open, onClose, users, plan}){
   required
   value={posts.content}
   onChange={handleTextChange}
-  ref={textareaRef} // Add this line
+  ref={textareaRef} 
 />
   
   <p className={`${plan?.images ? 

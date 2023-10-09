@@ -1,10 +1,25 @@
-import { useState , useEffect} from 'react';
+import { useState , useEffect, useRef} from 'react';
 import { useDispatch } from 'react-redux';
 import {createRplies}  from "../../Store/userActions";
 import "./Reply.css"
+
+import axios from "axios";
+
+const API = process.env.REACT_APP_API_URL;
 function ReplyForm({open , onClose, users, posts, plan }){
 
   const dispatch = useDispatch()
+
+  let [otherUsers , setOtherUsers] = useState([])
+
+  let [mentionUsers , setMentionUsers] = useState([])
+
+  let [tags , setTags] = useState([])
+
+  let[filterTags , setFilterTags] = useState([])
+
+  const textareaRef = useRef(null);
+
 
   let [replies, setReplies] = useState({
     content: "",
@@ -23,7 +38,17 @@ function ReplyForm({open , onClose, users, posts, plan }){
       }
     }, [users?.id, posts?.id]);
 
+    useEffect(() => {
+      axios.get(`${API}/users`)
+      .then((res) => {
+        setOtherUsers(res.data)
+      })
 
+      axios.get(`${API}/tags`)
+      .then((res) => {
+        setTags(res.data)
+      })
+    }, [API])
 
     function formatDate(inputDate){
         const months = [
@@ -83,9 +108,51 @@ function ReplyForm({open , onClose, users, posts, plan }){
         else{
           event.target.value = value.substr(0,250)
         }
+
+        const mentionMatches = value.match(/@(\w+)/g);
+
+        if (mentionMatches) {
+          const mentions = mentionMatches.map((mention) => mention.substring(1));
+          const filteredUsers = otherUsers.filter((user) =>
+            mentions.some((mention) => user.username.toLowerCase().includes(mention.toLowerCase()))
+          );
+          setMentionUsers(filteredUsers);
+        } else {
+          setMentionUsers([]);
+        }
+
+        const hashtags = value.match(/#(\w+)/g);
+        if (hashtags) {
+          const searchTags = hashtags.map((tags) => tags.substring(1));
+          const filteredTags = tags.filter((tag) =>
+            searchTags.some((hash) => tag.tag_names.toLowerCase().includes(hash.toLowerCase()))
+          );
+          setFilterTags(filteredTags);
+        } else {
+          setFilterTags([]);
+        }
+
+
       }
     };
 
+    const handleMention = (user) => {
+   
+      const newContent = `@${user.username}`
+    
+      setReplies({ ...replies, content: newContent });
+    
+      setMentionUsers([]); // Clear mention suggestions
+    };
+
+    const handleTags = (tag) => {
+   
+      const newContent = `${tag.tag_names}`
+    
+      setReplies({ ...replies, content: newContent });
+    
+      setFilterTags([]); // Clear mention suggestions
+    };
 
     const handleSubmit = (event) => {
       event.preventDefault()
@@ -179,13 +246,33 @@ className="post_user_profile"
     required
     value={replies.content}
     onChange={handleTextChange}
-    onClick={handleTextareaClick}
+    ref={textareaRef} 
   />
     <p className={`${plan?.images ? 
     (replies?.content.length >= 400 ? 'text-red-700' : null) 
     : (replies?.content.length >= 250 ? 'text-red-700' : null)}`}>
   {replies?.content.length} / {plan?.images ? 400 : 250} characters
 </p>
+
+{mentionUsers.length > 0 && (
+    <ul className="mention-suggestions">
+      {mentionUsers.map((user) => (
+        <li key={user.id} onClick={() => handleMention(user)}>
+          @{user.username}
+        </li>
+      ))}
+    </ul>
+  )}
+
+{filterTags.length > 0 && (
+    <ul className="mention-suggestions">
+      {filterTags.map((tag) => (
+        <li key={tag.id} onClick={() => handleTags(tag)}>
+          {tag.tag_names}
+        </li>
+      ))}
+    </ul>
+  )}
   </label>
 
   <label htmlFor="posts_img" className='label-signup'>

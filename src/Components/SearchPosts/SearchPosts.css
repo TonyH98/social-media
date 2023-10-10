@@ -1,13 +1,17 @@
-.search_post_page{
-    margin-left: 200px;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
 
-.search_post_container{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+@media(min-width:993px){
+    .search_post_page{
+        margin-left: 200px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .search_post_container{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
 }
 

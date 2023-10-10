@@ -24,7 +24,9 @@ import { ADD_POSTS_REACTIONS , ADD_POSTS_REACTIONS_FAIL } from "./userActions";
 import { GET_FAVORITE , GET_FAVORITE_FAIL } from "./userActions";
 import { FETCH_NOTIFICATIONS_FAIL2 , FETCH_NOTIFICATIONS2 } from "./userActions";
 import { FETCH_SEARCH_REPLIES , FETCH_SEARCH_REPLIES_FAIL } from "./userActions";
-
+import {FETCH_FAVORITE_REPLIES , FETCH_FAVORITE_REPLIES_FAIL} from "./userActions";
+import {DELETE_FAV_REPLIES , DELETE_FAV_REPLIES_FAIL} from "./userActions";
+import {ADD_FAVR , ADD_FAVR_FAIL} from "./userActions"
 
 const initialState = {
 
@@ -714,3 +716,81 @@ export const getPostDetails = (state = initialPostDetails, action) => {
                 return state
         }
       }
+
+
+      const initialFavoriteR = {
+
+        fav: [],
+        error: null
+    }
+    
+    export const userFavoriteR = (state = initialFavoriteR, action) => {
+        switch (action.type){
+            case FETCH_FAVORITE_REPLIES:
+                return {
+                    ...state,
+                    fav: action.payload,
+                    error:null
+                };
+            case FETCH_FAVORITE_REPLIES_FAIL:
+                return {
+                    ...state,
+                    fav: [],
+                    error: action.payload
+                }
+            default:
+                return state
+        }
+    }
+    
+
+    const initialAddFavoritesR = {
+      fav: false,
+      error: null,
+    };
+    
+  
+   export const addFavoritesR = (state = initialAddFavoritesR, action) => {
+      switch (action.type) {
+        case ADD_FAVR:
+          return {
+            ...state,
+            fav: true,
+            error: null,
+          };
+        case ADD_FAVR_FAIL:
+          return {
+            ...state,
+            fav: false,
+            error: action.error,
+          };
+        default:
+          return state;
+      }
+    };
+
+
+    const initialDeleteFavR = {
+      fav: false,
+      error: null,
+    };
+    
+  
+   export const deleteFavoriteR = (state = initialDeleteFavR, action) => {
+      switch (action.type) {
+        case DELETE_FAV_REPLIES:
+          return {
+            ...state,
+            fav: true,
+            error: null,
+          };
+        case DELETE_FAV_REPLIES_FAIL:
+          return {
+            ...state,
+            fav: false,
+            error: action.error,
+          };
+        default:
+          return state;
+      }
+    };

@@ -25,6 +25,9 @@ import {addUserReactions}  from "./userReducer";
 import { usersFav } from "./userReducer";
 import { userNote2 } from "./userReducer";
 import { searchReplies } from "./userReducer";
+import {userFavoriteR} from "./userReducer";
+import {addFavoritesR} from "./userReducer"
+import {deleteFavoriteR} from "./userReducer"
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -51,7 +54,10 @@ const rootReducer = combineReducers({
   reactions: addUserReactions,
   idFav: usersFav,
   note2: userNote2,
-  search2: searchReplies
+  search2: searchReplies,
+  favR: userFavoriteR,
+  deleteFavR: deleteFavoriteR,
+  addFavR: addFavoritesR
 
 });
 

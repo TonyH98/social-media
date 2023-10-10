@@ -255,23 +255,23 @@ className="post_user_profile"
 </p>
 
 {mentionUsers.length > 0 && (
-    <ul className="mention-suggestions">
-      {mentionUsers.map((user) => (
-        <li key={user.id} onClick={() => handleMention(user)}>
+    <div className="dataResult">
+      {mentionUsers.slice(0 , 10).map((user) => (
+        <div className="search-link dropdown-link" key={user.id} onClick={() => handleMention(user)}>
           @{user.username}
-        </li>
+        </div>
       ))}
-    </ul>
+    </div>
   )}
 
 {filterTags.length > 0 && (
-    <ul className="mention-suggestions">
+    <div className="dataResult">
       {filterTags.map((tag) => (
-        <li key={tag.id} onClick={() => handleTags(tag)}>
+        <div className="search-link dropdown-link" key={tag.id} onClick={() => handleTags(tag)}>
           {tag.tag_names}
-        </li>
+        </div>
       ))}
-    </ul>
+    </div>
   )}
   </label>
 

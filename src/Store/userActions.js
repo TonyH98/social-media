@@ -444,3 +444,52 @@ export const getSearchReplies = (tag) => async(dispatch) => {
   }
 
 }
+
+
+export const FETCH_FAVORITE_REPLIES = "FAVORITE_REPLIES"
+export const FETCH_FAVORITE_REPLIES_FAIL= "FAVORITE_REPLIES_FAIL"
+
+export const getFavoriteReplies = (userId) => async(dispatch) => {
+
+  try {
+    const response = await axios.get(`${API}/favorites/${userId}/replies`);
+    dispatch({ type: FETCH_FAVORITE_REPLIES, payload: response.data })
+  } catch (error) {
+    dispatch({ type: FETCH_FAVORITE_REPLIES_FAIL , payload: error.message });
+  }
+
+}
+
+
+export const DELETE_FAV_REPLIES = "DELETE_FAV_REPLIES"
+export const DELETE_FAV_REPLIES_FAIL = "DELETE_FAV_REPLIES_FAIL"
+
+export const deleteFavReplies = (user, replyId) => async (dispatch) => {
+
+  axios
+  .delete(`${API}/favorites/${user.id}/deleteR/${replyId}`)
+  .then(() => {
+    dispatch({type: DELETE_FAV_REPLIES})
+  })
+  .catch((error) => {
+    dispatch({ type: DELETE_FAV_REPLIES_FAIL, error: error.message });
+    console.log(error); 
+  })
+}
+
+
+export const ADD_FAVR = "ADD_FAVR_SUCCESS"
+export const ADD_FAVR_FAIL = "ADD_FAVR_FAIL"
+
+export const addFavR = (user, replyId, fav) => async (dispatch) => {
+
+  axios
+  .post(`${API}/favorites/${user?.id}/favR/${replyId}`, fav)
+  .then(() => {
+    dispatch({type: ADD_FAVR})
+  })
+  .catch((error) => {
+    dispatch({ type: ADD_FAVR_FAIL, error: error.message });
+    console.log(error); 
+  })
+}

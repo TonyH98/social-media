@@ -1,4 +1,9 @@
 import "./Replies.css"
+import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
+import {AiFillHeart} from "react-icons/ai"
+import {AiOutlineHeart} from "react-icons/ai"
+
+
 function Replies({reply}){
 
     function formatDate(inputDate){
@@ -14,7 +19,7 @@ function Replies({reply}){
         return `${formattedMonth} ${day}, ${formattedYear}`
     }
 
-console.log(reply)
+
 return(
 
 <div className="posts_content replies">
@@ -52,9 +57,36 @@ className="post_user_profile"
 
 </div>
 
+<div className="posts-options-container">
 
+
+
+
+
+   <div className="favorite_posts_container">
+       <button className="no_br fav_btn" ><AiOutlineHeart size={20}/>
+       <span className="hidden-text">Like</span>
+       </button>
+
+   </div>
+
+   
+   <div className="like-container">
+   <button className="no_br react_btn"><AiOutlineLike size={20}/> 0
+   <span className="hidden-text">Like</span>
+   </button>
+  
+   </div>
+   
+   <div className="dislike-container">
+   <button  className="no_br react_btn"><AiOutlineDislike size={20}/> 0
+   <span className="hidden-text">Dislike</span>
+   </button>
+   </div> 
 </div>
 
+</div>
+  
 
 
 </div>

@@ -209,7 +209,7 @@ return(
 <div className="replies_container">
     {getReplies.map((reply) => {
         return(
-            <Replies reply={reply}/>
+            <Replies reply={reply} user={user}/>
         )
     })}
 </div>

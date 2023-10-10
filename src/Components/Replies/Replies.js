@@ -1,11 +1,25 @@
 import "./Replies.css"
+import { useState , useEffect } from "react"
 import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
 import {AiFillHeart} from "react-icons/ai"
 import {AiOutlineHeart} from "react-icons/ai"
+import { useDispatch , useSelector } from "react-redux";
+import {getFavoriteReplies , deleteFavReplies, addFavR} from "../../Store/userActions";
+function Replies({reply , user}){
 
+    let [fav] = useState({
+        creator_id: reply.creator.id
+    })
 
-function Replies({reply}){
+    let dispatch = useDispatch()
 
+    const favoriteR = useSelector((state) => state.favR.fav)
+
+    useEffect(() => {
+        dispatch(getFavoriteReplies(user.id))   
+        }, [dispatch])
+
+console.log(reply)
     function formatDate(inputDate){
         const months = [
             "Jan", "Feb", "Mar", "Apr", "May", "Jun",
@@ -18,6 +32,18 @@ function Replies({reply}){
     
         return `${formattedMonth} ${day}, ${formattedYear}`
     }
+
+const inFav = Array.isArray(favoriteR) ? favoriteR.map(fav => fav?.reply_id) : [];
+
+function handleFavorite(e){
+    e.preventDefault()
+    dispatch(addFavR(user?.id , reply.id, fav))
+}
+
+function handleDeleteFavorite(e){
+    e.preventDefault()
+    dispatch(deleteFavReplies(user?.id , reply.id))
+}
 
 
 return(
@@ -63,12 +89,17 @@ className="post_user_profile"
 
 
 
-   <div className="favorite_posts_container">
-       <button className="no_br fav_btn" ><AiOutlineHeart size={20}/>
-       <span className="hidden-text">Like</span>
-       </button>
+<div className="favorite_posts_container">
+                {user && inFav.includes(reply?.id) ? 
+                <button className="no_br fav_btn" onClick={handleDeleteFavorite} ><AiFillHeart size={20} color="red"/>
+                <span className="hidden-text">Disike</span>
+                </button>
 
-   </div>
+                : <button className="no_br fav_btn" onClick={handleFavorite}><AiOutlineHeart size={20}/>
+                <span className="hidden-text">Like</span>
+                </button>}
+
+            </div>
 
    
    <div className="like-container">

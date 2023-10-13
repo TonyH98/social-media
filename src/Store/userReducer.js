@@ -27,6 +27,9 @@ import { FETCH_SEARCH_REPLIES , FETCH_SEARCH_REPLIES_FAIL } from "./userActions"
 import {FETCH_FAVORITE_REPLIES , FETCH_FAVORITE_REPLIES_FAIL} from "./userActions";
 import {DELETE_FAV_REPLIES , DELETE_FAV_REPLIES_FAIL} from "./userActions";
 import {ADD_FAVR , ADD_FAVR_FAIL} from "./userActions"
+import {FETCH_REPLY_REACTIONS , FETCH_REPLY_REACTIONS_FAIL} from "./userActions"
+import {ADD_REPLY_REACTIONS , ADD_REPLY_REACTIONS_FAIL} from "./userActions"
+
 
 const initialState = {
 
@@ -788,6 +791,58 @@ export const getPostDetails = (state = initialPostDetails, action) => {
           return {
             ...state,
             fav: false,
+            error: action.error,
+          };
+        default:
+          return state;
+      }
+    };
+
+
+
+    const initialReactionR = {
+      react: [],
+      error: null
+    } 
+    
+    export const userReactR = (state = initialReactionR, action) => {
+      switch (action.type){
+          case FETCH_REPLY_REACTIONS:
+              return {
+                  ...state,
+                  react: action.payload,
+                  error:null
+              };
+          case FETCH_REPLY_REACTIONS_FAIL:
+              return {
+                  ...state,
+                  react: [],
+                  error: action.payload
+              }
+          default:
+              return state
+      }
+    }
+
+
+    const initialAddReactionsR = {
+      react: false,
+      error: null,
+    };
+    
+  
+   export const addUserReactionsR = (state = initialAddReactionsR, action) => {
+      switch (action.type) {
+        case ADD_REPLY_REACTIONS:
+          return {
+            ...state,
+            react: true,
+            error: null,
+          };
+        case ADD_REPLY_REACTIONS_FAIL:
+          return {
+            ...state,
+            react: false,
             error: action.error,
           };
         default:

@@ -270,6 +270,7 @@ export const addFav = (user, postId, fav) => async (dispatch) => {
   .post(`${API}/favorites/${user?.id}/fav/${postId}`, fav)
   .then(() => {
     dispatch({type: ADD_FAV})
+    dispatch(getFavorites(user?.id))
   })
   .catch((error) => {
     dispatch({ type: ADD_FAV_FAIL, error: error.message });
@@ -339,6 +340,7 @@ export const addFollowing = (user, followId) => async (dispatch) => {
   .post(`${API}/follow/${user}/follow/${followId}`)
   .then(() => {
     dispatch({type: ADD_Following})
+    dispatch(getFollowing(user))
   })
   .catch((error) => {
     dispatch({ type: ADD_Following_FAIL, error: error.message });
@@ -470,6 +472,7 @@ export const deleteFavReplies = (user, replyId) => async (dispatch) => {
   .delete(`${API}/favorites/${user}/deleteR/${replyId}`)
   .then(() => {
     dispatch({type: DELETE_FAV_REPLIES})
+    dispatch(getFavoriteReplies(user))
   })
   .catch((error) => {
     dispatch({ type: DELETE_FAV_REPLIES_FAIL, error: error.message });
@@ -487,9 +490,45 @@ export const addFavR = (user, replyId, fav) => async (dispatch) => {
   .post(`${API}/favorites/${user}/favR/${replyId}`, fav)
   .then(() => {
     dispatch({type: ADD_FAVR})
+    dispatch(getFavoriteReplies(user))
   })
   .catch((error) => {
     dispatch({ type: ADD_FAVR_FAIL, error: error.message });
+    console.log(error); 
+  })
+}
+
+
+
+export const FETCH_REPLY_REACTIONS = "REACTIONSR"
+export const FETCH_REPLY_REACTIONS_FAIL = "REACTIONSR_FAIL"
+
+export const getReplyReactions = (user, postId, replyId) => async(dispatch) => {
+
+  try {
+    const response = await axios.get(`${API}/users/${user}/posts/${postId}/reply/${replyId}/reactionsR`);
+    dispatch({ type: FETCH_REPLY_REACTIONS, payload: response.data })
+    
+  } catch (error) {
+    dispatch({ type: FETCH_REPLY_REACTIONS_FAIL , payload: error.message });
+  }
+
+}
+
+
+
+export const ADD_REPLY_REACTIONS = "REPLY_REACTIONS"
+export const ADD_REPLY_REACTIONS_FAIL = "REPLY_REACTIONS_FAIL"
+
+export const addReactionR = (creatorName , userId , postId, replyId, reactions) => async (dispatch) => {
+
+  axios
+  .post(`${API}/users/${creatorName}/posts/${postId}/reply/${userId}/reactR/${replyId}`, reactions)
+  .then(() => {
+    dispatch({type: ADD_REPLY_REACTIONS })
+  })
+  .catch((error) => {
+    dispatch({ type: ADD_REPLY_REACTIONS_FAIL, error: error.message });
     console.log(error); 
   })
 }

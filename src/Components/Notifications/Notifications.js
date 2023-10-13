@@ -4,7 +4,7 @@ import { useDispatch , useSelector } from "react-redux";
 import { useState, useEffect} from "react";
 import Notification from "./Notification";
 import RepliesNote from "./RepliesNote";
-import AllNotifications from "./AllNotifications";
+
 import "./Notifications.css"
 
 
@@ -14,9 +14,9 @@ function Notifications(){
 const [searchFilter, setSearchFilter] = useState('');
 const [filterNote, setFilterNote] = useState([]);
 const [filterNote2 , setFilterNote2] = useState([])
-const [filterNote3 , setFilterNote3] = useState([])
+
 let [option , setOption] = useState(0)
-let options = ["Posts", "Replies", "All"]
+let options = ["Posts", "Replies"]
 
 const {id} = useParams()
 
@@ -27,12 +27,10 @@ const noteR = useSelector((state) => state.note2.note2)
 const users = useSelector((state) => state.user.users);
 
 useEffect(() => {
+
     dispatch(fetchUsers(id))
     dispatch(getNotifications(id))
-    setFilterNote(note)
-    setFilterNote2(noteR)
     dispatch(getNotificationsReplies(id))
-    setFilterNote3([...note , ...noteR])
   
 }, [dispatch])
 
@@ -62,21 +60,9 @@ const applyFilters = () => {
     }
     setFilterNote2(filteredNote)
   }
-  
-  if(option === 2){
-    let filteredNote = filterNote3;
-    if (searchFilter) {
-      const filterText = searchFilter.toLowerCase();
-      filteredNote = filteredNote.filter(
-        (notes) =>
-          notes.post_content.username.toLowerCase().includes(filterText) || notes.post_content.profile_name.toLowerCase().includes(filterText)
-         
-      );
-    }
-    setFilterNote3(filteredNote)
-  }
 
   };
+
 
 
   useEffect(() => {
@@ -111,23 +97,10 @@ const applyFilters = () => {
       );
     }
 
-    if (selected === 2) {
-      return (
-        <div>
-          {filterNote3.map((notes) => {
-            return (
-              <div  className="posts-border-container">
-                <AllNotifications users={users} notes={notes}/>
-              </div>
-            );
-          })}
-        </div>
-      );
-    }
     
   }
   
-console.log(filterNote3)
+
 
     return(
         <div className="note_page">

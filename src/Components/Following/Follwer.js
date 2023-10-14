@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react"
+import { useDispatch , useSelector } from "react-redux";
+import { getFollowing , addFollowing,  deleteFol } from "../../Store/userActions";
+function Follower({fol , user}){
 
-function Follower({fol}){
-
+  const dispatch = useDispatch();
     let [bio, setBio] = useState(fol.bio)
+
+    let following = useSelector((state) => state.follow.fol)
 
 
     useEffect(() => {
@@ -11,10 +15,27 @@ function Follower({fol}){
       }
     }, [fol.bio , bio]) 
   
-  
+    useEffect(() => {
+      dispatch(getFollowing(user?.id))
+   }, [dispatch])
+
+
+
+   function handleFollow(e){
+    e.preventDefault()
+    dispatch(addFollowing(user?.id, fol?.id))
+}
+
+
+function handleDeleteFollow(e){
+    e.preventDefault()
+    dispatch(deleteFol(user?.id, fol?.id))
+}
+
 console.log(fol)
+   const inFol = Array.isArray(following) ? following.map(fol => fol?.following_id) : [];
 
-
+   
 return(
 
     <div className="following_border">
@@ -37,7 +58,13 @@ return(
       </div>
     </div>
 
-
+    <div className="following_content_third">
+        <div className="following_button_container">
+        {user && inFol.includes(fol?.id) ? 
+            <button onClick={handleDeleteFollow} className="follow_btn">Remove</button>
+            : <button onClick={handleFollow} className="follow_btn">Follow</button>}
+        </div>
+    </div>
 
   </div>
 

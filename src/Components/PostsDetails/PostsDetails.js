@@ -197,7 +197,7 @@ return(
    </button>
    </div>
 
-   <ReplyForm open={show} onClose={() =>  setShow(false)} users={user}  posts={posts} plan={plan}/>
+   <ReplyForm open={show} onClose={() =>  setShow(false)} users={user}  posts={posts} plan={plan} />
 </div>
  
  </div>
@@ -209,7 +209,7 @@ return(
 <div className="replies_container">
     {getReplies.map((reply) => {
         return(
-            <Replies reply={reply} user={user}/>
+            <Replies reply={reply} user={user} username={username} posts={posts}/>
         )
     })}
 </div>

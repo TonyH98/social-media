@@ -121,6 +121,8 @@ useEffect(() => {
         });
       };
 
+
+   console.log(user)   
 return(
         <div className="profile">
 

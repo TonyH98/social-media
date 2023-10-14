@@ -85,8 +85,8 @@ function App() {
           <Route path="/posts/:tag_name" element={<SearchPosts/>}/>
           <Route path={`/posts/:username/:id`} element={<PostsDetails user={user} plan={plan}/>}/>
           <Route path={`/profiles/:id`} element={<OtherProfile user={user} plan={plan}/>}/>
-          <Route path={`/:id/following`} element={<Followings />}/>
-          <Route path={`/:id/follower`} element={<Followers/>}/>
+          <Route path={`/:id/following`} element={<Followings user={user}/>}/>
+          <Route path={`/:id/follower`} element={<Followers user={user}/>}/>
           <Route path={`/notifications/:id`} element={<Notifications/>}/>
         </Routes>
       </main>

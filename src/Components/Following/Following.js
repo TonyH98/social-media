@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react"
-import { useDispatch , useSelector } from "react-redux";
-import { deleteFol } from "../../Store/userActions"
-function Following({fol, users}) {
+import { useDispatch } from "react-redux";
+import { addFollowing,  deleteFol } from "../../Store/userActions";
+import axios from "axios";
 
-  let [bio, setBio] = useState(fol.bio)
+const API = process.env.REACT_APP_API_URL;
+
+function Following({fol , user}) {
 
   const dispatch = useDispatch();
+  let [bio, setBio] = useState(fol.bio)
+
+  let [following , setFollowing] = useState([])
 
   useEffect(() => {
     if (bio.length >= 250) {
@@ -13,12 +18,28 @@ function Following({fol, users}) {
     }
   }, [fol.bio , bio]) 
 
+useEffect(() => {
+  if(user.id){
+    axios.get(`${API}/follow/${user.id}`)
+    .then((res) => {
+      setFollowing(res.data)
+    })
+  }
+}, [user.id])
 
-function handleDeleteFollow(e){
-    e.preventDefault()
-    dispatch(deleteFol(users?.id, fol?.following_id))
+function handleFollow(e){
+  e.preventDefault()
+  dispatch(addFollowing(user?.id, fol?.following_id))
 }
 
+
+function handleDeleteFollow(e){
+  e.preventDefault()
+  dispatch(deleteFol(user?.id, fol?.following_id))
+}
+
+console.log(fol)
+const inFol = Array.isArray(following) ? following.map(fol => fol?.following_id) : [];
 
   return (
     <div className="following_border">
@@ -43,7 +64,9 @@ function handleDeleteFollow(e){
 
     <div className="following_content_third">
         <div className="following_button_container">
-            <button onClick={handleDeleteFollow} className="follow_button">Remove</button>
+        {user && inFol.includes(fol?.following_id) ? 
+            <button onClick={handleDeleteFollow} className="follow_btn">Remove</button>
+            : <button onClick={handleFollow} className="follow_btn">Follow</button>}
         </div>
     </div>
 

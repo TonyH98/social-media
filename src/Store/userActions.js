@@ -520,7 +520,7 @@ export const getReplyReactions = (user, postId, replyId) => async(dispatch) => {
 export const ADD_REPLY_REACTIONS = "REPLY_REACTIONS"
 export const ADD_REPLY_REACTIONS_FAIL = "REPLY_REACTIONS_FAIL"
 
-export const addReactionR = (creatorName , userId , postId, replyId, reactions) => async (dispatch) => {
+export const addReactionR = (creatorName , postId, userId, replyId, reactions) => async (dispatch) => {
 
   axios
   .post(`${API}/users/${creatorName}/posts/${postId}/reply/${userId}/reactR/${replyId}`, reactions)

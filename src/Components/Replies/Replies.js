@@ -4,22 +4,38 @@ import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
 import {AiFillHeart} from "react-icons/ai"
 import {AiOutlineHeart} from "react-icons/ai"
 import { useDispatch , useSelector } from "react-redux";
-import {getFavoriteReplies , deleteFavReplies, addFavR} from "../../Store/userActions";
-function Replies({reply , user}){
+import {getFavoriteReplies , 
+    deleteFavReplies,
+     addFavR, addReactionR, getReplyReactions
+    } from "../../Store/userActions";
 
+
+function Replies({reply , user , username, posts}){
+ 
     let [fav] = useState({
         creator_id: reply.creator.id
+    })
+
+    let [likes] = useState({
+        reaction: "like"
+    })
+    
+    let [dislike] = useState({
+        reaction: "dislike"
     })
 
     let dispatch = useDispatch()
 
     const favoriteR = useSelector((state) => state.favR.fav)
 
-    useEffect(() => {
-        dispatch(getFavoriteReplies(user.id))   
-        }, [dispatch])
+    const reaction = useSelector((state) => state.reactionsR.react)
 
-console.log(reply)
+    useEffect(() => {
+        dispatch(getFavoriteReplies(user.id)) 
+        dispatch(getReplyReactions(username, posts.id, reply.id))
+        }, [dispatch , username])
+
+
     function formatDate(inputDate){
         const months = [
             "Jan", "Feb", "Mar", "Apr", "May", "Jun",
@@ -45,6 +61,18 @@ function handleDeleteFavorite(e){
     dispatch(deleteFavReplies(user?.id , reply.id))
 }
 
+
+function handleLike(e){
+    e.preventDefault()
+    dispatch(addReactionR(username , posts.id , user.id, reply.id, likes))
+}
+
+function handleDislike(e){
+    e.preventDefault()
+    dispatch(addReactionR(username , posts.id , user.id, reply.id, dislike))
+}
+
+console.log(reaction)
 
 return(
 
@@ -103,14 +131,14 @@ className="post_user_profile"
 
    
    <div className="like-container">
-   <button className="no_br react_btn"><AiOutlineLike size={20}/> 0
+   <button className="no_br react_btn" onClick={handleLike}><AiOutlineLike size={20}/> {reaction.likes}
    <span className="hidden-text">Like</span>
    </button>
   
    </div>
    
    <div className="dislike-container">
-   <button  className="no_br react_btn"><AiOutlineDislike size={20}/> 0
+   <button  className="no_br react_btn" onClick={handleDislike}><AiOutlineDislike size={20}/> {reaction.dislikes}
    <span className="hidden-text">Dislike</span>
    </button>
    </div> 

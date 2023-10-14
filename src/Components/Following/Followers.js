@@ -1,34 +1,38 @@
-import {  useEffect} from "react";
-import { fetchUsers, getFollowing, getFollower } from "../../Store/userActions";
+import { useEffect , useState} from "react";
+import { getFollower } from "../../Store/userActions";
 import { useDispatch , useSelector } from "react-redux";
 import { Link, useLocation, useParams } from "react-router-dom";
 import Follower from "./Follwer";
+import axios from "axios";
 
-function Followers(){
+const API = process.env.REACT_APP_API_URL;
+function Followers({user}){
 
     let {id} = useParams()
-
+    let [users , setUsers] = useState([])
     const location = useLocation()
 
     const isActive = (path) => {
         return location.pathname === path ? 'active3' : ''
       }
 
-const dispatch = useDispatch();
-const users = useSelector((state) => state.user.users);
+let dispatch = useDispatch()
 let follower = useSelector((state) => state.follower.fol)
 
 useEffect(() => {
-    
-    dispatch(fetchUsers(id))
-
- }, [dispatch , id])
+axios.get(`${API}/users/${id}`)
+.then((res) => {
+    setUsers(res.data)
+})
+ }, [id])
 
  useEffect(() => { 
     if(id){
       dispatch(getFollower(id))
     }
  }, [dispatch, id])
+
+console.log(user)
 
     return(
         <div className="users_following_container">
@@ -57,7 +61,7 @@ useEffect(() => {
             <div>
                 {follower.map((fol) => {
                     return(
-                        <Follower fol={fol}/>
+                        <Follower fol={fol} user={user}/>
                     )
                 })}
 

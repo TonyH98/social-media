@@ -160,11 +160,7 @@ return(
         alt={users?.banner_img} 
         className="profile_banner_img"/>
 
-        <div className="profile_btns_container">
-            {user && inFav.includes(users?.id) ? 
-            <button onClick={handleDeleteFollow} className="follow_btn">Unfollow</button>
-            : <button onClick={handleFollow} className="follow_btn">Follow</button>}
-        </div>
+       
 
         </div>
 
@@ -173,6 +169,7 @@ return(
 
         <div className="profile_info_container">
 
+        <div className="profile_info_first">
         <div className="profile_img_container">
 
         <img src={users?.profile_img} className="profile_img"/>
@@ -207,6 +204,15 @@ return(
 
         </div>
 
+        
+
+        </div>
+
+        <div className="profile_btns_container">
+          {user && inFav.includes(users?.id) ? 
+          <button onClick={handleDeleteFollow} className="follow_btn">Unfollow</button>
+          : <button onClick={handleFollow} className="follow_btn">Follow</button>}
+          </div>
         </div>
 
         <div className="profile_selected_options">
@@ -233,4 +239,5 @@ return(
 }
 
 export default OtherProfile
-        
+
+

@@ -1,4 +1,11 @@
 
+a{
+  text-decoration: none;
+  color: black;
+}
+
+
+
 @media(min-width: 993px){
 
   nav {
@@ -44,11 +51,7 @@
   
   
   
-  a{
-    text-decoration: none;
-    color: black;
-  }
-  
+ 
   .active2{
     color: rgb(13, 13, 169);
   }
@@ -104,5 +107,10 @@
   .text {
     display: block;
     font-size: 12px; /* Adjust the font size as needed */
+  }
+
+  .logout{
+    background-color: transparent;
+    border: none;
   }
 }

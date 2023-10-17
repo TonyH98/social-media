@@ -120,15 +120,7 @@ function Profile({user , plan}){
         alt={users?.banner_img} 
         className="profile_banner_img"/>
 
-        <div className="profile_btns_container">
-
-        <button className="create_post_btns" 
-        onClick={() => setModal(true)}
-        >Post</button>
-
-        <button className="profile-edit-btns"  onClick={() => setModal2(true)}>
-        <BsPencilSquare size={20}/></button>
-        </div>
+     
 
         </div>
 
@@ -139,6 +131,7 @@ function Profile({user , plan}){
 
         <div className="profile_info_container">
 
+          <div className="profile_info_first"> 
         <div className="profile_img_container">
 
         <img src={users?.profile_img} className="profile_img"/>
@@ -177,6 +170,18 @@ function Profile({user , plan}){
             
 
         </div>
+          
+          </div>
+
+          <div className="profile_btns_container">
+
+          <button className="create_post_btns" 
+          onClick={() => setModal(true)}
+          >Post</button>
+
+          <button className="profile-edit-btns"  onClick={() => setModal2(true)}>
+          <BsPencilSquare size={20}/></button>
+          </div>
 
         </div>
 
@@ -204,3 +209,13 @@ function Profile({user , plan}){
 }
 
 export default Profile
+
+{/* <div className="profile_btns_container">
+
+<button className="create_post_btns" 
+onClick={() => setModal(true)}
+>Post</button>
+
+<button className="profile-edit-btns"  onClick={() => setModal2(true)}>
+<BsPencilSquare size={20}/></button>
+</div> */}

@@ -1,6 +1,7 @@
 import { useParams , Link } from "react-router-dom";
 import { useState, useEffect} from "react";
 import { useDispatch , useSelector } from "react-redux";
+import AllReplies from "../ALLReplies/AllReplies";
 import { addFollowing, getFollowing, deleteFol , getFollower, getFavorites } from "../../Store/userActions";
 import Favorites from "../Favorites/Favorites"
 import Posts from "../Posts/Posts";
@@ -17,7 +18,10 @@ function OtherProfile({user , plan}){
     let [option , setOption] = useState(0)
     let [users , setUsers] = useState([])
     let [posts , setPosts] = useState([])
+    let [userReplies , setUserReplies] = useState([])
+
     let dispatch = useDispatch()
+
     const {id} = useParams()
  
     let [following , setFollowing] = useState([])
@@ -43,7 +47,12 @@ useEffect(() => {
   .catch((err) => {
     console.log(err)
   })
-} , [users.username])
+
+  axios.get(`${API}/users/${users.username}/posts/${id}/replies`)
+  .then((res) => {
+    setUserReplies(res.data)
+  })
+} , [users.username , id])
 
 
 useEffect(() => {
@@ -60,6 +69,10 @@ useEffect(() => {
     setFavorites(res.data)
   })
 }, [id])
+
+
+
+
 
 useEffect(() => {
   dispatch(getFollowing(user?.id))
@@ -78,6 +91,19 @@ useEffect(() => {
               return (
                 <div key={posts.id} className="posts-border-container">
                   <Posts posts={posts} users={user} favorites={userFavorites} plan={plan}/>
+                </div>
+              );
+            })}
+          </div>
+        );
+      }
+      if (selected === 1) {
+        return (
+          <div className="option-content-holder">
+            {userReplies.map((reply) => {
+              return (
+                <div key={reply.id} className="posts-border-container">
+                  <AllReplies posts={reply} users={user}/>
                 </div>
               );
             })}

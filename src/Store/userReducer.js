@@ -29,7 +29,7 @@ import {DELETE_FAV_REPLIES , DELETE_FAV_REPLIES_FAIL} from "./userActions";
 import {ADD_FAVR , ADD_FAVR_FAIL} from "./userActions"
 import {FETCH_REPLY_REACTIONS , FETCH_REPLY_REACTIONS_FAIL} from "./userActions"
 import {ADD_REPLY_REACTIONS , ADD_REPLY_REACTIONS_FAIL} from "./userActions"
-
+import {FETCH_ALL_USERS_REPLIES , FETCH_ALL_USERS_REPLIES_FAIL} from "./userActions"
 
 const initialState = {
 
@@ -849,3 +849,29 @@ export const getPostDetails = (state = initialPostDetails, action) => {
           return state;
       }
     };
+
+
+    const initialAllUserReplies = {
+
+      replies: [],
+      error: null
+  }
+  
+  export const allUserReplies = (state = initialAllUserReplies, action) => {
+      switch (action.type){
+          case FETCH_ALL_USERS_REPLIES: 
+              return {
+                  ...state,
+                  replies: action.payload,
+                  error:null
+              };
+          case FETCH_ALL_USERS_REPLIES_FAIL:
+              return {
+                  ...state,
+                 replies: [],
+                  error: action.payload
+              }
+          default:
+              return state
+      }
+  }

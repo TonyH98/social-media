@@ -532,3 +532,20 @@ export const addReactionR = (creatorName , postId, userId, replyId, reactions) =
     console.log(error); 
   })
 }
+
+// localhost:3333/users/TonyH98/posts/1/replies
+
+export const FETCH_ALL_USERS_REPLIES = "REPLIES_SUCCESS"
+export const FETCH_ALL_USERS_REPLIES_FAIL = "RELIES_FAIL"
+
+export const getAllUsersReplies = (username , userId) => async(dispatch) => {
+
+  try {
+    const response = await axios.get(`${API}/users/${username}/posts/${userId}/replies`);
+    dispatch({ type: FETCH_ALL_USERS_REPLIES, payload: response.data })
+    
+  } catch (error) {
+    dispatch({ type: FETCH_ALL_USERS_REPLIES_FAIL , payload: error.message });
+  }
+
+}

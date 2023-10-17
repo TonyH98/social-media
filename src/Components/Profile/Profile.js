@@ -4,9 +4,10 @@ import {BsPencilSquare} from "react-icons/bs"
 import Favorites from "../Favorites/Favorites"
 import PostForm from "../PostForm/PostForm";
 import ProfileEdit from "../ProfileEdit/ProfileEdit";
+import AllReplies from "../ALLReplies/AllReplies";
 import Posts from "../Posts/Posts";
 import { useDispatch , useSelector } from "react-redux";
-import { fetchUsers, fetchPosts, getTags, getFavorites ,  fetchUser, getFollowing, getFollower} from "../../Store/userActions";
+import { fetchUsers, fetchPosts, getTags, getFavorites ,  fetchUser, getFollowing, getFollower, getAllUsersReplies} from "../../Store/userActions";
 import { Link } from "react-router-dom";
 
 
@@ -24,7 +25,7 @@ function Profile({user , plan}){
     const favorites = useSelector((state) => state.favorites.fav)
     let following = useSelector((state) => state.follow.fol)
     let follower = useSelector((state) => state.follower.fol)
-
+    let replies = useSelector((state) => state.userReplies.replies)
 
   
     useEffect(() => {
@@ -33,6 +34,7 @@ function Profile({user , plan}){
        dispatch(fetchUser())
        dispatch(getFollowing(user?.id))
        dispatch(getFollower(user?.id))
+      
     }, [dispatch])
     
 
@@ -42,12 +44,13 @@ function Profile({user , plan}){
         if(users && users?.id){
             dispatch(fetchPosts(users?.username))
             dispatch(getFavorites(users?.id))
+            dispatch(getAllUsersReplies(users?.username , users?.id))
         }
 
     }, [dispatch , users])
     
 
-
+    console.log(replies)
 
     let options = ["Posts", "Replies", "Favorites"]
 
@@ -59,6 +62,19 @@ function Profile({user , plan}){
                 return (
                   <div key={posts.id} className="posts-border-container">
                     <Posts posts={posts} users={user} favorites={favorites} plan={plan} />
+                  </div>
+                );
+              })}
+            </div>
+          );
+        }
+        if (selected === 1) {
+          return (
+            <div className="option-content-holder">
+              {replies.map((reply) => {
+                return (
+                  <div key={reply.id} className="posts-border-container">
+                    <AllReplies posts={reply} users={user}/>
                   </div>
                 );
               })}

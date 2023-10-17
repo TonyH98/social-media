@@ -76,16 +76,16 @@ console.log(reaction)
 
 return(
 
-<div className="posts_content replies">
+<div className="posts_content">
 
-<div className="post_user_profile_container">
-<img
-src={reply?.creator?.profile_img}
-alt={reply?.creator?.profile_img}
-className="post_user_profile"
-/>
-</div>
-
+<div className="replies">
+    <div className="post_user_profile_container">
+    <img
+    src={reply?.creator?.profile_img}
+    alt={reply?.creator?.profile_img}
+    className="post_user_profile"
+    />
+    </div>
 <div className="post_user_info_date_container">
 
 <div className="post_user_profile">
@@ -111,6 +111,12 @@ className="post_user_profile"
 
 </div>
 
+
+</div>
+
+</div>
+
+  
 <div className="posts-options-container">
 
 
@@ -143,9 +149,6 @@ className="post_user_profile"
    </button>
    </div> 
 </div>
-
-</div>
-  
 
 
 </div>

@@ -160,7 +160,11 @@ return(
     </div>
 
  </div>
- <div className="posts-options-container">
+
+    </div>
+
+</div>
+ <div className="posts-options-container post_details_btns">
 
 <div className="posts-reply-button">
 <button className="no_br reply_btn" onClick={(e) => { e.preventDefault(); setShow(true); }}>
@@ -201,10 +205,6 @@ return(
 </div>
  
  </div>
-
-    </div>
-
-</div>
     
 <div className="replies_container">
     {getReplies.map((reply) => {

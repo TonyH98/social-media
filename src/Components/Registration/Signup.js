@@ -37,6 +37,8 @@ function Signup(){
        DOB: "",
        bio: "I am",
        profile_name: "",
+       notifications: false,
+       dark_mode: false,
        password: ""
       });
 
@@ -181,7 +183,7 @@ function Signup(){
       }
 
 
-
+console.log(user)
 
       return(
         <div className="signup-section">

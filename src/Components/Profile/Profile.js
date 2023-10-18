@@ -107,7 +107,7 @@ function Profile({user , plan}){
       };
 
  
-      console.log(plan)
+      console.log(users)
 
     return(
         <div className="profile">

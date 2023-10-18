@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 const API = process.env.REACT_APP_API_URL;
 function ProfileEdit({onClose , users, open2, fetchUsers }){
 
+    const [currentPage , setCurrentPage] = useState(1)
 
     const dispatch = useDispatch();
 
@@ -19,7 +20,8 @@ function ProfileEdit({onClose , users, open2, fetchUsers }){
         email: "",
         bio: "",
         profile_img: "",
-        banner_img: ""
+        banner_img: "",
+        dark_mode: ""
     })
     
 
@@ -66,6 +68,20 @@ const handleTextChange = (event) => {
     }
 };
 
+const handleCheck = (event) => {
+    setEdit({ ...edit, dark_mode: !edit.dark_mode });
+};
+
+const nextPage = (event) => {
+    event.preventDefault();
+    setCurrentPage(currentPage + 1);
+  };
+
+  const prevPage = (event) => {
+    event.preventDefault();
+    setCurrentPage(currentPage - 1);
+  };
+
 
 const handleSubmit = (event) => {
     event.preventDefault();
@@ -76,6 +92,7 @@ const handleSubmit = (event) => {
     formData.append("lastname", edit?.lastname);
     formData.append("email", edit?.email);
     formData.append("bio", edit.bio);
+    formData.append("dark_mode", edit.dark_mode);
     if (edit?.profile_img) {
         formData.append("profile_img", edit?.profile_img);
     }
@@ -87,12 +104,13 @@ const handleSubmit = (event) => {
      .then(() => {
         dispatch(fetchUsers(users?.id))
         onClose()
+        setCurrentPage(1)
      })
 };
 
 
 
-
+console.log(edit.dark_mode)
 
     if(!open2) return null
 
@@ -108,7 +126,8 @@ const handleSubmit = (event) => {
             <form onSubmit={handleSubmit}className="signup-form">
 
             <div className='input-container'>
-  
+            {currentPage === 1 && (
+                <div>
             <label htmlFor="profile_name" className='label-signup'>Profile Name:
             <input
                 id="profile_name"
@@ -120,19 +139,26 @@ const handleSubmit = (event) => {
             </label>
 
             <label className='label-signup' htmlFor="bio">
-  Bio:
-  <textarea
-    required
-    id="bio"
-    value={edit.bio}
-    onChange={handleTextChange}
-  />
-  <p className={`${edit?.bio.length >= 250 ? 'text-red-700' : null}`}>
-    {edit?.bio.length}/250 characters
-  </p>
-</label>
+                    Bio:
+                    <textarea
+                        required
+                        id="bio"
+                        value={edit.bio}
+                        onChange={handleTextChange}
+                    />
+                    <p className={`${edit?.bio.length >= 250 ? 'text-red-700' : null}`}>
+                        {edit?.bio.length}/250 characters
+                    </p>
+                    </label>
 
-                
+                <button className="page_count_button" onClick={nextPage}> Next </button>
+                </div>
+            )}
+  
+
+
+                {currentPage === 2 && (
+                    <div>
             <label htmlFor="profile_img" className='label-signup'>
                     Profile Image
                     <input
@@ -161,10 +187,48 @@ const handleSubmit = (event) => {
                     />
                     </label>
 
+                    <div className="page_count_btn_container">
+
+                    <button className="page_count_button" type="button" onClick={prevPage}>Previous</button>
+
+                    <button className="page_count_button" onClick={nextPage}>Next</button>
+                    </div>
+                    </div>
+                )}
+
+
+
+                {currentPage === 3 && (
+                    <div>
+                    
+                    <label htmlFor="dark_mode" className='label-signup'>
+                        Background Color
+                        <label className="switch">
+                        <input
+                        type="checkbox"
+                        id="dark_mode"
+                        value={edit.dark_mode}
+                        checked={edit.dark_mode}
+                        onChange={handleCheck}
+                    />
+                            <span className="slider round"></span>
+                        </label>
+                        </label>
+                
+               <div className="page_count_btn_container">
+
+                <button className="page_count_button" type="button" onClick={prevPage}>
+                Previous
+              </button>
+
+              <button type='submit'>Edit</button>
+               </div>
+                    </div>
+                )}
+
 </div>
 
 
-  <button type='submit'>Edit</button>
 
             </form>
 

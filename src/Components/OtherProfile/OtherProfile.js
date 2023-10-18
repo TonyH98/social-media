@@ -210,7 +210,7 @@ return(
 
         <div className="profile_btns_container">
           {user && inFav.includes(users?.id) ? 
-          <button onClick={handleDeleteFollow} className="follow_btn">Unfollow</button>
+          <button onClick={handleDeleteFollow} className="follow_btn">Remove</button>
           : <button onClick={handleFollow} className="follow_btn">Follow</button>}
           </div>
         </div>

@@ -9,7 +9,7 @@ import axios from "axios";
 
 const API = process.env.REACT_APP_API_URL;
 
-function OtherProfile({user , plan}){
+function OtherProfile({user , plan, mainUser}){
 
     let usersFollowing = useSelector((state) => state.follow.fol)
     let userFavorites = useSelector((state) => state.favorites.fav)
@@ -90,7 +90,7 @@ useEffect(() => {
             {posts.map((posts) => {
               return (
                 <div key={posts.id} className="posts-border-container">
-                  <Posts posts={posts} users={user} favorites={userFavorites} plan={plan}/>
+                  <Posts posts={posts} users={user} favorites={userFavorites} plan={plan} mainUser={mainUser}/>
                 </div>
               );
             })}
@@ -103,7 +103,7 @@ useEffect(() => {
             {userReplies.map((reply) => {
               return (
                 <div key={reply.id} className="posts-border-container">
-                  <AllReplies posts={reply} users={user}/>
+                  <AllReplies posts={reply} users={user} mainUser={mainUser}/>
                 </div>
               );
             })}
@@ -116,7 +116,7 @@ useEffect(() => {
             {favorites.map((fav) => {
               return (
                 <div key={fav.id} className="posts-border-container">
-                  <Favorites fav={fav} users={users} />
+                  <Favorites fav={fav} users={users} mainUser={mainUser}/>
                 </div>
               );
             })}
@@ -177,13 +177,13 @@ return(
         </div>
         
         <div className="profile_names_container">
-            <h3>{users?.profile_name}</h3>
-            <div>@{users?.username}</div>
+            <h3 className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`} >{users?.profile_name}</h3>
+            <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>@{users?.username}</div>
 
         </div>
 
         <div className="profile_bio_container">
-      <p
+      <p className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}
         dangerouslySetInnerHTML={{
           __html: users ? parseBio(users.bio) : '',
         }}
@@ -194,11 +194,11 @@ return(
         <div className="profile_followers_container">
 
             <Link to={`/${users?.id}/following`}>
-            <div>{following.length} Following</div>
+            <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>{following.length} Following</div>
             </Link>
 
             <Link to={`/${users?.id}/follower`}>
-            <div>{follower.length} Followers</div>
+            <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>{follower.length} Followers</div>
             </Link>
             
 
@@ -220,7 +220,7 @@ return(
         <div className="three_options_container">
         {options.map((opt , index) => {
             return(
-                <button onClick={() => setOption(index)} className={index === option ? `active options` : 'options'} key={index}>{opt}</button>
+                <button onClick={() => setOption(index)} className={`${index === option ? `active options` : 'options'} ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`} key={index}>{opt}</button>
             )
         })}
 

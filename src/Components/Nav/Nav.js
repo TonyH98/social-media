@@ -76,7 +76,7 @@ return(
 
         <div className="nav-content nav-search" onClick={() => setModal2(true)}>
         <CiSearch class="icon" size={30} className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`} />
-        <span class="text">Search</span>
+        <span className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} text`}>Search</span>
         </div>
         <SearchModal open={modal2} onClose={() => setModal2(false)} user={user} />
 

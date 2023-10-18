@@ -88,8 +88,7 @@ a{
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: white; /* Adjust the background color as needed */
-    border-top: black solid 1px;
+    border-top: white solid 1px;
     z-index: 9999;
   }
 

@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 
 function Profile({user , plan}){
 
+  console.log(user)
 
     let [option , setOption] = useState(0)
     const [modal , setModal] = useState(false)
@@ -61,7 +62,7 @@ function Profile({user , plan}){
               {getPosts.map((posts) => {
                 return (
                   <div key={posts.id} className="posts-border-container">
-                    <Posts posts={posts} users={user} favorites={favorites} plan={plan} />
+                    <Posts posts={posts} users={user} mainUser={users} favorites={favorites} plan={plan} />
                   </div>
                 );
               })}
@@ -74,7 +75,7 @@ function Profile({user , plan}){
               {replies.map((reply) => {
                 return (
                   <div key={reply.id} className="posts-border-container">
-                    <AllReplies posts={reply} users={user}/>
+                    <AllReplies posts={reply} users={user} mainUser={users}/>
                   </div>
                 );
               })}
@@ -87,7 +88,7 @@ function Profile({user , plan}){
               {favorites.map((fav) => {
                 return (
                   <div key={fav.id} className="posts-border-container">
-                    <Favorites fav={fav} users={users} />
+                    <Favorites fav={fav} users={users}  mainUser={users}/>
                   </div>
                 );
               })}
@@ -134,23 +135,23 @@ function Profile({user , plan}){
           <div className="profile_info_first"> 
         <div className="profile_img_container">
 
-        <img src={users?.profile_img} className="profile_img"/>
+        <img src={users?.profile_img}  className={`${users?.dark_mode ? 'profile_img_white_border' : 'profile_img_dark_border'} profile_img`}/>
 
         </div>
         
         <div className="profile_names_container">
 
             <div className="profile_name">
-           <h3>{users?.profile_name}</h3> 
+           <h3 className={`${users?.dark_mode ? 'white_text' : 'dark_text'}`}>{users?.profile_name}</h3> 
             {plan?.images ? <img src={plan.images} alt={plan.images} className="member_badge"/> : null}
             </div>
 
-            <div>@{users?.username}</div>
+            <div className={`${users?.dark_mode ? 'white_text' : 'dark_text'}`}>@{users?.username}</div>
 
         </div>
 
         <div className="profile_bio_container">
-      <p
+      <p className={`${users?.dark_mode ? 'white_text' : 'dark_text'}`}
         dangerouslySetInnerHTML={{
           __html: users ? parseBio(users.bio) : '',
         }}
@@ -161,11 +162,11 @@ function Profile({user , plan}){
         <div className="profile_followers_container">
 
             <Link to={`/${user?.id}/following`}>
-            <div>{following.length} Following</div>
+            <div className={`${users?.dark_mode ? 'white_text' : 'dark_text'}`}>{following.length} Following</div>
             </Link>
 
             <Link to={`/${user?.id}/follower`}>
-            <div>{follower.length} Followers</div>
+            <div className={`${users?.dark_mode ? 'white_text' : 'dark_text'}`}>{follower.length} Followers</div>
             </Link>
             
 
@@ -190,7 +191,7 @@ function Profile({user , plan}){
         <div className="three_options_container">
         {options.map((opt , index) => {
             return(
-                <button onClick={() => setOption(index)} className={index === option ? `active options` : 'options'} key={index}>{opt}</button>
+                <button onClick={() => setOption(index)} className={`${index === option ? `active options` : 'options'} ${users?.dark_mode ? 'white_text' : 'dark_text'}`} key={index}>{opt}</button>
             )
         })}
 
@@ -209,13 +210,3 @@ function Profile({user , plan}){
 }
 
 export default Profile
-
-{/* <div className="profile_btns_container">
-
-<button className="create_post_btns" 
-onClick={() => setModal(true)}
->Post</button>
-
-<button className="profile-edit-btns"  onClick={() => setModal2(true)}>
-<BsPencilSquare size={20}/></button>
-</div> */}

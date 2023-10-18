@@ -19,7 +19,13 @@
   margin-bottom: 80px;
 }
 
+.profile_img_white_border{
+  border: white solid 2px;
+}
 
+.profile_img_dark_border{
+  border: black solid 2px;
+}
 
 @media(min-width: 993px){
   .profile_banner_img{
@@ -56,7 +62,6 @@
   width: 140px;
   height: 130px;
   border-radius: 50%;
-  border: 2px solid black;
   }
   
   .profile_names_container{

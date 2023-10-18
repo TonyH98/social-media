@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function AllReplies({posts}){
+function AllReplies({posts , mainUser}){
 
     function formatDate(inputDate){
         const months = [
@@ -44,7 +44,7 @@ function AllReplies({posts}){
 
         <div className="post_user_info_date_container">
 
-        <div className="post_user_profile">
+        <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_user_profile`}>
 
         {posts.creator.profile_name} | @{posts.creator.username} | {formatDate(posts.time)}
 
@@ -53,7 +53,7 @@ function AllReplies({posts}){
             <Link to={`/posts/${posts.creator.username}/${posts?.id}`} className="link-style">
         <div className="posts_content_text_container">
 
-            <div className="post_text">
+            <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_text`}>
 
                {highlightMentions(posts.content)}
             </div>

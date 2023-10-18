@@ -1,7 +1,7 @@
 
 import {Link} from "react-router-dom"
 
-function Favorites({fav}){
+function Favorites({fav , mainUser}){
 
     function formatDate(inputDate){
         const months = [
@@ -45,7 +45,7 @@ return(
 
 <div className="post_user_info_date_container">
 
-<div className="post_user_profile">
+<div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_user_profile`} >
 
 {fav.post_creator.profile_name} | @{fav.post_creator.username} | {formatDate(fav.post_creator.date_created)}
 
@@ -54,7 +54,7 @@ return(
     <Link to={`/posts/${fav.post_creator.username}/${fav?.posts_id}`} className="link-style">
 <div className="posts_content_text_container">
 
-    <div className="post_text">
+    <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_text`}>
 
        {highlightMentions(fav.post_creator.content)}
     </div>

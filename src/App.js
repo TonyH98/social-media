@@ -14,13 +14,18 @@ import Followers from './Components/Following/Followers';
 import Notifications from './Components/Notifications/Notifications';
 import Footer from './Components/Footer/Footer';
 import axios from 'axios';
-
+import { useDispatch , useSelector } from "react-redux";
+import { fetchUsers} from "./Store/userActions";
 
 const API = process.env.REACT_APP_API_URL;
 function App() {
 
+  const dispatch = useDispatch();
   const [user, setUser] = useState();
+
+  const mainUser = useSelector((state) => state.user.users);
   const [plan , setPlan] = useState({})
+
 
   const [isLogged, setIsLogged] = useState(false);
   
@@ -55,6 +60,12 @@ function App() {
   
 
   useEffect(() => {
+       dispatch(fetchUsers(user?.id))
+      
+    }, [dispatch])
+
+
+  useEffect(() => {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
     };
@@ -72,10 +83,10 @@ function App() {
 
 
   return (
-    <div className="App">
+    <div className={`App ${mainUser?.dark_mode ? "dark_background" : "light_background"}`}>
     <Router>
     <div className="navbar">
-        {user ? <Nav user={user} plan={plan}/> : null}
+        {user ? <Nav user={user} plan={plan} mainUser={mainUser}/> : null}
       </div>
       <main className="content">
         <Routes>

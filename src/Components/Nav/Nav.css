@@ -3,13 +3,24 @@ a{
   text-decoration: none;
   color: black;
 }
+ 
+.active2{
+  color: rgb(13, 13, 169);
+}
 
+.nav_white_border{
+  border-right: white solid 1px;
+}
+
+.nav_dark_border{
+  border-right: black solid 1px;
+}
 
 @media(min-width: 993px){
 
   nav {
     text-align: left;
-    border: black solid 1px;
+
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -50,11 +61,7 @@ a{
   
   
   
- 
-  .active2{
-    color: rgb(13, 13, 169);
-  }
-  
+
   
   .logout{
     background-color: transparent;

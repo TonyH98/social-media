@@ -14,7 +14,7 @@ import SearchModal from "../SearchModal/SearchModal"
 import Verifications from "./Verifications";
 import LogoutModal from "../Logout/LogoutModal"
 
-function Nav({plan}){
+function Nav({plan, mainUser}){
 
     const [user, setUser] = useState();
 
@@ -37,19 +37,20 @@ function Nav({plan}){
     return location.pathname === path ? 'active2' : ''
   }
 
-
+console.log(user?.dark_mode )
 return(
-    <nav>
+    <nav className={`${mainUser?.dark_mode ? 'nav_white_border' : 'nav_dark_border'}`} >
 
     <div className="nav-container">
 
         <div className="logo-container">
-        <h2>Hermes</h2>
+        <h2 className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>Hermes</h2>
         </div>
 
         <div className="nav-content-container">
 
-        <Link to={`/profile/${user?.id}`} className={isActive(`/profile/${user?.id}`)}>
+        <Link to={`/profile/${user?.id}`} 
+        className={`${isActive(`/profile/${user?.id}`)} ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>
         <div class="nav-content">
         <CgProfile class="icon" size={30} />
         <span class="text">Profile</span>
@@ -57,7 +58,8 @@ return(
 
         </Link>
 
-        <Link to={`/notifications/${user?.id}`} className={isActive(`/notifications/${user?.id}`)}>
+        <Link to={`/notifications/${user?.id}`} 
+        className={`${isActive(`/notifications/${user?.id}`)} ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>
         <div class="nav-content">
         <IoIosNotifications class="icon" size={30} />
         <span class="text">Notifications</span>
@@ -66,19 +68,19 @@ return(
 
 
         <div class="nav-content" onClick={() => setModal(true)}>
-        <LuVerified class="icon" size={30} />
+        <LuVerified class="icon" size={30} className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}/>
         <span class="text">Verified</span>
         </div>
 
         <Verifications open={modal} onClose={() => setModal(false)} user={user} plan={plan}/>
 
         <div className="nav-content nav-search" onClick={() => setModal2(true)}>
-        <CiSearch class="icon" size={30} />
+        <CiSearch class="icon" size={30} className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`} />
         <span class="text">Search</span>
         </div>
         <SearchModal open={modal2} onClose={() => setModal2(false)} user={user} />
 
-        <button className="logout nav-content" onClick={() => setModal3(true)}>Logout</button>
+        <button   className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} logout nav-content`}onClick={() => setModal3(true)}>Logout</button>
         <LogoutModal open={modal3} onClose={() => setModal3(false)} user={user}/>
         </div>
 

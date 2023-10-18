@@ -60,9 +60,10 @@ export const loginUser = (login, newLogin) => async (dispatch) => {
     newLogin();
     window.localStorage.setItem(
       'user',
-      JSON.stringify({ email: res.data.email, id: res.data.id })
-    );
-
+      JSON.stringify({ email: res.data.email, id: res.data.id, dark_mode: res.data.dark_mode})
+      );
+      
+      
     const redirectUrl = `/profile/${res.data.id}`;
     return Promise.resolve(redirectUrl);
   } catch (error) {

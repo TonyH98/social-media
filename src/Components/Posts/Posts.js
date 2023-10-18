@@ -10,7 +10,7 @@ import { useDispatch , useSelector } from "react-redux";
 import { addFav , deleteFav, getReactions, addReaction} from "../../Store/userActions";
 import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
 
-function Posts ({posts, users, favorites, plan}){
+function Posts ({posts, users, favorites, plan, mainUser}){
 
 
 
@@ -108,7 +108,7 @@ function handleDislike(e){
 
         <div className="post_user_info_date_container">
 
-        <div className="post_user_profile">
+        <div  className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_user_profile`} >
 
         {posts.creator.profile_name} | @{posts.creator.username} | {formatDate(posts.time)}
 
@@ -117,7 +117,7 @@ function handleDislike(e){
             <Link to={`/posts/${posts.creator.username}/${posts?.id}`} className="link-style">
         <div className="posts_content_text_container">
 
-            <div className="post_text">
+            <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_text`}>
 
                {highlightMentions(posts.content)}
             </div>
@@ -140,7 +140,7 @@ function handleDislike(e){
          <div className="posts-options-container">
 
          <div className="posts-reply-button">
-  <button className="no_br reply_btn" onClick={(e) => { e.preventDefault(); setShow(true); }}>
+  <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br reply_btn`}  onClick={(e) => { e.preventDefault(); setShow(true); }}>
     <SlBubble size={20} />
     <span className="hidden-text">Reply</span>
   </button>
@@ -150,11 +150,11 @@ function handleDislike(e){
 
             <div className="favorite_posts_container">
                 {users && inFav.includes(posts?.id) ? 
-                <button className="no_br fav_btn" onClick={handleDeleteFav}><AiFillHeart size={20} color="red"/>
+                <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} onClick={handleDeleteFav}><AiFillHeart size={20} color="red"/>
                 <span className="hidden-text">Disike</span>
                 </button>
 
-                : <button className="no_br fav_btn" onClick={handleAddFav}><AiOutlineHeart size={20}/>
+                : <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} onClick={handleAddFav}><AiOutlineHeart size={20}/>
                 <span className="hidden-text">Like</span>
                 </button>}
 
@@ -162,7 +162,7 @@ function handleDislike(e){
 
             
             <div className="like-container">
-            <button className="no_br react_btn" onClick={handleLike}><AiOutlineLike size={20}/> {reaction.likes}
+            <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br react_btn`} onClick={handleLike}><AiOutlineLike size={20}/> {reaction.likes}
             <span className="hidden-text">Like</span>
             </button>
            
@@ -172,7 +172,7 @@ function handleDislike(e){
 
       
             <div className="dislike-container">
-            <button  className="no_br react_btn" onClick={handleDislike}><AiOutlineDislike size={20}/> {reaction.dislikes}
+            <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br react_btn`} onClick={handleDislike}><AiOutlineDislike size={20}/> {reaction.dislikes}
             <span className="hidden-text">Dislike</span>
             </button>
             </div> 

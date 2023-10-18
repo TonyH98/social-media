@@ -5,7 +5,7 @@ import { useDispatch , useSelector } from "react-redux";
 import { fetchUsers, getTags, fetchUser} from "../../Store/userActions";
 import {PiMagnifyingGlassLight} from "react-icons/pi"
 import {MdClear} from "react-icons/md"
-function Footer({user}){
+function Footer({user, mainUser}){
 
     const dispatch = useDispatch();
 

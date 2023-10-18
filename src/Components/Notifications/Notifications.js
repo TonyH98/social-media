@@ -8,8 +8,7 @@ import RepliesNote from "./RepliesNote";
 import "./Notifications.css"
 
 
-
-function Notifications(){
+function Notifications({mainUser}){
 
 const [searchFilter, setSearchFilter] = useState('');
 const [filterNote, setFilterNote] = useState([]);
@@ -76,7 +75,7 @@ const applyFilters = () => {
           {filterNote.map((notes) => {
             return (
               <div  className="posts-border-container">
-                <Notification users={users} notes={notes}/>
+                <Notification users={users} notes={notes} mainUser={mainUser}/>
               </div>
             );
           })}
@@ -89,7 +88,7 @@ const applyFilters = () => {
           {filterNote2.map((notes) => {
             return (
               <div  className="posts-border-container">
-                <RepliesNote users={users} notes={notes}/>
+                <RepliesNote users={users} notes={notes} mainUser={mainUser}/>
               </div>
             );
           })}
@@ -106,13 +105,13 @@ const applyFilters = () => {
         <div className="note_page">
             <div className="note_first_section">
                 <div className="user_name_section">
-                    <h1>{users.profile_name}</h1>
+                    <h1 className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>{users.profile_name}</h1>
                 </div>
                 <div className="notifications_number_container">
-                    <h3>Notifications: {note.length}</h3>
+                    <h3 className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>Notifications: {note.length}</h3>
                 </div>
                 <div className="note_input_bar_container">
-                    <label htmlFor="note_input" className="label-note">
+                    <label htmlFor="note_input"className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} label-note`}>
                     Search User:
                     <input
                     id="note_input"
@@ -127,7 +126,7 @@ const applyFilters = () => {
                 <div className="note_options_button">
                 {options.map((opt , index) => {
                      return(
-                <button onClick={() => setOption(index)} className={index === option ? `active options` : 'options'} key={index}>{opt}</button>
+                <button onClick={() => setOption(index)} className={`${index === option ? `active options` : 'options'} ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`} key={index}>{opt}</button>
                     )
                    })}
                 </div>
@@ -135,7 +134,7 @@ const applyFilters = () => {
 
             <div className="note_second_section">
                 {note.length === 0 ? 
-                <h1>No Notifications</h1> : (
+                <h1 className={`${users?.dark_mode ? 'white_text' : 'dark_text'}`}>No Notifications</h1> : (
                     <div>
                         {optionContent(option)}
                     </div>

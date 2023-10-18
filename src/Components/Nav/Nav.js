@@ -69,7 +69,7 @@ return(
 
         <div class="nav-content" onClick={() => setModal(true)}>
         <LuVerified class="icon" size={30} className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}/>
-        <span class="text">Verified</span>
+        <span className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} text`}>Verified</span>
         </div>
 
         <Verifications open={modal} onClose={() => setModal(false)} user={user} plan={plan}/>

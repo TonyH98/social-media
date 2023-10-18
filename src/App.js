@@ -93,16 +93,16 @@ function App() {
           <Route path="/" element={<Home newLogin={newLogin} isLogged={isLogged} setUser={setUser} user={user}/>} />
           <Route path="/signup" element={<Signup />} />
           <Route path={`/profile/${user?.id}`} element={<Profile user={user} plan={plan}/>} />
-          <Route path="/posts/:tag_name" element={<SearchPosts/>}/>
-          <Route path={`/posts/:username/:id`} element={<PostsDetails user={user} plan={plan}/>}/>
+          <Route path="/posts/:tag_name" element={<SearchPosts mainUser={mainUser}/>}/>
+          <Route path={`/posts/:username/:id`} element={<PostsDetails user={user} plan={plan} mainUser={mainUser}/>}/>
           <Route path={`/profiles/:id`} element={<OtherProfile user={user} plan={plan} mainUser={mainUser}/>}/>
-          <Route path={`/:id/following`} element={<Followings user={user}/>}/>
-          <Route path={`/:id/follower`} element={<Followers user={user}/>}/>
-          <Route path={`/notifications/:id`} element={<Notifications/>}/>
+          <Route path={`/:id/following`} element={<Followings user={user} mainUser={mainUser}/>}/>
+          <Route path={`/:id/follower`} element={<Followers user={user} mainUser={mainUser}/>}/>
+          <Route path={`/notifications/:id`} element={<Notifications mainUser={mainUser}/>}/>
         </Routes>
       </main>
-      <div className="footer" style={{ display: screenWidth >= 993 ? 'block' : 'none' }}>
-          {user ? <Footer user={user} /> : null}
+      <div className={`${mainUser?.dark_mode ? "footer_border_white" : "footer_border_dark"}`} style={{ display: screenWidth >= 993 ? 'block' : 'none' }}>
+          {user ? <Footer user={user} mainUser={mainUser}/> : null}
         </div>
     </Router>
   </div>

@@ -1,6 +1,6 @@
 
 
-function AllSearch({tag}){
+function AllSearch({tag, mainUser}){
 
     function highlightMentions(content) {
         const mentionPattern = /@(\w+)/g;
@@ -41,7 +41,7 @@ function AllSearch({tag}){
 
     <div className="post_user_info_date_container">
 
-    <div className="post_user_profile">
+    <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_text`}>
 
     {tag.creator_details.profile_name} | @{tag.creator_details.username} | {formatDate(tag.posts_details?.date_created)}
 
@@ -50,7 +50,7 @@ function AllSearch({tag}){
         
     <div className="posts_content_text_container">
 
-        <div className="post_text">
+        <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_text`}>
 
            {highlightMentions(tag.posts_details.content)}
         </div>

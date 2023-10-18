@@ -8,7 +8,7 @@ import "./Following.css"
 import axios from "axios";
 
 const API = process.env.REACT_APP_API_URL;
-function Followings({user}){
+function Followings({user, mainUser}){
 
     let {id} = useParams()
     let [users , setUsers] = useState([])
@@ -44,17 +44,17 @@ return(
         <div className="following_first_section">
 
             <div className="user_names_container">
-            <h2>{users?.profile_name}</h2>
-            <span>@{users?.username}</span>
+            <h2 className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>{users?.profile_name}</h2>
+            <span className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>@{users?.username}</span>
             </div>
 
             <div className="followe_links">
                 <Link to={`/${users?.id}/following`} className={isActive(`/${users?.id}/following`)}>
-                <button className="follow_link">Following</button>
+                <button className={`${users?.dark_mode ? 'white_text' : 'dark_text'} follow_link`}>Following</button>
                 </Link>
 
-                <Link to={`/${users?.id}/follower`} className={isActive(`/${users?.id}/follower`)}>
-                <button className="follow_link">Followers</button>
+                <Link to={`/${mainUser?.id}/follower`} className={isActive(`/${users?.id}/follower`)}>
+                <button className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} follow_link`}>Followers</button>
                 </Link>
             </div>
         
@@ -65,7 +65,7 @@ return(
                 <div>
                     {following.map((fol) => {
                         return(
-                            <Following fol={fol} users={users} user={user}/>
+                            <Following fol={fol} users={users} user={user} mainUser={mainUser}/>
                         )
                     })}
 

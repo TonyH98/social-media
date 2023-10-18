@@ -5,7 +5,7 @@ import axios from "axios";
 
 const API = process.env.REACT_APP_API_URL;
 
-function Following({fol , user}) {
+function Following({fol , user, mainUser}) {
 
   const dispatch = useDispatch();
   let [bio, setBio] = useState(fol.bio)
@@ -42,7 +42,7 @@ console.log(fol)
 const inFol = Array.isArray(following) ? following.map(fol => fol?.following_id) : [];
 
   return (
-    <div className="following_border">
+    <div className={`${mainUser?.dark_mode ? "fol_white_border" : "fol_dark_border"} following_border`}>
       <div className="following_content_first">
         <div className="following_img_container">
           <img
@@ -51,14 +51,14 @@ const inFol = Array.isArray(following) ? following.map(fol => fol?.following_id)
             className="following_img"
           />
         </div>
-        <div className="following_names_container">
+        <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} following_names_container`}>
           <div className="profile_name">{fol.profile_name}</div>
           <div className="fol_username">@{fol.username}</div>
         </div>
       </div>
       <div className="following_content_second">
         <div className="following_bio_container">
-          <p className="following_bio">{bio}</p>
+          <p className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} following_bio`}>{bio}</p>
         </div>
       </div>
 

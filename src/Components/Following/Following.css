@@ -17,6 +17,16 @@
         background-color: transparent;
         font-size: 20px;
     }
+
+.fol_white_border{
+    border: white 1px solid;
+}
+
+.fol_dark_border{
+    border: black 1px solid;
+}
+
+
 @media(min-width: 993px){
     .following_first_section, .following_second_section{
         margin-left: 200px;
@@ -48,7 +58,6 @@
     .following_border{
         display: flex;
         flex-direction: column;
-        border: black 1px solid;
         width: 240px;
         height: 210px;
         align-items: flex-start;

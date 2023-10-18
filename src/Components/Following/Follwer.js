@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useDispatch , useSelector } from "react-redux";
 import { getFollowing , addFollowing,  deleteFol } from "../../Store/userActions";
-function Follower({fol , user}){
+function Follower({fol , user, mainUser}){
 
   const dispatch = useDispatch();
     let [bio, setBio] = useState(fol.bio)
@@ -38,7 +38,7 @@ console.log(fol)
    
 return(
 
-    <div className="following_border">
+    <div className={`${mainUser?.dark_mode ? "fol_white_border" : "fol_dark_border"} following_border`}>
     <div className="following_content_first">
       <div className="following_img_container">
         <img
@@ -47,14 +47,14 @@ return(
           className="following_img"
         />
       </div>
-      <div className="following_names_container">
+      <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} following_names_container`}>
         <div className="profile_name">{fol.profile_name}</div>
         <div className="fol_username">@{fol.username}</div>
       </div>
     </div>
     <div className="following_content_second">
       <div className="following_bio_container">
-        <p className="following_bio">{bio}</p>
+        <p className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} following_bio`}>{bio}</p>
       </div>
     </div>
 

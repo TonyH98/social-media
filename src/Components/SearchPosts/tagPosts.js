@@ -1,6 +1,6 @@
 
 
-function TagPosts({tag}){
+function TagPosts({tag, mainUser}){
 
     function highlightMentions(content) {
         const mentionPattern = /@(\w+)/g;
@@ -42,7 +42,7 @@ function TagPosts({tag}){
 
     <div className="post_user_info_date_container">
 
-    <div className="post_user_profile">
+    <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_user_profile`}>
 
     {tag.creator_details.profile_name} | @{tag.creator_details.username} | {formatDate(tag.posts_details?.date_created)}
 
@@ -51,7 +51,7 @@ function TagPosts({tag}){
         
     <div className="posts_content_text_container">
 
-        <div className="post_text">
+        <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_text`}>
 
            {highlightMentions(tag.posts_details.content)}
         </div>

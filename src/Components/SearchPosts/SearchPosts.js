@@ -7,7 +7,7 @@ import TagReplies from "./tagReplies";
 import AllSearch from "./AllSearch";
 import "./SearchPosts.css"
 
-function SearchPosts(){
+function SearchPosts({mainUser}){
 
 const {tag_name} = useParams()
 
@@ -34,7 +34,7 @@ function optionContent(selected) {
           {getPosts.map((tag) => {
             return (
               <div  className="posts-border-container">
-                <TagPosts tag={tag}/>
+                <TagPosts tag={tag} mainUser={mainUser}/>
               </div>
             );
           })}
@@ -47,7 +47,7 @@ function optionContent(selected) {
           {getReplies.map((tag) => {
             return (
               <div  className="posts-border-container">
-                <TagReplies tag={tag}/>
+                <TagReplies tag={tag} mainUser={mainUser}/>
               </div>
             );
           })}
@@ -60,7 +60,7 @@ function optionContent(selected) {
         {allSearch.map((tag) => {
           return (
             <div  className="posts-border-container">
-              <AllSearch tag={tag}/>
+              <AllSearch tag={tag} mainUser={mainUser}/>
             </div>
           );
         })}
@@ -77,12 +77,12 @@ console.log(getReplies)
       <div className="search_post_page">
         <div className="search_post_first_section">
             <div className="tag_name_container">
-                <h1>{getPosts[0]?.tag_names}</h1>
+                <h1 className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>{getPosts[0]?.tag_names}</h1>
             </div>
             <div className="search_option_button">
             {options.map((opt , index) => {
                         return(
-                    <button onClick={() => setOption(index)} className={index === option ? `active options` : 'options'} key={index}>{opt}</button>
+                    <button onClick={() => setOption(index)} className={`${index === option ? `active options` : 'options'} ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`} key={index}>{opt}</button>
                         )
                     })}
             </div>

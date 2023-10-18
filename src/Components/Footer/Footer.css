@@ -1,5 +1,14 @@
 
 
+.footer_border_white{
+    border-left: solid white 1px;
+}
+
+.footer_border_dark{
+    border-left: solid black 1px;
+}
+
+
 @media(min-width:993px) {
     .dataResult{
         background-color: rgb(66, 63, 63);
@@ -66,8 +75,6 @@
         cursor: pointer;
     }
     
-    .footer{
-        border-left: black solid 1px;
-    }
+   
     
 }

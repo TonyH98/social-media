@@ -1,5 +1,5 @@
 
-function RepliesNote({notes , users}){
+function RepliesNote({notes , users, mainUser}){
 
     function highlightMentions(content) {
         const mentionPattern = /@(\w+)/g;
@@ -41,7 +41,7 @@ function RepliesNote({notes , users}){
 
     <div className="post_user_info_date_container">
 
-    <div className="post_user_profile">
+    <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_user_profile`}>
 
     {notes.post_content.profile_name} | @{notes.post_content.username} | {formatDate(notes.post_content.date_created)}
 
@@ -50,7 +50,7 @@ function RepliesNote({notes , users}){
         
     <div className="posts_content_text_container">
 
-        <div className="post_text">
+        <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_text`}>
 
            {highlightMentions(notes.post_content.content)}
         </div>

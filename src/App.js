@@ -19,6 +19,8 @@ import { useDispatch , useSelector } from "react-redux";
 import { fetchUsers} from "./Store/userActions";
 
 const API = process.env.REACT_APP_API_URL;
+
+const newAPI = process.env.REACT_APP_API_NEWS
 function App() {
 
   const dispatch = useDispatch();
@@ -79,7 +81,6 @@ function App() {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-
 
 
 

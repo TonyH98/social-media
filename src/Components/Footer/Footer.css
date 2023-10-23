@@ -8,12 +8,34 @@
     border-left: solid black 1px;
 }
 
+.article_img{
+    height: 100px;
+    width: 200px;
+}
+
+.new_article_container{
+    display: flex;
+    gap: 30px;
+    flex-direction: column;
+    margin-left: 10px;
+    border: black 1px solid;
+    align-items: center;
+    border-radius: 8px;
+    background-color: rgb(126, 121, 121);
+}
+
+.article{
+    margin-top: 10px;
+}
+
 
 @media(min-width:993px) {
+    
     .dataResult{
         background-color: rgb(66, 63, 63);
         height: 100px;
         border-radius: 5px; 
+        
     }
     .profile_search_input_container{
         margin-right: 10px;

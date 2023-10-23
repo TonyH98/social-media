@@ -8,15 +8,17 @@ a{
   color: rgb(13, 13, 169);
 }
 
-.nav_white_border{
-  border-right: white solid 1px;
-}
 
-.nav_dark_border{
-  border-right: black solid 1px;
-}
 
 @media(min-width: 993px){
+  .nav_white_border{
+    border-right: white solid 1px;
+  }
+  
+  .nav_dark_border{
+    border-right: black solid 1px;
+  }
+
 
   nav {
     text-align: left;
@@ -88,7 +90,6 @@ a{
     bottom: 0;
     left: 0;
     right: 0;
-    border-top: white solid 1px;
     z-index: 9999;
   }
 
@@ -118,4 +119,13 @@ a{
     background-color: transparent;
     border: none;
   }
+
+ .nav_med_white_border{
+    border-top: white solid 1px;
+  }
+  
+  .nav_med_dark_border{
+    border-top: black solid 1px;
+  }
+ 
 }

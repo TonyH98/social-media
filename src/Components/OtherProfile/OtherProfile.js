@@ -172,7 +172,7 @@ return(
         <div className="profile_info_first">
         <div className="profile_img_container">
 
-        <img src={users?.profile_img} className="profile_img"/>
+        <img src={users?.profile_img}  className={`${mainUser?.dark_mode ? 'profile_img_white_border' : 'profile_img_dark_border'} profile_img`}/>
 
         </div>
         

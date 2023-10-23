@@ -41,7 +41,7 @@ console.log(user?.dark_mode )
 return(
     <nav className={`${mainUser?.dark_mode ? 'nav_white_border' : 'nav_dark_border'}`} >
 
-    <div className="nav-container">
+    <div className={`${mainUser?.dark_mode ? 'nav_med_white_border' : 'nav_med_dark_border'} nav-container`}>
 
         <div className="logo-container">
         <h2 className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>Hermes</h2>

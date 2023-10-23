@@ -134,7 +134,7 @@ return(
    <div className='signup-option'>
     <p>Don't Have an Account</p>
     <Link to="/signup">
-      <button className='registory-btn'>Sign Up</button>
+      <button type='submit' className='login-btn'>Sign Up</button>
     </Link>
    </div>
 

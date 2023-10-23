@@ -15,3 +15,34 @@ align-items: center;
     font-size: 17px;
 }
 
+
+.sign-up-form-btn-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sign-btn{
+    border: none;
+    color: white;
+    background-color:  #007bff;
+    width: 80px;
+    height: 30px;
+    border-radius: 3px;
+}
+
+.condition_modal_btn{
+    color: rgb(2, 137, 181);
+}
+
+.condition_modal_btn:hover{
+    cursor: pointer;
+}
+
+@media(min-width: 993px) {
+    .users_name_input_container{
+        display: flex;
+        flex-direction: row;
+    }
+    
+}

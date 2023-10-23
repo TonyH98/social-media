@@ -2,6 +2,7 @@ import { useState , useEffect} from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { createUser } from '../../Store/userActions';
+import Condition from './Condition';
 import axios from "axios";
 import "./Signup.css"
 
@@ -25,6 +26,8 @@ function Signup(){
 
     let [ageError , setAgeError] = useState("")
 
+    let[conditionError, setConditionError] = useState("")
+
     let [capsLockOn, setCapsLockOn] = useState(false)
 
     const [user, setUser] = useState({
@@ -41,6 +44,12 @@ function Signup(){
        dark_mode: false,
        password: ""
       });
+
+
+    const [condition , setCondition] = useState(false)
+
+    const [modal , setModal] = useState(false)
+
 
       useEffect(() => {
         setUser((prevUser) => ({
@@ -101,6 +110,8 @@ function Signup(){
         }
       };
 
+
+
       console.log(checkCapsLock)
       function getAge(){
         const dateOfBirth = new Date(user.DOB)
@@ -127,8 +138,24 @@ function Signup(){
           return true
         }
       }
- 
-   
+
+      
+      
+      function handleCondition(){
+        setCondition(!condition)
+      }
+      
+      
+      function checkCondition(){
+        if(condition){
+          return true
+        }
+        else{
+          return false
+        }
+      }
+
+      console.log(checkCondition())
 
       const handleSubmit = (event) => {
         event.preventDefault();
@@ -137,6 +164,10 @@ function Signup(){
 
         if(!validateEmail){
           setEmailError("Please enter a valid email address")
+          isValid = false
+        }
+        if(!checkCondition()){
+          setConditionError("Check Terms of Condition")
           isValid = false
         }
         if(!validatePassword){
@@ -161,7 +192,7 @@ function Signup(){
       isValid = false;
     }
 
-    if (isValid) {
+    if (isValid && condition) {
       dispatch(createUser(user))
       navigate('/verify')
       
@@ -183,7 +214,7 @@ function Signup(){
       }
 
 
-console.log(user)
+
 
       return(
         <div className="signup-section">
@@ -195,6 +226,7 @@ console.log(user)
 
           <div className='input-container'>
             
+            <div className='users_name_input_container'>
             <label htmlFor="firstname" className='label-signup'>First Name:
             <input
               id="firstname"
@@ -207,8 +239,7 @@ console.log(user)
             />
             
             </label>
-      
-      
+
              <label htmlFor="lastname" className='label-signup'>Last Name:
              
             <input
@@ -221,8 +252,12 @@ console.log(user)
               onKeyDown={checkCapsLock} 
             />
              </label>
-     
 
+            </div>
+      
+      
+     
+            <div className='users_name_input_container'>
             <label htmlFor="username" className='label-signup'>Username:
             
             <input
@@ -236,10 +271,7 @@ console.log(user)
             />
             {userError && <p style={{color:"red"}}>{userError}</p>}
             </label>
-            
-          
-           
-         
+
              <label htmlFor="email" className='label-signup'>Email:
              
             <input
@@ -254,7 +286,11 @@ console.log(user)
              {emailError && <p style={{color:"red"}}>{emailError}</p>}
              {emailError2 && <p style={{color:"red"}}>{emailError2}</p>}
              </label>
-       
+            </div>
+            
+          
+           
+         <div className='users_name_input_container'>
           <label htmlFor='DOB' className='label-signup'>Date of Birth:
           <input
               id="DOB"
@@ -282,6 +318,9 @@ console.log(user)
               />
              {passwordError && <p style={{color:"red"}}>{passwordError}</p>}
             </label>
+
+         </div>
+       
               
 
           </div>
@@ -298,12 +337,27 @@ console.log(user)
 
             </div>
 
+            <div className='termsOfCondition'>
+              <input
+              type='checkbox'
+              value={condition}
+              onClick={handleCondition}
+              />
+              <span className="condition_modal_btn" onClick={() => setModal(true)}>Terms of Condition</span>
+
+            </div>
+            {conditionError && <p style={{color:"red"}}>{conditionError}</p>}
+            <Condition open={modal} onClose={() => setModal(false)}/>
             {capsLockOn && <p style={{ color: 'red' }}>Caps Lock is ON</p>}
-            <button type='submit' className='login-submit'>Signup</button>
+            <br/>
+            <div className='sign-up-form-btn-container'>
+            <button type='submit' className='login-submit'>Submit</button>
       
           <Link to="/">
           <button className='sign-btn'>Sign In</button>
           </Link>
+
+            </div>
     
           </form>
         </div>

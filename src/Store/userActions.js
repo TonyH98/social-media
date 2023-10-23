@@ -49,6 +49,21 @@ export const createUser = (user) => async (dispatch) => {
   })
 }
 
+export const VERIFICATIONCODE = 'CODE_SUCCESS';
+export const VERIFICATIONCODE_FAILURE = 'CODE_FAILURE';
+
+
+export const verifyCode = (user) => async (dispatch) => {
+
+  axios.post(`${API}/users/verifyUsers`, user)
+  .then((res) => {
+    dispatch({type: VERIFICATIONCODE})
+  })
+  .catch((error) => {
+    dispatch({type: VERIFICATIONCODE_FAILURE, error: error.message})
+  })
+}
+
 
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS"
 export const LOGIN_FAILURE = "LOGIN_FAILURE"

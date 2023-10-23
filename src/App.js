@@ -13,6 +13,7 @@ import Followings from './Components/Following/Followings';
 import Followers from './Components/Following/Followers';
 import Notifications from './Components/Notifications/Notifications';
 import Footer from './Components/Footer/Footer';
+import Verification from './Components/Registration/Verification';
 import axios from 'axios';
 import { useDispatch , useSelector } from "react-redux";
 import { fetchUsers} from "./Store/userActions";
@@ -99,6 +100,7 @@ function App() {
           <Route path={`/:id/following`} element={<Followings user={user} mainUser={mainUser}/>}/>
           <Route path={`/:id/follower`} element={<Followers user={user} mainUser={mainUser}/>}/>
           <Route path={`/notifications/:id`} element={<Notifications mainUser={mainUser}/>}/>
+          <Route path="/verify" element={<Verification />} />
         </Routes>
       </main>
       <div className={`${mainUser?.dark_mode ? "footer_border_white" : "footer_border_dark"}`} style={{ display: screenWidth >= 993 ? 'block' : 'none' }}>

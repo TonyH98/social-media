@@ -24,7 +24,9 @@ function RepliesNote({notes , users, mainUser}){
         return `${formattedMonth} ${day}, ${formattedYear}`
     }
 
+    
 
+    
     return(
 
         <div className="posts_content">

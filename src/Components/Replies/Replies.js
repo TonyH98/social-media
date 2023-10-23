@@ -49,6 +49,16 @@ function Replies({reply , user , username, posts, mainUser}){
         return `${formattedMonth} ${day}, ${formattedYear}`
     }
 
+    function highlightMentions(content) {
+        const mentionPattern = /@(\w+)/g;
+        const hashtagPattern = /#(\w+)(?=\W|$)/g;
+        
+        const highlightedContent = content
+        .replace(mentionPattern, '<span class="mention">$&</span>')
+        .replace(hashtagPattern, `<span class="hashtag" style="color: blue;">$&</span>`)
+        return <div dangerouslySetInnerHTML={{ __html: highlightedContent }} />;
+    }
+
 const inFav = Array.isArray(favoriteR) ? favoriteR.map(fav => fav?.reply_id) : [];
 
 function handleFavorite(e){
@@ -99,7 +109,7 @@ return(
 
 <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_text`}>
 
-   {reply.content}
+   {highlightMentions(reply.content)}
 </div>
 <div className="posts_img_container">
             {reply.posts_img === null || reply.posts_img === "null" ? null : (

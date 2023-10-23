@@ -163,7 +163,7 @@ function Signup(){
 
     if (isValid) {
       dispatch(createUser(user))
-      navigate('/')
+      navigate('/verify')
       
     }
   }).catch((error) => {

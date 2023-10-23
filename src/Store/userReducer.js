@@ -30,6 +30,10 @@ import {ADD_FAVR , ADD_FAVR_FAIL} from "./userActions"
 import {FETCH_REPLY_REACTIONS , FETCH_REPLY_REACTIONS_FAIL} from "./userActions"
 import {ADD_REPLY_REACTIONS , ADD_REPLY_REACTIONS_FAIL} from "./userActions"
 import {FETCH_ALL_USERS_REPLIES , FETCH_ALL_USERS_REPLIES_FAIL} from "./userActions"
+import {VERIFICATIONCODE ,VERIFICATIONCODE_FAILURE} from "./userActions"
+
+
+
 
 const initialState = {
 
@@ -134,6 +138,34 @@ const initialUser = {
         return state;
     }
   };
+
+
+  const initialCode = {
+    code: false,
+    error: null,
+  };
+  
+
+ export const userCode = (state = initialCode, action) => {
+    switch (action.type) {
+      case VERIFICATIONCODE:
+        return {
+          ...state,
+          code: true,
+          error: null,
+        };
+      case VERIFICATIONCODE_FAILURE:
+        return {
+          ...state,
+          code: false,
+          error: action.error,
+        };
+      default:
+        return state;
+    }
+  };
+
+
 
 
 const initialLogin = {

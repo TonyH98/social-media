@@ -24,7 +24,8 @@ useEffect(() => {
 dispatch(getSearchPost(tag_name))
 dispatch(getSearchReplies(tag_name))
 setAllSearch([...getPosts , ...getReplies])
-}, [dispatch])
+}, [dispatch, tag_name])
+
 
 
 function optionContent(selected) {
@@ -71,13 +72,14 @@ function optionContent(selected) {
   }
 
 
-console.log(getReplies)
+console.log(getPosts)
+
 
     return(
       <div className="search_post_page">
         <div className="search_post_first_section">
             <div className="tag_name_container">
-                <h1 className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>{getPosts[0]?.tag_names}</h1>
+                <h1 className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>{allSearch[0]?.tag_names}</h1>
             </div>
             <div className="search_option_button">
             {options.map((opt , index) => {

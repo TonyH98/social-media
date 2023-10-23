@@ -30,6 +30,7 @@ import {addFavoritesR} from "./userReducer"
 import {deleteFavoriteR} from "./userReducer"
 import {userReactR , addUserReactionsR}  from "./userReducer"
 import { allUserReplies } from "./userReducer";
+import { userCode } from "./userReducer";
 
 
 const rootReducer = combineReducers({
@@ -63,7 +64,8 @@ const rootReducer = combineReducers({
   addFavR: addFavoritesR,
   reactionsR: userReactR,
   addReactionR: addUserReactionsR,
-  userReplies: allUserReplies
+  userReplies: allUserReplies,
+  code: userCode
 
 });
 

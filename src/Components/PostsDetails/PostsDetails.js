@@ -10,7 +10,12 @@ import {SlBubble} from "react-icons/sl"
 import {AiFillHeart} from "react-icons/ai"
 import {AiOutlineHeart} from "react-icons/ai"
 import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
-import { addFav , deleteFav, getReactions, addReaction, getFavorite} from "../../Store/userActions";
+import {getReactions, addReaction} from "../../Store/userActions";
+
+
+import axios from "axios";
+
+const API = process.env.REACT_APP_API_URL;
 
 function PostsDetails({user , plan, mainUser}){
 
@@ -26,6 +31,7 @@ let [dislike] = useState({
     reaction: "dislike"
 })
 
+let [favorite , setFavorite] = useState({})
 
 const dispatch = useDispatch()
 
@@ -35,10 +41,18 @@ const getReplies = useSelector((state) => state.replies.replies)
 
 const reaction = useSelector((state) => state.react.react)
 
-const favorite = useSelector((state) => state.idFav.fav)
+console.log(mainUser)
 
 
-
+useEffect(() => {
+    if(id && mainUser){
+        axios.get(`${API}/favorites/${mainUser?.id}/post/${id}`)
+        .then((res) => {
+            console.log(res.data)
+            setFavorite(res.data)
+        })
+    }
+}, [id, mainUser?.id])
 
 
 useEffect(() => {
@@ -46,11 +60,10 @@ useEffect(() => {
         dispatch(getPostDetails(username , id))
         dispatch(fetchReplies(username, id))
         dispatch(getReactions(username , posts?.id))
-        dispatch(getFavorite(user?.id , id))
     }
 }, [dispatch . username , id, posts?.id, user?.id])
 
-
+console.log(favorite)
 
 function formatDate() {
     const months = [
@@ -110,16 +123,27 @@ let [fav] = useState({
 
 
 function handleAddFav(e){
-    e.preventDefault()
-    dispatch(addFav(user, posts.id, fav))
+    axios.post(`${API}/favorites/${mainUser?.id}/fav/${id}`, {creator_id: posts?.creator?.id})
+    .then(() => {
+        axios.get(`${API}/favorites/${mainUser?.id}/post/${id}`)
+        .then((res) => {
+            setFavorite(res.data)
+        })
+    })
 }
 
 function handleDeleteFav(e){
-    e.preventDefault()
-    dispatch(deleteFav(user, posts.id))
+
+axios.delete(`${API}/favorites/${mainUser.id}/delete/${id}`)
+.then(() => {
+    axios.get(`${API}/favorites/${mainUser?.id}/post/${id}`)
+    .then((res) => {
+        setFavorite(res.data)
+    })
+})
 }
 
-
+console.log(favorite)
 
 return(
 
@@ -176,7 +200,7 @@ return(
 
 
    <div className="favorite_posts_container">
-       {favorite && favorite?.favorites ?
+       {favorite?.favorites ?
        <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} onClick={handleDeleteFav} ><AiFillHeart size={20} color="red"/>
        <span className="hidden-text">Disike</span>
        </button>

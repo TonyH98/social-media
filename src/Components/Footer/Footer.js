@@ -56,15 +56,15 @@ function Footer({user, mainUser}){
 
         allUsers = allUsers.filter((user) => user.id !== users.id)
 
-        useEffect(() => {
-            if(newAPI){
-                axios
-                  .get(`https://newsapi.org/v2/top-headlines?country=us&pageSize=8&apiKey=${newAPI}`)
-                  .then((res) => {
-                    setNewsArticle(res.data);
-                  });
-            }
-          }, []);
+        // useEffect(() => {
+        //     if(newAPI){
+        //         axios
+        //           .get(`https://newsapi.org/v2/top-headlines?country=us&pageSize=8&apiKey=${newAPI}`)
+        //           .then((res) => {
+        //             setNewsArticle(res.data);
+        //           });
+        //     }
+        //   }, []);
           
           console.log(newArticle)
 

@@ -287,6 +287,7 @@ export const addFav = (user, postId, fav) => async (dispatch) => {
   .then(() => {
     dispatch({type: ADD_FAV})
     dispatch(getFavorites(user?.id))
+
   })
   .catch((error) => {
     dispatch({ type: ADD_FAV_FAIL, error: error.message });

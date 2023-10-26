@@ -26,12 +26,13 @@ const noteR = useSelector((state) => state.note2.note2)
 const users = useSelector((state) => state.user.users);
 
 useEffect(() => {
-
+  if(id){
     dispatch(fetchUsers(id))
     dispatch(getNotifications(id))
     dispatch(getNotificationsReplies(id))
+  }
   
-}, [dispatch])
+}, [dispatch, id])
 
 const applyFilters = () => {
 
@@ -64,9 +65,10 @@ const applyFilters = () => {
 
 
 
+
   useEffect(() => {
     applyFilters();
-  }, [searchFilter]);
+  }, [searchFilter, option, note, noteR]);
 
   function optionContent(selected) {
     if (selected === 0) {
@@ -108,7 +110,7 @@ const applyFilters = () => {
                     <h1 className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>{users.profile_name}</h1>
                 </div>
                 <div className="notifications_number_container">
-                    <h3 className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>Notifications: {note.length}</h3>
+                    <h3 className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>Notifications: {note.length + noteR.length}</h3>
                 </div>
                 <div className="note_input_bar_container">
                     <label htmlFor="note_input"className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} label-note`}>

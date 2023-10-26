@@ -96,6 +96,12 @@ button[type='submit']:hover {
   background-color: #0056b3;
 }
 
+.modal_backgrond_dark{
+  background-color: black;
+  border: white 1px solid;
+}
+
+
 @media(min-width: 320px) and (max-width: 992px){
   .post_form{
     z-index: 99999;

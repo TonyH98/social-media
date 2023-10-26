@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import axios from "axios";
 const API = process.env.REACT_APP_API_URL;
 
-function Verifications({open , onClose, user , plan}){
+function Verifications({open , onClose, user , plan, mainUser}){
 
 const dispatch = useDispatch();
 const getPlans = useSelector((state) => state.plan.plans)
@@ -54,26 +54,26 @@ const buyNow = async () => {
 
 return(
     <div className="overlay2">
-           <div className="modal-container2">
+           <div className={`modal-container2 ${mainUser?.dark_mode ? 'modal_backgrond_dark' : 'modal_backgrond_white'}`}>
             <div className="modalLeft2">
                 <p className="closeBtn2" onClick={onClose}>X</p>
             </div>
            <div className="content2">
             <div className="verified-header">
-                <h1>Get Verified</h1>
-                <p>For Exclusive Perks</p>
+                <h1 className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>Get Verified</h1>
+                <p className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>For Exclusive Perks</p>
             </div>
 
             <div className="verified-option-container">
 
-            <div className="verified-option">
+            <div className={`verified-option ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>
 
                 <h4>{getPlans.product_name}</h4>
                 <p>{getPlans.description}</p>
                 <p>${getPlans.price.toFixed(2)}</p>
             </div>
             
-            {plan?.images ? <span className="check_member">Alraedy a member</span> :
+            {plan?.images ? <span className={`check_member ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>Alraedy a member</span> :
             
             <button className="purchase_verfication" onClick={buyNow}>Purchase</button>
             }

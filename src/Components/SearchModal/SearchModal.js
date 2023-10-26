@@ -7,7 +7,7 @@ import {MdClear} from "react-icons/md"
 
 import "./SearchModal.css"
 
-function SearchModal({open , onClose , user}){
+function SearchModal({open , onClose , user, mainUser}){
     const dispatch = useDispatch();
     let allUsers = useSelector((state) => state.users.users)
     const getAllTags = useSelector((state) => state.get_tags.tags)
@@ -54,7 +54,7 @@ function SearchModal({open , onClose , user}){
 
     return(
     <div className="overlay searchModal">
-    <div className="modal-container">
+    <div className={`modal-container ${mainUser?.dark_mode ? 'modal_backgrond_dark' : 'modal_backgrond_white'}`}>
      <div className="modalLeft">
      <button className="onClose" onClick={onClose}>X</button>
      </div>

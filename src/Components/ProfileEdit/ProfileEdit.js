@@ -122,19 +122,19 @@ console.log(edit.notifications)
 
     return(
         <div className="overlay">
-           <div className="modal-container">
+           <div className={`modal-container ${users?.dark_mode ? 'modal_backgrond_dark' : 'modal_backgrond_white'}`}>
             <div className="modalLeft">
                 <p className="closeBtn" onClick={onClose}>X</p>
             </div>
            <div className="content">
-            <h2 className="posts_header">Edit Profile</h2>
+            <h2 className={`posts_header ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>Edit Profile</h2>
             
             <form onSubmit={handleSubmit}className="signup-form">
 
             <div className='input-container'>
             {currentPage === 1 && (
                 <div>
-            <label htmlFor="profile_name" className='label-signup'>Profile Name:
+            <label htmlFor="profile_name" className={`label-signup ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>Profile Name:
             <input
                 id="profile_name"
                 required
@@ -144,7 +144,7 @@ console.log(edit.notifications)
             
             </label>
 
-            <label className='label-signup' htmlFor="bio">
+            <label className={`label-signup ${users?.dark_mode ? 'white_text' : 'dark_text'}`} htmlFor="bio">
                     Bio:
                     <textarea
                         required
@@ -165,7 +165,7 @@ console.log(edit.notifications)
 
                 {currentPage === 2 && (
                     <div>
-            <label htmlFor="profile_img" className='label-signup'>
+            <label htmlFor="profile_img" className={`label-signup ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>
                     Profile Image
                     <input
                         id="profile_img"
@@ -179,7 +179,7 @@ console.log(edit.notifications)
 
 
 
-                    <label htmlFor="banner_img" className='label-signup'>
+                    <label htmlFor="banner_img"className={`label-signup ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>
                     Banner Image
                     <input
 
@@ -207,7 +207,7 @@ console.log(edit.notifications)
                 {currentPage === 3 && (
                     <div>
                     
-                    <label htmlFor="dark_mode" className='label-signup'>
+                    <label htmlFor="dark_mode" className={`label-signup ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>
                         Background Color
                         <label className="switch">
                         <input
@@ -221,7 +221,7 @@ console.log(edit.notifications)
                         </label>
                         </label>
 
-                        <label htmlFor="Notifications" className='label-signup'>
+                        <label htmlFor="Notifications" className={`label-signup ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>
                         Notifications
                         <label className="switch">
                         <input

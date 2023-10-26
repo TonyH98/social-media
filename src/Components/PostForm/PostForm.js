@@ -166,22 +166,23 @@ function PostForm ({open, onClose, users, plan}){
   
     
     return(
-        <div className="overlay post_form">
-           <div className="modal-container ">
+        <div className={`overlay post_form`}>
+           <div className={`modal-container ${users?.dark_mode ? 'modal_backgrond_dark' : 'modal_backgrond_white'}`}>
             <div className="modalLeft">
                 <p className="closeBtn" onClick={onClose}>X</p>
             </div>
            <div className="content">
-            <h2 className="posts_header">Create Post</h2>
+            <h2 className={`posts_header ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>Create Post</h2>
             
             <form onSubmit={handleSubmit} className="signup-form">
 
 
 <div className='input-container'>
   
-  <label htmlFor="content" className='label-signup'>Post:
+  <label htmlFor="content" className={`label-signup ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>Post:
   <textarea
   id="content"
+  className={`${users?.dark_mode ? 'white_text' : 'dark_text'}`}
   required
   value={posts.content}
   onChange={handleTextChange}
@@ -215,7 +216,7 @@ function PostForm ({open, onClose, users, plan}){
   )}
   </label>
 
-  <label htmlFor="posts_img" className='label-signup'>
+  <label htmlFor="posts_img" className={`label-signup ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>
           Post Image
           <input
             key={posts.imageKey}

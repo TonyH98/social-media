@@ -72,16 +72,16 @@ return(
         <span className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} text`}>Verified</span>
         </div>
 
-        <Verifications open={modal} onClose={() => setModal(false)} user={user} plan={plan}/>
+        <Verifications open={modal} onClose={() => setModal(false)} user={user} plan={plan} mainUser={mainUser}/>
 
         <div className="nav-content nav-search" onClick={() => setModal2(true)}>
         <CiSearch class="icon" size={30} className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`} />
         <span className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} text`}>Search</span>
         </div>
-        <SearchModal open={modal2} onClose={() => setModal2(false)} user={user} />
+        <SearchModal open={modal2} onClose={() => setModal2(false)} user={user} mainUser={mainUser} />
 
         <button   className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} logout nav-content`}onClick={() => setModal3(true)}>Logout</button>
-        <LogoutModal open={modal3} onClose={() => setModal3(false)} user={user}/>
+        <LogoutModal open={modal3} onClose={() => setModal3(false)} user={user} mainUser={mainUser}/>
         </div>
 
     </div>

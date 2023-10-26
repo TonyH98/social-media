@@ -21,7 +21,8 @@ function ProfileEdit({onClose , users, open2, fetchUsers }){
         bio: "",
         profile_img: "",
         banner_img: "",
-        dark_mode: ""
+        dark_mode: "",
+        notifications: ""
     })
     
 
@@ -69,8 +70,12 @@ const handleTextChange = (event) => {
 };
 
 const handleCheck = (event) => {
-    setEdit({ ...edit, dark_mode: !edit.dark_mode });
+        setEdit({ ...edit, dark_mode: !edit.dark_mode });
 };
+
+const handelNofite = () => {
+    setEdit({...edit, notifications: !edit.notifications})
+}
 
 const nextPage = (event) => {
     event.preventDefault();
@@ -93,6 +98,7 @@ const handleSubmit = (event) => {
     formData.append("email", edit?.email);
     formData.append("bio", edit.bio);
     formData.append("dark_mode", edit.dark_mode);
+    formData.append("notifications", edit.notifications);
     if (edit?.profile_img) {
         formData.append("profile_img", edit?.profile_img);
     }
@@ -108,9 +114,9 @@ const handleSubmit = (event) => {
      })
 };
 
+console.log(edit.notifications)
 
 
-console.log(edit.dark_mode)
 
     if(!open2) return null
 
@@ -210,6 +216,20 @@ console.log(edit.dark_mode)
                         value={edit.dark_mode}
                         checked={edit.dark_mode}
                         onChange={handleCheck}
+                    />
+                            <span className="slider round"></span>
+                        </label>
+                        </label>
+
+                        <label htmlFor="Notifications" className='label-signup'>
+                        Notifications
+                        <label className="switch">
+                        <input
+                        type="checkbox"
+                        id="notifications"
+                        value={edit.notifications}
+                        checked={edit.notifications}
+                        onChange={handelNofite}
                     />
                             <span className="slider round"></span>
                         </label>

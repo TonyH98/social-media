@@ -12,7 +12,7 @@ function Articles({article}){
     console.log(title)
 return(
     <a href={`${article.url}`} target="_blank">
-   <div>
+   <div className="article_real">
     <div className="article_image_container">
         <img src={article.urlToImage} alt={article.title} className="article_img"/>
     </div>

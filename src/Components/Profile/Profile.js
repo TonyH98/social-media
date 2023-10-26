@@ -113,7 +113,7 @@ function Profile({user , plan}){
     return(
         <div className="profile">
 
-        <div className="profile_first_half">
+       
 
         <div className="profile_banner_container">
 
@@ -122,15 +122,17 @@ function Profile({user , plan}){
         className="profile_banner_img"/>
 
      
-
         </div>
+
+        
+
 
         <ProfileEdit open2={modal2} fetchUsers={fetchUsers} onClose={() => setModal2(false)} users={users}/>
 
         <PostForm open={modal} onClose={() => setModal(false)} users={users} plan={plan}/>
 
-
-        <div className="profile_info_container">
+      <div className="profile_second_section">
+       
 
           <div className="profile_info_first"> 
         <div className="profile_img_container">
@@ -184,8 +186,11 @@ function Profile({user , plan}){
           <BsPencilSquare size={20}/></button>
           </div>
 
-        </div>
+    
 
+      </div>
+
+        <div className="profile_third_section">
         <div className="profile_selected_options">
 
         <div className="three_options_container">
@@ -199,9 +204,10 @@ function Profile({user , plan}){
 
 {optionContent(option)}
         </div>
-
-
+          
         </div>
+
+
 
         </div>
 

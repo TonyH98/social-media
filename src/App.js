@@ -104,7 +104,7 @@ function App() {
           <Route path="/verify" element={<Verification />} />
         </Routes>
       </main>
-      <div className={`${mainUser?.dark_mode ? "footer_border_white" : "footer_border_dark"}`} style={{ display: screenWidth >= 993 ? 'block' : 'none' }}>
+      <div className={`${mainUser?.dark_mode ? "footer_border_white" : "footer_border_dark"} footer`} style={{ display: screenWidth >= 993 ? 'block' : 'none' }}>
           {user ? <Footer user={user} mainUser={mainUser}/> : null}
         </div>
     </Router>

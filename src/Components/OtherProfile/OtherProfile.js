@@ -152,7 +152,7 @@ useEffect(() => {
 return(
         <div className="profile">
 
-        <div className="profile_first_half">
+        <div className="profile_first_section">
 
         <div className="profile_banner_container">
 
@@ -164,10 +164,10 @@ return(
 
         </div>
 
-        
+        </div>
 
-
-        <div className="profile_info_container">
+        <div className="profile_second_section">
+     
 
         <div className="profile_info_first">
         <div className="profile_img_container">
@@ -189,7 +189,6 @@ return(
         }}
       />
     </div>
-
 
         <div className="profile_followers_container">
 
@@ -213,7 +212,12 @@ return(
           <button onClick={handleDeleteFollow} className="follow_btn">Remove</button>
           : <button onClick={handleFollow} className="follow_btn">Follow</button>}
           </div>
+        
+
         </div>
+
+
+        <div className="profile_third_section">
 
         <div className="profile_selected_options">
 
@@ -228,9 +232,10 @@ return(
         {optionContent(option)}
 
         </div>
-
-
         </div>
+
+
+       
 
         </div>
     

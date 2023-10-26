@@ -21,25 +21,16 @@ a{
 
 
   nav {
-    text-align: left;
-
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 180px;
-    position: fixed; /* Set position to fixed */
-    top: 0; /* Attach to the top of the viewport */
-    left: 0; /* Attach to the left of the viewport */
-
     padding: 20px; /* Add some padding */
-    box-sizing: border-box; /* Include padding in the width/height */
+    height: 100%;
+    display: flex;
   }
   
   .nav-container {
     display: flex;
     flex-direction: column;
     gap: 50px;
+    height: 100%;
   }
   
   .nav-content-container {
@@ -47,6 +38,8 @@ a{
     flex-direction: column;
     gap: 40px;
   }
+
+  
   
   .nav-content {
     font-size: 20px;
@@ -84,27 +77,39 @@ a{
 }
 
 
+
+
+
+
 @media (min-width: 320px) and (max-width: 992px) {
   .nav-container {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 9999;
+    z-index: 99999;
+  
+    padding: 10px; /* Adjust the padding as needed */
   }
+
+  .nav-background-med-black{
+    background-color: black;
+  }
+
+  .nav-background-med-white{
+    background-color: white;
+  }
+
 
   .nav-content-container {
     display: flex;
     justify-content: space-around; /* Adjust the alignment as needed */
-    padding: 10px; /* Adjust the padding as needed */
   }
 
   .nav-content {
     text-align: center; /* Center align the items */
   }
-  .logo-container{
-    display: none;
-  }
+
   .icon {
     display: block;
     margin: 0 auto; /* Center the icons horizontally */
@@ -115,17 +120,20 @@ a{
     font-size: 12px; /* Adjust the font size as needed */
   }
 
-  .logout{
+  .logo-container {
+    display: none;
+  }
+
+  .logout {
     background-color: transparent;
     border: none;
   }
 
- .nav_med_white_border{
+  .nav_med_white_border {
     border-top: white solid 1px;
   }
-  
-  .nav_med_dark_border{
+
+  .nav_med_dark_border {
     border-top: black solid 1px;
   }
- 
 }

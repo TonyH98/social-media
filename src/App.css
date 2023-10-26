@@ -1,8 +1,10 @@
-.App {
-  display: flex;
-  flex-direction: row;
-  height: 100vh;
-  overflow: hidden; /* Prevent content overflow */
+
+@media(min-width: 993px){
+  .App {
+    display: flex;
+    flex-direction: row;
+  }
+
 }
 
 .dark_background{

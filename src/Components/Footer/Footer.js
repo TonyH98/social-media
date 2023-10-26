@@ -57,12 +57,14 @@ function Footer({user, mainUser}){
         allUsers = allUsers.filter((user) => user.id !== users.id)
 
         useEffect(() => {
-            axios
-              .get(`https://newsapi.org/v2/top-headlines?country=us&pageSize=8&apiKey=${newAPI}`)
-              .then((res) => {
-                setNewsArticle(res.data);
-              });
-          }, [] );
+            if(newAPI){
+                axios
+                  .get(`https://newsapi.org/v2/top-headlines?country=us&pageSize=8&apiKey=${newAPI}`)
+                  .then((res) => {
+                    setNewsArticle(res.data);
+                  });
+            }
+          }, []);
           
           console.log(newArticle)
 
@@ -86,13 +88,10 @@ function Footer({user, mainUser}){
     onChange={handleFilter}
   />
 </div>
-
-
         {filter.length !== 0 && (
                     <div className="dataResult">
                         {filter.slice(0, 10).map((result, index) => {
                             if (result.tag_names) {
-                                // Display tags
                                 return (
                                     <div className="search-link" key={index}>
                                         <Link to={`/posts/${result.tag_names.slice(1)}`}>
@@ -101,7 +100,6 @@ function Footer({user, mainUser}){
                                     </div>
                                 );
                             } else if (result.username) {
-                                // Display users
                                 return (
                                     <div className="search-link" key={index}>
                                         <Link to={`/profiles/${result.id}`}>
@@ -115,15 +113,12 @@ function Footer({user, mainUser}){
                 )}
         <br/>
         <div className="new_article_container">
-            {newArticle.articles.map((article) => {
-                return(
-                <div className="article">
-                    <Articles article={article}/>
-                </div>
-
-                )
-            })}
-        </div>
+                {newArticle.articles && Array.isArray(newArticle.articles) && newArticle.articles.map((article, index) => (
+                    <div className="article" key={index}>
+                        <Articles article={article} />
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }

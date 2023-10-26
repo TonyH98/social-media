@@ -96,3 +96,8 @@ button[type='submit']:hover {
   background-color: #0056b3;
 }
 
+@media(min-width: 320px) and (max-width: 992px){
+  .post_form{
+    z-index: 99999;
+  }
+}

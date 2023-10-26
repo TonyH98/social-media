@@ -166,8 +166,8 @@ function PostForm ({open, onClose, users, plan}){
   
     
     return(
-        <div className="overlay">
-           <div className="modal-container">
+        <div className="overlay post_form">
+           <div className="modal-container ">
             <div className="modalLeft">
                 <p className="closeBtn" onClick={onClose}>X</p>
             </div>

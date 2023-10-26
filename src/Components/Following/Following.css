@@ -28,9 +28,7 @@
 
 
 @media(min-width: 993px){
-    .following_first_section, .following_second_section{
-        margin-left: 200px;
-    }
+    
     
     .following_first_section{
         margin-bottom: 80px;

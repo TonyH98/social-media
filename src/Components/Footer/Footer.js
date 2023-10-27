@@ -56,17 +56,17 @@ function Footer({user, mainUser}){
 
         allUsers = allUsers.filter((user) => user.id !== users.id)
 
-        // useEffect(() => {
-        //     if(newAPI){
-        //         axios
-        //           .get(`https://newsapi.org/v2/top-headlines?country=us&pageSize=8&apiKey=${newAPI}`)
-        //           .then((res) => {
-        //             setNewsArticle(res.data);
-        //           });
-        //     }
-        //   }, []);
+        useEffect(() => {
+            if(newAPI){
+                axios
+                  .get(`https://newsapi.org/v2/top-headlines?country=us&pageSize=8&apiKey=${newAPI}`)
+                  .then((res) => {
+                    setNewsArticle(res.data);
+                  });
+            }
+          }, []);
           
-          console.log(newArticle)
+          console.log(filter)
 
 
     return(
@@ -103,7 +103,16 @@ function Footer({user, mainUser}){
                                 return (
                                     <div className="search-link" key={index}>
                                         <Link to={`/profiles/${result.id}`}>
-                                            <p className="dropdown-link">@{result.username}</p>
+                                           <div className="user-drop-info">
+                                                <div className="user-drop-image-container">
+                                                    <img src={result.profile_img} alt={result.username} className="user-drop-image"/>
+                                                </div>
+
+                                                <div className="user-drop-name-container">
+                                                    <div className="user-drop-profilename">{result.profile_name}</div>
+                                                    <div className="user-drop-username">@{result.username}</div>
+                                                </div>
+                                           </div>
                                         </Link>
                                     </div>
                                 );
@@ -113,12 +122,14 @@ function Footer({user, mainUser}){
                 )}
         <br/>
         <div className="new_article_container">
+
                 {newArticle.articles && Array.isArray(newArticle.articles) && newArticle.articles.map((article, index) => (
                     <div className="article" key={index}>
+                        
                         <Articles article={article} />
                     </div>
                 ))}
-            </div>
+        </div>
         </div>
     )
 }

@@ -9,36 +9,81 @@
 }
 
 .article_img{
-    height: 100px;
+    height: 150px;
     width: 200px;
+
 }
 
-.new_article_container{
+.new_article_container {
     display: flex;
-    gap: 30px;
     flex-direction: column;
-    margin-left: 10px;
-    border: black 1px solid;
-    align-items: center;
+    gap: 30px;
+    margin: 20px auto;
+    border: 1px solid black;
     border-radius: 8px;
     background-color: rgb(126, 121, 121);
+    max-width: 300px;
+    padding: 20px;
 }
+
+
 
 .article{
-    margin: 10px 10px 10px 10px;
-    
+    margin: 10px 10px 10px 10px;  
+}
+
+.article_real{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.user-drop-image{
+    height: 50px;
+    width: 60px;
+    border-radius: 50%;
+}
+
+.user-drop-info{
+    margin-top: 10px;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.user-drop-profilename{
+    color: white;
+    font-weight: bold;
+}
+
+.user-drop-name-container{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 
+.user-drop-username{
+    color: rgb(156, 154, 154);
+}
 
 @media(min-width:993px) {
     
-    .dataResult{
-        background-color: rgb(66, 63, 63);
-        height: 100px;
-        border-radius: 5px; 
-        
+    .search-link:hover{
+        background: rgba(255, 255, 255, 0.1);
     }
+
+    .dataResult {
+        background-color: rgb(66, 63, 63);
+        height: 200px;
+        border-radius: 5px;
+        position: absolute;
+         width: 320px;
+        z-index: 1; 
+        margin-top: 5px; 
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+      }
     .profile_search_input_container{
         margin-right: 10px;
     }
@@ -62,8 +107,6 @@
     }
     
     .profile_search_bar{
-    
-    
         height: 25px;
         border-radius: 25px;
         font-size: 20px;

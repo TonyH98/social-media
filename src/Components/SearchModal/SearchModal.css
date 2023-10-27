@@ -1,21 +1,4 @@
-.profile_search_bar{
-    
-    
-    height: 25px;
-    border-radius: 25px;
-    font-size: 20px;
-    
-    }
 
-    .profile_search_bar {
-        border: none;
-        font-size: 18px;
-        background-color: transparent;
-        flex: 1;
-        margin-left: 10px;
-        height: 30px;
-        outline: none;
-      }
 
 .search_container{
     display: flex;

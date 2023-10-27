@@ -6,7 +6,7 @@ import "./Reply.css"
 import axios from "axios";
 
 const API = process.env.REACT_APP_API_URL;
-function ReplyForm({open , onClose, users, posts, plan }){
+function ReplyForm({open , onClose, users, posts, plan, mainUser }){
 
   const dispatch = useDispatch()
 
@@ -182,7 +182,7 @@ if(!open) return null
 
     return(
         <div className="overlay">
-           <div className="modal-container">
+           <div className={`modal-container ${mainUser?.dark_mode ? 'modal_backgrond_dark' : 'modal_backgrond_white'}`}>
             <div className="modalLeft">
             <button className="onClose" onClick={onClose}>X</button>
             </div>
@@ -201,7 +201,7 @@ className="post_user_profile"
 
 <div className="post_user_info_date_container">
 
-<div className="post_user_profile">
+<div className={`post_user_profile ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>
 
 {posts.creator.profile_name} | @{posts.creator.username} | {formatDate(posts.time)}
 
@@ -210,7 +210,7 @@ className="post_user_profile"
 
 <div className="posts_content_text_container">
 
-<div className="post_text">
+<div className={`post-text ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>
 
    {highlightMentions(posts.content)}
 </div>
@@ -236,11 +236,11 @@ className="post_user_profile"
 
 <form  className="signup-form" onSubmit={handleSubmit}>
 
-<h2>Reply Back:</h2>
+<h2 className={` ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>Reply Back:</h2>
 
 <div className='input-container'>
   
-  <label htmlFor="content" className='label-signup'>Post:
+  <label htmlFor="content" className={`label-signup ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>Post:
   <textarea
     id="content"
     required
@@ -275,7 +275,7 @@ className="post_user_profile"
   )}
   </label>
 
-  <label htmlFor="posts_img" className='label-signup'>
+  <label htmlFor="posts_img" className={`label-signup ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>
           Post Image
           <input
             key={replies.imageKey}

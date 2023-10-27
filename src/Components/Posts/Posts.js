@@ -177,7 +177,7 @@ function handleDislike(e){
             </button>
             </div> 
 
-            <ReplyForm open={show} onClose={() =>  setShow(false)} users={users} posts={posts} plan={plan}/>
+            <ReplyForm open={show} onClose={() =>  setShow(false)} users={users} posts={posts} plan={plan} mainUser={mainUser}/>
          </div>
          
          </div>

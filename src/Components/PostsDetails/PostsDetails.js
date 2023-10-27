@@ -225,7 +225,7 @@ return(
    </button>
    </div>
 
-   <ReplyForm open={show} onClose={() =>  setShow(false)} users={user}  posts={posts} plan={plan} />
+   <ReplyForm open={show} onClose={() =>  setShow(false)} users={user}  posts={posts} plan={plan} mainUser={mainUser} />
 </div>
  
  </div>

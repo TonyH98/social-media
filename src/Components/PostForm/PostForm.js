@@ -182,7 +182,7 @@ function PostForm ({open, onClose, users, plan}){
   <label htmlFor="content" className={`label-signup ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>Post:
   <textarea
   id="content"
-  className={`${users?.dark_mode ? 'white_text' : 'dark_text'}`}
+  
   required
   value={posts.content}
   onChange={handleTextChange}

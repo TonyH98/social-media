@@ -9,6 +9,20 @@ function Verification(){
 
     const dispatch = useDispatch();
 
+    const [seconds, setSeconds] = useState(300)
+
+    useEffect(() => {
+      const intervalid = setInterval(() => {
+        setSeconds(prevSeconds => prevSeconds - 1)
+      }, 1000)
+
+      if(seconds <= 0){
+        navigate("/signup")
+        clearInterval(intervalid)
+      }
+      return () => clearInterval(intervalid);
+    }, [seconds])
+
     const [code, setCode] = useState({
         email: "",
         verificationCode: ""
@@ -23,6 +37,15 @@ function Verification(){
         dispatch(verifyCode(code))
         navigate('/')
       };
+
+const formatTime = (time) => {
+  const minutes = Math.floor(time / 60)
+  const seconds = time % 60
+  return `${minutes}:${seconds < 10 ? '0': ""}${seconds}`
+}
+
+
+
 
 
 return(
@@ -46,8 +69,6 @@ return(
         onChange={handleTextChange}
 
       />
-       {/* {emailError && <p style={{color:"red"}}>{emailError}</p>}
-       {emailError2 && <p style={{color:"red"}}>{emailError2}</p>} */}
        </label>
  
   
@@ -66,7 +87,8 @@ return(
         
 
     </div>
-    
+
+       <h2 style={{color: "red"}}><span>Code Expires:</span> {formatTime(seconds)}</h2>
       <button type='submit' className='login-submit'>Signup</button>
 
     </form>

@@ -7,14 +7,14 @@ import {LuVerified} from "react-icons/lu"
 import {CgProfile} from "react-icons/cg"
 import {CiSearch} from "react-icons/ci"
 
-import {  Link, useLocation } from "react-router-dom";
+import {  Link, useLocation, useNavigate } from "react-router-dom";
 
 import { useState, useEffect } from "react";
 import SearchModal from "../SearchModal/SearchModal"
 import Verifications from "./Verifications";
 import LogoutModal from "../Logout/LogoutModal"
 
-function Nav({plan, mainUser}){
+function Nav({plan, mainUser, setIsLogged}){
 
     const [user, setUser] = useState();
 
@@ -24,7 +24,7 @@ function Nav({plan, mainUser}){
 
     const [modal3 , setModal3] = useState(false)
 
-
+    let navigate = useNavigate()
 
   useEffect(() => {
     const loggedUser = JSON.parse(window.localStorage.getItem('user'));
@@ -37,7 +37,34 @@ function Nav({plan, mainUser}){
     return location.pathname === path ? 'active2' : ''
   }
 
-console.log(user?.dark_mode )
+  let inactivityTimeout
+
+  const handleUserActivity = () => {
+    clearTimeout(inactivityTimeout)
+
+    inactivityTimeout = setTimeout(() => {
+      localStorage.clear()
+      setIsLogged(false)
+      navigate("/")
+    }, 3 * 24 * 60 * 60 * 1000)
+
+  }
+
+  useEffect(() => {
+    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'];
+    for(let event of events){
+      window.addEventListener(event, handleUserActivity)
+    }
+
+    return () => {
+      for(let event of events){
+        window.removeEventListener(event, handleUserActivity)
+      }
+    }
+  }, [])
+
+
+
 return(
     <nav className={`${mainUser?.dark_mode ? 'nav_white_border' : 'nav_dark_border'}`} >
 

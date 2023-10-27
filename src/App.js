@@ -88,7 +88,7 @@ function App() {
     <div className={`App ${mainUser?.dark_mode ? "dark_background" : "light_background"}`}>
     <Router>
     <div className="navbar">
-        {user ? <Nav user={user} plan={plan} mainUser={mainUser}/> : null}
+        {user ? <Nav user={user} plan={plan} mainUser={mainUser} setIsLogged={setIsLogged}/> : null}
       </div>
       <main className="content">
         <Routes>

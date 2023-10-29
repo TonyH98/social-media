@@ -72,3 +72,26 @@
     border-radius: 5px;
     font-size: 15px;
   }
+
+
+  .edit_profile_image{
+    width: 120px;
+    height: 120px;
+    border: black 1px solid;
+    border-radius: 50%;
+  }
+
+  .file-input {
+    display: none;
+  }
+
+  .edit_profile_image:hover, .edit_banner_image:hover{
+    border: rgb(5, 143, 189) solid 3px;
+  }
+
+
+  .edit_banner_image{
+    width: 300px;
+    height: 100px;
+  }
+  

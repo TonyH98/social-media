@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux";
-import { addFollowing,  deleteFol } from "../../Store/userActions";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -8,7 +6,7 @@ const API = process.env.REACT_APP_API_URL;
 
 function Following({fol , mainUser}) {
 
-  const dispatch = useDispatch();
+
 
   let [bio, setBio] = useState(fol.bio)
 
@@ -58,7 +56,7 @@ const inFol = Array.isArray(following) ? following.map(fol => fol?.following_id)
 console.log(inFol)
 
   return (
-    <Link to={`/profiles/${fol.following_id}`}>
+    <Link to={`/profiles/${fol.following_id}`} onClick={window.scrollTo(0 , 0)}>
     <div className={`${mainUser?.dark_mode ? "fol_white_border" : "fol_dark_border"} following_border`}>
       <div className="following_content_first">
        
@@ -100,3 +98,6 @@ console.log(inFol)
 }
 
 export default Following
+
+
+// window.scrollTo(0 , 0)

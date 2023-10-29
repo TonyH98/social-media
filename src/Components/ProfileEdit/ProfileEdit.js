@@ -165,24 +165,33 @@ console.log(edit.notifications)
 
                 {currentPage === 2 && (
                     <div>
-            <label htmlFor="profile_img" className={`label-signup ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>
-                    Profile Image
-                    <input
-                        id="profile_img"
-                        name="profile_img"
-                        type="file"
-                        className="file-input"
-                        accept=".png, .jpg, .jpeg"
-                        onChange={handleTextChange}
-                    />
-             </label>
+                    <label
+            htmlFor="profile_img"
+            className={`label-signup ${
+                users?.dark_mode ? "white_text" : "dark_text"
+            }`}
+            >
+            Profile Image
+            <div className="custom-input-container">
+             <img src={edit.profile_img} className="edit_profile_image"/>
+                <input
+                id="profile_img"
+                name="profile_img"
+                type="file"
+                className="file-input"
+                accept=".png, .jpg, .jpeg"
+                onChange={handleTextChange}
+                />
+            </div>
+            </label>
 
 
 
                     <label htmlFor="banner_img"className={`label-signup ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>
                     Banner Image
+                    <div>
+                    <img src={edit.banner_img} className="edit_banner_image"/>
                     <input
-
                         id="banner_img"
                         name="banner_img"
                         type="file"
@@ -191,6 +200,8 @@ console.log(edit.notifications)
                         onChange={handleTextChange}
                         
                     />
+
+                    </div>
                     </label>
 
                     <div className="page_count_btn_container">

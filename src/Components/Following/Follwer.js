@@ -38,7 +38,7 @@ console.log(fol)
 
    
 return(
-  <Link to={`/profiles/${fol.id}`}>
+  <Link to={`/profiles/${fol.id}`} onClick={window.scrollTo(0 , 0)}>
   <div className={`${mainUser?.dark_mode ? "fol_white_border" : "fol_dark_border"} following_border`}>
     <div className="following_content_first">
      

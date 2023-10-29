@@ -168,6 +168,10 @@
       margin-bottom: 80px;
   }
 
+  .profile-edit-btns:hover{
+    cursor: pointer;;
+  }
+
 }
 
 @media (min-width: 320px) and (max-width: 992px){

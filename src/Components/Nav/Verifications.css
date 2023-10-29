@@ -40,3 +40,11 @@
 .check_member{
     color: red;
 }
+
+.closeBtn2:hover{
+    cursor: pointer;
+}
+
+.purchase_verfication:hover{
+    cursor: pointer;
+}

@@ -11,7 +11,9 @@ const API = process.env.REACT_APP_API_URL;
 function Followings({user, mainUser}){
 
     let {id} = useParams()
+
     let [users , setUsers] = useState([])
+
     const location = useLocation()
 
     const isActive = (path) => {
@@ -47,13 +49,13 @@ return(
             <h2 className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>{users?.profile_name}</h2>
             <span className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>@{users?.username}</span>
             </div>
-
+            <br/>
             <div className="followe_links">
-                <Link to={`/${users?.id}/following`} className={isActive(`/${users?.id}/following`)}>
+                <Link to={`/${id}/following`} className={isActive(`/${users?.id}/following`)}>
                 <button className={`${users?.dark_mode ? 'white_text' : 'dark_text'} follow_link`}>Following</button>
                 </Link>
 
-                <Link to={`/${mainUser?.id}/follower`} className={isActive(`/${users?.id}/follower`)}>
+                <Link to={`/${id}/follower`} className={isActive(`/${users?.id}/follower`)}>
                 <button className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} follow_link`}>Followers</button>
                 </Link>
             </div>
@@ -62,7 +64,7 @@ return(
 
         <div className="following_second_section">
             {following.length === 0 ? <h1>Empty</h1> : 
-                <div>
+                <div className="following_gap">
                     {following.map((fol) => {
                         return(
                             <Following fol={fol} users={users} user={user} mainUser={mainUser}/>

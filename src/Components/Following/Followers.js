@@ -42,13 +42,13 @@ console.log(user)
             <h2 className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>{users?.profile_name}</h2>
             <span className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>@{users?.username}</span>
             </div>
-
+            <br/>
             <div className="followe_links">
-                <Link to={`/${users?.id}/following`} className={isActive(`/${users?.id}/following`)}>
+                <Link to={`/${id}/following`} className={isActive(`/${users?.id}/following`)}>
                 <button className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} follow_link`}>Following</button>
                 </Link>
 
-                <Link to={`/${users?.id}/follower`} className={isActive(`/${users?.id}/follower`)}>
+                <Link to={`/${id}/follower`} className={isActive(`/${users?.id}/follower`)}>
                 <button className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} follow_link`}>Followers</button>
                 </Link>
             </div>

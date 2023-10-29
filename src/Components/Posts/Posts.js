@@ -31,6 +31,15 @@ let [dislike] = useState({
     reaction: "dislike"
 })
 
+let [replies , setReplies] = useState([])
+
+useEffect(() => {
+    axios.get(`${API}/users/${posts.creator.username}/posts/${posts.id}/reply`)
+    .then((res) => {
+        setReplies(res.data)
+    })
+})
+
 const [reaction , setReaction] = useState({})
 
 let dispatch = useDispatch()
@@ -158,7 +167,7 @@ const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.posts_id) :
 
          <div className="posts-reply-button">
   <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br reply_btn`}  onClick={(e) => { e.preventDefault(); setShow(true); }}>
-    <SlBubble size={20} />
+    <SlBubble size={20} /> {replies.length}
     <span className="hidden-text">Reply</span>
   </button>
 </div>

@@ -6,9 +6,10 @@ import axios from "axios";
 
 const API = process.env.REACT_APP_API_URL;
 
-function Following({fol , user, mainUser}) {
+function Following({fol , mainUser}) {
 
   const dispatch = useDispatch();
+
   let [bio, setBio] = useState(fol.bio)
 
   let [following , setFollowing] = useState([])
@@ -20,27 +21,41 @@ function Following({fol , user, mainUser}) {
   }, [fol.bio , bio]) 
 
 useEffect(() => {
-  if(user.id){
-    axios.get(`${API}/follow/${user.id}`)
+  if(mainUser.id){
+    axios.get(`${API}/follow/${mainUser.id}`)
     .then((res) => {
       setFollowing(res.data)
     })
   }
-}, [user.id])
+}, [mainUser.id])
 
 function handleFollow(e){
-  e.preventDefault()
-  dispatch(addFollowing(user?.id, fol?.following_id))
+  e.preventDefault();
+  axios.post(`${API}/follow/${mainUser.id}/follow/${fol.following_id}`)
+  .then(() => {
+    axios.get(`${API}/follow/${mainUser.id}`)
+    .then((res) => {
+      setFollowing(res.data)
+    })
+  })
 }
 
 
 function handleDeleteFollow(e){
-  e.preventDefault()
-  dispatch(deleteFol(user?.id, fol?.following_id))
+  e.preventDefault();
+  axios.delete(`${API}/follow/${mainUser.id}/delete/${fol.following_id}`)
+  .then(() => {
+    axios.get(`${API}/follow/${mainUser.id}`)
+    .then((res) => {
+      setFollowing(res.data)
+    })
+  })
 }
 
-console.log(fol)
+
 const inFol = Array.isArray(following) ? following.map(fol => fol?.following_id) : [];
+
+console.log(inFol)
 
   return (
     <Link to={`/profiles/${fol.following_id}`}>
@@ -62,7 +77,7 @@ const inFol = Array.isArray(following) ? following.map(fol => fol?.following_id)
 
       <div className="following_content_third">
           <div className="following_button_container">
-          {user && inFol.includes(fol?.following_id) ? 
+          { inFol.includes(fol?.following_id) ? 
               <button onClick={handleDeleteFollow} className="follow_btn">Remove</button>
               : <button onClick={handleFollow} className="follow_btn">Follow</button>}
           </div>

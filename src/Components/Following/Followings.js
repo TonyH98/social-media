@@ -8,7 +8,7 @@ import "./Following.css"
 import axios from "axios";
 
 const API = process.env.REACT_APP_API_URL;
-function Followings({user, mainUser}){
+function Followings({ mainUser}){
 
     let {id} = useParams()
 
@@ -39,7 +39,7 @@ useEffect(() => {
  }, [dispatch, id])
 
 
- console.log(user)
+
 return(
 
     <div className="users_following_container">
@@ -52,7 +52,7 @@ return(
             <br/>
             <div className="followe_links">
                 <Link to={`/${id}/following`} className={isActive(`/${users?.id}/following`)}>
-                <button className={`${users?.dark_mode ? 'white_text' : 'dark_text'} follow_link`}>Following</button>
+                <button className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} follow_link`}>Following</button>
                 </Link>
 
                 <Link to={`/${id}/follower`} className={isActive(`/${users?.id}/follower`)}>
@@ -67,7 +67,7 @@ return(
                 <div className="following_gap">
                     {following.map((fol) => {
                         return(
-                            <Following fol={fol} users={users} user={user} mainUser={mainUser}/>
+                            <Following fol={fol}  mainUser={mainUser}/>
                         )
                     })}
 

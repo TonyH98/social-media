@@ -10,7 +10,7 @@ import {SlBubble} from "react-icons/sl"
 import {AiFillHeart} from "react-icons/ai"
 import {AiOutlineHeart} from "react-icons/ai"
 import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
-import {getReactions, addReaction} from "../../Store/userActions";
+import { addReaction} from "../../Store/userActions";
 
 
 import axios from "axios";
@@ -39,7 +39,7 @@ const posts = useSelector((state) => state.postsDetail.postDetail);
 
 const getReplies = useSelector((state) => state.replies.replies)
 
-const reaction = useSelector((state) => state.react.react)
+const [reaction , setReaction] = useState({})
 
 console.log(mainUser)
 
@@ -59,11 +59,15 @@ useEffect(() => {
     if(username && id){
         dispatch(getPostDetails(username , id))
         dispatch(fetchReplies(username, id))
-        dispatch(getReactions(username , posts?.id))
     }
 }, [dispatch . username , id, posts?.id, user?.id])
 
-console.log(favorite)
+useEffect(() => {
+    axios.get(`${API}/users/${username}/posts/${id}/reactions`)
+    .then((res) => {
+      setReaction(res.data);
+    });
+  }, [username, id]);
 
 function formatDate() {
     const months = [
@@ -107,12 +111,24 @@ function highlightMentions() {
 
 function handleLike(e){
     e.preventDefault()
-    dispatch(addReaction(posts.creator.username, user.id, posts.id, likes))
+    axios.post(`${API}/users/${username}/posts/${mainUser.id}/react/${id}`, likes)
+    .then(() => {
+        axios.get(`${API}/users/${username}/posts/${id}/reactions`)
+        .then((res) => {
+          setReaction(res.data);
+        });
+    })
 }
 
 function handleDislike(e){
     e.preventDefault()
-    dispatch(addReaction(posts.creator.username, user.id, posts.id, dislike))
+    axios.post(`${API}/users/${username}/posts/${mainUser.id}/react/${id}`, dislike)
+    .then(() => {
+        axios.get(`${API}/users/${posts.creator.username}/posts/${posts.id}/reactions`)
+        .then((res) => {
+          setReaction(res.data);
+        });
+    })
 }
 
 console.log(posts?.creator?.id)
@@ -212,18 +228,19 @@ return(
    </div>
 
    <div className="like-container">
-
-   <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br react_btn`} onClick={handleLike}><AiOutlineLike size={20}/> {reaction.likes}
-   <span className="hidden-text">Like</span>
-   </button>
-  
-   </div>
-   
-   <div className="dislike-container">
-   <button  className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br react_btn`} onClick={handleDislike}><AiOutlineDislike size={20}/> {reaction.dislikes}
-   <span className="hidden-text">Dislike</span>
-   </button>
-   </div>
+            <button className={`${reaction?.likeId?.includes(mainUser?.id) ? 'green_option_btn' : 'dark_option_btn'} no_br react_btn`} onClick={handleLike}><AiOutlineLike size={20} /> {reaction.likes}
+            <span className="hidden-text">Like</span>
+            </button>
+           
+            </div>
+            
+            
+      
+            <div className="dislike-container">
+            <button className={`${reaction?.dislikeId?.includes(mainUser?.id) ? 'red_option_btn' : 'dark_option_btn'} no_br react_btn`} onClick={handleDislike}><AiOutlineDislike size={20}/> {reaction.dislikes}
+            <span className="hidden-text">Dislike</span>
+            </button>
+            </div> 
 
    <ReplyForm open={show} onClose={() =>  setShow(false)} users={user}  posts={posts} plan={plan} mainUser={mainUser} />
 </div>

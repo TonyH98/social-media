@@ -168,3 +168,12 @@ border-radius: 50%;
 .posts_content_text_container{
   margin-top: 10px;
 }
+
+
+.green_option_btn{
+  color: green;
+}
+
+.red_option_btn{
+  color: red;
+}

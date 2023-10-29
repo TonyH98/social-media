@@ -442,6 +442,7 @@ export const addReaction = (creatorName , userId , postId, reactions) => async (
   .post(`${API}/users/${creatorName}/posts/${userId}/react/${postId}`, reactions)
   .then(() => {
     dispatch({type: ADD_POSTS_REACTIONS})
+
   })
   .catch((error) => {
     dispatch({ type: ADD_POSTS_REACTIONS_FAIL, error: error.message });

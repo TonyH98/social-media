@@ -5,3 +5,11 @@
 .post_details_btns{
    margin-top: 10px;
 }
+
+
+.replies_container{
+   margin-top: 20px;
+   display: flex;
+   flex-direction: column;
+   gap: 40px;
+}

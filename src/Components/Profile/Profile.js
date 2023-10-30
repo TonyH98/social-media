@@ -163,11 +163,11 @@ function Profile({user , plan}){
 
         <div className="profile_followers_container">
 
-            <Link to={`/${user?.id}/following`}>
+            <Link to={`/${user?.id}/following`} onClick={window.scrollTo(0 , 0)}>
             <div className={`${users?.dark_mode ? 'white_text' : 'dark_text'}`}>{following.length} Following</div>
             </Link>
 
-            <Link to={`/${user?.id}/follower`}>
+            <Link to={`/${user?.id}/follower`} onClick={window.scrollTo(0 , 0)}>
             <div className={`${users?.dark_mode ? 'white_text' : 'dark_text'}`}>{follower.length} Followers</div>
             </Link>
             

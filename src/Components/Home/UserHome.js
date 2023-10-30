@@ -1,5 +1,5 @@
 import "./UserHome.css"
-
+import HomePosts from "./HomePosts";
 import { useState , useEffect} from 'react';
 import axios from "axios";
 
@@ -8,6 +8,9 @@ const API = process.env.REACT_APP_API_URL;
 function UserHome({mainUser, plan}){
 
 
+    let [following , setFollowing] = useState([])
+
+    let [favorites , setFavorites] = useState([])
 
     let [posts, setPosts] = useState({
         user_name: "",
@@ -24,6 +27,8 @@ function UserHome({mainUser, plan}){
 
     let [mentionUsers , setMentionUsers] = useState([])
 
+    let [followingPosts , setFollowingPosts] = useState([])
+
     useEffect(() => {
         if (mainUser?.id) {
             setPosts((prevPost) => ({
@@ -33,6 +38,13 @@ function UserHome({mainUser, plan}){
             }));
         }
     }, [mainUser?.id]);
+
+    useEffect(() => {
+      axios.get(`${API}/follow/${mainUser.id}`)
+      .then((res) => {
+        setFollowing(res.data)
+      })
+    }, [mainUser.id])
 
 
     useEffect(() => {
@@ -46,6 +58,14 @@ function UserHome({mainUser, plan}){
           setTags(res.data)
         })
       }, [API])
+
+
+      useEffect(() => {
+        axios.get(`${API}/favorites/${mainUser.id}`)
+        .then((res) => {
+          setFavorites(res.data)
+        })
+      }, [mainUser.id])
 
 
     const handleTextChange = (event) => {
@@ -151,6 +171,32 @@ function UserHome({mainUser, plan}){
           .catch((c) => console.warn("catch", c)); 
     };
 
+      const inFol = Array.isArray(following) ? following.map((fol) => fol?.username) : [];
+
+    
+
+    useEffect(() => {
+     
+          const fetchPosts = async () => {
+            try{
+              const promises = inFol.map((username) => axios.get(`${API}/users/${username}/posts`))
+              const response = await Promise.all(promises)
+              const posts = response.flatMap((res) => res.data)
+              setFollowingPosts(posts)
+            }
+            catch(error){
+              console.log("Error Fetching following posts:", error)
+            }
+          }
+          if(inFol.length > 0){
+            fetchPosts()
+          }
+
+    }, [followingPosts])
+
+    
+
+    console.log(followingPosts)
     return(
         <div>
             <div className="Home_Post_input_container">
@@ -208,9 +254,21 @@ function UserHome({mainUser, plan}){
             </div>
             <br/>
             <hr/>
+
+        <div className="users_following_posts_container">
+        <div className="option-content-holder">
+              {followingPosts.map((posts) => {
+                return (
+                  <div key={posts.id} className="posts-border-container">
+                    <HomePosts favorites={favorites} posts={posts}  mainUser={mainUser} plan={plan} />
+                  </div>
+                );
+              })}
+            </div>
+        </div>
+           
         </div>
     )
-
 
 }
 

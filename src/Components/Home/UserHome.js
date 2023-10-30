@@ -1,8 +1,9 @@
 import "./UserHome.css"
 import HomePosts from "./HomePosts";
 import { useState , useEffect} from 'react';
+import PostForm from "../PostForm/PostForm";
 import axios from "axios";
-
+import {BsFillPenFill} from "react-icons/bs"
 const API = process.env.REACT_APP_API_URL;
 
 function UserHome({mainUser, plan}){
@@ -28,6 +29,10 @@ function UserHome({mainUser, plan}){
     let [mentionUsers , setMentionUsers] = useState([])
 
     let [followingPosts , setFollowingPosts] = useState([])
+
+    const [modal , setModal] = useState(false)
+
+
 
     useEffect(() => {
         if (mainUser?.id) {
@@ -192,11 +197,22 @@ function UserHome({mainUser, plan}){
             fetchPosts()
           }
 
-    }, [followingPosts])
+    }, [])
 
-    
 
-    console.log(followingPosts)
+
+    const oneWeekAgo = new Date()
+    oneWeekAgo.setDate(oneWeekAgo.getDate() -7)
+
+    console.log(oneWeekAgo)
+
+    followingPosts = followingPosts.filter((post) => {
+      const postTime = new Date(post.time)
+      return postTime > oneWeekAgo
+    })
+
+  
+
     return(
         <div>
             <div className="Home_Post_input_container">
@@ -266,7 +282,10 @@ function UserHome({mainUser, plan}){
               })}
             </div>
         </div>
-           
+         <button className="home-post-button" 
+          onClick={() => setModal(true)}
+          ><BsFillPenFill size={20}/></button>
+           <PostForm open={modal} onClose={() => setModal(false)} users={mainUser} plan={plan}/>
         </div>
     )
 

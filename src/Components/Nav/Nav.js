@@ -71,7 +71,9 @@ return(
     <div className={`${mainUser?.dark_mode ? 'nav_med_white_border nav-background-med-black' : 'nav_med_dark_border nav-background-med-white'} nav-container`}>
 
         <div className="logo-container">
+          <Link to="/Home">
         <h2 className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>Hermes</h2>
+          </Link>
         </div>
 
         <div className="nav-content-container">

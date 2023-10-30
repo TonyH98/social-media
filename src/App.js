@@ -14,6 +14,7 @@ import Followers from './Components/Following/Followers';
 import Notifications from './Components/Notifications/Notifications';
 import Footer from './Components/Footer/Footer';
 import Verification from './Components/Registration/Verification';
+import UserHome from './Components/Home/UserHome';
 import axios from 'axios';
 import { useDispatch , useSelector } from "react-redux";
 import { fetchUsers} from "./Store/userActions";
@@ -76,7 +77,7 @@ function App() {
     // Attach the event listener
     window.addEventListener('resize', handleResize);
 
-    // Clean up the event listener on component unmount
+
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -93,6 +94,7 @@ function App() {
       <main className="content">
         <Routes>
           <Route path="/" element={<Home newLogin={newLogin} isLogged={isLogged} setUser={setUser} user={user}/>} />
+          <Route path="/Home" element={<UserHome mainUser={mainUser} plan={plan}/>}/>
           <Route path="/signup" element={<Signup />} />
           <Route path={`/profile/${user?.id}`} element={<Profile user={user} plan={plan}/>} />
           <Route path="/posts/:tag_name" element={<SearchPosts mainUser={mainUser}/>}/>

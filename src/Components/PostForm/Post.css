@@ -12,81 +12,89 @@
 }
 
 .modal-container {
-  max-width: 600px; /* Adjust the width to your preference */
-  width: 90%;
+  width: 500px;
   background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
-  max-height: 90vh; /* Adjust to your preference */
+  height: 400px;
   overflow-y: auto; /* Enable vertical scrolling if content overflows */
   position: relative;
   display: flex;
   flex-direction: column;
-
 }
 
 .modalLeft {
   display: flex;
   justify-content: flex-end;
-  padding: 10px;
+  padding: 5px;
 }
 
 .closeBtn {
   color: red;
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+  margin-right: 8px;
+  display: inline-block; 
+  width: 30px; 
+  height: 30px; 
+  text-align: center; 
+  line-height: 30px; 
+  border-radius: 50%; 
+  border: none; 
 }
 
-.content {
-  padding: 20px;
+.closeBtn:hover{
+  background-color: rgba(255, 255, 255, 0.5); /* Transparent white background */
 }
+
 
 .posts_header {
   text-align: center;
-  font-size: 1.5rem;
-  margin-bottom: 20px;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
 }
 
 .input-container {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .label-signup {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 10px;
+  padding: 5px;
 }
 
 .modal-container textarea {
-  width: 100%;
-  padding: 10px;
+  width: calc(100% - 20px);
+  padding: 8px;
   border: none;
   border-radius: 5px;
-  resize: none; /* Prevent textarea resizing */
-  font-size: 1rem; /* Adjust font size to your preference */
-  line-height: 1.5; /* Adjust line height for readability */
-  margin-bottom: 10px; /* Add some space between textarea and character count */
+  resize: none; 
+ 
+  line-height: 1.3; 
+  margin-bottom: 8px; 
 }
 
 .text-red-700 {
   color: red;
-  margin-top: 5px; /* Add space between character count and textarea */
+  margin-top: 3px;
+
 }
 
 .file-input {
-  width: 100%;
-  padding: 10px;
+  width: calc(100% - 20px);
+  padding: 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  margin-bottom: 10px; /* Add space between file input and textarea */
+  margin-bottom: 8px; /* Add space between file input and textarea */
 }
 
 button[type='submit'] {
   background-color: #007bff;
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 8px 16px;
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
@@ -96,11 +104,29 @@ button[type='submit']:hover {
   background-color: #0056b3;
 }
 
-.modal_backgrond_dark{
+.modal_backgrond_dark {
   background-color: black;
   border: white 1px solid;
 }
 
+.post_modal_second_section{
+  display: flex;
+  flex-direction: row;
+}
+
+.post_submit_button{
+  margin-left: auto;
+}
+
+.input-container{
+  width: 400px;
+}
+
+.post_modal_text{
+  height: 150px;
+  outline: none;
+  font-size: 20px;
+}
 
 @media(min-width: 320px) and (max-width: 992px){
   .post_form{

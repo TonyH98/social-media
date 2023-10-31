@@ -17,11 +17,11 @@ import Verification from './Components/Registration/Verification';
 import UserHome from './Components/Home/UserHome';
 import axios from 'axios';
 import { useDispatch , useSelector } from "react-redux";
-import { fetchUsers} from "./Store/userActions";
+import { fetchUsers, getFollowing} from "./Store/userActions";
 
 const API = process.env.REACT_APP_API_URL;
 
-const newAPI = process.env.REACT_APP_API_NEWS
+
 function App() {
 
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ function App() {
 
   const mainUser = useSelector((state) => state.user.users);
   const [plan , setPlan] = useState({})
-
+  let following = useSelector((state) => state.follow.fol)
 
   const [isLogged, setIsLogged] = useState(false);
   
@@ -65,8 +65,8 @@ function App() {
 
   useEffect(() => {
        dispatch(fetchUsers(user?.id))
-      
-    }, [dispatch])
+      dispatch(getFollowing(user?.id))
+    }, [dispatch, user?.id])
 
 
   useEffect(() => {
@@ -94,7 +94,7 @@ function App() {
       <main className="content">
         <Routes>
           <Route path="/" element={<Home newLogin={newLogin} isLogged={isLogged} setUser={setUser} user={user}/>} />
-          <Route path="/Home" element={<UserHome mainUser={mainUser} plan={plan}/>}/>
+          <Route path="/Home" element={<UserHome mainUser={mainUser} plan={plan} following={following}/>}/>
           <Route path="/signup" element={<Signup />} />
           <Route path={`/profile/${user?.id}`} element={<Profile user={user} plan={plan}/>} />
           <Route path="/posts/:tag_name" element={<SearchPosts mainUser={mainUser}/>}/>

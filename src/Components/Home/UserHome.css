@@ -18,6 +18,19 @@
     border: none;
     outline: none;
 }
+
+.text_background_dark{
+    background-color: black;
+    color: white;
+
+}
+
+.text_background_light{
+    background-color: white;
+    color: black;
+
+}
+
 @media(min-width: 993px){
     .home-post-button{
         display:none

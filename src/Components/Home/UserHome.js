@@ -4,12 +4,11 @@ import { useState , useEffect} from 'react';
 import PostForm from "../PostForm/PostForm";
 import axios from "axios";
 import {BsFillPenFill} from "react-icons/bs"
+
+
 const API = process.env.REACT_APP_API_URL;
 
-function UserHome({mainUser, plan}){
-
-
-    let [following , setFollowing] = useState([])
+function UserHome({mainUser, plan, following}){
 
     let [favorites , setFavorites] = useState([])
 
@@ -32,8 +31,7 @@ function UserHome({mainUser, plan}){
 
     const [modal , setModal] = useState(false)
 
-
-
+console.log(following)
     useEffect(() => {
         if (mainUser?.id) {
             setPosts((prevPost) => ({
@@ -44,162 +42,156 @@ function UserHome({mainUser, plan}){
         }
     }, [mainUser?.id]);
 
+    
+    
     useEffect(() => {
-      axios.get(`${API}/follow/${mainUser.id}`)
+      axios.get(`${API}/users`)
       .then((res) => {
-        setFollowing(res.data)
+        setOtherUsers(res.data)
+      })
+      
+      axios.get(`${API}/tags`)
+      .then((res) => {
+        setTags(res.data)
+      })
+    }, [API])
+    
+    
+    useEffect(() => {
+      axios.get(`${API}/favorites/${mainUser.id}`)
+      .then((res) => {
+        setFavorites(res.data)
       })
     }, [mainUser.id])
-
-
-    useEffect(() => {
-        axios.get(`${API}/users`)
-        .then((res) => {
-          setOtherUsers(res.data)
-        })
-  
-        axios.get(`${API}/tags`)
-        .then((res) => {
-          setTags(res.data)
-        })
-      }, [API])
-
-
-      useEffect(() => {
-        axios.get(`${API}/favorites/${mainUser.id}`)
-        .then((res) => {
-          setFavorites(res.data)
-        })
-      }, [mainUser.id])
-
-
-    const handleTextChange = (event) => {
-        if(event.target.id === "posts_img"){
-            const file = event.target.files[0];
-            const reader = new FileReader();
-            
-            reader.onload = () => {
-                setPosts({...posts, posts_img: reader.result})
-            }
-            reader.readAsDataURL(file)
-        }
-        
-        else if(event.target.id === "content"){
-          if(plan?.images){
-            const {value} = event.target
-            if(value.length <=400){
-              setPosts((prevEvent) => ({
-                ...prevEvent,
-                content: value,
-              }));
-            } 
-            else{
-              event.target.value = value.substr(0,400)
-            }
-
-          }
-          else{
-            const {value} = event.target
-            if(value.length <=250){
-              setPosts((prevEvent) => ({
-                ...prevEvent,
-                content: value,
-              }));
-            } 
-            else{
-              event.target.value = value.substr(0,250)
-            }
-
-            const mentionMatches = value.match(/@(\w+)/g);
-
-            if (mentionMatches) {
-              const mentions = mentionMatches.map((mention) => mention.substring(1));
-              const filteredUsers = otherUsers.filter((user) =>
-                mentions.some((mention) => user.username.toLowerCase().includes(mention.toLowerCase()))
-              );
-              setMentionUsers(filteredUsers);
-            } else {
-              setMentionUsers([]);
-            }
-
-            const hashtags = value.match(/#(\w+)/g);
-            if (hashtags) {
-              const searchTags = hashtags.map((tags) => tags.substring(1));
-              const filteredTags = tags.filter((tag) =>
-                searchTags.some((hash) => tag.tag_names.toLowerCase().includes(hash.toLowerCase()))
-              );
-              setFilterTags(filteredTags);
-            } else {
-              setFilterTags([]);
-            }
-
-          }
-        }
-    };
-
-    const handleMention = (user) => {
-   
-        const newContent = `@${user.username}`
-      
-        setPosts({ ...posts, content: newContent });
-      
-        setMentionUsers([]); // Clear mention suggestions
-      };
-  
-      const handleTags = (tag) => {
-     
-        const newContent = `${tag.tag_names}`
-      
-        setPosts({ ...posts, content: newContent });
-      
-        setFilterTags([]); // Clear mention suggestions
-      };
-  
-      
-      const handleSubmit = (event) => {
-        event.preventDefault();
-        const formData = new FormData();
-        formData.append("content", posts?.content);
-        formData.append("posts_img", posts.posts_img === "" ? null : posts.posts_img);
-        formData.append("user_id", mainUser?.id);
-        formData.append("user_name", mainUser?.username)
-        axios.post(`${API}/users/${mainUser?.username}/posts`, formData, {
-        headers: {
-        "Content-Type": "multipart/form-data",
-        },
-        })
-        .then(() => {
-            setPosts({
-                content: ""
-            })
-        })
-          .catch((c) => console.warn("catch", c)); 
-    };
-
-      const inFol = Array.isArray(following) ? following.map((fol) => fol?.username) : [];
-
     
-
-    useEffect(() => {
-     
-          const fetchPosts = async () => {
-            try{
-              const promises = inFol.map((username) => axios.get(`${API}/users/${username}/posts`))
-              const response = await Promise.all(promises)
-              const posts = response.flatMap((res) => res.data)
-              setFollowingPosts(posts)
-            }
-            catch(error){
-              console.log("Error Fetching following posts:", error)
-            }
+    
+    const handleTextChange = (event) => {
+      if(event.target.id === "posts_img"){
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        
+        reader.onload = () => {
+          setPosts({...posts, posts_img: reader.result})
+        }
+        reader.readAsDataURL(file)
+      }
+      
+      else if(event.target.id === "content"){
+        if(plan?.images){
+          const {value} = event.target
+          if(value.length <=400){
+            setPosts((prevEvent) => ({
+              ...prevEvent,
+              content: value,
+            }));
+          } 
+          else{
+            event.target.value = value.substr(0,400)
           }
-          if(inFol.length > 0){
-            fetchPosts()
+          
+        }
+        else{
+          const {value} = event.target
+          if(value.length <=250){
+            setPosts((prevEvent) => ({
+              ...prevEvent,
+              content: value,
+            }));
+          } 
+          else{
+            event.target.value = value.substr(0,250)
           }
-
-    }, [])
-
-
+          
+          const mentionMatches = value.match(/@(\w+)/g);
+          
+          if (mentionMatches) {
+            const mentions = mentionMatches.map((mention) => mention.substring(1));
+            const filteredUsers = otherUsers.filter((user) =>
+            mentions.some((mention) => user.username.toLowerCase().includes(mention.toLowerCase()))
+            );
+            setMentionUsers(filteredUsers);
+          } else {
+            setMentionUsers([]);
+          }
+          
+          const hashtags = value.match(/#(\w+)/g);
+          if (hashtags) {
+            const searchTags = hashtags.map((tags) => tags.substring(1));
+            const filteredTags = tags.filter((tag) =>
+            searchTags.some((hash) => tag.tag_names.toLowerCase().includes(hash.toLowerCase()))
+            );
+            setFilterTags(filteredTags);
+          } else {
+            setFilterTags([]);
+          }
+          
+        }
+      }
+    };
+    
+    const handleMention = (user) => {
+      
+      const newContent = `@${user.username}`
+      
+      setPosts({ ...posts, content: newContent });
+      
+      setMentionUsers([]); // Clear mention suggestions
+    };
+    
+    const handleTags = (tag) => {
+      
+      const newContent = `${tag.tag_names}`
+      
+      setPosts({ ...posts, content: newContent });
+      
+      setFilterTags([]); // Clear mention suggestions
+    };
+    
+    
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      const formData = new FormData();
+      formData.append("content", posts?.content);
+      formData.append("posts_img", posts.posts_img === "" ? null : posts.posts_img);
+      formData.append("user_id", mainUser?.id);
+      formData.append("user_name", mainUser?.username)
+      axios.post(`${API}/users/${mainUser?.username}/posts`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then(() => {
+        setPosts({
+          content: ""
+        })
+      })
+      .catch((c) => console.warn("catch", c)); 
+    };
+    
+   
+    const inFol = Array.isArray(following) ? following.map((fol) => fol?.username) : [];
+    
+    
+    
+  
+    const fetchPosts = async () => {
+      try {
+          const promises = inFol.map((username) => axios.get(`${API}/users/${username}/posts`));
+          const responses = await Promise.all(promises);
+          const posts = responses.flatMap((res) => res.data);
+          setFollowingPosts(posts);
+      } catch (error) {
+          console.error("Error Fetching following posts:", error);
+      }
+  };
+  
+  useEffect(() => {
+      if (inFol.length > 0 && API) {
+          fetchPosts();
+      }
+  }, [ API, inFol]);
+  
+      
 
     const oneWeekAgo = new Date()
     oneWeekAgo.setDate(oneWeekAgo.getDate() -7)
@@ -223,7 +215,7 @@ function UserHome({mainUser, plan}){
                 <form onSubmit={handleSubmit}>
                             <textarea
                             id="content"
-                            className="home_textera"
+                            className={`home_textera ${mainUser.dark_mode ? "text_background_dark" : "text_background_light"}`}
                             value={posts.content}
                             onChange={handleTextChange}
                             placeholder="What is happening?!"
@@ -276,7 +268,7 @@ function UserHome({mainUser, plan}){
               {followingPosts.map((posts) => {
                 return (
                   <div key={posts.id} className="posts-border-container">
-                    <HomePosts favorites={favorites} posts={posts}  mainUser={mainUser} plan={plan} />
+                    <HomePosts favorites={favorites} posts={posts}  mainUser={mainUser} plan={plan} setFavorites={setFavorites}/>
                   </div>
                 );
               })}

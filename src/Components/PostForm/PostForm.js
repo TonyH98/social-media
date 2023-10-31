@@ -1,5 +1,5 @@
 import "./Post.css"
-
+import {GoFileMedia} from "react-icons/go"
 import { useState , useEffect, useRef} from 'react';
 import { useDispatch } from 'react-redux';
 import { createPost } from "../../Store/userActions";
@@ -172,19 +172,21 @@ function PostForm ({open, onClose, users, plan}){
                 <p className="closeBtn" onClick={onClose}>X</p>
             </div>
            <div className="content">
-            <h2 className={`posts_header ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>Create Post</h2>
+            
             
             <form onSubmit={handleSubmit} className="signup-form">
 
 
 <div className='input-container'>
   
-  <label htmlFor="content" className={`label-signup ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>Post:
+  <label htmlFor="content" className={`label-signup ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>
   <textarea
   id="content"
   required
   value={posts.content}
+  className={`post_modal_text ${users.dark_mode ? "text_background_dark" : "text_background_light"}`}
   onChange={handleTextChange}
+  placeholder="What is happening?!"
   ref={textareaRef} 
 />
   
@@ -215,8 +217,10 @@ function PostForm ({open, onClose, users, plan}){
   )}
   </label>
 
+<div className="post_modal_second_section">
   <label htmlFor="posts_img" className={`label-signup ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>
-          Post Image
+          <div>
+          <GoFileMedia size={22} color="blue"/>
           <input
             key={posts.imageKey}
             id="posts_img"
@@ -226,12 +230,16 @@ function PostForm ({open, onClose, users, plan}){
             accept=".png, .jpg, .jpeg"
             onChange={handleTextChange}
           />
+
+          </div>
         </label>
 
+  <button className="post_submit_button" type='submit'>Post</button>
 </div>
 
 
-  <button type='submit'>Post</button>
+
+</div>
 
 </form>
 

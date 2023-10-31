@@ -12,7 +12,7 @@ import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
 import axios from "axios";
 
 const API = process.env.REACT_APP_API_URL;
-function HomePost ({posts, favorites, plan, mainUser}){
+function HomePost ({posts, favorites, plan, mainUser, setFavorites}){
 
 console.log(posts)
 
@@ -83,12 +83,24 @@ function highlightMentions(content) {
 
 function handleAddFav(e){
     e.preventDefault()
-    dispatch(addFav(mainUser, posts.id, fav))
+    axios.post(`${API}/favorites/${mainUser?.id}/fav/${posts.id}`, fav)
+    .then(() => {
+        axios.get(`${API}/favorites/${mainUser.id}`)
+        .then((res) => {
+          setFavorites(res.data)
+        })
+    })
 }
 
 function handleDeleteFav(e){
     e.preventDefault()
-    dispatch(deleteFav(mainUser, posts.id))
+    axios.delete(`${API}/favorites/${mainUser.id}/delete/${posts.id}`)
+    .then(() => {
+        axios.get(`${API}/favorites/${mainUser.id}`)
+        .then((res) => {
+          setFavorites(res.data)
+        })
+    })
 }
 
 

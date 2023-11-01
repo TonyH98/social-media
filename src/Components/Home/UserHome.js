@@ -283,9 +283,7 @@ function UserHome({mainUser, plan, following}){
       
         <div>
   <BsEmojiSmile size={22} color="blue" onClick={() => setShowEmojiPicker(!showEmojiPicker)} />
-  {showEmojiPicker && (
-    <EmojiPicker onEmojiClick={(emoji) => handleEmojiClick(emoji)}/>
-  )}
+  
 </div>
       
       <div>
@@ -297,6 +295,9 @@ function UserHome({mainUser, plan, following}){
 </div>
 
                 </form>
+                {showEmojiPicker && (
+    <EmojiPicker onEmojiClick={(emoji) => handleEmojiClick(emoji)}/>
+  )}
                 </div>
             </div>
             <br/>
@@ -316,7 +317,7 @@ function UserHome({mainUser, plan, following}){
          <button className="home-post-button" 
           onClick={() => setModal(true)}
           ><BsFillPenFill size={20}/></button>
-           <PostForm open={modal} onClose={() => setModal(false)} users={mainUser} plan={plan}/>
+           <PostForm open={modal} onClose={() => {setModal(false); setShowEmojiPicker(false);}}  showEmojiPicker={showEmojiPicker} setShowEmojiPicker={setShowEmojiPicker} users={mainUser} plan={plan}/>
         </div>
     )
 

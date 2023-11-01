@@ -309,9 +309,7 @@ className="post_user_profile"
       
         <div>
   <BsEmojiSmile size={22} color="blue" onClick={() => setShowEmojiPicker(!showEmojiPicker)} />
-  {showEmojiPicker && (
-    <EmojiPicker onEmojiClick={(emoji) => handleEmojiClick(emoji)}/>
-  )}
+ 
 </div>
       
       <div>
@@ -327,8 +325,10 @@ className="post_user_profile"
 
 
 
+{showEmojiPicker && (
+    <EmojiPicker onEmojiClick={(emoji) => handleEmojiClick(emoji)}/>
+  )}
 </form>
-
 
            </div>
 

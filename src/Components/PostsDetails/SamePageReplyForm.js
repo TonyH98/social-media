@@ -223,9 +223,7 @@ function SamePageReplyForm({ users, plan, mainUser, posts}){
       
         <div>
   <BsEmojiSmile size={22} color="blue" onClick={() => setShowEmojiPicker(!showEmojiPicker)} />
-  {showEmojiPicker && (
-    <EmojiPicker onEmojiClick={(emoji) => handleEmojiClick(emoji)}/>
-  )}
+  
 </div>
       
       <div>
@@ -237,6 +235,9 @@ function SamePageReplyForm({ users, plan, mainUser, posts}){
 </div>
 
                 </form>
+                {showEmojiPicker && (
+    <EmojiPicker onEmojiClick={(emoji) => handleEmojiClick(emoji)}/>
+  )}
                 </div>
             </div>
     )

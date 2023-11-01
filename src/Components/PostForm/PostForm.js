@@ -254,9 +254,7 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
       
         <div>
   <BsEmojiSmile size={22} color="blue" onClick={() => setShowEmojiPicker(!showEmojiPicker)} />
-  {showEmojiPicker && (
-    <EmojiPicker onEmojiClick={(emoji) => handleEmojiClick(emoji)}/>
-  )}
+  
 </div>
       
       <div>
@@ -272,7 +270,9 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
 </div>
 
 </form>
-
+{showEmojiPicker && (
+    <EmojiPicker onEmojiClick={(emoji) => handleEmojiClick(emoji)}/>
+  )}
 
            </div>
 

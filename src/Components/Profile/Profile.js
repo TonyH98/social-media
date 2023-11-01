@@ -17,7 +17,7 @@ function Profile({user , plan}){
 
     let [option , setOption] = useState(0)
     const [modal , setModal] = useState(false)
-
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false)
     const [modal2 , setModal2] = useState(false)
 
     const dispatch = useDispatch();
@@ -129,7 +129,7 @@ function Profile({user , plan}){
 
         <ProfileEdit open2={modal2} fetchUsers={fetchUsers} onClose={() => setModal2(false)} users={users}/>
 
-        <PostForm open={modal} onClose={() => setModal(false)} users={users} plan={plan}/>
+        <PostForm open={modal} onClose={() => {setModal(false); setShowEmojiPicker(false);}}  showEmojiPicker={showEmojiPicker} setShowEmojiPicker={setShowEmojiPicker} users={users} plan={plan}/>
 
       <div className="profile_second_section">
        

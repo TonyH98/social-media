@@ -2,12 +2,15 @@ import { useState , useEffect, useRef} from 'react';
 import { useDispatch } from 'react-redux';
 import {createRplies}  from "../../Store/userActions";
 import {GoFileMedia} from "react-icons/go"
+import {BsEmojiSmile} from "react-icons/bs"
+import {MdOutlineGifBox} from "react-icons/md"
+import EmojiPicker from "emoji-picker-react";
 import "./Reply.css"
 
 import axios from "axios";
 
 const API = process.env.REACT_APP_API_URL;
-function ReplyForm({open , onClose, users, posts, plan, mainUser }){
+function ReplyForm({open , onClose, users, posts, plan, mainUser, showEmojiPicker, setShowEmojiPicker  }){
 
   const dispatch = useDispatch()
 
@@ -155,6 +158,16 @@ function ReplyForm({open , onClose, users, posts, plan, mainUser }){
       setFilterTags([]); // Clear mention suggestions
     };
 
+    const handleEmojiClick = (emoji) => {
+      const emojiUnicode = emoji.emoji;
+      const startPos = textareaRef.current.selectionStart;
+      const endPos = textareaRef.current.selectionEnd;
+      const text = replies.content;
+      const updatedText = text.substring(0, startPos) + emojiUnicode + text.substring(endPos);
+      setReplies((prevPost) => ({ ...prevPost, content: updatedText }));
+    };
+
+
     const handleSubmit = (event) => {
       event.preventDefault()
       const formData = new FormData();
@@ -277,12 +290,12 @@ className="post_user_profile"
   </label>
 
   <div className="post_modal_second_section">
-  
+  <div className="posts_icons_container">
   <label htmlFor="posts_img" className={`label-signup ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>
           <div className="media_button">
           <GoFileMedia size={22} color="blue"/>
           <input
-            key={replies.imageKey}
+            key={posts.imageKey}
             id="posts_img"
             name="posts_img"
             type="file"
@@ -293,6 +306,18 @@ className="post_user_profile"
       <span className="hidden-text">Photos</span>
           </div>
         </label>
+      
+        <div>
+  <BsEmojiSmile size={22} color="blue" onClick={() => setShowEmojiPicker(!showEmojiPicker)} />
+  {showEmojiPicker && (
+    <EmojiPicker onEmojiClick={(emoji) => handleEmojiClick(emoji)}/>
+  )}
+</div>
+      
+      <div>
+        <MdOutlineGifBox size={22} color="blue"/>
+      </div>
+  </div>
 
   <button className="post_submit_button" type='submit'>Post</button>
 </div>

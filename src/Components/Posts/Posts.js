@@ -14,10 +14,11 @@ import axios from "axios";
 const API = process.env.REACT_APP_API_URL;
 function Posts ({posts, users, favorites, plan, mainUser}){
 
-console.log(posts)
+
 
 let [show , setShow] = useState(false)
 
+const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 
 let [fav] = useState({
     creator_id: posts.creator.id
@@ -202,7 +203,7 @@ const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.posts_id) :
             </button>
             </div> 
 
-            <ReplyForm open={show} onClose={() =>  setShow(false)} users={users} posts={posts} plan={plan} mainUser={mainUser}/>
+            <ReplyForm open={show} onClose={() => {setShow(false); setShowEmojiPicker(false);}} setShowEmojiPicker={setShowEmojiPicker} showEmojiPicker={showEmojiPicker} users={users} posts={posts} plan={plan} mainUser={mainUser}/>
          </div>
          
          </div>

@@ -11,7 +11,7 @@ import {AiFillHeart} from "react-icons/ai"
 import {AiOutlineHeart} from "react-icons/ai"
 import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
 import { addReaction} from "../../Store/userActions";
-
+import SamePageReplyForm from "./SamePageReplyForm";
 
 import axios from "axios";
 
@@ -33,6 +33,7 @@ let [dislike] = useState({
 
 let [favorite , setFavorite] = useState({})
 
+const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 const dispatch = useDispatch()
 
 const posts = useSelector((state) => state.postsDetail.postDetail);
@@ -242,11 +243,13 @@ return(
             </button>
             </div> 
 
-   <ReplyForm open={show} onClose={() =>  setShow(false)} users={user}  posts={posts} plan={plan} mainUser={mainUser} />
+   <ReplyForm open={show} onClose={() => {setShow(false); setShowEmojiPicker(false);}} setShowEmojiPicker={setShowEmojiPicker} showEmojiPicker={showEmojiPicker} users={user}  posts={posts} plan={plan} mainUser={mainUser} />
 </div>
  
  </div>
-    
+<div className={`reply_form_container ${mainUser.dark_mode ? "border_dark" : "border_light"}`}>
+<SamePageReplyForm users={user} mainUser={mainUser} plan={plan} posts={posts}/>
+</div>
 <div className="replies_container">
     {getReplies.map((reply) => {
         return(

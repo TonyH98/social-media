@@ -1,10 +1,13 @@
 import "./UserHome.css"
 import HomePosts from "./HomePosts";
-import { useState , useEffect} from 'react';
+import { useState , useEffect, useRef} from 'react';
 import PostForm from "../PostForm/PostForm";
 import axios from "axios";
 import {BsFillPenFill} from "react-icons/bs"
 import {GoFileMedia} from "react-icons/go"
+import EmojiPicker from "emoji-picker-react";
+import {BsEmojiSmile} from "react-icons/bs"
+import {MdOutlineGifBox} from "react-icons/md"
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -12,6 +15,7 @@ function UserHome({mainUser, plan, following}){
 
     let [favorites , setFavorites] = useState([])
 
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false)
     let [posts, setPosts] = useState({
         user_name: "",
         content: "",
@@ -31,7 +35,9 @@ function UserHome({mainUser, plan, following}){
 
     const [modal , setModal] = useState(false)
 
-console.log(following)
+    const textareaRef = useRef(null);
+
+    
     useEffect(() => {
         if (mainUser?.id) {
             setPosts((prevPost) => ({
@@ -147,6 +153,14 @@ console.log(following)
       setFilterTags([]); // Clear mention suggestions
     };
     
+    const handleEmojiClick = (emoji) => {
+      const emojiUnicode = emoji.emoji;
+      const startPos = textareaRef.current.selectionStart;
+      const endPos = textareaRef.current.selectionEnd;
+      const text = posts.content;
+      const updatedText = text.substring(0, startPos) + emojiUnicode + text.substring(endPos);
+      setPosts((prevPost) => ({ ...prevPost, content: updatedText }));
+    };
     
     const handleSubmit = (event) => {
       event.preventDefault();
@@ -214,11 +228,16 @@ console.log(following)
                 <div className="post_textera_container">
                 <form onSubmit={handleSubmit}>
                             <textarea
+                            ref={textareaRef} 
                             id="content"
                             className={`home_textera ${mainUser.dark_mode ? "text_background_dark" : "text_background_light"}`}
                             value={posts.content}
                             onChange={handleTextChange}
                             placeholder="What is happening?!"
+                            onInput={(e) => {
+                              e.target.style.height = 'auto';
+                              e.target.style.height = e.target.scrollHeight + 'px';
+                            }}
                             />
                             <p className={`${plan?.images ? 
                                 (posts?.content.length >= 400 ? 'text-red-700' : null) 
@@ -244,8 +263,8 @@ console.log(following)
                 ))}
                 </div>
             )}
-            <div className="post_modal_second_section">
-  
+ <div className="post_modal_second_section">
+  <div className="posts_icons_container">
   <label htmlFor="posts_img" className={`label-signup ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>
           <div className="media_button">
           <GoFileMedia size={22} color="blue"/>
@@ -261,6 +280,18 @@ console.log(following)
       <span className="hidden-text">Photos</span>
           </div>
         </label>
+      
+        <div>
+  <BsEmojiSmile size={22} color="blue" onClick={() => setShowEmojiPicker(!showEmojiPicker)} />
+  {showEmojiPicker && (
+    <EmojiPicker onEmojiClick={(emoji) => handleEmojiClick(emoji)}/>
+  )}
+</div>
+      
+      <div>
+        <MdOutlineGifBox size={22} color="blue"/>
+      </div>
+  </div>
 
   <button className="post_submit_button" type='submit'>Post</button>
 </div>

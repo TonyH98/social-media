@@ -5,10 +5,12 @@ import { useState , useEffect, useRef} from 'react';
 import {MdOutlineGifBox} from "react-icons/md"
 import { useDispatch } from 'react-redux';
 import { createPost } from "../../Store/userActions";
-import axios from "axios";
+import EmojiPicker from "emoji-picker-react";
 
+
+import axios from "axios";
 const API = process.env.REACT_APP_API_URL;
-function PostForm ({open, onClose, users, plan}){
+function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPicker}){
 
   const dispatch = useDispatch();
 
@@ -21,6 +23,7 @@ function PostForm ({open, onClose, users, plan}){
     let[filterTags , setFilterTags] = useState([])
 
     const textareaRef = useRef(null);
+    
 
 
     let [posts, setPosts] = useState({
@@ -136,6 +139,18 @@ function PostForm ({open, onClose, users, plan}){
       setFilterTags([]); // Clear mention suggestions
     };
 
+
+    const handleEmojiClick = (emoji) => {
+      const emojiUnicode = emoji.emoji;
+      const startPos = textareaRef.current.selectionStart;
+      const endPos = textareaRef.current.selectionEnd;
+      const text = posts.content;
+      const updatedText = text.substring(0, startPos) + emojiUnicode + text.substring(endPos);
+      setPosts((prevPost) => ({ ...prevPost, content: updatedText }));
+    };
+    
+
+
       const handleSubmit = (event) => {
         event.preventDefault();
         const formData = new FormData();
@@ -237,9 +252,12 @@ function PostForm ({open, onClose, users, plan}){
           </div>
         </label>
       
-      <div>
-        <BsEmojiSmile size={22} color="blue"/>
-      </div>
+        <div>
+  <BsEmojiSmile size={22} color="blue" onClick={() => setShowEmojiPicker(!showEmojiPicker)} />
+  {showEmojiPicker && (
+    <EmojiPicker onEmojiClick={(emoji) => handleEmojiClick(emoji)}/>
+  )}
+</div>
       
       <div>
         <MdOutlineGifBox size={22} color="blue"/>

@@ -1,7 +1,4 @@
 
-
-
-
 .post_details_btns{
    margin-top: 10px;
 }
@@ -13,3 +10,31 @@
    flex-direction: column;
    gap: 40px;
 }
+
+
+.post_details_reply_text {
+   width: 50vw;
+  outline: none;
+   resize: none;
+   font-size: 20px;
+   padding: 10px;
+   box-sizing: border-box;
+   margin: 10px 0;
+   border: none;
+ }
+ 
+ .border_dark {
+   border-top: 1px solid white;
+   border-bottom: 1px solid white;
+ }
+ 
+ .border_light {
+   border-top: 1px solid black;
+   border-bottom: 1px solid black;
+ }
+ 
+ .reply_form_details {
+   margin-top: 10px;
+   margin-bottom: 10px;
+ }
+ 

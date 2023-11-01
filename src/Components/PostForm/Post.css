@@ -128,6 +128,64 @@ button[type='submit']:hover {
   font-size: 20px;
 }
 
+
+.media_button {
+  position: relative;
+}
+
+.media_button .hidden-text {
+  display: none;
+  position: absolute;
+  bottom: -20px; /* Adjust the positioning as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  width: fit-content;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 4px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.media_button:hover .hidden-text {
+  display: block;
+}
+
+.media_button:hover{
+  cursor: pointer;
+}
+
+
+.posts_icons_container {
+  display: flex;
+  align-items: center;
+}
+
+
+
+.posts_icons_container label:last-child {
+  margin-right: 0;
+}
+
+.media_button {
+  display: flex;
+  align-items: center;
+}
+
+.media_button .hidden-text {
+  display: none;
+}
+
+.media_button:hover .hidden-text {
+  display: block;
+}
+
+
+
+.posts_icons_container div {
+  margin-right: 20px;
+}
+
 @media(min-width: 320px) and (max-width: 992px){
   .post_form{
     z-index: 99999;

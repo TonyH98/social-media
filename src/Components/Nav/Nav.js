@@ -3,7 +3,7 @@ import "./Nav.css"
 import {IoIosNotifications} from "react-icons/io"
 
 import {LuVerified} from "react-icons/lu"
-
+import {BiHome} from "react-icons/bi"
 import {CgProfile} from "react-icons/cg"
 import {CiSearch} from "react-icons/ci"
 
@@ -71,12 +71,26 @@ return(
     <div className={`${mainUser?.dark_mode ? 'nav_med_white_border nav-background-med-black' : 'nav_med_dark_border nav-background-med-white'} nav-container`}>
 
         <div className="logo-container">
-          <Link to="/Home">
-        <h2 className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>Hermes</h2>
-          </Link>
+        <Link to="/home"
+        className={`${isActive(`/home`)} ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>
+        <div class="nav-content">
+        <BiHome class="icon" size={30} />
+        <h2 class="text">Hermes</h2>
+        </div>
+
+        </Link>
         </div>
 
         <div className="nav-content-container">
+
+        <Link to="/home"
+        className={`${isActive(`/home`)} ${mainUser?.dark_mode ? 'white_text' : 'dark_text'} nav-search`}>
+        <div class="nav-content">
+        <BiHome class="icon" size={30} />
+        <span class="text">Home</span>
+        </div>
+
+        </Link>
 
         <Link to={`/profile/${user?.id}`} 
         className={`${isActive(`/profile/${user?.id}`)} ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>
@@ -96,7 +110,7 @@ return(
         </Link>
 
 
-        <div class="nav-content" onClick={() => setModal(true)}>
+        <div class="nav-content verification_nav" onClick={() => setModal(true)}>
         <LuVerified class="icon" size={30} className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}/>
         <span className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} text`}>Verified</span>
         </div>

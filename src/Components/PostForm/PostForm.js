@@ -1,6 +1,8 @@
 import "./Post.css"
 import {GoFileMedia} from "react-icons/go"
+import {BsEmojiSmile} from "react-icons/bs"
 import { useState , useEffect, useRef} from 'react';
+import {MdOutlineGifBox} from "react-icons/md"
 import { useDispatch } from 'react-redux';
 import { createPost } from "../../Store/userActions";
 import axios from "axios";
@@ -218,8 +220,9 @@ function PostForm ({open, onClose, users, plan}){
   </label>
 
 <div className="post_modal_second_section">
+  <div className="posts_icons_container">
   <label htmlFor="posts_img" className={`label-signup ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>
-          <div>
+          <div className="media_button">
           <GoFileMedia size={22} color="blue"/>
           <input
             key={posts.imageKey}
@@ -230,9 +233,18 @@ function PostForm ({open, onClose, users, plan}){
             accept=".png, .jpg, .jpeg"
             onChange={handleTextChange}
           />
-
+      <span className="hidden-text">Photos</span>
           </div>
         </label>
+      
+      <div>
+        <BsEmojiSmile size={22} color="blue"/>
+      </div>
+      
+      <div>
+        <MdOutlineGifBox size={22} color="blue"/>
+      </div>
+  </div>
 
   <button className="post_submit_button" type='submit'>Post</button>
 </div>

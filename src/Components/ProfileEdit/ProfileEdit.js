@@ -137,6 +137,7 @@ console.log(edit.notifications)
             <label htmlFor="profile_name" className={`label-signup ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>Profile Name:
             <input
                 id="profile_name"
+                className={`input_profile_name ${users.dark_mode ? "input_dark" : "input_white"}`}
                 required
                 value={edit.profile_name}
                 onChange={handleTextChange}
@@ -149,7 +150,9 @@ console.log(edit.notifications)
                     <textarea
                         required
                         id="bio"
+                        className={`input_bio ${users.dark_mode ? "input_dark" : "input_white"}`}
                         value={edit.bio}
+                        placeholder="About You?!"
                         onChange={handleTextChange}
                     />
                     <p className={`${edit?.bio.length >= 250 ? 'text-red-700' : null}`}>
@@ -216,8 +219,9 @@ console.log(edit.notifications)
 
 
                 {currentPage === 3 && (
-                    <div>
+                    <div className="page_three_container">
                     
+                    <div>
                     <label htmlFor="dark_mode" className={`label-signup ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>
                         Background Color
                         <label className="switch">
@@ -245,6 +249,8 @@ console.log(edit.notifications)
                             <span className="slider round"></span>
                         </label>
                         </label>
+
+                    </div>
                 
                <div className="page_count_btn_container">
 

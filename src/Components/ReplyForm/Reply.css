@@ -8,3 +8,17 @@
 .onClose:hover{
     cursor: pointer;
 }
+
+.reply_content{
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+}
+
+.reply_modal_text{
+    height: 100px;
+}
+
+.closeBtn{
+    background-color: transparent;
+}

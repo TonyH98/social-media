@@ -1,6 +1,7 @@
 import { useState , useEffect, useRef} from 'react';
 import { useDispatch } from 'react-redux';
 import {createRplies}  from "../../Store/userActions";
+import {GoFileMedia} from "react-icons/go"
 import "./Reply.css"
 
 import axios from "axios";
@@ -184,9 +185,9 @@ if(!open) return null
         <div className="overlay">
            <div className={`modal-container ${mainUser?.dark_mode ? 'modal_backgrond_dark' : 'modal_backgrond_white'}`}>
             <div className="modalLeft">
-            <button className="onClose" onClick={onClose}>X</button>
+            <button className="closeBtn" onClick={onClose}>X</button>
             </div>
-           <div className="content">
+           <div className="content reply_content">
            <div className="posts_content">
 
 <div className="posts_extra_container">
@@ -236,14 +237,14 @@ className="post_user_profile"
 
 <form  className="signup-form" onSubmit={handleSubmit}>
 
-<h2 className={` ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>Reply Back:</h2>
-
 <div className='input-container'>
   
-  <label htmlFor="content" className={`label-signup ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>Post:
+  <label htmlFor="content" className={`label-signup ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>
   <textarea
     id="content"
+    className={`post_modal_text reply_modal_text ${mainUser.dark_mode ? "text_background_dark" : "text_background_light"}`}
     required
+    placeholder="What is happening?!"
     value={replies.content}
     onChange={handleTextChange}
     ref={textareaRef} 
@@ -275,8 +276,11 @@ className="post_user_profile"
   )}
   </label>
 
+  <div className="post_modal_second_section">
+  
   <label htmlFor="posts_img" className={`label-signup ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>
-          Post Image
+          <div className="media_button">
+          <GoFileMedia size={22} color="blue"/>
           <input
             key={replies.imageKey}
             id="posts_img"
@@ -286,12 +290,17 @@ className="post_user_profile"
             accept=".png, .jpg, .jpeg"
             onChange={handleTextChange}
           />
+      <span className="hidden-text">Photos</span>
+          </div>
         </label>
+
+  <button className="post_submit_button" type='submit'>Post</button>
+</div>
 
 </div>
 
 
-  <button type='submit'>Post</button>
+
 
 </form>
 

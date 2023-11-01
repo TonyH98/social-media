@@ -136,4 +136,8 @@ a{
   .nav_med_dark_border {
     border-top: black solid 1px;
   }
+
+  .verification_nav{
+    display: none;
+  }
 }

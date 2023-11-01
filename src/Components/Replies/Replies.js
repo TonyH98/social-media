@@ -167,15 +167,16 @@ return(
 
    
             <div className="like-container">
-            <button className={`${reaction?.likeId?.includes(mainUser?.id) ? 'green_option_btn' : 'dark_option_btn'} no_br react_btn`} onClick={handleLike}><AiOutlineLike size={20} /> {reaction.likes}
+            <button className={`${reaction?.dislikeId?.includes(mainUser?.id) ? 'green_option_btn' : `${mainUser.dark_mode ? "light_outline" : "dark_outline"}`} no_br react_btn`} onClick={handleLike}><AiOutlineLike size={20} /> {reaction.likes}
             <span className="hidden-text">Like</span>
             </button>
            
             </div>
             
-   
+            
+      
             <div className="dislike-container">
-            <button className={`${reaction?.dislikeId?.includes(mainUser?.id) ? 'red_option_btn' : 'dark_option_btn'} no_br react_btn`} onClick={handleDislike}><AiOutlineDislike size={20}/> {reaction.dislikes}
+            <button className={`${reaction?.dislikeId?.includes(mainUser?.id) ? 'red_option_btn' : `${mainUser.dark_mode ? "light_outline" : "dark_outline"}`} no_br react_btn`} onClick={handleDislike}><AiOutlineDislike size={20}/> {reaction.dislikes}
             <span className="hidden-text">Dislike</span>
             </button>
             </div> 

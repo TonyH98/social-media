@@ -177,3 +177,12 @@ border-radius: 50%;
 .red_option_btn{
   color: red;
 }
+
+
+.light_outline{
+  color: white;
+}
+
+.dark_outline{
+  color: black;
+}

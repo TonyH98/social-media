@@ -175,11 +175,11 @@
 }
 
 @media (min-width: 320px) and (max-width: 992px){
-  .profile{
+  /* .profile{
     margin-left: -18px;
     margin-right: -20px;
     margin-top: -20px;
-  }
+  } */
 
   .profile_banner_img{
     width: 100%;

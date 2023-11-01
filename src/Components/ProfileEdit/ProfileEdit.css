@@ -94,4 +94,43 @@
     width: 300px;
     height: 100px;
   }
+
+  .input_profile_name{
+    width: 200px;
+    height: 30px;
+    border: none;
+  }
+
+  .input_dark{
+    background-color: black;
+    color: white;
+  }
+
+  .input_white{
+    background-color: white;
+    color: black;
+  }
+
+  .input_bio{
+    height: 50px;
+    font-size: 20px;
+  }
   
+
+
+  .page_three_container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .page_count_btn_container {
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+  }
+  
+ 

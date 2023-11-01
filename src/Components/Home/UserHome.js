@@ -4,7 +4,7 @@ import { useState , useEffect} from 'react';
 import PostForm from "../PostForm/PostForm";
 import axios from "axios";
 import {BsFillPenFill} from "react-icons/bs"
-
+import {GoFileMedia} from "react-icons/go"
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -206,7 +206,7 @@ console.log(following)
   
 
     return(
-        <div>
+        <div className="users_home_page">
             <div className="Home_Post_input_container">
                 <div className="Home_users_image_container">
                     <img src={mainUser.profile_img} className="Home_user_image"/>
@@ -244,8 +244,11 @@ console.log(following)
                 ))}
                 </div>
             )}
-              <label htmlFor="posts_img" className={`label-signup ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>
-          Post Image
+            <div className="post_modal_second_section">
+  
+  <label htmlFor="posts_img" className={`label-signup ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>
+          <div className="media_button">
+          <GoFileMedia size={22} color="blue"/>
           <input
             key={posts.imageKey}
             id="posts_img"
@@ -255,8 +258,13 @@ console.log(following)
             accept=".png, .jpg, .jpeg"
             onChange={handleTextChange}
           />
+      <span className="hidden-text">Photos</span>
+          </div>
         </label>
-            <button type='submit'>Post</button>
+
+  <button className="post_submit_button" type='submit'>Post</button>
+</div>
+
                 </form>
                 </div>
             </div>

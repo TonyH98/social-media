@@ -4,6 +4,18 @@
     display: flex;
     flex-direction: row;
   }
+  .users_home_page, 
+  .profile, 
+  .users_following_container,
+  .note_page,
+  .search_post_page,
+  .posts_content{
+    margin-left: 20px;
+  }
+
+  .users_home_page, .posts_content{
+    margin-top: 20px;
+  }
 
 }
 
@@ -29,6 +41,8 @@
   height: 40vmin;
   pointer-events: none;
 }
+
+
 
 .white_text{
   color: white;

@@ -5,6 +5,7 @@ import { useState , useEffect, useRef} from 'react';
 import {MdOutlineGifBox} from "react-icons/md"
 import { useDispatch } from 'react-redux';
 import { createPost } from "../../Store/userActions";
+import ReactGiphySearchbox from 'react-giphy-searchbox'
 import EmojiPicker from "emoji-picker-react";
 
 

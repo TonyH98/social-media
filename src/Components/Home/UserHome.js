@@ -8,9 +8,9 @@ import {GoFileMedia} from "react-icons/go"
 import EmojiPicker from "emoji-picker-react";
 import {BsEmojiSmile} from "react-icons/bs"
 import {MdOutlineGifBox} from "react-icons/md"
-
+import ReactGiphySearchbox from 'react-giphy-searchbox'
 const API = process.env.REACT_APP_API_URL;
-
+const GIF = process.env.REACT_APP_API_GIF;
 function UserHome({mainUser, plan, following}){
 
     let [favorites , setFavorites] = useState([])
@@ -221,6 +221,10 @@ function UserHome({mainUser, plan, following}){
 
     return(
         <div className="users_home_page">
+          <ReactGiphySearchbox
+         apiKey={GIF}
+         onSelect={item => console.log(item)}
+          />
             <div className="Home_Post_input_container">
                 <div className="Home_users_image_container">
                     <img src={mainUser.profile_img} className="Home_user_image"/>
@@ -241,7 +245,7 @@ function UserHome({mainUser, plan, following}){
                             />
                             <p className={`${plan?.images ? 
                                 (posts?.content.length >= 400 ? 'text-red-700' : null) 
-                                : (posts?.content.length >= 250 ? 'text-red-700' : null)}`}>
+                                : (posts?.content.length >= 250 ? 'text-red-700' : null)} ${mainUser.dark_mode ? "light_text" : "dark_text"}`}>
                             {posts?.content.length} / {plan?.images ? 400 : 250} characters
                             </p>
                             {mentionUsers.length > 0 && (

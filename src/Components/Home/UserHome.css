@@ -31,6 +31,15 @@
 
 }
 
+
+.dark_text{
+    color: black
+}
+
+.light_text{
+    color: white;
+}
+
 @media(min-width: 993px){
     .home-post-button{
         display:none

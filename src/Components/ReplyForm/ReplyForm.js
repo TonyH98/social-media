@@ -326,7 +326,10 @@ className="post_user_profile"
 
 
 {showEmojiPicker && (
-    <EmojiPicker onEmojiClick={(emoji) => handleEmojiClick(emoji)}/>
+    <div>
+
+      <EmojiPicker onEmojiClick={(emoji) => handleEmojiClick(emoji)}/>
+    </div>
   )}
 </form>
 

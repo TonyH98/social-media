@@ -26,9 +26,9 @@ if(!open) return null
 
     return(
        <div className="overlay">
-           <div className={`modal-container ${mainUser?.dark_mode ? 'modal_backgrond_dark' : 'modal_backgrond_white'}`}>
+           <div className={`logout_modal ${mainUser?.dark_mode ? 'modal_backgrond_dark' : 'modal_backgrond_white'}`}>
             
-           <div className="content">
+           <div className="logout_content">
             <h1 className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>Are you sure you want to logout </h1>
             <div className="logout_buttons_container">
               <button className="logout_button lg_btn" onClick={handleLogout}>Logout</button>

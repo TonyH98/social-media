@@ -38,7 +38,7 @@ function SearchModal({open , onClose , user, mainUser}){
                 return user.username.toLowerCase().includes(searchResult.toLowerCase());
             });
     
-            // Combine filterTag and filterUsers into a single array
+            
             const combinedFilter = [...filterTag, ...filterUsers];
     
             if (searchResult === "") {
@@ -54,11 +54,11 @@ function SearchModal({open , onClose , user, mainUser}){
 
     return(
     <div className="overlay searchModal">
-    <div className={`modal-container ${mainUser?.dark_mode ? 'modal_backgrond_dark' : 'modal_backgrond_white'}`}>
+    <div className={`search_modal_container ${mainUser?.dark_mode ? 'modal_backgrond_dark' : 'modal_backgrond_white'}`}>
      <div className="modalLeft">
      <button className="onClose" onClick={onClose}>X</button>
      </div>
-    <div className="content">
+    <div className="search_content">
     <div className="profile_search_input_container">
 
 <div className={search.length > 0 ? `search_active search_container` : `search_container`}>
@@ -80,7 +80,7 @@ function SearchModal({open , onClose , user, mainUser}){
 
 
         {filter.length !== 0 && (
-                    <div className="dataResult">
+                    <div className="dataResult search_modal_data_result">
                         {filter.slice(0, 10).map((result, index) => {
                             if (result.tag_names) {
                                 // Display tags
@@ -96,7 +96,13 @@ function SearchModal({open , onClose , user, mainUser}){
                                 return (
                                     <div className="search-link" key={index}>
                                         <Link to={`/profiles/${result.id}`}>
-                                            <p className="dropdown-link">@{result.username}</p>
+                                            <div className="search_modal_user_container">
+                                            <img src={result.profile_img} alt="result.username" className="search_modal_img"/>
+                                            <div className="search_modal_users_name_container">
+                                            <span className="dropdown-link">{result.profile_name}</span>
+                                            <span className="dropdown-link">@{result.username}</span>
+                                            </div>
+                                            </div>
                                         </Link>
                                     </div>
                                 );

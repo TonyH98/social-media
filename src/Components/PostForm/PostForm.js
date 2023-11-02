@@ -82,6 +82,28 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
             else{
               event.target.value = value.substr(0,400)
             }
+            const mentionMatches = value.match(/@(\w+)/g);
+
+            if (mentionMatches) {
+              const mentions = mentionMatches.map((mention) => mention.substring(1));
+              const filteredUsers = otherUsers.filter((user) =>
+                mentions.some((mention) => user.username.toLowerCase().includes(mention.toLowerCase()))
+              );
+              setMentionUsers(filteredUsers);
+            } else {
+              setMentionUsers([]);
+            }
+
+            const hashtags = value.match(/#(\w+)/g);
+            if (hashtags) {
+              const searchTags = hashtags.map((tags) => tags.substring(1));
+              const filteredTags = tags.filter((tag) =>
+                searchTags.some((hash) => tag.tag_names.toLowerCase().includes(hash.toLowerCase()))
+              );
+              setFilterTags(filteredTags);
+            } else {
+              setFilterTags([]);
+            }
 
           }
           else{
@@ -130,7 +152,7 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
     
       setPosts({ ...posts, content: newContent });
     
-      setMentionUsers([]); // Clear mention suggestions
+      setMentionUsers([]);
     };
 
     const handleTags = (tag) => {
@@ -139,7 +161,7 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
     
       setPosts({ ...posts, content: newContent });
     
-      setFilterTags([]); // Clear mention suggestions
+      setFilterTags([]);
     };
 
 
@@ -184,13 +206,9 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
     };
 
 
-
-
-
-    
     if(!open) return null
   
-    
+  
     return(
         <div className={`overlay post_form`}>
            <div className={`modal-container ${users?.dark_mode ? 'modal_backgrond_dark' : 'modal_backgrond_white'}`}>

@@ -5,9 +5,12 @@ import { useEffect , useState } from "react";
 import TagPosts from "./tagPosts";
 import TagReplies from "./tagReplies";
 import AllSearch from "./AllSearch";
+import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
+import {AiFillHeart} from "react-icons/ai"
+import {AiOutlineHeart} from "react-icons/ai"
 import "./SearchPosts.css"
 
-function SearchPosts({mainUser}){
+function SearchPosts({mainUser, plan}){
 
 const {tag_name} = useParams()
 
@@ -35,7 +38,7 @@ function optionContent(selected) {
           {getPosts.map((tag) => {
             return (
               <div  className="posts-border-container">
-                <TagPosts tag={tag} mainUser={mainUser}/>
+                <TagPosts tag={tag} mainUser={mainUser} plan={plan}/>
               </div>
             );
           })}

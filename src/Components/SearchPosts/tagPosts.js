@@ -1,6 +1,48 @@
+import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
+import {AiFillHeart} from "react-icons/ai"
+import {AiOutlineHeart} from "react-icons/ai"
+import {SlBubble} from "react-icons/sl"
+import ReplyForm from "../ReplyForm/ReplyForm"
+import { useEffect , useState } from "react";
 
 
-function TagPosts({tag, mainUser}){
+import axios from "axios";
+
+const API = process.env.REACT_APP_API_URL;
+function TagPosts({tag, mainUser, plan}){
+console.log(tag)
+    const [reaction , setReaction] = useState({})
+    let [show , setShow] = useState(false)
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false)
+const [showGifPicker, setShowGifPicker] = useState(false)
+
+    useEffect(() => {
+        axios.get(`${API}/users/${tag.creator_details.username}/posts/${tag.post_id}/reactions`)
+        .then((res) => {
+          setReaction(res.data);
+        });
+      }, [tag.post_id]);
+
+    let [likes] = useState({
+        reaction: "like"
+    })
+    
+    let [dislike] = useState({
+        reaction: "dislike"
+    })
+
+    let [favorites, setFavorites] = useState([])
+    
+    let [fav] = useState({
+        creator_id: tag.creator_details.id
+    })
+
+    useEffect(() => {
+        axios.get(`${API}/favorites/${mainUser?.id}`)
+        .then((res) => {
+            setFavorites(res.data)
+        })
+    }, [mainUser?.id])
 
     function highlightMentions(content) {
         const mentionPattern = /@(\w+)/g;
@@ -26,7 +68,52 @@ function TagPosts({tag, mainUser}){
     }
 
 
+    function handleAddFav(e){
+        e.preventDefault()
+        axios.post(`${API}/favorites/${mainUser?.id}/fav/${tag.post_id}`, fav)
+        .then(() => {
+            axios.get(`${API}/favorites/${mainUser?.id}`)
+        .then((res) => {
+            setFavorites(res.data)
+        })
+        })
+    }
+
+    function handleDeleteFav(e){
+        e.preventDefault()
+        axios.delete(`${API}/favorites/${mainUser.id}/delete/${tag.post_id}`)
+        .then(() => {
+            axios.get(`${API}/favorites/${mainUser?.id}`)
+        .then((res) => {
+            setFavorites(res.data)
+        })
+        })
+        
+    }
+
+
+    function handleLike(e){
+        e.preventDefault()
+        axios.post(`${API}/users/${tag.creator_details.username}/posts/${mainUser.id}/react/${tag.post_id}`, likes)
+        .then(() => {
+            axios.get(`${API}/users/${tag.creator_details.username}/posts/${tag.post_id}/reactions`)
+            .then((res) => {
+              setReaction(res.data);
+            });
+        })
+    }
     
+    function handleDislike(e){
+        e.preventDefault()
+        axios.post(`${API}/users/${tag.creator_details.username}/posts/${mainUser.id}/react/${tag.post_id}`, dislike)
+        .then(() => {
+            axios.get(`${API}/users/${tag.creator_details.username}/posts/${tag.post_id}/reactions`)
+            .then((res) => {
+              setReaction(res.data);
+            });
+        })
+    }
+    const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.posts_id) : [];
     return(
         <div className="posts_content">
 
@@ -65,11 +152,53 @@ function TagPosts({tag, mainUser}){
     
      </div>
 
-     
+
      </div>
 
         </div>
-        
+        <div className="posts-options-container">
+
+{/* <div className="posts-reply-button">
+<button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br reply_btn`} onClick={() => setShow(!show)}>
+<SlBubble size={20} />
+<span className="hidden-text">Reply</span>
+</button>
+</div> */}
+
+
+
+    <div className="favorite_posts_container">
+       {mainUser && inFav.includes(tag.post_id) ? 
+       <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} onClick={handleDeleteFav}><AiFillHeart size={20} color="red"/>
+       <span className="hidden-text">Disike</span>
+       </button>
+
+       : <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} onClick={handleAddFav}><AiOutlineHeart size={20}/>
+       <span className="hidden-text">Like</span>
+       </button>}
+
+   </div> 
+
+   
+   <div className="like-container">
+   <button className={`${reaction?.dislikeId?.includes(mainUser?.id) ? 'green_option_btn' : `${mainUser.dark_mode ? "light_outline" : "dark_outline"}`} no_br react_btn`} onClick={handleLike}><AiOutlineLike size={20} /> {reaction.likes}
+   <span className="hidden-text">Like</span>
+   </button>
+  
+   </div>
+   
+   
+
+   <div className="dislike-container">
+   <button className={`${reaction?.dislikeId?.includes(mainUser?.id) ? 'red_option_btn' : `${mainUser.dark_mode ? "light_outline" : "dark_outline"}`} no_br react_btn`} onClick={handleDislike}><AiOutlineDislike size={20}/> {reaction.dislikes}
+   <span className="hidden-text">Dislike</span>
+   </button>
+   </div> 
+
+   {/* <ReplyForm open={show} onClose={() => {setShow(false); setShowEmojiPicker(false);  setShowGifPicker(false)}}
+    showGifPicker={showGifPicker} setShowGifPicker={setShowGifPicker} setShowEmojiPicker={setShowEmojiPicker}
+   showEmojiPicker={showEmojiPicker} users={mainUser} posts={tag} plan={plan}/> */}
+</div>
      </div>
     )
 }

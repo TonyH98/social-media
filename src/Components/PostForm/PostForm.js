@@ -216,8 +216,12 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
   ref={textareaRef} 
 />
 <div className="gif_form">
- {posts.gif ?  <img src={posts.gif} alt="posts.gif"/> : null }
-  {posts.gif ? <button onClick={() => setPosts({...posts, gif: ""})}>X</button> : null}
+ {posts.gif ?  <img src={posts.gif} alt="posts.gif" className="gif_preview"/> : null }
+  {posts.gif ? <button onClick={() => setPosts({...posts, gif: ""})} className="remove_gif_btn">X</button> : null}
+</div>
+<div className="gif_form">
+ {posts.posts_img ?  <img src={posts.posts_img} alt="posts.images" className="image_preview"/> : null }
+  {posts.posts_img ? <button onClick={() => setPosts({...posts, posts_img: ""})} className="remove_gif_btn">X</button> : null}
 </div>
   <p className={`${plan?.images ? 
     (posts?.content.length >= 400 ? 'text-red-700' : null) 
@@ -264,10 +268,10 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
           </div>
         </label>
       
-        <div>
-  <BsEmojiSmile size={22} color="blue" onClick={() => setShowEmojiPicker(!showEmojiPicker)} />
-  
-</div>
+        <div className='media_button'>
+  <BsEmojiSmile size={22} className='emoji_btn' color="blue" onClick={() => setShowEmojiPicker(!showEmojiPicker)} />
+          <span className='hidden-text'>Emoji</span>
+    </div>
       
 <div>
       <label htmlFor="gif" className={`label-signup ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>
@@ -280,7 +284,7 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
             value={posts.gif}
             onChange={handleTextChange}
           />
-     
+        <span className="hidden-text">Gif</span>
           </div>
         </label>
       </div>

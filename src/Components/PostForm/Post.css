@@ -1,28 +1,3 @@
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal-container {
-  width: 500px;
-  background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  height: 400px;
-  overflow-y: auto; /* Enable vertical scrolling if content overflows */
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
 .modalLeft {
   display: flex;
   justify-content: flex-end;
@@ -43,94 +18,11 @@
   border: none; 
 }
 
-.closeBtn:hover{
-  background-color: rgba(255, 255, 255, 0.5); /* Transparent white background */
-}
-
-
-.posts_header {
-  text-align: center;
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-}
-
-.input-container {
-  margin-bottom: 10px;
-}
-
 .label-signup {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   padding: 5px;
-}
-
-.modal-container textarea {
-  width: calc(100% - 20px);
-  padding: 8px;
-  border: none;
-  border-radius: 5px;
-  resize: none; 
- 
-  line-height: 1.3; 
-  margin-bottom: 8px; 
-}
-
-.text-red-700 {
-  color: red;
-  margin-top: 3px;
-
-}
-
-.file-input {
-  width: calc(100% - 20px);
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-bottom: 8px; /* Add space between file input and textarea */
-}
-
-button[type='submit'] {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-button[type='submit']:hover {
-  background-color: #0056b3;
-}
-
-.modal_backgrond_dark {
-  background-color: black;
-  border: white 1px solid;
-}
-
-.post_modal_second_section{
-  display: flex;
-  flex-direction: row;
-}
-
-.post_submit_button{
-  margin-left: auto;
-}
-
-.input-container{
-  width: 400px;
-}
-
-.post_modal_text{
-  height: 150px;
-  outline: none;
-  font-size: 20px;
-}
-
-
-.media_button {
-  position: relative;
 }
 
 .media_button .hidden-text {
@@ -147,47 +39,260 @@ button[type='submit']:hover {
   text-align: center;
 }
 
-.media_button:hover .hidden-text {
-  display: block;
+.post_modal_text{
+  height: 150px;
+  outline: none;
+  font-size: 20px;
 }
 
-.media_button:hover{
+.post_submit_button{
+  margin-left: auto;
+}
+
+button[type='submit'] {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
   cursor: pointer;
+  font-weight: bold;
+}
+
+button[type='submit']:hover {
+  background-color: #0056b3;
 }
 
 
-.posts_icons_container {
+@media(min-width: 993px){
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-container {
+    width: 500px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    height: 400px;
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  
+ 
+  
+  .closeBtn:hover{
+    background-color: rgba(255, 255, 255, 0.5); /* Transparent white background */
+  }
+  
+  
+  .posts_header {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .input-container {
+    margin-bottom: 10px;
+  }
+  
+
+  .modal-container textarea {
+    width: calc(100% - 20px);
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    resize: none; 
+   
+    line-height: 1.3; 
+    margin-bottom: 8px; 
+  }
+  
+  .text-red-700 {
+    color: red;
+    margin-top: 3px;
+  
+  }
+  
+  .file-input {
+    width: calc(100% - 20px);
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 8px; /* Add space between file input and textarea */
+  }
+  
+
+  
+  .modal_backgrond_dark {
+    background-color: black;
+    border: white 1px solid;
+  }
+  
+  .post_modal_second_section{
+    display: flex;
+    flex-direction: row;
+  }
+  
+
+  
+  .input-container{
+    width: 400px;
+  }
+  
+ 
+  
+  
+  .media_button {
+    position: relative;
+  }
+  
+  .media_button .hidden-text {
+    display: none;
+    position: absolute;
+    bottom: -20px; /* Adjust the positioning as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    width: fit-content;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 4px;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .media_button:hover .hidden-text {
+    display: block;
+  }
+  
+  .media_button:hover{
+    cursor: pointer;
+  }
+  
+  
+  .posts_icons_container {
+    display: flex;
+    align-items: center;
+  }
+  
+  
+  
+  .posts_icons_container label:last-child {
+    margin-right: 0;
+  }
+  
+  .media_button {
+    display: flex;
+    align-items: center;
+  }
+  
+  .media_button .hidden-text {
+    display: none;
+  }
+  
+  .media_button:hover .hidden-text {
+    display: block;
+  }
+  
+  
+  
+  .posts_icons_container div {
+    margin-right: 20px;
+  }
+
+  .gif_preview{
+    height: 100%;
+    width: 100%;
+  }
+  .image_preview{
+   height: 40%;
+  width: 100%;
+  }
+}
+
+
+
+.gif_form{
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  margin-right: 10px;
 }
 
 
+.remove_gif_btn{
+width: 20px;
+font-size: 17px;
+color: red;
+border: none;
+background-color: transparent;
 
-.posts_icons_container label:last-child {
-  margin-right: 0;
-}
-
-.media_button {
-  display: flex;
-  align-items: center;
-}
-
-.media_button .hidden-text {
-  display: none;
-}
-
-.media_button:hover .hidden-text {
-  display: block;
-}
-
-
-
-.posts_icons_container div {
-  margin-right: 20px;
 }
 
 @media(min-width: 320px) and (max-width: 992px){
   .post_form{
     z-index: 99999;
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+
+  .modal-container {
+   width: 100%;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    height: 500px;
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .post_modal_text{
+    border: none;
+  }
+
+  .post_modal_second_section{
+    display: flex;
+    flex-direction: row;
+  }
+
+  .posts_icons_container {
+    display: flex;
+    align-items: center;
+  }
+
+
+  .gif_preview{
+    height: 100px;
+    width: 80%;
+  }
+
+  .image_preview{
+    width: 100%;
+    height: 100px
   }
 }

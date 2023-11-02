@@ -250,11 +250,15 @@ function UserHome({mainUser, plan, following}){
                               e.target.style.height = e.target.scrollHeight + 'px';
                             }}
                             />
-                            <div className="gif_form">
-                              {posts.gif ?  <img src={posts.gif} alt="posts.gif"/> : null }
-                            {posts.gif ? <button onClick={() => setPosts({...posts, gif: ""})}>X</button> : null}
-                           
-                            </div>
+                           <div className="gif_form">
+ {posts.gif ?  <img src={posts.gif} alt="posts.gif" className="gif_preview"/> : null }
+  {posts.gif ? <button onClick={() => setPosts({...posts, gif: ""})} className="remove_gif_btn">X</button> : null}
+</div>
+
+<div className="gif_form">
+ {posts.posts_img ?  <img src={posts.posts_img} alt="posts.images" className="image_preview"/> : null }
+  {posts.posts_img ? <button onClick={() => setPosts({...posts, posts_img: ""})} className="remove_gif_btn">X</button> : null}
+</div>
                             <p className={`${plan?.images ? 
                                 (posts?.content.length >= 400 ? 'text-red-700' : null) 
                                 : (posts?.content.length >= 250 ? 'text-red-700' : null)} ${mainUser.dark_mode ? "light_text" : "dark_text"}`}>
@@ -297,10 +301,10 @@ function UserHome({mainUser, plan, following}){
           </div>
         </label>
       
-        <div>
-  <BsEmojiSmile size={22} color="blue" onClick={() => setShowEmojiPicker(!showEmojiPicker)} />
-  
-</div>
+        <div className='media_button'>
+  <BsEmojiSmile size={22} className='emoji_btn' color="blue" onClick={() => setShowEmojiPicker(!showEmojiPicker)} />
+          <span className='hidden-text'>Emoji</span>
+    </div>
       
       <div>
       <label htmlFor="gif" className={`label-signup ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>
@@ -313,7 +317,7 @@ function UserHome({mainUser, plan, following}){
             value={posts.gif}
             onChange={handleTextChange}
           />
-     
+     <span className="hidden-text">Gif</span>
           </div>
         </label>
       </div>

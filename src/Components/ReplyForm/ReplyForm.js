@@ -270,11 +270,14 @@ className="post_user_profile"
     onChange={handleTextChange}
     ref={textareaRef} 
   />
-   <div className="gif_form">
-                              {replies.gif ?  <img src={replies.gif} alt="posts.gif"/> : null }
-                            {replies.gif ? <button onClick={() => setReplies({...replies, gif: ""})}>X</button> : null}
-                           
-                            </div>
+<div className="gif_form">
+ {replies.gif ?  <img src={replies.gif} alt="posts.gif" className="gif_preview"/> : null }
+  {replies.gif ? <button onClick={() => setReplies({...replies, gif: ""})} className="remove_gif_btn">X</button> : null}
+</div>
+<div className="gif_form">
+  {replies.posts_img ?  <img src={replies.posts_img} alt="posts.images" className="image_preview"/> : null }
+    {replies.posts_img ? <button onClick={() => setReplies({...replies, posts_img: ""})} className="remove_gif_btn">X</button> : null}
+    </div>
     <p className={`${plan?.images ? 
     (replies?.content.length >= 400 ? 'text-red-700' : null) 
     : (replies?.content.length >= 250 ? 'text-red-700' : null)}`}>
@@ -321,7 +324,7 @@ className="post_user_profile"
         </label>
       
         <div>
-  <BsEmojiSmile size={22} color="blue" onClick={() => setShowEmojiPicker(!showEmojiPicker)} />
+  <BsEmojiSmile size={22} className='emoji_btn' color="blue" onClick={() => setShowEmojiPicker(!showEmojiPicker)} />
  
 </div>
       

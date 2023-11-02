@@ -186,14 +186,17 @@ function SamePageReplyForm({ users, plan, mainUser, posts}){
                             className={`post_details_reply_text ${mainUser.dark_mode ? "text_background_dark" : "text_background_light"}`}
                             value={replies.content}
                             onChange={handleTextChange}
-                            placeholder="What is happening?!"
+                            placeholder="Post your reply"
                             />
 
                           <div className="gif_form">
-                              {replies.gif ?  <img src={replies.gif} alt="posts.gif"/> : null }
-                            {replies.gif ? <button onClick={() => setReplies({...replies, gif: ""})}>X</button> : null}
-                           
-                            </div>
+                          {replies.gif ?  <img src={replies.gif} alt="posts.gif" className="gif_preview"/> : null }
+                            {replies.gif ? <button onClick={() => setReplies({...replies, gif: ""})} className="remove_gif_btn">X</button> : null}
+                          </div>
+                          <div className="gif_form">
+                          {replies.posts_img ?  <img src={replies.posts_img} alt="posts.images" className="image_preview"/> : null }
+                            {replies.posts_img ? <button onClick={() => setReplies({...replies, posts_img: ""})} className="remove_gif_btn">X</button> : null}
+                          </div>
                             <p className={`${plan?.images ? 
                                 (replies?.content.length >= 400 ? 'text-red-700' : null) 
                                 : (replies?.content.length >= 250 ? 'text-red-700' : null)}`}>
@@ -236,10 +239,10 @@ function SamePageReplyForm({ users, plan, mainUser, posts}){
           </div>
         </label>
       
-        <div>
-  <BsEmojiSmile size={22} color="blue" onClick={() => setShowEmojiPicker(!showEmojiPicker)} />
-  
-</div>
+        <div className='media_button'>
+  <BsEmojiSmile size={22} className='emoji_btn' color="blue" onClick={() => setShowEmojiPicker(!showEmojiPicker)} />
+          <span className='hidden-text'>Emoji</span>
+    </div>
       
 <div>
       <label htmlFor="gif" className={`label-signup ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>
@@ -252,7 +255,7 @@ function SamePageReplyForm({ users, plan, mainUser, posts}){
             value={replies.gif}
             onChange={handleTextChange}
           />
-     
+      <span className="hidden-text">Gif</span>
           </div>
         </label>
       </div>

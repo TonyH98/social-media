@@ -16,7 +16,7 @@
    width: 50vw;
   outline: none;
    resize: none;
-   font-size: 20px;
+   font-size: 25px;
    padding: 10px;
    box-sizing: border-box;
    margin: 10px 0;
@@ -38,3 +38,8 @@
    margin-bottom: 10px;
  }
  
+@media(min-width:320px) and (max-width:992px){
+  .reply_form_container{
+    display: none;
+  }
+}

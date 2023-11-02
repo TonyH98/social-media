@@ -1,4 +1,8 @@
 
+.gif_img{
+  width: 100%;
+}
+
 @media(min-width: 993px){
   .App {
     display: flex;
@@ -58,6 +62,10 @@
 
 .dark_option_btn{
   color: black;
+}
+
+.emoji_btn:hover{
+  cursor: pointer;
 }
 
 @media (prefers-reduced-motion: no-preference) {

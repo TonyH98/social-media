@@ -198,6 +198,8 @@ return(
         <img src={posts.posts_img} alt={posts.posts_img} className="posts_img"/>
     )}
 
+{posts.gif ? <img src={posts.gif} alt={posts.gif} className="gif_img"/> : null}
+
     </div>
 
  </div>

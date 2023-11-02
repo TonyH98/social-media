@@ -20,7 +20,8 @@ function UserHome({mainUser, plan, following}){
         user_name: "",
         content: "",
         user_id: "",
-        posts_img: null
+        posts_img: null,
+        gif: ""
     });
 
     let [otherUsers , setOtherUsers] = useState([])
@@ -34,6 +35,8 @@ function UserHome({mainUser, plan, following}){
     let [followingPosts , setFollowingPosts] = useState([])
 
     const [modal , setModal] = useState(false)
+
+    const [showGifPicker, setShowGifPicker] = useState(false)
 
     const textareaRef = useRef(null);
 
@@ -169,6 +172,7 @@ function UserHome({mainUser, plan, following}){
       formData.append("posts_img", posts.posts_img === "" ? null : posts.posts_img);
       formData.append("user_id", mainUser?.id);
       formData.append("user_name", mainUser?.username)
+      formData.append("gif", posts.gif)
       axios.post(`${API}/users/${mainUser?.username}/posts`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -186,7 +190,13 @@ function UserHome({mainUser, plan, following}){
     const inFol = Array.isArray(following) ? following.map((fol) => fol?.username) : [];
     
     
-    
+    const handleGifText = (gif) => {
+      console.log(gif)
+      const gifUrl = gif.images.original.url;
+  
+      setPosts((prevPost) => ({ ...prevPost, gif: gifUrl }));
+      setShowGifPicker(false);
+    }
   
     const fetchPosts = async () => {
       try {
@@ -221,10 +231,7 @@ function UserHome({mainUser, plan, following}){
 
     return(
         <div className="users_home_page">
-          <ReactGiphySearchbox
-         apiKey={GIF}
-         onSelect={item => console.log(item)}
-          />
+          
             <div className="Home_Post_input_container">
                 <div className="Home_users_image_container">
                     <img src={mainUser.profile_img} className="Home_user_image"/>
@@ -243,6 +250,11 @@ function UserHome({mainUser, plan, following}){
                               e.target.style.height = e.target.scrollHeight + 'px';
                             }}
                             />
+                            <div className="gif_form">
+                              {posts.gif ?  <img src={posts.gif} alt="posts.gif"/> : null }
+                            {posts.gif ? <button onClick={() => setPosts({...posts, gif: ""})}>X</button> : null}
+                           
+                            </div>
                             <p className={`${plan?.images ? 
                                 (posts?.content.length >= 400 ? 'text-red-700' : null) 
                                 : (posts?.content.length >= 250 ? 'text-red-700' : null)} ${mainUser.dark_mode ? "light_text" : "dark_text"}`}>
@@ -271,7 +283,7 @@ function UserHome({mainUser, plan, following}){
   <div className="posts_icons_container">
   <label htmlFor="posts_img" className={`label-signup ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>
           <div className="media_button">
-          <GoFileMedia size={22} color="blue"/>
+          <GoFileMedia size={22} color="blue" />
           <input
             key={posts.imageKey}
             id="posts_img"
@@ -291,7 +303,19 @@ function UserHome({mainUser, plan, following}){
 </div>
       
       <div>
-        <MdOutlineGifBox size={22} color="blue"/>
+      <label htmlFor="gif" className={`label-signup ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>
+          <div className="media_button">
+          <MdOutlineGifBox size={22} color="blue" onClick={() => setShowGifPicker(!showGifPicker)}/>
+          <input
+            name="gif"
+            type="input"
+            className="gif_button"
+            value={posts.gif}
+            onChange={handleTextChange}
+          />
+     
+          </div>
+        </label>
       </div>
   </div>
 
@@ -302,6 +326,13 @@ function UserHome({mainUser, plan, following}){
                 {showEmojiPicker && (
     <EmojiPicker onEmojiClick={(emoji) => handleEmojiClick(emoji)}/>
   )}
+{showGifPicker && (
+<ReactGiphySearchbox
+         apiKey={GIF}
+         onSelect={handleGifText}
+          />
+
+)}
                 </div>
             </div>
             <br/>

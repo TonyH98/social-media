@@ -1,44 +1,65 @@
-.Home_user_image{
+.Home_user_image {
     width: 50px;
     height: 50px;
     border-radius: 50%;
 }
 
-.Home_Post_input_container{
+.Home_Post_input_container {
     display: flex;
     flex-direction: row;
     gap: 20px;
 }
 
-.home_textera{
+.home_textera {
     width: 500px;
     height: 100px;
     resize: none;
     font-size: 30px;
     border: none;
     outline: none;
+    position: relative; /* Ensure the textarea container is relative */
 }
 
-.text_background_dark{
+.text_background_dark {
     background-color: black;
     color: white;
-
 }
 
-.text_background_light{
+.text_background_light {
     background-color: white;
     color: black;
-
 }
 
-
-.dark_text{
-    color: black
+.dark_text {
+    color: black;
 }
 
-.light_text{
+.light_text {
     color: white;
 }
+
+/* Additional styles for the GIF overlay */
+.gif-overlay {
+
+    top: 10px; /* Adjust the positioning as needed */
+    right: 10px; /* Adjust the positioning as needed */
+    max-width: 100px; /* Adjust the size of the overlay */
+    max-height: 100px; /* Adjust the size of the overlay */
+}
+
+.gif-overlay img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none; /* Ensure the image doesn't interfere with textarea interaction */
+    z-index: 1; /* Ensure the image appears above the textarea */
+}
+
+.gif_button{
+    display: none;
+}
+
+
 
 @media(min-width: 993px){
     .home-post-button{

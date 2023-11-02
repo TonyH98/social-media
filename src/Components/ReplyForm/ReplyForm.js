@@ -29,7 +29,7 @@ function ReplyForm({open , onClose, users, posts, plan, mainUser, showEmojiPicke
 
   let [replies, setReplies] = useState({
     content: "",
-    posts_img: null,
+    posts_img: "",
     user_id: users?.id,
     posts_id: posts.id, 
     gif: ""
@@ -285,7 +285,6 @@ className="post_user_profile"
   <textarea
     id="content"
     className={`post_modal_text reply_modal_text ${mainUser.dark_mode ? "text_background_dark" : "text_background_light"}`}
-    required
     placeholder="What is happening?!"
     value={replies.content}
     onChange={handleTextChange}
@@ -366,7 +365,11 @@ className="post_user_profile"
       </div>
   </div>
 
+  {replies.content.length === 0 && replies.posts_img.length === 0 && replies.gif.length === 0?
+    <button className="post_submit_button gray_button" disabled>Post</button> :
+
   <button className="post_submit_button" type='submit'>Post</button>
+  }
 </div>
 
 </div>

@@ -30,7 +30,7 @@ function SamePageReplyForm({ users, plan, mainUser, posts}){
   
     let [replies, setReplies] = useState({
       content: "",
-      posts_img: null,
+      posts_img: "",
       gif: "",
       user_id: users?.id,
       posts_id: posts.id, 
@@ -283,7 +283,12 @@ function SamePageReplyForm({ users, plan, mainUser, posts}){
       </div>
   </div>
 
+ 
+  {replies.content.length === 0 && replies.posts_img.length === 0 && replies.gif.length === 0?
+    <button className="post_submit_button gray_button" disabled>Post</button> :
+
   <button className="post_submit_button" type='submit'>Post</button>
+  }
 </div>
 
                 </form>

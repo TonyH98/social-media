@@ -20,7 +20,7 @@ function UserHome({mainUser, plan, following}){
         user_name: "",
         content: "",
         user_id: "",
-        posts_img: null,
+        posts_img: "",
         gif: ""
     });
 
@@ -345,7 +345,12 @@ function UserHome({mainUser, plan, following}){
       </div>
   </div>
 
+ 
+  {posts.content.length === 0  && posts.posts_img.length === 0 && posts.gif.length === 0?
+    <button className="post_submit_button gray_button" disabled>Post</button> :
+
   <button className="post_submit_button" type='submit'>Post</button>
+  }
 </div>
 
                 </form>

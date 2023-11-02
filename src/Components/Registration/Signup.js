@@ -351,7 +351,12 @@ function Signup(){
             {capsLockOn && <p style={{ color: 'red' }}>Caps Lock is ON</p>}
             <br/>
             <div className='sign-up-form-btn-container'>
-            <button type='submit' className='login-submit'>Submit</button>
+            
+            {user.firstname.length === 0 || user.lastname.length === 0 || user.username.length === 0
+    && user.email.length === 0 || user.DOB.length === 0 || user.password.length === 0 ?
+      <button className="login_submit gray_button" disabled>Post</button> :
+      <button className="login_submit" type='submit'>Post</button>
+  }
       
           <Link to="/">
           <button className='sign-btn'>Sign In</button>

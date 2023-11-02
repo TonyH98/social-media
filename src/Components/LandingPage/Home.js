@@ -126,7 +126,10 @@ return(
 
     </div>
     
-    <button  disabled={error} type='submit' className='login-submit'>Login</button>
+    {login.email.length === 0 || login.password.length === 0 ?
+      <button className="login_submit gray_button" disabled>Login</button> :
+      <button className="login_submit" disabled={error} type='submit'>login</button>
+  }
   {capsLockOn && <p style={{ color: 'red' }}>Caps Lock is ON</p>}
 
    {error && <p style={{color: "red"}}>{error}</p>}

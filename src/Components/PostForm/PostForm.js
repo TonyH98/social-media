@@ -32,7 +32,7 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
         user_name: "",
         content: "",
         user_id: "",
-        posts_img: null,
+        posts_img: "",
         gif: ""
     });
     
@@ -226,7 +226,6 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
   <label htmlFor="content" className={`label-signup ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>
   <textarea
   id="content"
-  required
   value={posts.content}
   className={`post_modal_text ${users.dark_mode ? "text_background_dark" : "text_background_light"}`}
   onChange={handleTextChange}
@@ -307,8 +306,11 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
         </label>
       </div>
   </div>
+  {posts.content.length === 0 && posts.posts_img.length === 0 && posts.gif.length === 0?
+    <button className="post_submit_button gray_button" disabled>Post</button> :
 
   <button className="post_submit_button" type='submit'>Post</button>
+  }
 </div>
 
 

@@ -64,6 +64,18 @@ button[type='submit']:hover {
 }
 
 
+.gray_button {
+  background-color: rgba(0, 123, 255, 0.5); /* Use rgba with reduced opacity to gray out the background color */
+  color: white; 
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: not-allowed; 
+  font-weight: bold;
+}
+
+
+
 @media(min-width: 993px){
   .overlay {
     position: fixed;

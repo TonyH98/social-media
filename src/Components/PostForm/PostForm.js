@@ -11,7 +11,8 @@ import EmojiPicker from "emoji-picker-react";
 
 import axios from "axios";
 const API = process.env.REACT_APP_API_URL;
-function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPicker}){
+const GIF = process.env.REACT_APP_API_GIF;
+function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPicker, setShowGifPicker, showGifPicker}){
 
   const dispatch = useDispatch();
 
@@ -31,7 +32,8 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
         user_name: "",
         content: "",
         user_id: "",
-        posts_img: null
+        posts_img: null,
+        gif: ""
     });
     
     useEffect(() => {
@@ -151,7 +153,12 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
     };
     
 
-
+    const handleGifText = (gif) => {
+      console.log(gif)
+      const gifUrl = gif.images.original.url;
+      setPosts((prevPost) => ({ ...prevPost, gif: gifUrl }));
+      setShowGifPicker(false);
+    }
       const handleSubmit = (event) => {
         event.preventDefault();
         const formData = new FormData();
@@ -159,6 +166,7 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
         formData.append("posts_img", posts.posts_img === "" ? null : posts.posts_img);
         formData.append("user_id", users?.id);
         formData.append("user_name", users?.username)
+        formData.append("gif", posts.gif)
         dispatch(createPost(users, formData))
           .then(
             (response) => {
@@ -207,7 +215,10 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
   placeholder="What is happening?!"
   ref={textareaRef} 
 />
-  
+<div className="gif_form">
+ {posts.gif ?  <img src={posts.gif} alt="posts.gif"/> : null }
+  {posts.gif ? <button onClick={() => setPosts({...posts, gif: ""})}>X</button> : null}
+</div>
   <p className={`${plan?.images ? 
     (posts?.content.length >= 400 ? 'text-red-700' : null) 
     : (posts?.content.length >= 250 ? 'text-red-700' : null)}`}>
@@ -258,8 +269,20 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
   
 </div>
       
-      <div>
-        <MdOutlineGifBox size={22} color="blue"/>
+<div>
+      <label htmlFor="gif" className={`label-signup ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>
+          <div className="media_button">
+          <MdOutlineGifBox size={22} color="blue" onClick={() => setShowGifPicker(!showGifPicker)}/>
+          <input
+            name="gif"
+            type="input"
+            className="gif_button"
+            value={posts.gif}
+            onChange={handleTextChange}
+          />
+     
+          </div>
+        </label>
       </div>
   </div>
 
@@ -274,6 +297,14 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
 {showEmojiPicker && (
     <EmojiPicker onEmojiClick={(emoji) => handleEmojiClick(emoji)}/>
   )}
+
+{showGifPicker && (
+<ReactGiphySearchbox
+         apiKey={GIF}
+         onSelect={handleGifText}
+          />
+
+)}
 
            </div>
 

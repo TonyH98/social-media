@@ -136,6 +136,7 @@ return(
 
                 <img src={reply.posts_img} alt={reply.posts_img} className="posts_img"/>
             )}
+        {reply.gif ? <img src={reply.gif} alt={reply.gif} className="gif_img"/> : null}
 
             </div>
 

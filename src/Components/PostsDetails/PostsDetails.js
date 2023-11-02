@@ -34,6 +34,7 @@ let [dislike] = useState({
 let [favorite , setFavorite] = useState({})
 
 const [showEmojiPicker, setShowEmojiPicker] = useState(false)
+const [showGifPicker, setShowGifPicker] = useState(false)
 const dispatch = useDispatch()
 
 const posts = useSelector((state) => state.postsDetail.postDetail);
@@ -245,7 +246,7 @@ return(
             </button>
             </div> 
 
-   <ReplyForm open={show} onClose={() => {setShow(false); setShowEmojiPicker(false);}} setShowEmojiPicker={setShowEmojiPicker} showEmojiPicker={showEmojiPicker} users={user}  posts={posts} plan={plan} mainUser={mainUser} />
+   <ReplyForm open={show} onClose={() => {setShow(false); setShowEmojiPicker(false); setShowGifPicker(false)}}  setShowGifPicker={setShowGifPicker} showGifPicker={showGifPicker} setShowEmojiPicker={setShowEmojiPicker} showEmojiPicker={showEmojiPicker} users={user}  posts={posts} plan={plan} mainUser={mainUser} />
 </div>
  
  </div>

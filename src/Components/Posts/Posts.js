@@ -19,7 +19,7 @@ function Posts ({posts, users, favorites, plan, mainUser}){
 let [show , setShow] = useState(false)
 
 const [showEmojiPicker, setShowEmojiPicker] = useState(false)
-
+const [showGifPicker, setShowGifPicker] = useState(false)
 let [fav] = useState({
     creator_id: posts.creator.id
 })
@@ -205,7 +205,7 @@ const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.posts_id) :
             </button>
             </div> 
 
-            <ReplyForm open={show} onClose={() => {setShow(false); setShowEmojiPicker(false);}} setShowEmojiPicker={setShowEmojiPicker} showEmojiPicker={showEmojiPicker} users={users} posts={posts} plan={plan} mainUser={mainUser}/>
+            <ReplyForm open={show} onClose={() => {setShow(false); setShowEmojiPicker(false);  setShowGifPicker(false)}} showGifPicker={showGifPicker} setShowGifPicker={setShowGifPicker} setShowEmojiPicker={setShowEmojiPicker} showEmojiPicker={showEmojiPicker} users={users} posts={posts} plan={plan} mainUser={mainUser}/>
          </div>
          
          </div>

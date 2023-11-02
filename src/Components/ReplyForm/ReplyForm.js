@@ -5,12 +5,14 @@ import {GoFileMedia} from "react-icons/go"
 import {BsEmojiSmile} from "react-icons/bs"
 import {MdOutlineGifBox} from "react-icons/md"
 import EmojiPicker from "emoji-picker-react";
+import ReactGiphySearchbox from 'react-giphy-searchbox'
 import "./Reply.css"
 
 import axios from "axios";
 
 const API = process.env.REACT_APP_API_URL;
-function ReplyForm({open , onClose, users, posts, plan, mainUser, showEmojiPicker, setShowEmojiPicker  }){
+const GIF = process.env.REACT_APP_API_GIF;
+function ReplyForm({open , onClose, users, posts, plan, mainUser, showEmojiPicker, setShowEmojiPicker, setShowGifPicker, showGifPicker  }){
 
   const dispatch = useDispatch()
 
@@ -30,6 +32,7 @@ function ReplyForm({open , onClose, users, posts, plan, mainUser, showEmojiPicke
     posts_img: null,
     user_id: users?.id,
     posts_id: posts.id, 
+    gif: ""
     })
 
     useEffect(() => {
@@ -167,7 +170,11 @@ function ReplyForm({open , onClose, users, posts, plan, mainUser, showEmojiPicke
       setReplies((prevPost) => ({ ...prevPost, content: updatedText }));
     };
 
-
+    const handleGifText = (gif) => {
+      const gifUrl = gif.images.original.url;
+      setReplies((prevPost) => ({ ...prevPost, gif: gifUrl }));
+      setShowGifPicker(false);
+    }
     const handleSubmit = (event) => {
       event.preventDefault()
       const formData = new FormData();
@@ -175,6 +182,7 @@ function ReplyForm({open , onClose, users, posts, plan, mainUser, showEmojiPicke
         formData.append("posts_img", replies.posts_img === "" ? null : replies.posts_img);
         formData.append("user_id", users?.id);
         formData.append("posts_id", posts.id)
+        formData.append("gif", replies.gif)
       dispatch(createRplies(users?.username, posts.id, formData))
       .then((res) => {
         onClose()
@@ -262,6 +270,11 @@ className="post_user_profile"
     onChange={handleTextChange}
     ref={textareaRef} 
   />
+   <div className="gif_form">
+                              {replies.gif ?  <img src={replies.gif} alt="posts.gif"/> : null }
+                            {replies.gif ? <button onClick={() => setReplies({...replies, gif: ""})}>X</button> : null}
+                           
+                            </div>
     <p className={`${plan?.images ? 
     (replies?.content.length >= 400 ? 'text-red-700' : null) 
     : (replies?.content.length >= 250 ? 'text-red-700' : null)}`}>
@@ -312,8 +325,20 @@ className="post_user_profile"
  
 </div>
       
-      <div>
-        <MdOutlineGifBox size={22} color="blue"/>
+<div>
+      <label htmlFor="gif" className={`label-signup ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>
+          <div className="media_button">
+          <MdOutlineGifBox size={22} color="blue" onClick={() => setShowGifPicker(!showGifPicker)}/>
+          <input
+            name="gif"
+            type="input"
+            className="gif_button"
+            value={replies.gif}
+            onChange={handleTextChange}
+          />
+     
+          </div>
+        </label>
       </div>
   </div>
 
@@ -331,6 +356,14 @@ className="post_user_profile"
       <EmojiPicker onEmojiClick={(emoji) => handleEmojiClick(emoji)}/>
     </div>
   )}
+
+{showGifPicker && (
+<ReactGiphySearchbox
+         apiKey={GIF}
+         onSelect={handleGifText}
+          />
+
+)}
 </form>
 
            </div>

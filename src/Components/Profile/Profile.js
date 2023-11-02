@@ -76,7 +76,7 @@ function Profile({user , plan}){
               {replies.map((reply) => {
                 return (
                   <div key={reply.id} className="posts-border-container">
-                    <AllReplies posts={reply} users={user} mainUser={users}/>
+                    <AllReplies posts={reply} users={user} mainUser={users} favorites={favorites} plan={plan}/>
                   </div>
                 );
               })}

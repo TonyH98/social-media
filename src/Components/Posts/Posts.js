@@ -10,7 +10,7 @@ import { useDispatch} from "react-redux";
 import { addFav , deleteFav} from "../../Store/userActions";
 import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
 import axios from "axios";
-
+import {PiArrowsClockwise} from "react-icons/pi"
 const API = process.env.REACT_APP_API_URL;
 function Posts ({posts, users, favorites, plan, mainUser}){
 
@@ -175,6 +175,9 @@ const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.posts_id) :
   </button>
 </div>
 
+<div className="repost_btn_container">
+    <button className="no_br"><PiArrowsClockwise size={20}/></button>
+</div>
 
 
              <div className="favorite_posts_container">

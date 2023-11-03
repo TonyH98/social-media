@@ -12,7 +12,8 @@ import {AiOutlineHeart} from "react-icons/ai"
 import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
 import { addReaction} from "../../Store/userActions";
 import SamePageReplyForm from "./SamePageReplyForm";
-
+import {PiArrowsClockwise} from "react-icons/pi"
+import RePostForm from "../Repost/RepostForm";
 import axios from "axios";
 
 const API = process.env.REACT_APP_API_URL;
@@ -22,6 +23,8 @@ function PostsDetails({user , plan, mainUser}){
 const {username , id} = useParams()
 
 let [show , setShow] = useState(false)
+
+let [show2 , setShow2] = useState(false)
 
 let [likes] = useState({
     reaction: "like"
@@ -217,7 +220,12 @@ return(
 </button>
 </div>
 
-
+<div className="repost_btn_container">
+    <button 
+   onClick={(e) => { e.preventDefault(); setShow2(true); }}
+    className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br reply_btn`} 
+    ><PiArrowsClockwise size={20}/></button>
+</div>
 
    <div className="favorite_posts_container">
        {favorite?.favorites ?
@@ -245,7 +253,7 @@ return(
             <span className="hidden-text">Dislike</span>
             </button>
             </div> 
-
+    <RePostForm open={show2} mainUser={mainUser} post={posts} onClose={() => {setShow2(false);}}/>
    <ReplyForm open={show} onClose={() => {setShow(false); setShowEmojiPicker(false); setShowGifPicker(false)}}  setShowGifPicker={setShowGifPicker} showGifPicker={showGifPicker} setShowEmojiPicker={setShowEmojiPicker} showEmojiPicker={showEmojiPicker} users={user}  posts={posts} plan={plan} mainUser={mainUser} />
 </div>
  

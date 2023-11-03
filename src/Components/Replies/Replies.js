@@ -3,6 +3,7 @@ import { useState , useEffect } from "react"
 import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
 import {AiFillHeart} from "react-icons/ai"
 import {AiOutlineHeart} from "react-icons/ai"
+import {PiArrowsClockwise} from "react-icons/pi"
 import { useDispatch , useSelector } from "react-redux";
 import {getFavoriteReplies , 
     deleteFavReplies,
@@ -151,7 +152,9 @@ return(
 <div className="posts-options-container">
 
 
-
+<div className="repost_btn_container">
+    <button className="no_br"><PiArrowsClockwise size={20}/></button>
+</div>
 
 
 <div className="favorite_posts_container">

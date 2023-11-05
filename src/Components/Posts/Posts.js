@@ -116,6 +116,14 @@ function handleDislike(e){
 }
 
 
+function createRepost (e){
+    e.preventDefault()
+    axios.post(`${API}/users/${mainUser.username}/posts/${mainUser.username}/repost/${posts.id}`)
+}
+
+
+console.log(posts)
+
 const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.posts_id) : [];
 
 
@@ -123,6 +131,7 @@ const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.posts_id) :
     return(
         <div className="posts_content">
 
+                {posts.repost ? <span className="repost_style"><PiArrowsClockwise size={15} color="gray"/> {posts.user_name} reposted</span> : null}
             <div className="posts_extra_container">
 
             <div className="post_user_profile_container">
@@ -176,7 +185,7 @@ const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.posts_id) :
 </div>
 
 <div className="repost_btn_container">
-    <button className="no_br"><PiArrowsClockwise size={20}/></button>
+    <button className="no_br" onClick={createRepost}><PiArrowsClockwise size={20}/></button>
 </div>
 
 

@@ -128,7 +128,7 @@ function createRepost (e){
 
 
 
-const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.posts_id) : [];
+const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.id) : [];
 
 
 

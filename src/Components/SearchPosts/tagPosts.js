@@ -4,24 +4,26 @@ import {AiOutlineHeart} from "react-icons/ai"
 import {SlBubble} from "react-icons/sl"
 import ReplyForm from "../ReplyForm/ReplyForm"
 import { useEffect , useState } from "react";
-
+import {PiArrowsClockwise} from "react-icons/pi"
 
 import axios from "axios";
 
 const API = process.env.REACT_APP_API_URL;
 function TagPosts({tag, mainUser, plan}){
-console.log(tag)
-    const [reaction , setReaction] = useState({})
-    let [show , setShow] = useState(false)
-    const [showEmojiPicker, setShowEmojiPicker] = useState(false)
+
+
+const [reaction , setReaction] = useState({})
+let [show , setShow] = useState(false)
+const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 const [showGifPicker, setShowGifPicker] = useState(false)
 
     useEffect(() => {
-        axios.get(`${API}/users/${tag.creator_details.username}/posts/${tag.post_id}/reactions`)
+        axios.get(`${API}/users/${tag.creator.username}/posts/${tag.id}/reactions`)
         .then((res) => {
           setReaction(res.data);
         });
-      }, [tag.post_id]);
+      }, [tag.id]);
+
 
     let [likes] = useState({
         reaction: "like"
@@ -34,7 +36,7 @@ const [showGifPicker, setShowGifPicker] = useState(false)
     let [favorites, setFavorites] = useState([])
     
     let [fav] = useState({
-        creator_id: tag.creator_details.id
+        creator_id: tag.creator.id
     })
 
     useEffect(() => {
@@ -70,7 +72,7 @@ const [showGifPicker, setShowGifPicker] = useState(false)
 
     function handleAddFav(e){
         e.preventDefault()
-        axios.post(`${API}/favorites/${mainUser?.id}/fav/${tag.post_id}`, fav)
+        axios.post(`${API}/favorites/${mainUser?.id}/fav/${tag.id}`, fav)
         .then(() => {
             axios.get(`${API}/favorites/${mainUser?.id}`)
         .then((res) => {
@@ -81,7 +83,7 @@ const [showGifPicker, setShowGifPicker] = useState(false)
 
     function handleDeleteFav(e){
         e.preventDefault()
-        axios.delete(`${API}/favorites/${mainUser.id}/delete/${tag.post_id}`)
+        axios.delete(`${API}/favorites/${mainUser.id}/delete/${tag.id}`)
         .then(() => {
             axios.get(`${API}/favorites/${mainUser?.id}`)
         .then((res) => {
@@ -94,9 +96,9 @@ const [showGifPicker, setShowGifPicker] = useState(false)
 
     function handleLike(e){
         e.preventDefault()
-        axios.post(`${API}/users/${tag.creator_details.username}/posts/${mainUser.id}/react/${tag.post_id}`, likes)
+        axios.post(`${API}/users/${tag.creator.username}/posts/${mainUser.id}/react/${tag.id}`, likes)
         .then(() => {
-            axios.get(`${API}/users/${tag.creator_details.username}/posts/${tag.post_id}/reactions`)
+            axios.get(`${API}/users/${tag.creator.username}/posts/${tag.id}/reactions`)
             .then((res) => {
               setReaction(res.data);
             });
@@ -105,15 +107,25 @@ const [showGifPicker, setShowGifPicker] = useState(false)
     
     function handleDislike(e){
         e.preventDefault()
-        axios.post(`${API}/users/${tag.creator_details.username}/posts/${mainUser.id}/react/${tag.post_id}`, dislike)
+        axios.post(`${API}/users/${tag.creator.username}/posts/${mainUser.id}/react/${tag.id}`, dislike)
         .then(() => {
-            axios.get(`${API}/users/${tag.creator_details.username}/posts/${tag.post_id}/reactions`)
+            axios.get(`${API}/users/${tag.creator.username}/posts/${tag.id}/reactions`)
             .then((res) => {
               setReaction(res.data);
             });
         })
     }
-    const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.posts_id) : [];
+
+
+    // function createRepost (e){
+    //     e.preventDefault()
+    //     axios.post(`${API}/users/${mainUser.username}/posts/${mainUser.username}/repost/${posts.id}`, {user_id: posts.user_id})
+    //     .then(() => {
+    //         axios.put(`${API}/users/${posts.creator.username}/posts/${posts.id}`, {repost_counter: posts.repost_counter += 1})
+    //     })
+    // }
+
+    const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.id) : [];
     return(
         <div className="posts_content">
 
@@ -121,8 +133,8 @@ const [showGifPicker, setShowGifPicker] = useState(false)
 
         <div className="post_user_profile_container">
         <img
-        src={tag.creator_details.profile_img}
-        alt={tag.creator_details.profile_img}
+        src={tag.creator.profile_img}
+        alt={tag.creator.profile_img}
         className="post_user_profile"
         />
         </div>
@@ -131,7 +143,7 @@ const [showGifPicker, setShowGifPicker] = useState(false)
 
     <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_user_profile`}>
 
-    {tag.creator_details.profile_name} | @{tag.creator_details.username} | {formatDate(tag.posts_details?.date_created)}
+    {tag.creator.profile_name} | @{tag.creator.username} | {formatDate(tag.time)}
 
     </div>
 
@@ -140,12 +152,12 @@ const [showGifPicker, setShowGifPicker] = useState(false)
 
         <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_text`}>
 
-           {highlightMentions(tag.posts_details.content)}
+           {highlightMentions(tag.content)}
         </div>
          <div className="posts_img_container">
-        {tag.posts_details?.image === "null" ? null : (
+        {!tag.posts_details?.image ? null : (
 
-            <img src={tag.posts_details?.image} alt={tag.posts_details?.image} className="posts_img"/>
+            <img src={tag.posts_img} alt={tag.posts_img} className="posts_img"/>
         )}
 
         </div> 
@@ -158,17 +170,17 @@ const [showGifPicker, setShowGifPicker] = useState(false)
         </div>
         <div className="posts-options-container">
 
-{/* <div className="posts-reply-button">
+<div className="posts-reply-button">
 <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br reply_btn`} onClick={() => setShow(!show)}>
 <SlBubble size={20} />
 <span className="hidden-text">Reply</span>
 </button>
-</div> */}
+</div>
 
 
 
     <div className="favorite_posts_container">
-       {mainUser && inFav.includes(tag.post_id) ? 
+       {mainUser && inFav.includes(tag.id) ? 
        <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} onClick={handleDeleteFav}><AiFillHeart size={20} color="red"/>
        <span className="hidden-text">Disike</span>
        </button>
@@ -195,9 +207,9 @@ const [showGifPicker, setShowGifPicker] = useState(false)
    </button>
    </div> 
 
-   {/* <ReplyForm open={show} onClose={() => {setShow(false); setShowEmojiPicker(false);  setShowGifPicker(false)}}
+   <ReplyForm open={show} onClose={() => {setShow(false); setShowEmojiPicker(false);  setShowGifPicker(false)}}
     showGifPicker={showGifPicker} setShowGifPicker={setShowGifPicker} setShowEmojiPicker={setShowEmojiPicker}
-   showEmojiPicker={showEmojiPicker} users={mainUser} posts={tag} plan={plan}/> */}
+   showEmojiPicker={showEmojiPicker} users={mainUser} posts={tag} plan={plan}/>
 </div>
      </div>
     )

@@ -5,14 +5,18 @@ import { useEffect , useState } from "react";
 import {PiArrowsClockwise} from "react-icons/pi"
 import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
 import {Link} from "react-router-dom"
+import ReplyForm from "../ReplyForm/ReplyForm";
 import axios from "axios";
 
 const API = process.env.REACT_APP_API_URL;
-function Favorites({fav , mainUser}){
+function Favorites({fav , mainUser, users, plan}){
 
     const [reaction , setReaction] = useState({})
 
+    const [show , setShow] = useState(false)
 
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false)
+    const [showGifPicker, setShowGifPicker] = useState(false)
     let [likes] = useState({
         reaction: "like"
     })
@@ -47,18 +51,18 @@ function Favorites({fav , mainUser}){
     
 
     useEffect(() => {
-        axios.get(`${API}/users/${fav.post_creator.username}/posts/${fav.posts_id}/reactions`)
+        axios.get(`${API}/users/${fav.creator.username}/posts/${fav.id}/reactions`)
         .then((res) => {
           setReaction(res.data);
         });
-      }, [fav.posts_id]);
+      }, [fav.id]);
 
 
     function handleLike(e){
         e.preventDefault()
-        axios.post(`${API}/users/${fav.post_creator.username}/posts/${mainUser.id}/react/${fav.posts_id}`, likes)
+        axios.post(`${API}/users/${fav.creator.username}/posts/${mainUser.id}/react/${fav.id}`, likes)
         .then(() => {
-            axios.get(`${API}/users/${fav.post_creator.username}/posts/${fav.posts_id}/reactions`)
+            axios.get(`${API}/users/${fav.creator.username}/posts/${fav.id}/reactions`)
             .then((res) => {
               setReaction(res.data);
             });
@@ -67,9 +71,9 @@ function Favorites({fav , mainUser}){
     
     function handleDislike(e){
         e.preventDefault()
-        axios.post(`${API}/users/${fav.post_creator.username}/posts/${mainUser.id}/react/${fav.posts_id}`, dislike)
+        axios.post(`${API}/users/${fav.creator.username}/posts/${mainUser.id}/react/${fav.id}`, dislike)
         .then(() => {
-            axios.get(`${API}/users/${fav.post_creator.username}/posts/${fav.posts_id}/reactions`)
+            axios.get(`${API}/users/${fav.creator.username}/posts/${fav.id}/reactions`)
             .then((res) => {
               setReaction(res.data);
             });
@@ -80,9 +84,9 @@ function Favorites({fav , mainUser}){
     
     function createRepost (e){
         e.preventDefault()
-        axios.post(`${API}/users/${mainUser.username}/posts/${mainUser.username}/repost/${fav.posts_id}`, {user_id: fav.post_creator.creator_id})
+        axios.post(`${API}/users/${mainUser.username}/posts/${mainUser.username}/repost/${fav.id}`, {user_id: fav.creator.id})
         .then(() => {
-            axios.put(`${API}/users/${fav.post_creator.username}/posts/${fav.posts_id}`, {repost_counter: fav.repost_counter.repost_counter += 1})
+            axios.put(`${API}/users/${fav.creator.username}/posts/${fav.id}`, {repost_counter: fav.repost_counter += 1})
         })
     }
 
@@ -93,8 +97,8 @@ return(
 
     <div className="post_user_profile_container">
     <img
-    src={fav.post_creator.profile_img}
-    alt={fav.post_creator.profile_img}
+    src={fav.creator.profile_img}
+    alt={fav.creator.profile_img}
     className="post_user_profile"
     />
     </div>
@@ -103,21 +107,21 @@ return(
 
 <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_user_profile`} >
 
-{fav.post_creator.profile_name} | @{fav.post_creator.username} | {formatDate(fav.post_creator.date_created)}
+{fav.creator.profile_name} | @{fav.creator.username} | {formatDate(fav.time)}
 
 </div>
 
-    <Link to={`/posts/${fav.post_creator.username}/${fav?.posts_id}`} className="link-style">
+    <Link to={`/posts/${fav.creator.username}/${fav?.id}`} className="link-style">
 <div className="posts_content_text_container">
 
     <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_text`}>
 
-       {highlightMentions(fav.post_creator.content)}
+       {highlightMentions(fav.content)}
     </div>
     <div className="posts_img_container">
-    {fav.post_creator.image === "null" ? null : (
+    {fav.posts_img === "null" ? null : (
 
-        <img src={fav.post_creator.image} alt={fav.post_creator.image} className="posts_img"/>
+        <img src={fav.posts_img} alt={fav.posts_img} className="posts_img"/>
     )}
 
     </div>
@@ -133,7 +137,9 @@ return(
     <div className="posts-options-container">
 
 <div className="posts-reply-button">
-<button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br reply_btn`}>
+<button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br reply_btn`}
+onClick={() => setShow(!show)}
+>
 <SlBubble size={20} /> 
 <span className="hidden-text">Reply</span>
 </button>
@@ -141,7 +147,7 @@ return(
 
 <div className="repost-button">
 <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} 
-onClick={createRepost}><PiArrowsClockwise size={20}/> {fav.post_creator.repost_counter}
+onClick={createRepost}><PiArrowsClockwise size={20}/> {fav.repost_counter}
 <span className="hidden-text">Repost</span>
 </button>
 </div>
@@ -175,7 +181,7 @@ onClick={createRepost}><PiArrowsClockwise size={20}/> {fav.post_creator.repost_c
    </button>
    </div> 
 
-   {/* <ReplyForm open={show} onClose={() => {setShow(false); setShowEmojiPicker(false);  setShowGifPicker(false)}} showGifPicker={showGifPicker} setShowGifPicker={setShowGifPicker} setShowEmojiPicker={setShowEmojiPicker} showEmojiPicker={showEmojiPicker} users={users} posts={posts} plan={plan} mainUser={mainUser}/> */}
+   <ReplyForm open={show} onClose={() => {setShow(false); setShowEmojiPicker(false);  setShowGifPicker(false)}} showGifPicker={showGifPicker} setShowGifPicker={setShowGifPicker} setShowEmojiPicker={setShowEmojiPicker} showEmojiPicker={showEmojiPicker} users={users} posts={fav} plan={plan} mainUser={mainUser}/>
 </div>
  
  </div>

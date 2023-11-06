@@ -284,7 +284,7 @@ className="post_user_profile"
   <label htmlFor="content" className={`label-signup ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>
   <textarea
     id="content"
-    className={`post_modal_text reply_modal_text ${mainUser.dark_mode ? "text_background_dark" : "text_background_light"}`}
+    className={`post_modal_text reply_modal_text ${mainUser?.dark_mode ? "text_background_dark" : "text_background_light"}`}
     placeholder="What is happening?!"
     value={replies.content}
     onChange={handleTextChange}

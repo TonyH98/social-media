@@ -51,6 +51,7 @@ function Profile({user , plan}){
   }, [dispatch, users?.username, users?.id]);
   
     
+  
 
     let options = ["Posts", "Replies", "Favorites"]
 
@@ -82,7 +83,7 @@ function Profile({user , plan}){
           <div className="option-content-holder">
             {favorites.map((fav) => (
               <div key={fav.id} className="posts-border-container">
-                <Favorites fav={fav} users={users} mainUser={users} />
+                <Favorites fav={fav} users={user} mainUser={users} plan={plan}  />
               </div>
             ))}
           </div>

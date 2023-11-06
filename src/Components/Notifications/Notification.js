@@ -117,7 +117,7 @@ function Notification({users , notes, mainUser}){
         })
     }
 
-    const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.posts_id) : [];
+    const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.id) : [];
     return(
         <div className="posts_content">
 

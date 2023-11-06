@@ -116,13 +116,17 @@ function handleDislike(e){
 }
 
 
+
 function createRepost (e){
     e.preventDefault()
-    axios.post(`${API}/users/${mainUser.username}/posts/${mainUser.username}/repost/${posts.id}`)
+    axios.post(`${API}/users/${mainUser.username}/posts/${mainUser.username}/repost/${posts.id}`, {user_id: posts.user_id})
+    .then(() => {
+        axios.put(`${API}/users/${posts.creator.username}/posts/${posts.id}`, {repost_counter: posts.repost_counter + 1})
+    })
 }
 
 
-console.log(posts)
+
 
 const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.posts_id) : [];
 
@@ -185,7 +189,7 @@ const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.posts_id) :
 </div>
 
 <div className="repost_btn_container">
-    <button className="no_br" onClick={createRepost}><PiArrowsClockwise size={20}/></button>
+    <button className="no_br" onClick={createRepost}><PiArrowsClockwise size={20}/>{posts.repost_counter}</button>
 </div>
 
 

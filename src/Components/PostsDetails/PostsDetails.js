@@ -13,7 +13,7 @@ import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
 import { addReaction} from "../../Store/userActions";
 import SamePageReplyForm from "./SamePageReplyForm";
 import {PiArrowsClockwise} from "react-icons/pi"
-import RePostForm from "../Repost/RepostForm";
+
 import axios from "axios";
 
 const API = process.env.REACT_APP_API_URL;
@@ -24,7 +24,7 @@ const {username , id} = useParams()
 
 let [show , setShow] = useState(false)
 
-let [show2 , setShow2] = useState(false)
+
 
 let [likes] = useState({
     reaction: "like"
@@ -164,7 +164,15 @@ axios.delete(`${API}/favorites/${mainUser.id}/delete/${id}`)
 })
 }
 
-console.log(favorite)
+function createRepost (e){
+    e.preventDefault()
+    axios.post(`${API}/users/${mainUser.username}/posts/${mainUser.username}/repost/${id}`, {user_id: posts.user_id})
+    .then(() => {
+        axios.put(`${API}/users/${username}/posts/${id}`, {repost_counter: posts.repost_counter + 1})
+    })
+}
+
+
 
 return(
 
@@ -222,9 +230,9 @@ return(
 
 <div className="repost_btn_container">
     <button 
-   onClick={(e) => { e.preventDefault(); setShow2(true); }}
+    onClick={createRepost}
     className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br reply_btn`} 
-    ><PiArrowsClockwise size={20}/></button>
+    ><PiArrowsClockwise size={20}/>{posts.repost_counter}</button>
 </div>
 
    <div className="favorite_posts_container">
@@ -253,7 +261,7 @@ return(
             <span className="hidden-text">Dislike</span>
             </button>
             </div> 
-    <RePostForm open={show2} mainUser={mainUser} post={posts} onClose={() => {setShow2(false);}}/>
+   
    <ReplyForm open={show} onClose={() => {setShow(false); setShowEmojiPicker(false); setShowGifPicker(false)}}  setShowGifPicker={setShowGifPicker} showGifPicker={showGifPicker} setShowEmojiPicker={setShowEmojiPicker} showEmojiPicker={showEmojiPicker} users={user}  posts={posts} plan={plan} mainUser={mainUser} />
 </div>
  

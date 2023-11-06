@@ -24,7 +24,22 @@ function Favorites({fav , mainUser, users, plan}){
     let [dislike] = useState({
         reaction: "dislike"
     })
+
+    let [favs] = useState({
+        creator_id: fav.creator.id
+    })
+
     
+    let [favorites, setFavorites] = useState([])
+
+    useEffect(() => {
+        axios.get(`${API}/favorites/${mainUser?.id}`)
+        .then((res) => {
+            setFavorites(res.data)
+        })
+    }, [mainUser?.id])
+
+
     function formatDate(inputDate){
         const months = [
             "Jan", "Feb", "Mar", "Apr", "May", "Jun",
@@ -80,7 +95,28 @@ function Favorites({fav , mainUser, users, plan}){
         })
     }
     
-    
+    function handleAddFav(e){
+        e.preventDefault()
+        axios.post(`${API}/favorites/${mainUser?.id}/fav/${fav.id}`, favs)
+        .then(() => {
+            axios.get(`${API}/favorites/${mainUser?.id}`)
+        .then((res) => {
+            setFavorites(res.data)
+        })
+        })
+    }
+
+    function handleDeleteFav(e){
+        e.preventDefault()
+        axios.delete(`${API}/favorites/${mainUser.id}/delete/${fav.id}`)
+        .then(() => {
+            axios.get(`${API}/favorites/${mainUser?.id}`)
+        .then((res) => {
+            setFavorites(res.data)
+        })
+        })
+        
+    }
     
     function createRepost (e){
         e.preventDefault()
@@ -89,6 +125,9 @@ function Favorites({fav , mainUser, users, plan}){
             axios.put(`${API}/users/${fav.creator.username}/posts/${fav.id}`, {repost_counter: fav.repost_counter += 1})
         })
     }
+
+
+    const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.id) : [];
 
 return(
     <div className="posts_content">
@@ -153,8 +192,8 @@ onClick={createRepost}><PiArrowsClockwise size={20}/> {fav.repost_counter}
 </div>
 
 
-    {/* <div className="favorite_posts_container">
-       {users && inFav.includes(posts?.id) ? 
+    <div className="favorite_posts_container">
+       {users && inFav.includes(fav?.id) ? 
        <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} onClick={handleDeleteFav}><AiFillHeart size={20} color="red"/>
        <span className="hidden-text">Disike</span>
        </button>
@@ -163,7 +202,7 @@ onClick={createRepost}><PiArrowsClockwise size={20}/> {fav.repost_counter}
        <span className="hidden-text">Like</span>
        </button>}
 
-   </div>  */}
+   </div> 
 
    
    <div className="like-container">

@@ -14,7 +14,7 @@ function Notification({users , notes, mainUser, plan}){
     let [favorites , setFavorites] = useState([])
 
     let [fav] = useState({
-        creator_id: notes.sender_id
+        creator_id: notes.users_id
     })
 
     let [likes] = useState({
@@ -101,6 +101,9 @@ const [showGifPicker, setShowGifPicker] = useState(false)
               setFavorites(res.data);
             });
         })
+        .catch((err) => {
+            console.log(err)
+        })
     }
     
     function handleDeleteFav(e){
@@ -111,6 +114,9 @@ const [showGifPicker, setShowGifPicker] = useState(false)
             .then((res) => {
               setFavorites(res.data);
             });
+        })
+        .catch((err) => {
+            console.log(err)
         })
     }
 

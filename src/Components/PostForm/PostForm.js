@@ -231,6 +231,10 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
   onChange={handleTextChange}
   placeholder="What is happening?!"
   ref={textareaRef} 
+  onInput={(e) => {
+    e.target.style.height = 'auto';
+    e.target.style.height = e.target.scrollHeight + 'px';
+  }}
 />
 <div className="gif_form">
  {posts.gif ?  <img src={posts.gif} alt="posts.gif" className="gif_preview"/> : null }

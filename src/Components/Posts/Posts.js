@@ -121,7 +121,7 @@ function createRepost (e){
     e.preventDefault()
     axios.post(`${API}/users/${mainUser.username}/posts/${mainUser.username}/repost/${posts.id}`, {user_id: posts.user_id})
     .then(() => {
-        axios.put(`${API}/users/${posts.creator.username}/posts/${posts.id}`, {repost_counter: posts.repost_counter + 1})
+        axios.put(`${API}/users/${posts.creator.username}/posts/${posts.id}`, {repost_counter: posts.repost_counter += 1})
     })
 }
 
@@ -188,8 +188,11 @@ const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.posts_id) :
   </button>
 </div>
 
-<div className="repost_btn_container">
-    <button className="no_br" onClick={createRepost}><PiArrowsClockwise size={20}/>{posts.repost_counter}</button>
+<div className="repost-button">
+<button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} 
+onClick={createRepost}><PiArrowsClockwise size={20}/> {posts.repost_counter}
+ <span className="hidden-text">Repost</span>
+ </button>
 </div>
 
 

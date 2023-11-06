@@ -1,14 +1,16 @@
 import "./ProfileEdit.css"
 
-import { useState , useEffect} from 'react';
+import { useState , useEffect, useRef} from 'react';
 import { editProfile} from "../../Store/userActions";
 import { useDispatch } from "react-redux";
-
-
+import {BsEmojiSmile} from "react-icons/bs"
+import EmojiPicker from "emoji-picker-react";
 const API = process.env.REACT_APP_API_URL;
-function ProfileEdit({onClose , users, open2, fetchUsers }){
+function ProfileEdit({onClose , users, open2, fetchUsers, setShowEmojiPicker, showEmojiPicker }){
 
     const [currentPage , setCurrentPage] = useState(1)
+
+    const textareaRef = useRef(null);
 
     const dispatch = useDispatch();
 
@@ -88,6 +90,16 @@ const nextPage = (event) => {
   };
 
 
+  const handleEmojiClick = (emoji) => {
+    const emojiUnicode = emoji.emoji;
+    const startPos = textareaRef.current.selectionStart;
+    const endPos = textareaRef.current.selectionEnd;
+    const text = edit.profile_name;
+    const updatedText = text.substring(0, startPos) + emojiUnicode + text.substring(endPos);
+    setEdit((prevEdit) => ({ ...prevEdit, profile_name: updatedText }));
+  };
+
+
 const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData();
@@ -145,6 +157,14 @@ console.log(edit.notifications)
             
             </label>
 
+            <div className='media_button'>
+             <BsEmojiSmile size={15} className='emoji_btn' color="blue" onClick={() => setShowEmojiPicker(!showEmojiPicker)} />
+                <span className='hidden-text'>Emoji</span>
+             </div>
+             {showEmojiPicker && (
+             <EmojiPicker onEmojiClick={(emoji) => handleEmojiClick(emoji)}/>
+            )}
+            
             <label className={`label-signup ${users?.dark_mode ? 'white_text' : 'dark_text'}`} htmlFor="bio">
                     Bio:
                     <textarea
@@ -154,6 +174,11 @@ console.log(edit.notifications)
                         value={edit.bio}
                         placeholder="About You?!"
                         onChange={handleTextChange}
+                        ref={textareaRef}
+                        onInput={(e) => {
+                            e.target.style.height = 'auto';
+                            e.target.style.height = e.target.scrollHeight + 'px';
+                          }}
                     />
                     <p className={`${edit?.bio.length >= 250 ? 'text-red-700' : null}`}>
                         {edit?.bio.length}/250 characters

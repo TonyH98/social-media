@@ -125,10 +125,8 @@ function Profile({user , plan}){
      
         </div>
 
-        
-
-
-        <ProfileEdit open2={modal2} fetchUsers={fetchUsers} onClose={() => setModal2(false)} users={users}/>
+      
+        <ProfileEdit open2={modal2} fetchUsers={fetchUsers} onClose={() => {setModal2(false); setShowEmojiPicker(false)}} showEmojiPicker={showEmojiPicker} setShowEmojiPicker={setShowEmojiPicker} users={users}/>
 
         <PostForm open={modal} onClose={() => {setModal(false); setShowEmojiPicker(false); setShowGifPicker(false)}} setShowGifPicker={setShowGifPicker} showGifPicker={showGifPicker} showEmojiPicker={showEmojiPicker} setShowEmojiPicker={setShowEmojiPicker} users={users} plan={plan}/>
 

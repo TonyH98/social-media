@@ -289,6 +289,10 @@ className="post_user_profile"
     value={replies.content}
     onChange={handleTextChange}
     ref={textareaRef} 
+    onInput={(e) => {
+      e.target.style.height = 'auto';
+      e.target.style.height = e.target.scrollHeight + 'px';
+    }}
   />
 <div className="gif_form">
  {replies.gif ?  <img src={replies.gif} alt="posts.gif" className="gif_preview"/> : null }

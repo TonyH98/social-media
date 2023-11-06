@@ -9,6 +9,7 @@ import { useEffect , useState } from "react";
 import { useDispatch} from "react-redux";
 import { addFav , deleteFav} from "../../Store/userActions";
 import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
+import {PiArrowsClockwise} from "react-icons/pi"
 import axios from "axios";
 
 const API = process.env.REACT_APP_API_URL;
@@ -126,6 +127,13 @@ function handleDislike(e){
     })
 }
 
+function createRepost (e){
+    e.preventDefault()
+    axios.post(`${API}/users/${mainUser.username}/posts/${mainUser.username}/repost/${posts.id}`, {user_id: posts.user_id})
+    .then(() => {
+        axios.put(`${API}/users/${posts.creator.username}/posts/${posts.id}`, {repost_counter: posts.repost_counter += 1})
+    })
+}
 
 const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.posts_id) : [];
 
@@ -133,7 +141,7 @@ const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.posts_id) :
 
     return(
         <div className="posts_content">
-
+             {posts.repost ? <span className="repost_style"><PiArrowsClockwise size={15} color="gray"/> {posts.user_name} reposted</span> : null}
             <div className="posts_extra_container">
 
             <div className="post_user_profile_container">
@@ -184,7 +192,12 @@ const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.posts_id) :
   </button>
 </div>
 
-
+<div className="repost-button">
+<button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} 
+onClick={createRepost}><PiArrowsClockwise size={20}/> {posts.repost_counter}
+ <span className="hidden-text">Repost</span>
+ </button>
+</div>
 
              <div className="favorite_posts_container">
                 {mainUser && inFav.includes(posts?.id) ? 

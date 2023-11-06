@@ -2,7 +2,7 @@ import {AiFillHeart} from "react-icons/ai"
 import {AiOutlineHeart} from "react-icons/ai"
 import { useEffect , useState } from "react";
 import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
-
+import {PiArrowsClockwise} from "react-icons/pi"
 import axios from "axios";
 
 const API = process.env.REACT_APP_API_URL;
@@ -108,6 +108,15 @@ function Notification({users , notes, mainUser}){
         })
     }
 
+
+    function createRepost (e){
+        e.preventDefault()
+        axios.post(`${API}/users/${mainUser.username}/posts/${mainUser.username}/repost/${notes.posts_id}`, {user_id: notes.sender_id})
+        .then(() => {
+            axios.put(`${API}/users/${notes.post_content.username}/posts/${notes.posts_id}`, {repost_counter:notes.post_content.repost_counter += 1})
+        })
+    }
+
     const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.posts_id) : [];
     return(
         <div className="posts_content">
@@ -169,7 +178,14 @@ function Notification({users , notes, mainUser}){
 
    </div> 
 
-   
+        
+   <div className="repost-button">
+<button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} 
+onClick={createRepost}><PiArrowsClockwise size={20}/> {notes.post_content.repost_counter}
+ <span className="hidden-text">Repost</span>
+ </button>
+</div>
+
    <div className="like-container">
    <button className={`${reaction?.dislikeId?.includes(mainUser?.id) ? 'green_option_btn' : `${mainUser.dark_mode ? "light_outline" : "dark_outline"}`} no_br react_btn`} onClick={handleLike}><AiOutlineLike size={20} /> {reaction.likes}
    <span className="hidden-text">Like</span>

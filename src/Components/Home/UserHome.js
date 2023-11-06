@@ -9,6 +9,7 @@ import EmojiPicker from "emoji-picker-react";
 import {BsEmojiSmile} from "react-icons/bs"
 import {MdOutlineGifBox} from "react-icons/md"
 import ReactGiphySearchbox from 'react-giphy-searchbox'
+
 const API = process.env.REACT_APP_API_URL;
 const GIF = process.env.REACT_APP_API_GIF;
 function UserHome({mainUser, plan, following}){
@@ -235,9 +236,10 @@ function UserHome({mainUser, plan, following}){
       if (inFol.length > 0 && API) {
           fetchPosts();
       }
-  }, [ API, inFol]);
+  }, []);
   
       
+
 
     const oneWeekAgo = new Date()
     oneWeekAgo.setDate(oneWeekAgo.getDate() -7)
@@ -249,7 +251,8 @@ function UserHome({mainUser, plan, following}){
       return postTime > oneWeekAgo
     })
 
-  
+
+
 
     return(
         <div className="users_home_page">

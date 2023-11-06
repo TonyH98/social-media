@@ -163,7 +163,7 @@ const [showGifPicker, setShowGifPicker] = useState(false)
 
             <img src={notes.creator.posts_img} alt={notes.creator.posts_img} className="posts_img"/>
         )}
-
+ {notes.gif ? <img src={notes.gif} alt={notes.gif} className="gif_img"/> : null}
         </div> 
     
      </div>

@@ -353,9 +353,9 @@ function Signup(){
             <div className='sign-up-form-btn-container'>
             
             {user.firstname.length === 0 || user.lastname.length === 0 || user.username.length === 0
-    && user.email.length === 0 || user.DOB.length === 0 || user.password.length === 0 ?
-      <button className="login_submit gray_button" disabled>Post</button> :
-      <button className="login_submit" type='submit'>Post</button>
+    && user.email.length === 0 || user.DOB.length === 0 || user.password.length === 0 || !condition ?
+      <button className="login_submit gray_button" disabled>Submit</button> :
+      <button className="login_submit" type='submit'>Submit</button>
   }
       
           <Link to="/">

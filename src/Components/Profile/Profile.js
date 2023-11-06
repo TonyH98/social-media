@@ -110,9 +110,9 @@ function Profile({user , plan}){
     return(
         <div className="profile">
 
-       
 
         <div className="profile_banner_container">
+      
 
         <img src={users?.banner_img} 
         alt={users?.banner_img} 

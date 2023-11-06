@@ -59,7 +59,7 @@ function AllSearch({tag, mainUser}){
 
             <img src={tag.posts_details?.image} alt={tag.posts_details?.image} className="posts_img"/>
         )}
-
+ {tag.gif ? <img src={tag.gif} alt={tag.gif} className="gif_img"/> : null}
         </div> 
     
      </div>

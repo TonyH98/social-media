@@ -136,17 +136,18 @@ console.log(edit.notifications)
         <div className="overlay">
            <div className={`modal-container ${users?.dark_mode ? 'modal_backgrond_dark' : 'modal_backgrond_white'}`}>
             <div className="modalLeft">
-                <p className="closeBtn" onClick={onClose}>X</p>
+            <p className="closeBtn" onClick={() => { onClose(); setCurrentPage(1); }}>X</p>
+
             </div>
            <div className="content">
-            <h2 className={`posts_header ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>Edit Profile</h2>
             
             <form onSubmit={handleSubmit}className="signup-form">
 
             <div className='input-container'>
             {currentPage === 1 && (
-                <div>
+                <div className="profile_page_one_form">
             <label htmlFor="profile_name" className={`label-signup ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>Profile Name:
+            <div className="profile_edit_input_container">
             <input
                 id="profile_name"
                 className={`input_profile_name ${users.dark_mode ? "input_dark" : "input_white"}`}
@@ -154,13 +155,15 @@ console.log(edit.notifications)
                 value={edit.profile_name}
                 onChange={handleTextChange}
             />
+            <div className='media_button'>
+             <BsEmojiSmile size={20} className='emoji_btn' color="blue" onClick={() => setShowEmojiPicker(!showEmojiPicker)} />
+                <span className='hidden-text'>Emoji</span>
+             </div>
+
+            </div>
             
             </label>
 
-            <div className='media_button'>
-             <BsEmojiSmile size={15} className='emoji_btn' color="blue" onClick={() => setShowEmojiPicker(!showEmojiPicker)} />
-                <span className='hidden-text'>Emoji</span>
-             </div>
              {showEmojiPicker && (
              <EmojiPicker onEmojiClick={(emoji) => handleEmojiClick(emoji)}/>
             )}
@@ -192,7 +195,7 @@ console.log(edit.notifications)
 
 
                 {currentPage === 2 && (
-                    <div>
+                    <div className="profile_page_two_form">
                     <label
             htmlFor="profile_img"
             className={`label-signup ${
@@ -283,7 +286,7 @@ console.log(edit.notifications)
                 Previous
               </button>
 
-              <button type='submit'>Edit</button>
+              <button className="edit_submit" type='submit'>Edit</button>
                </div>
                     </div>
                 )}

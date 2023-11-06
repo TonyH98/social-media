@@ -220,7 +220,7 @@ function ReplyForm({open , onClose, users, posts, plan, mainUser, showEmojiPicke
   };
 
 
-  
+  console.log(posts)
 if(!open) return null
 
     return(
@@ -258,11 +258,11 @@ className="post_user_profile"
    {highlightMentions(posts.content)}
 </div>
 <div className="posts_img_container">
-{!posts.posts_img ? null : (
+{!posts.posts_img || posts.posts_img === "null" ? null  : (
 
     <img src={posts.posts_img} alt={posts.posts_img} className="posts_img"/>
 )}
-
+ {posts.gif ? <img src={posts.gif} alt={posts.gif} className="gif_img"/> : null}
 </div>
 
 

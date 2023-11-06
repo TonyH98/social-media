@@ -162,7 +162,7 @@ return(
 
         <img src={fav.posts_img} alt={fav.posts_img} className="posts_img"/>
     )}
-
+ {fav.gif ? <img src={fav.gif} alt={fav.gif} className="gif_img"/> : null}
     </div>
 
 

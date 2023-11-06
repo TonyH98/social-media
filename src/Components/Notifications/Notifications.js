@@ -8,7 +8,7 @@ import RepliesNote from "./RepliesNote";
 import "./Notifications.css"
 
 
-function Notifications({mainUser}){
+function Notifications({mainUser, plan}){
 
 const [searchFilter, setSearchFilter] = useState('');
 const [filterNote, setFilterNote] = useState([]);
@@ -77,7 +77,7 @@ const applyFilters = () => {
           {filterNote.map((notes) => {
             return (
               <div  className="posts-border-container">
-                <Notification users={users} notes={notes} mainUser={mainUser}/>
+                <Notification users={users} notes={notes} mainUser={mainUser} plan={plan}/>
               </div>
             );
           })}

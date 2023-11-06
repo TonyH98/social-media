@@ -3,11 +3,13 @@ import {AiOutlineHeart} from "react-icons/ai"
 import { useEffect , useState } from "react";
 import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
 import {PiArrowsClockwise} from "react-icons/pi"
+import {SlBubble} from "react-icons/sl"
+import ReplyForm from "../ReplyForm/ReplyForm";
 import axios from "axios";
 
 const API = process.env.REACT_APP_API_URL;
 
-function Notification({users , notes, mainUser}){
+function Notification({users , notes, mainUser, plan}){
 
     let [favorites , setFavorites] = useState([])
 
@@ -23,14 +25,18 @@ function Notification({users , notes, mainUser}){
         reaction: "dislike"
     })
     
+    let [show , setShow] = useState(false)
+
     const [reaction , setReaction] = useState({})
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false)
+const [showGifPicker, setShowGifPicker] = useState(false)
 
     useEffect(() => {
-        axios.get(`${API}/users/${notes.post_content.username}/posts/${notes.posts_id}/reactions`)
+        axios.get(`${API}/users/${notes.creator.username}/posts/${notes.id}/reactions`)
         .then((res) => {
           setReaction(res.data);
         });
-      }, [notes.posts_id]);
+      }, [notes.id]);
 
       useEffect(() => {
         axios.get(`${API}/favorites/${mainUser.id}`)
@@ -64,9 +70,9 @@ function Notification({users , notes, mainUser}){
 
     function handleLike(e){
         e.preventDefault()
-        axios.post(`${API}/users/${notes.post_content.username}/posts/${mainUser.id}/react/${notes.posts_id}`, likes)
+        axios.post(`${API}/users/${notes.creator.username}/posts/${mainUser.id}/react/${notes.id}`, likes)
         .then(() => {
-            axios.get(`${API}/users/${notes.post_content.username}/posts/${notes.posts_id}/reactions`)
+            axios.get(`${API}/users/${notes.creator.username}/posts/${notes.id}/reactions`)
             .then((res) => {
               setReaction(res.data);
             });
@@ -75,9 +81,9 @@ function Notification({users , notes, mainUser}){
     
     function handleDislike(e){
         e.preventDefault()
-        axios.post(`${API}/users/${notes.post_content.username}/posts/${mainUser.id}/react/${notes.posts_id}`, dislike)
+        axios.post(`${API}/users/${notes.creator.username}/posts/${mainUser.id}/react/${notes.id}`, dislike)
         .then(() => {
-            axios.get(`${API}/users/${notes.post_content.username}/posts/${notes.posts_id}/reactions`)
+            axios.get(`${API}/users/${notes.creator.username}/posts/${notes.id}/reactions`)
             .then((res) => {
               setReaction(res.data);
             
@@ -88,7 +94,7 @@ function Notification({users , notes, mainUser}){
     function handleAddFav(e){
         e.preventDefault()
         axios
-        .post(`${API}/favorites/${mainUser?.id}/fav/${notes.posts_id}`, fav)
+        .post(`${API}/favorites/${mainUser?.id}/fav/${notes.id}`, fav)
         .then(() => {
             axios.get(`${API}/favorites/${mainUser.id}`)
             .then((res) => {
@@ -99,7 +105,7 @@ function Notification({users , notes, mainUser}){
     
     function handleDeleteFav(e){
         e.preventDefault()
-        axios.delete(`${API}/favorites/${mainUser.id}/delete/${notes.posts_id}`)
+        axios.delete(`${API}/favorites/${mainUser.id}/delete/${notes.id}`)
         .then(() => {
             axios.get(`${API}/favorites/${mainUser.id}`)
             .then((res) => {
@@ -111,9 +117,9 @@ function Notification({users , notes, mainUser}){
 
     function createRepost (e){
         e.preventDefault()
-        axios.post(`${API}/users/${mainUser.username}/posts/${mainUser.username}/repost/${notes.posts_id}`, {user_id: notes.sender_id})
+        axios.post(`${API}/users/${mainUser.username}/posts/${mainUser.username}/repost/${notes?.id}`, {user_id: notes?.users_id})
         .then(() => {
-            axios.put(`${API}/users/${notes.post_content.username}/posts/${notes.posts_id}`, {repost_counter:notes.post_content.repost_counter += 1})
+            axios.put(`${API}/users/${notes.creator.username}/posts/${notes?.id}`, {repost_counter: notes.creator.repost_counter += 1})
         })
     }
 
@@ -125,8 +131,8 @@ function Notification({users , notes, mainUser}){
 
         <div className="post_user_profile_container">
         <img
-        src={notes.post_content.profile_img}
-        alt={notes.post_content.profile_img}
+        src={notes.creator.profile_img}
+        alt={notes.creator.profile_img}
         className="post_user_profile"
         />
         </div>
@@ -135,7 +141,7 @@ function Notification({users , notes, mainUser}){
 
     <div  className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_user_profile`}>
 
-    {notes.post_content.profile_name} | @{notes.post_content.username} | {formatDate(notes.post_content.date_created)}
+    {notes.creator.profile_name} | @{notes.creator.username} | {formatDate(notes.time)}
 
     </div>
 
@@ -144,12 +150,12 @@ function Notification({users , notes, mainUser}){
 
         <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_text`}>
 
-           {highlightMentions(notes.post_content.content)}
+           {highlightMentions(notes.content)}
         </div>
          <div className="posts_img_container">
-        {notes.post_content.post_img === "null" ? null : (
+        {notes.creator.posts_img === "null" ? null : (
 
-            <img src={notes.post_content.post_img} alt={notes.post_content.post_img} className="posts_img"/>
+            <img src={notes.creator.posts_img} alt={notes.creator.posts_img} className="posts_img"/>
         )}
 
         </div> 
@@ -163,11 +169,16 @@ function Notification({users , notes, mainUser}){
         <div className="posts-options-container">
 
 
-
+        <div className="posts-reply-button">
+  <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br reply_btn`}  onClick={(e) => { e.preventDefault(); setShow(true); }}>
+    <SlBubble size={20} /> 
+    <span className="hidden-text">Reply</span>
+  </button>
+</div>
 
 
     <div className="favorite_posts_container">
-       {mainUser && inFav.includes(notes?.posts_id) ? 
+       {mainUser && inFav.includes(notes?.id) ? 
        <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} onClick={handleDeleteFav}><AiFillHeart size={20} color="red"/>
        <span className="hidden-text">Disike</span>
        </button>
@@ -181,7 +192,7 @@ function Notification({users , notes, mainUser}){
         
    <div className="repost-button">
 <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} 
-onClick={createRepost}><PiArrowsClockwise size={20}/> {notes.post_content.repost_counter}
+onClick={createRepost}><PiArrowsClockwise size={20}/> {notes.creator.repost_counter}
  <span className="hidden-text">Repost</span>
  </button>
 </div>
@@ -201,7 +212,7 @@ onClick={createRepost}><PiArrowsClockwise size={20}/> {notes.post_content.repost
    </button>
    </div> 
 
-  
+   <ReplyForm open={show} onClose={() => {setShow(false); setShowEmojiPicker(false);  setShowGifPicker(false)}} users={users} showGifPicker={showGifPicker} setShowGifPicker={setShowGifPicker} setShowEmojiPicker={setShowEmojiPicker} showEmojiPicker={showEmojiPicker}  posts={notes} plan={plan} mainUser={mainUser}/>
 </div>
      </div>
 

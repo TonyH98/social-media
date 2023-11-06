@@ -102,7 +102,7 @@ function App() {
           <Route path={`/profiles/:id`} element={<OtherProfile user={user} plan={plan} mainUser={mainUser}/>}/>
           <Route path={`/:id/following`} element={<Followings user={user} mainUser={mainUser}/>}/>
           <Route path={`/:id/follower`} element={<Followers user={user} mainUser={mainUser}/>}/>
-          <Route path={`/notifications/:id`} element={<Notifications mainUser={mainUser}/>}/>
+          <Route path={`/notifications/:id`} element={<Notifications mainUser={mainUser} plan={plan}/>}/>
           <Route path="/verify" element={<Verification />} />
         </Routes>
       </main>

@@ -258,7 +258,7 @@ className="post_user_profile"
    {highlightMentions(posts.content)}
 </div>
 <div className="posts_img_container">
-{posts.posts_img === "null" ? null : (
+{!posts.posts_img ? null : (
 
     <img src={posts.posts_img} alt={posts.posts_img} className="posts_img"/>
 )}

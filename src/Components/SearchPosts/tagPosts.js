@@ -170,6 +170,8 @@ const [showGifPicker, setShowGifPicker] = useState(false)
         </div>
         <div className="posts-options-container">
 
+
+
 <div className="posts-reply-button">
 <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br reply_btn`} onClick={() => setShow(!show)}>
 <SlBubble size={20} />

@@ -40,65 +40,60 @@ function Profile({user , plan}){
     }, [dispatch])
     
 
-
+    console.log(favorites)
 
     useEffect(() => {
-        if(users && users?.id){
-            dispatch(fetchPosts(users?.username))
-            dispatch(getFavorites(users?.id))
-            dispatch(getAllUsersReplies(users?.username , users?.id))
-        }
-
-    }, [dispatch , users])
+      if (users?.username && users?.id) {
+          dispatch(fetchPosts(users.username));
+          dispatch(getFavorites(users.id));
+          dispatch(getAllUsersReplies(users.username, users.id));
+      }
+  }, [dispatch, users?.username, users?.id]);
+  
     
-
-    console.log(replies)
 
     let options = ["Posts", "Replies", "Favorites"]
 
     function optionContent(selected) {
-        if (selected === 0) {
-          return (
-            <div className="option-content-holder">
-              {getPosts.map((posts) => {
-                return (
-                  <div key={posts.id} className="posts-border-container">
-                    <Posts posts={posts} users={user} mainUser={users} favorites={favorites} plan={plan} />
-                  </div>
-                );
-              })}
-            </div>
-          );
-        }
-        if (selected === 1) {
-          return (
-            <div className="option-content-holder">
-              {replies.map((reply) => {
-                return (
-                  <div key={reply.id} className="posts-border-container">
-                    <AllReplies posts={reply} users={user} mainUser={users} favorites={favorites} plan={plan}/>
-                  </div>
-                );
-              })}
-            </div>
-          );
-        }
-        if (selected === 2) {
-          return ( 
-            <div className="option-content-holder">
-              {favorites.map((fav) => {
-                return (
-                  <div key={fav.id} className="posts-border-container">
-                    <Favorites fav={fav} users={users}  mainUser={users}/>
-                  </div>
-                );
-              })}
-            </div>
-          );
-        }
- 
+      if (selected === 0) {
+        return (
+          <div className="option-content-holder">
+            {getPosts.map((posts) => (
+              <div key={posts.id} className="posts-border-container">
+                <Posts posts={posts} users={user} mainUser={users} favorites={favorites} plan={plan} />
+              </div>
+            ))}
+          </div>
+        );
       }
+      if (selected === 1) {
+        return (
+          <div className="option-content-holder">
+            {replies.map((reply) => (
+              <div key={reply.id} className="posts-border-container">
+                <AllReplies posts={reply} users={user} mainUser={users} favorites={favorites} plan={plan} />
+              </div>
+            ))}
+          </div>
+        );
+      }
+      if (selected === 2) {
+        return (
+          <div className="option-content-holder">
+            {favorites.map((fav) => (
+              <div key={fav.id} className="posts-border-container">
+                <Favorites fav={fav} users={users} mainUser={users} />
+              </div>
+            ))}
+          </div>
+        );
+      }
+      return null; // Add a default return value if none of the conditions are met
+    }
+    
       
+
+
 
 
     const parseBio = (bio) => {

@@ -3,6 +3,8 @@ import { useState, useEffect} from "react";
 import { useDispatch , useSelector } from "react-redux";
 import AllReplies from "../ALLReplies/AllReplies";
 import { addFollowing, getFollowing, deleteFol , getFollower, getFavorites } from "../../Store/userActions";
+import {CgUnblock} from "react-icons/cg"
+import {BiBlock} from "react-icons/bi"
 import Favorites from "../Favorites/Favorites"
 import Posts from "../Posts/Posts";
 import axios from "axios";
@@ -27,6 +29,14 @@ function OtherProfile({user , plan, mainUser}){
     let [following , setFollowing] = useState([])
     let [follower , setFollower] = useState([])
     let [favorites , setFavorites] = useState([])
+    let [block , setBlock] = useState([])
+
+useEffect(() => {
+  axios.get(`${API}/block/${user?.id}`)
+  .then((res) => {
+    setBlock(res.data)
+  })
+}, [user?.id])
 
 useEffect(() => {
   axios.get(`${API}/users/${id}`)
@@ -126,7 +136,20 @@ useEffect(() => {
     }
 
 
+function addBlock(e){
+  e.preventDefault()
+  axios.post(`${API}/block/${user?.id}/block/${users?.id}`)
+  .then(() => {
+    dispatch(deleteFol(user?.id, users?.id))
+    dispatch(deleteFol(users.id, user?.id))
+  })
+}
 
+function removeBlock(e){
+  e.preventDefault()
+  axios.delete(`${API}/block/${user?.id}/deleteBlock/${users?.id}`)
+  
+}
 
     function handleFollow(e){
         e.preventDefault()
@@ -138,7 +161,10 @@ useEffect(() => {
         e.preventDefault()
         dispatch(deleteFol(user?.id, users?.id))
     }
+
      const inFav = Array.isArray(usersFollowing) ? usersFollowing.map(fol => fol?.following_id) : [];
+
+     const inBlock = Array.isArray(block) ? block.map(block => block.block_id) : []
 
    const parseBio = (bio) => {
         const urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -211,6 +237,11 @@ return(
           {user && inFav.includes(users?.id) ? 
           <button onClick={handleDeleteFollow} className="follow_btn">Remove</button>
           : <button onClick={handleFollow} className="follow_btn">Follow</button>}
+
+          {user && inBlock.includes(users?.id) ?
+          <button onClick={removeBlock}><CgUnblock size={20}/></button> : 
+          <button onClick={addBlock}> <BiBlock size={20}/></button>
+          }
           </div>
         
 

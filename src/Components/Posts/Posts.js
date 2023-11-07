@@ -43,6 +43,8 @@ useEffect(() => {
 
 const [reaction , setReaction] = useState({})
 
+let [block , setBlock] = useState([])
+
 let dispatch = useDispatch()
 
 useEffect(() => {
@@ -52,7 +54,13 @@ useEffect(() => {
     });
   }, [posts.id, users.username]);
 
-
+  useEffect(() => {
+    axios.get(`${API}/block/${mainUser?.id}`)
+    .then((res) => {
+      setBlock(res.data)
+    })
+  
+  }, [mainUser?.id])
 
 function formatDate(inputDate){
     const months = [
@@ -130,7 +138,7 @@ function createRepost (e){
 
 const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.id) : [];
 
-
+const inBlock = Array.isArray(block) ? block.map(block => block.block_id) : []
 
     return(
         <div className="posts_content">
@@ -154,7 +162,13 @@ const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.id) : [];
 
         </div>
 
+        {inBlock.includes(posts.creator.id) ? 
+        <h2>@{posts.creator.username} Blocked</h2> :
+        <>
             <Link to={`/posts/${posts.creator.username}/${posts?.id}`} className="link-style">
+
+        
+
         <div className="posts_content_text_container">
 
             <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_text`}>
@@ -173,12 +187,18 @@ const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.id) : [];
         
          </div>
         </Link>
+        
+        </>
+        
+    }
          
          </div>
 
             </div>
             
-         
+        {inBlock.includes(posts.creator.id) ?
+        null: 
+        <>
          <div className="posts-options-container">
 
          <div className="posts-reply-button">
@@ -226,6 +246,10 @@ onClick={createRepost}><PiArrowsClockwise size={20}/> {posts.repost_counter}
 
             <ReplyForm open={show} onClose={() => {setShow(false); setShowEmojiPicker(false);  setShowGifPicker(false)}} showGifPicker={showGifPicker} setShowGifPicker={setShowGifPicker} setShowEmojiPicker={setShowEmojiPicker} showEmojiPicker={showEmojiPicker} users={users} posts={posts} plan={plan} mainUser={mainUser}/>
          </div>
+        
+        </>
+
+        }
          
          </div>
 

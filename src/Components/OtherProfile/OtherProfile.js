@@ -159,6 +159,13 @@ function addBlock(e){
     dispatch(deleteFol(user?.id, users?.id))
     dispatch(deleteFol(users.id, user?.id))
   })
+  .then(() => {
+    axios.get(`${API}/favorites/${id}`)
+    .then((res) => {
+      setFavorites(res.data)
+    })
+
+  })
   })
 }
 

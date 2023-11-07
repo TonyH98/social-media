@@ -45,6 +45,8 @@ const [reaction , setReaction] = useState({})
 
 let [block , setBlock] = useState([])
 
+
+
 let dispatch = useDispatch()
 
 useEffect(() => {
@@ -59,7 +61,8 @@ useEffect(() => {
     .then((res) => {
       setBlock(res.data)
     })
-  
+
+
   }, [mainUser?.id])
 
 function formatDate(inputDate){

@@ -29,13 +29,20 @@ function Replies({reply , user , username, posts, mainUser}){
 
     let [block , setBlock] = useState([])
 
+    let [otherBlock , setOtherBlock] = useState([])
+
     useEffect(() => {
         axios.get(`${API}/block/${mainUser?.id}`)
         .then((res) => {
           setBlock(res.data)
         })
+
+        axios.get(`${API}/block/${reply.creator.id}`)
+        .then((res) => {
+          setOtherBlock(res.data)
+        })
       
-      }, [mainUser?.id])
+      }, [mainUser?.id , reply.creator.id])
 
     let dispatch = useDispatch()
 
@@ -81,6 +88,8 @@ useEffect(() => {
 const inFav = Array.isArray(favoriteR) ? favoriteR.map(fav => fav?.reply_id) : [];
 
 const inBlock = Array.isArray(block) ? block.map(block => block.block_id) : []
+
+const inOtherBlock = Array.isArray(otherBlock) ? otherBlock.map(block => block.block_id) : []
 
 function handleFavorite(e){
     e.preventDefault()
@@ -138,7 +147,7 @@ return(
 </div>
 
 
-{inBlock.includes(reply.creator.id) ? 
+{inBlock.includes(reply.creator.id) || inOtherBlock.includes(mainUser.id)? 
 <h2>@{reply.creator.username} Blocked</h2> :
 <div>
 <div className="posts_content_text_container">
@@ -168,7 +177,7 @@ return(
 </div>
 
 </div>
-{inBlock.includes(reply.creator.id) ? null : 
+{inBlock.includes(reply.creator.id) || inOtherBlock.includes(mainUser.id)? null : 
 <div className="posts-options-container">
 
 

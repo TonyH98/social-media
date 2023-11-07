@@ -8,7 +8,7 @@ import {BiBlock} from "react-icons/bi"
 import Favorites from "../Favorites/Favorites"
 import Posts from "../Posts/Posts";
 import axios from "axios";
-//HTL9878HTaL@1
+import BlockModal from "./BlockModal"
 const API = process.env.REACT_APP_API_URL;
 
 function OtherProfile({user , plan, mainUser}){
@@ -21,7 +21,7 @@ function OtherProfile({user , plan, mainUser}){
     let [users , setUsers] = useState([])
     let [posts , setPosts] = useState([])
     let [userReplies , setUserReplies] = useState([])
-  
+    let [show , setShow] = useState(false)
 
     let dispatch = useDispatch()
 
@@ -147,39 +147,6 @@ useEffect(() => {
     }
 
 
-function addBlock(e){
-  e.preventDefault()
-  axios.post(`${API}/block/${user?.id}/block/${users?.id}`)
-  .then(() => {
-    axios.get(`${API}/block/${user?.id}`)
-  .then((res) => {
-    setBlock(res.data)
-  })
-  .then(() => {
-    dispatch(deleteFol(user?.id, users?.id))
-    dispatch(deleteFol(users.id, user?.id))
-  })
-  .then(() => {
-    axios.get(`${API}/favorites/${id}`)
-    .then((res) => {
-      setFavorites(res.data)
-    })
-
-  })
-  })
-}
-
-function removeBlock(e){
-  e.preventDefault()
-  axios.delete(`${API}/block/${user?.id}/deleteBlock/${users?.id}`)
-  .then(() =>{
-
-    axios.get(`${API}/block/${user?.id}`)
-    .then((res) => {
-      setBlock(res.data)
-    })
-  })
-}
 
     function handleFollow(e){
         e.preventDefault()
@@ -282,8 +249,8 @@ return(
     )
 )}
           {user && inBlock.includes(users?.id) ?
-          <button onClick={removeBlock} className="block_btn"><CgUnblock size={30}/></button> : 
-          <button onClick={addBlock} className="block_btn"> <BiBlock size={30}/></button>
+          <button onClick={() => setShow(!show)} className="block_btn"><CgUnblock size={30}/></button> : 
+          <button onClick={() => setShow(!show)} className="block_btn"> <BiBlock size={30}/></button>
           }
           </div>
         
@@ -315,7 +282,16 @@ return(
         </div>
 
 
-       
+       <BlockModal 
+       open={show} 
+       onClose={() => setShow(false)} 
+       mainUser={mainUser} 
+       users={users} 
+       inBlock={inBlock} 
+       inOtherBlock={inOtherBlock}
+       block={block}
+       setBlock={setBlock}
+       setOtherBlock={setOtherBlock}/> 
 
         </div>
     

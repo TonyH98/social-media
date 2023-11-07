@@ -166,7 +166,7 @@ const inBlock = Array.isArray(block) ? block.map(block => block.block_id) : []
         </div>
 
         {inBlock.includes(posts.creator.id) ? 
-        <h2>@{posts.creator.username} Blocked</h2> :
+        <h2 className={`${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`}>@{posts.creator.username} Blocked</h2> :
         <>
             <Link to={`/posts/${posts.creator.username}/${posts?.id}`} className="link-style">
 

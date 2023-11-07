@@ -23,6 +23,8 @@ function ReplyForm({open , onClose, users, posts, plan, mainUser, showEmojiPicke
   let [tags , setTags] = useState([])
 
   let[filterTags , setFilterTags] = useState([])
+  let [block , setBlock] = useState([])
+  const [usersBlock , setUsersBlock] = useState([])
 
   const textareaRef = useRef(null);
 
@@ -55,7 +57,23 @@ function ReplyForm({open , onClose, users, posts, plan, mainUser, showEmojiPicke
       .then((res) => {
         setTags(res.data)
       })
-    }, [API])
+      axios.get(`${API}/block/${users?.id}`)
+      .then((res) => {
+        setBlock(res.data)
+      })
+
+      axios.get(`${API}/block/${users?.id}/block`)
+      .then((res) => {
+        setUsersBlock(res.data)
+      })
+      
+    }, [API, users?.id])
+  
+
+
+    otherUsers = otherUsers.filter((ou) => {
+      return !block.some((bu) => ou.id === bu.block_id) && !usersBlock.some((ub) => ou.id === ub.user_id);
+    });
 
     function formatDate(inputDate){
         const months = [

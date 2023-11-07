@@ -41,7 +41,9 @@ function UserHome({mainUser, plan, following}){
 
     const textareaRef = useRef(null);
 
-    
+    let [block , setBlock] = useState([])
+
+    const [usersBlock , setUsersBlock] = useState([])
     useEffect(() => {
         if (mainUser?.id) {
             setPosts((prevPost) => ({
@@ -54,18 +56,32 @@ function UserHome({mainUser, plan, following}){
 
     
     
+   
     useEffect(() => {
       axios.get(`${API}/users`)
       .then((res) => {
         setOtherUsers(res.data)
       })
-      
+
       axios.get(`${API}/tags`)
       .then((res) => {
         setTags(res.data)
       })
-    }, [API])
+      axios.get(`${API}/block/${mainUser?.id}`)
+      .then((res) => {
+        setBlock(res.data)
+      })
+
+      axios.get(`${API}/block/${mainUser?.id}/block`)
+      .then((res) => {
+        setUsersBlock(res.data)
+      })
+    }, [API, mainUser?.id])
     
+
+    otherUsers = otherUsers.filter((ou) => {
+      return !block.some((bu) => ou.id === bu.block_id) && !usersBlock.some((ub) => ou.id === ub.user_id);
+    });
     
     useEffect(() => {
       axios.get(`${API}/favorites/${mainUser.id}`)

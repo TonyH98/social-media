@@ -271,7 +271,7 @@ return(
 
         </div>
         {inBlock.includes(users?.id) || inOtherBlock.includes(user?.id) ? 
-        <h1>@{users.username} is blocked</h1> :
+        <h1 className={`${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`}>@{users.username} is blocked</h1> :
         <div>
           {optionContent(option)}
 

@@ -24,6 +24,10 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
 
     let[filterTags , setFilterTags] = useState([])
 
+    let [block , setBlock] = useState([])
+
+    const [usersBlock , setUsersBlock] = useState([])
+
     const textareaRef = useRef(null);
     
 
@@ -56,9 +60,25 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
       .then((res) => {
         setTags(res.data)
       })
-    }, [API])
-  console.log(tags)
+      axios.get(`${API}/block/${users?.id}`)
+      .then((res) => {
+        setBlock(res.data)
+      })
 
+      axios.get(`${API}/block/${users?.id}/block`)
+      .then((res) => {
+        setUsersBlock(res.data)
+      })
+      
+    }, [API, users?.id])
+  
+
+
+    otherUsers = otherUsers.filter((ou) => {
+      return !block.some((bu) => ou.id === bu.block_id) && !usersBlock.some((ub) => ou.id === ub.user_id);
+    });
+
+    
     const handleTextChange = (event) => {
         if(event.target.id === "posts_img"){
             const file = event.target.files[0];

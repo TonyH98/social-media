@@ -26,6 +26,10 @@ function SamePageReplyForm({ users, plan, mainUser, posts}){
 
     const textareaRef = useRef(null);
 
+    let [block , setBlock] = useState([])
+
+    const [usersBlock , setUsersBlock] = useState([])
+
     const [showGifPicker, setShowGifPicker] = useState(false)
   
     let [replies, setReplies] = useState({
@@ -56,8 +60,25 @@ function SamePageReplyForm({ users, plan, mainUser, posts}){
         .then((res) => {
           setTags(res.data)
         })
-      }, [API])
+        axios.get(`${API}/block/${users?.id}`)
+        .then((res) => {
+          setBlock(res.data)
+        })
   
+        axios.get(`${API}/block/${users?.id}/block`)
+        .then((res) => {
+          setUsersBlock(res.data)
+        })
+        
+      }, [API, users?.id])
+    
+  
+  
+      otherUsers = otherUsers.filter((ou) => {
+        return !block.some((bu) => ou.id === bu.block_id) && !usersBlock.some((ub) => ou.id === ub.user_id);
+      });
+  
+
 
       const handleTextChange = (event) => {
         if(event.target.id === "posts_img"){

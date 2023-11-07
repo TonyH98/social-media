@@ -148,7 +148,7 @@ return(
 
 
 {inBlock.includes(reply.creator.id) || inOtherBlock.includes(mainUser.id)? 
-<h2>@{reply.creator.username} Blocked</h2> :
+<h2 className={`${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`} >@{reply.creator.username} Blocked</h2> :
 <div>
 <div className="posts_content_text_container">
 

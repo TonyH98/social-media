@@ -2,6 +2,7 @@ import { useState, useEffect} from "react";
 import { useDispatch } from "react-redux";
 import { deleteFol} from "../../Store/userActions";
 import axios from "axios";
+import "./BlockModal.css"
 const API = process.env.REACT_APP_API_URL;
 
 function BlockModal({mainUser , users, open, setOtherBlock, onClose, inBlock, inOtherBlock, block, setBlock}){
@@ -43,26 +44,26 @@ function BlockModal({mainUser , users, open, setOtherBlock, onClose, inBlock, in
 
 return(
     <div className="overlay">
-    <div className={`logout_modal ${mainUser?.dark_mode ? 'modal_background_dark' : 'modal_background_white'}`}>
+    <div className={`block_modal ${mainUser?.dark_mode ? 'block_background_dark' : 'block_background_white'}`}>
         <div className="logout_content">
             {inBlock.includes(users.id) ? (
                 <>
-                    <div className="warning_message_container">
+                    <div className={`${mainUser?.dark_mode ? 'light_text' : 'dark_text'} warning_message_container`}>
                         <h2>Unblock @{users?.username}</h2>
-                        <p>{`${users?.username} would be able to follow you back and view your posts.`}</p>
+                        <p className="warning_message">{`${users?.username} would be able to follow you back and view your posts.`}</p>
                     </div>
-                    <div className="logout_buttons_container">
+                    <div className="block_buttons_container">
                         <button className="logout_button lg_btn" onClick={removeBlock}>Unblock</button>
                         <button className="logout_cancel_button lg_btn" onClick={onClose}>Cancel</button>
                     </div>
                 </>
             ) : (
                 <>
-                    <div className="warning_message_container">
+                    <div className={`${mainUser?.dark_mode ? 'light_text' : 'dark_text'} warning_message_container`}>
                         <h2>Block @{users?.username}</h2>
-                        <p>{`They will not be able to follow you or view your posts, and you will not see posts or notifications from ${users?.username}.`}</p>
+                        <p className="warning_message">{`They will not be able to follow you or view your posts, and you will not see posts or notifications from ${users?.username}.`}</p>
                     </div>
-                    <div className="logout_buttons_container">
+                    <div className="block_buttons_container">
                         <button className="logout_button lg_btn" onClick={addBlock}>Block</button>
                         <button className="logout_cancel_button lg_btn" onClick={onClose}>Cancel</button>
                     </div>

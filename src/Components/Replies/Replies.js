@@ -27,6 +27,16 @@ function Replies({reply , user , username, posts, mainUser}){
         reaction: "dislike"
     })
 
+    let [block , setBlock] = useState([])
+
+    useEffect(() => {
+        axios.get(`${API}/block/${mainUser?.id}`)
+        .then((res) => {
+          setBlock(res.data)
+        })
+      
+      }, [mainUser?.id])
+
     let dispatch = useDispatch()
 
     const favoriteR = useSelector((state) => state.favR.fav)
@@ -69,6 +79,8 @@ useEffect(() => {
     }
 
 const inFav = Array.isArray(favoriteR) ? favoriteR.map(fav => fav?.reply_id) : [];
+
+const inBlock = Array.isArray(block) ? block.map(block => block.block_id) : []
 
 function handleFavorite(e){
     e.preventDefault()
@@ -126,6 +138,9 @@ return(
 </div>
 
 
+{inBlock.includes(reply.creator.id) ? 
+<h2>@{reply.creator.username} Blocked</h2> :
+<div>
 <div className="posts_content_text_container">
 
 <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_text`}>
@@ -144,11 +159,16 @@ return(
 </div>
 
 
-</div>
 
 </div>
 
-  
+}
+
+
+</div>
+
+</div>
+{inBlock.includes(reply.creator.id) ? null : 
 <div className="posts-options-container">
 
 
@@ -185,6 +205,10 @@ return(
             </button>
             </div> 
 </div>
+
+}
+
+  
 
 
 </div>

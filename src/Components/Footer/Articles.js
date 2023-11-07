@@ -9,7 +9,7 @@ function Articles({article}){
             setTitle(title.slice(0, 20) + "...")
           }
     }, [title, article.title])
-    console.log(title)
+
 return(
     <a href={`${article.url}`} target="_blank">
    <div className="article_real">

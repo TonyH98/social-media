@@ -27,6 +27,17 @@
   border: black solid 2px;
 }
 
+
+.block_btn{
+  background-color: transparent;
+  border: none;
+  color: red;
+}
+
+.block_btn:hover{
+  cursor: pointer;
+}
+
 @media(min-width: 993px){
 
   .profile_banner_img {

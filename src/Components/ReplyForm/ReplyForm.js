@@ -220,7 +220,7 @@ function ReplyForm({open , onClose, users, posts, plan, mainUser, showEmojiPicke
   };
 
 
-  console.log(posts)
+
 if(!open) return null
 
     return(

@@ -8,7 +8,7 @@ import {BiBlock} from "react-icons/bi"
 import Favorites from "../Favorites/Favorites"
 import Posts from "../Posts/Posts";
 import axios from "axios";
-
+//HTL9878HTaL@1
 const API = process.env.REACT_APP_API_URL;
 
 function OtherProfile({user , plan, mainUser}){
@@ -21,6 +21,7 @@ function OtherProfile({user , plan, mainUser}){
     let [users , setUsers] = useState([])
     let [posts , setPosts] = useState([])
     let [userReplies , setUserReplies] = useState([])
+  
 
     let dispatch = useDispatch()
 
@@ -30,13 +31,23 @@ function OtherProfile({user , plan, mainUser}){
     let [follower , setFollower] = useState([])
     let [favorites , setFavorites] = useState([])
     let [block , setBlock] = useState([])
+    let [otherBlock, setOtherBlock] = useState([])
 
 useEffect(() => {
   axios.get(`${API}/block/${user?.id}`)
   .then((res) => {
     setBlock(res.data)
   })
-}, [user?.id])
+
+  axios.get(`${API}/block/${users?.id}`)
+  .then((res) => {
+    setOtherBlock(res.data)
+  })
+}, [user?.id, users?.id])
+
+console.log(otherBlock)
+
+console.log(block)
 
 useEffect(() => {
   axios.get(`${API}/users/${id}`)
@@ -140,15 +151,27 @@ function addBlock(e){
   e.preventDefault()
   axios.post(`${API}/block/${user?.id}/block/${users?.id}`)
   .then(() => {
+    axios.get(`${API}/block/${user?.id}`)
+  .then((res) => {
+    setBlock(res.data)
+  })
+  .then(() => {
     dispatch(deleteFol(user?.id, users?.id))
     dispatch(deleteFol(users.id, user?.id))
+  })
   })
 }
 
 function removeBlock(e){
   e.preventDefault()
   axios.delete(`${API}/block/${user?.id}/deleteBlock/${users?.id}`)
-  
+  .then(() =>{
+
+    axios.get(`${API}/block/${user?.id}`)
+    .then((res) => {
+      setBlock(res.data)
+    })
+  })
 }
 
     function handleFollow(e){
@@ -166,6 +189,8 @@ function removeBlock(e){
 
      const inBlock = Array.isArray(block) ? block.map(block => block.block_id) : []
 
+     const inOtherBlock = Array.isArray(otherBlock) ? otherBlock.map(block => block.block_id) : []
+
    const parseBio = (bio) => {
         const urlRegex = /(https?:\/\/[^\s]+)/g;
         return bio?.replace(urlRegex, (url) => {
@@ -174,7 +199,7 @@ function removeBlock(e){
       };
 
 
-   console.log(user)   
+   
 return(
         <div className="profile">
 
@@ -234,13 +259,24 @@ return(
         </div>
 
         <div className="profile_btns_container">
-          {user && inFav.includes(users?.id) ? 
-          <button onClick={handleDeleteFollow} className="follow_btn">Remove</button>
-          : <button onClick={handleFollow} className="follow_btn">Follow</button>}
-
+        {inOtherBlock.includes(user?.id) || inBlock.includes(users?.id) ? (
+    <button onClick={handleDeleteFollow} className="follow_btn disabled_btn" disabled>
+        Block
+    </button>
+) : (
+    user && inFav.includes(users?.id) ? (
+        <button onClick={handleDeleteFollow} className="follow_btn">
+            Remove
+        </button>
+    ) : (
+        <button onClick={handleFollow} className="follow_btn">
+            Follow
+        </button>
+    )
+)}
           {user && inBlock.includes(users?.id) ?
-          <button onClick={removeBlock}><CgUnblock size={20}/></button> : 
-          <button onClick={addBlock}> <BiBlock size={20}/></button>
+          <button onClick={removeBlock} className="block_btn"><CgUnblock size={30}/></button> : 
+          <button onClick={addBlock} className="block_btn"> <BiBlock size={30}/></button>
           }
           </div>
         
@@ -260,7 +296,13 @@ return(
         })}
 
         </div>
-        {optionContent(option)}
+        {inBlock.includes(users?.id) || inOtherBlock.includes(user?.id) ? 
+        <h1>@{users.username} is blocked</h1> :
+        <div>
+          {optionContent(option)}
+
+        </div>
+        }
 
         </div>
         </div>

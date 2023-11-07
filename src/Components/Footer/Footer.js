@@ -66,7 +66,7 @@ function Footer({user, mainUser}){
             }
           }, []);
           
-          console.log(filter)
+        
 
 
     return(

@@ -64,7 +64,7 @@ button[type='submit']:hover {
 }
 
 
-.gray_button {
+.gray_button{
   background-color: rgba(0, 123, 255, 0.5); /* Use rgba with reduced opacity to gray out the background color */
   color: white; 
   border: none;
@@ -74,7 +74,21 @@ button[type='submit']:hover {
   font-weight: bold;
 }
 
-
+.disabled_btn{
+  background-color: rgba(0, 123, 255, 0.5);
+  width: 130px;
+  border-radius: 25px;
+  border: none;
+ 
+  color: white;
+  height: 45px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: not-allowed;
+  transition: background-color 0.3s ease;
+}
 
 @media(min-width: 993px){
   .overlay {

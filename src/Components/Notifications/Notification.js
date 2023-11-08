@@ -18,11 +18,13 @@ function Notification({users , notes, mainUser, plan}){
     })
 
     let [likes] = useState({
-        reaction: "like"
+        reaction: "like",
+        creator_id: notes.users_id
     })
     
     let [dislike] = useState({
-        reaction: "dislike"
+        reaction: "dislike",
+        creator_id: notes.users_id
     })
     
     let [show , setShow] = useState(false)

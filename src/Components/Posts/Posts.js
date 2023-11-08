@@ -25,11 +25,13 @@ let [fav] = useState({
 })
 
 let [likes] = useState({
-    reaction: "like"
+    reaction: "like",
+    creator_id: posts.creator.id
 })
 
 let [dislike] = useState({
-    reaction: "dislike"
+    reaction: "dislike",
+    creator_id: posts.creator.id
 })
 
 let [replies , setReplies] = useState([])

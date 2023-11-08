@@ -20,11 +20,13 @@ function Replies({reply , user , username, posts, mainUser}){
     })
 
     let [likes] = useState({
-        reaction: "like"
+        reaction: "like",
+        creator_id: reply.creator.id
     })
     
     let [dislike] = useState({
-        reaction: "dislike"
+        reaction: "dislike",
+        creator_id: reply.creator.id
     })
 
     let [block , setBlock] = useState([])

@@ -18,11 +18,13 @@ function Favorites({fav , mainUser, users, plan}){
     const [showEmojiPicker, setShowEmojiPicker] = useState(false)
     const [showGifPicker, setShowGifPicker] = useState(false)
     let [likes] = useState({
-        reaction: "like"
+        reaction: "like",
+        creator_id: fav.creator.id
     })
     
     let [dislike] = useState({
-        reaction: "dislike"
+        reaction: "dislike",
+        creator_id: fav.creator.id
     })
 
     let [favs] = useState({

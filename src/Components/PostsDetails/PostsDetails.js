@@ -27,11 +27,14 @@ let [show , setShow] = useState(false)
 
 
 let [likes] = useState({
-    reaction: "like"
+    reaction: "like",
+    creator_id: id
 })
 
+
 let [dislike] = useState({
-    reaction: "dislike"
+    reaction: "dislike",
+    creator_id: id
 })
 
 let [favorite , setFavorite] = useState({})

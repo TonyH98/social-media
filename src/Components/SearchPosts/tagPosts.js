@@ -26,11 +26,13 @@ const [showGifPicker, setShowGifPicker] = useState(false)
 
 
     let [likes] = useState({
-        reaction: "like"
+        reaction: "like",
+        creator_id: tag.creator.id
     })
     
     let [dislike] = useState({
-        reaction: "dislike"
+        reaction: "dislike",
+        creator_id: tag.creator.id
     })
 
     let [favorites, setFavorites] = useState([])

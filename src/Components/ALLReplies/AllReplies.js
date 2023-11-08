@@ -15,16 +15,19 @@ function AllReplies({posts , mainUser, plan, }){
 console.log(posts)
 
     let [favorites , setFavorites] = useState([])
+
     let [fav] = useState({
         creator_id: posts.creator.id
     })
     
     let [likes] = useState({
-        reaction: "like"
+        reaction: "like",
+        creator_id: posts.creator.id
     })
     
     let [dislike] = useState({
-        reaction: "dislike"
+        reaction: "dislike",
+        creator_id: posts.creator.id
     })
   
     const [reaction , setReaction] = useState({})

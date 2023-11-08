@@ -18,11 +18,13 @@ function RepliesNote({notes , users, mainUser}){
     })
     
     let [likes] = useState({
-        reaction: "like"
+        reaction: "like",
+        creator_id: notes.sender_id
     })
     
     let [dislike] = useState({
-        reaction: "dislike"
+        reaction: "dislike",
+        creator_id: notes.sender_id
     })
   
     const [reaction , setReaction] = useState({})

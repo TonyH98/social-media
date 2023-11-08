@@ -1,6 +1,6 @@
 import {AiFillHeart} from "react-icons/ai"
 import {AiOutlineHeart} from "react-icons/ai"
-import { useEffect , useState } from "react";
+import { useEffect , useState, useRef } from "react";
 import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
 
 import axios from "axios";
@@ -12,6 +12,8 @@ function RepliesNote({notes , users, mainUser}){
     let [favorites , setFavorites] = useState([])
 
     
+    let [isVisible , setIsVisible] = useState(false)
+    const notificationRef = useRef(null)
 
     let [fav] = useState({
         creator_id: notes.sender_id
@@ -29,6 +31,7 @@ function RepliesNote({notes , users, mainUser}){
   
     const [reaction , setReaction] = useState({})
 
+    
     useEffect(() => {
         axios.get(`${API}/users/${notes.post_content.username}/posts/${notes.post_content.posts_id}/reply/${notes.reply_id}/reactionsR`)
         .then((res) => {
@@ -110,10 +113,50 @@ function RepliesNote({notes , users, mainUser}){
         })
     }
 
+    function marketRead (){
+        axios.put(`${API}/notifications/${notes?.id}`, {is_read: !notes.is_read})
+        .then((res) => {
+            console.log("response from the api,", res.data)
+        })
+        .catch((err) => {
+            console.log('error', err)
+        })
+    }
+
+    useEffect(() => {
+        const options = {
+            root: null,
+            rootMargin: "0px",
+            threshold: 0.5
+        }
+
+        const observer = new IntersectionObserver(([entry]) => {
+            setIsVisible(entry.isIntersecting);
+          }, options);
+
+
+         if(notificationRef.current){
+            observer.observe(notificationRef.current)
+         }
+         
+         return () => {
+            if(notificationRef.current){
+                observer.unobserve(notificationRef.current)
+            }
+         }
+    })
+
+    useEffect(() => {
+        if (isVisible) {
+          marketRead();
+        }
+      }, [isVisible]);
+
+      console.log(notes)
     const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.reply_id) : [];
     return(
 
-        <div className="posts_content">
+        <div className="posts_content" ref={notificationRef}>
 
         <div className="posts_extra_container">
 

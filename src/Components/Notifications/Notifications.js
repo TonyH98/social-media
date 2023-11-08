@@ -4,35 +4,56 @@ import { useDispatch , useSelector } from "react-redux";
 import { useState, useEffect} from "react";
 import Notification from "./Notification";
 import RepliesNote from "./RepliesNote";
-
+import AllNote from "./AllNote";
 import "./Notifications.css"
+import axios from "axios";
 
-
+const API = process.env.REACT_APP_API_URL;
 function Notifications({mainUser, plan}){
 
 const [searchFilter, setSearchFilter] = useState('');
 const [filterNote, setFilterNote] = useState([]);
 const [filterNote2 , setFilterNote2] = useState([])
+const [filterNote3 , setFilterNote3] = useState([])
 
+const [allNote , setAllNote] = useState([])
 let [option , setOption] = useState(0)
-let options = ["Posts", "Replies"]
+let options = ["Posts", "Replies", "All"]
 
 const {id} = useParams()
 
 const dispatch = useDispatch();
 
-const note = useSelector((state) => state.note.note)
-const noteR = useSelector((state) => state.note2.note2)
+const [note , setNote] = useState([])
+const [noteR, setNoteR] = useState([])
 const users = useSelector((state) => state.user.users);
 
 useEffect(() => {
   if(id){
     dispatch(fetchUsers(id))
-    dispatch(getNotifications(id))
-    dispatch(getNotificationsReplies(id))
+
   }
   
 }, [dispatch, id])
+
+
+useEffect(() => {
+  axios.get(`${API}/notifications/${id}`)
+  .then((res) => {
+    setAllNote(res.data)
+  })
+  axios.get(`${API}/notifications/${id}/posts`)
+  .then((res) => {
+    setNote(res.data)
+  })
+
+  axios.get(`${API}/notifications/${id}/reply`)
+  .then((res) => {
+    setNoteR(res.data)
+  })
+}, [id])
+
+
 
 const applyFilters = () => {
 
@@ -42,7 +63,7 @@ const applyFilters = () => {
       const filterText = searchFilter.toLowerCase();
       filteredNote = filteredNote.filter(
         (notes) =>
-          notes.post_content.username.toLowerCase().includes(filterText) || notes.post_content.profile_name.toLowerCase().includes(filterText)
+          notes.creator.username.toLowerCase().includes(filterText) || notes.creator.profile_name.toLowerCase().includes(filterText)
          
       );
     }
@@ -60,15 +81,27 @@ const applyFilters = () => {
     }
     setFilterNote2(filteredNote)
   }
+  if(option === 2){
+    let filteredNote = allNote;
+    if (searchFilter) {
+      const filterText = searchFilter.toLowerCase();
+      filteredNote = filteredNote.filter(
+        (notes) =>
+          notes.creator.username.toLowerCase().includes(filterText) || notes.creator.profile_name.toLowerCase().includes(filterText)
+         
+      );
+    }
+    setFilterNote3(filteredNote)
+  }
 
   };
 
-
+console.log(noteR)
 
 
   useEffect(() => {
     applyFilters();
-  }, [searchFilter, option, note, noteR]);
+  }, [searchFilter, note, noteR, allNote, id, options]);
 
   function optionContent(selected) {
     if (selected === 0) {
@@ -96,12 +129,26 @@ const applyFilters = () => {
           })}
         </div>
       );
-    }
 
+    }
+    if (selected === 2) {
+      return (
+        <div>
+          {filterNote3.map((notes) => {
+            return (
+              <div  className="posts-border-container">
+                <AllNote users={users} notes={notes} mainUser={mainUser} plan={plan}/>
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
     
   }
   
 
+let is_read = allNote.filter(note => !note.is_read)
 
     return(
         <div className="note_page">
@@ -110,7 +157,7 @@ const applyFilters = () => {
                     <h1 className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>{users.profile_name}</h1>
                 </div>
                 <div className="notifications_number_container">
-                    <h3 className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>Notifications: {note.length + noteR.length}</h3>
+                    <h3 className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>Notifications: {is_read.length}</h3>
                 </div>
                 <div className="note_input_bar_container">
                     <label htmlFor="note_input"className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} label-note`}>

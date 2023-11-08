@@ -85,7 +85,7 @@ useEffect(() => {
   .then((res) => {
     setFollower(res.data)
   })
-  axios.get(`${API}/favorites/${id}`)
+  axios.get(`${API}/favorites/${id}/all`)
   .then((res) => {
     setFavorites(res.data)
   })

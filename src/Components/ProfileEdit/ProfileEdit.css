@@ -11,6 +11,12 @@
     height: 0;
   }
   
+.check_slider_container{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
   .slider {
     position: absolute;
     cursor: pointer;

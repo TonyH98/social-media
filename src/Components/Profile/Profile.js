@@ -7,10 +7,11 @@ import ProfileEdit from "../ProfileEdit/ProfileEdit";
 import AllReplies from "../ALLReplies/AllReplies";
 import Posts from "../Posts/Posts";
 import { useDispatch , useSelector } from "react-redux";
-import { fetchUsers, fetchPosts, getTags, getFavorites ,  fetchUser, getFollowing, getFollower, getAllUsersReplies} from "../../Store/userActions";
+import { fetchUsers, fetchPosts, getTags, fetchUser, getFollowing, getFollower, getAllUsersReplies} from "../../Store/userActions";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
-
+const API = process.env.REACT_APP_API_URL;
 function Profile({user , plan}){
 
   console.log(user)
@@ -21,10 +22,12 @@ function Profile({user , plan}){
     const [showGifPicker, setShowGifPicker] = useState(false)
     const [modal2 , setModal2] = useState(false)
 
+    const [favorites , setFavorites] = useState([])
+
     const dispatch = useDispatch();
     const users = useSelector((state) => state.user.users);
     const getPosts = useSelector((state) => state.posts_get.posts)
-    const favorites = useSelector((state) => state.favorites.fav)
+
     let following = useSelector((state) => state.follow.fol)
     let follower = useSelector((state) => state.follower.fol)
     let replies = useSelector((state) => state.userReplies.replies)
@@ -45,13 +48,20 @@ function Profile({user , plan}){
     useEffect(() => {
       if (users?.username && users?.id) {
           dispatch(fetchPosts(users.username));
-          dispatch(getFavorites(users.id));
+          
           dispatch(getAllUsersReplies(users.username, users.id));
       }
   }, [dispatch, users?.username, users?.id]);
   
     
-  
+  useEffect(() => {
+
+    axios.get(`${API}/favorites/${user.id}/all`)
+    .then((res) => {
+      setFavorites(res.data)
+    })
+
+  }, [user.id])
 
     let options = ["Posts", "Replies", "Favorites"]
 

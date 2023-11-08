@@ -249,7 +249,7 @@ console.log(edit.notifications)
                 {currentPage === 3 && (
                     <div className="page_three_container">
                     
-                    <div>
+                    <div className="check_slider_container">
                     <label htmlFor="dark_mode" className={`label-signup ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>
                         Background Color
                         <label className="switch">
@@ -262,6 +262,7 @@ console.log(edit.notifications)
                     />
                             <span className="slider round"></span>
                         </label>
+                        <span>{edit.dark_mode ? "Dark Mode" : "Light Mode"}</span>
                         </label>
 
                         <label htmlFor="Notifications" className={`label-signup ${users?.dark_mode ? 'white_text' : 'dark_text'}`}>
@@ -276,6 +277,7 @@ console.log(edit.notifications)
                     />
                             <span className="slider round"></span>
                         </label>
+                        <span>{edit.notifications ? "Receive notifications when users mention you or blocks you" : "Will not receive any notifications when users mention you or blocks you"}</span>
                         </label>
 
                     </div>

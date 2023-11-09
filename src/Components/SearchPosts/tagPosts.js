@@ -13,6 +13,8 @@ function TagPosts({tag, mainUser, plan}){
 
 
 const [reaction , setReaction] = useState({})
+let [block , setBlock] = useState([])
+let [otherBlock , setOtherBlock] = useState([])
 let [show , setShow] = useState(false)
 const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 const [showGifPicker, setShowGifPicker] = useState(false)
@@ -23,6 +25,19 @@ const [showGifPicker, setShowGifPicker] = useState(false)
           setReaction(res.data);
         });
       }, [tag.id]);
+
+
+      useEffect(() => {
+        axios.get(`${API}/block/${mainUser?.id}`)
+        .then((res) => {
+          setBlock(res.data)
+        })
+        axios.get(`${API}/block/${tag.creator.id}`)
+        .then((res) => {
+          setOtherBlock(res.data)
+        })
+      
+      }, [mainUser?.id])
 
 
     let [likes] = useState({
@@ -127,6 +142,9 @@ const [showGifPicker, setShowGifPicker] = useState(false)
         })
     }
 
+ const inBlock = Array.isArray(block) ? block.map(block => block.block_id) : []
+
+    const inOtherBlock = Array.isArray(otherBlock) ? otherBlock.map(block => block.block_id) : []   
     const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.id) : [];
     return(
         <div className="posts_content">
@@ -149,7 +167,9 @@ const [showGifPicker, setShowGifPicker] = useState(false)
 
     </div>
 
-        
+    {inBlock.includes(tag.creator.id) || inOtherBlock.includes(mainUser.id) ? (
+        <h2 className={`${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`} >@{tag.creator.username} Blocked</h2> 
+    ): 
     <div className="posts_content_text_container">
 
         <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_text`}>
@@ -165,11 +185,14 @@ const [showGifPicker, setShowGifPicker] = useState(false)
         </div> 
     
      </div>
+    
+    }
 
 
      </div>
 
         </div>
+        {inBlock.includes(tag.creator.id) || inOtherBlock.includes(mainUser.id) ? null : (
         <div className="posts-options-container">
 
 
@@ -220,8 +243,13 @@ onClick={createRepost}><PiArrowsClockwise size={20}/>
     showGifPicker={showGifPicker} setShowGifPicker={setShowGifPicker} setShowEmojiPicker={setShowEmojiPicker}
    showEmojiPicker={showEmojiPicker} users={mainUser} posts={tag} plan={plan}/>
 </div>
+
+
+        )}
      </div>
     )
 }
 
 export default TagPosts
+
+//HTL9878HTaL@1

@@ -15,6 +15,9 @@ function TagReplies({tag, mainUser, plan}){
 
     let [favorites, setFavorites] = useState([])
 
+    let [block , setBlock] = useState([])
+let [otherBlock , setOtherBlock] = useState([])
+
     let [likes] = useState({
         reaction: "like",
         creator_id: tag.creator.id
@@ -68,6 +71,18 @@ function TagReplies({tag, mainUser, plan}){
       }, [mainUser.id])
 
 
+      useEffect(() => {
+        axios.get(`${API}/block/${mainUser?.id}`)
+        .then((res) => {
+          setBlock(res.data)
+        })
+        axios.get(`${API}/block/${tag.creator.id}`)
+        .then((res) => {
+          setOtherBlock(res.data)
+        })
+      
+      }, [mainUser?.id])
+
       function handleLike(e){
         e.preventDefault()
         axios.post(`${API}/users/${tag.creator.username}/posts/${tag.posts_id}/reply/${mainUser.id}/reactR/${tag.id}`, likes)
@@ -112,6 +127,9 @@ function TagReplies({tag, mainUser, plan}){
         })
     }
 
+    const inBlock = Array.isArray(block) ? block.map(block => block.block_id) : []
+
+    const inOtherBlock = Array.isArray(otherBlock) ? otherBlock.map(block => block.block_id) : []
     const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.reply_id) : [];
 
     return(
@@ -136,6 +154,9 @@ function TagReplies({tag, mainUser, plan}){
     </div>
 
         
+    {inBlock.includes(tag.creator.id) || inOtherBlock.includes(mainUser.id) ? (
+        <h2 className={`${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`} >@{tag.creator.username} Blocked</h2> 
+    ): 
     <div className="posts_content_text_container">
 
         <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_text`}>
@@ -143,57 +164,59 @@ function TagReplies({tag, mainUser, plan}){
            {highlightMentions(tag.content)}
         </div>
          <div className="posts_img_container">
-        {tag.posts_img === "null" ? null : (
+        {!tag.posts_details?.image ? null : (
 
             <img src={tag.posts_img} alt={tag.posts_img} className="posts_img"/>
         )}
-         {tag.gif ? <img src={tag.gif} alt={tag.gif} className="gif_img"/> : null}
 
         </div> 
     
      </div>
+    
+    }
 
      
      </div>
 
         </div>
         
+        {inBlock.includes(tag.creator.id) || inOtherBlock.includes(mainUser.id) ? null : (
         <div className="posts-options-container">
 
 
 
+    <div className="favorite_posts_container">
+       {mainUser && inFav.includes(tag.id) ? 
+       <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} onClick={handleDeleteFav}><AiFillHeart size={20} color="red"/>
+       <span className="hidden-text">Disike</span>
+       </button>
 
+       : <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} onClick={handleAddFav}><AiOutlineHeart size={20}/>
+       <span className="hidden-text">Like</span>
+       </button>}
 
-<div className="favorite_posts_container">
-   {mainUser && inFav.includes(tag?.id) ? 
-   <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} onClick={handleDeleteFav}><AiFillHeart size={20} color="red"/>
-   <span className="hidden-text">Disike</span>
-   </button>
+   </div> 
 
-   : <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} onClick={handleAddFav}><AiOutlineHeart size={20}/>
+   
+   <div className="like-container">
+   <button className={`${reaction?.dislikeId?.includes(mainUser?.id) ? 'green_option_btn' : `${mainUser.dark_mode ? "light_outline" : "dark_outline"}`} no_br react_btn`} onClick={handleLike}><AiOutlineLike size={20} /> {reaction.likes}
    <span className="hidden-text">Like</span>
-   </button>}
+   </button>
+  
+   </div>
+   
+   
 
-</div> 
-
-
-<div className="like-container">
-<button className={`${reaction?.dislikeId?.includes(mainUser?.id) ? 'green_option_btn' : `${mainUser.dark_mode ? "light_outline" : "dark_outline"}`} no_br react_btn`} onClick={handleLike}><AiOutlineLike size={20} /> {reaction.likes}
-<span className="hidden-text">Like</span>
-</button>
-
-</div>
-
-
-
-<div className="dislike-container">
-<button className={`${reaction?.dislikeId?.includes(mainUser?.id) ? 'red_option_btn' : `${mainUser.dark_mode ? "light_outline" : "dark_outline"}`} no_br react_btn`} onClick={handleDislike}><AiOutlineDislike size={20}/> {reaction.dislikes}
-<span className="hidden-text">Dislike</span>
-</button>
-</div> 
-
+   <div className="dislike-container">
+   <button className={`${reaction?.dislikeId?.includes(mainUser?.id) ? 'red_option_btn' : `${mainUser.dark_mode ? "light_outline" : "dark_outline"}`} no_br react_btn`} onClick={handleDislike}><AiOutlineDislike size={20}/> {reaction.dislikes}
+   <span className="hidden-text">Dislike</span>
+   </button>
+   </div> 
 
 </div>
+
+
+        )}
 
 
      </div>

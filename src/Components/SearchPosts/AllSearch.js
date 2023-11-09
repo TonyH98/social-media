@@ -21,6 +21,10 @@ function AllSearch({tag, mainUser, plan}){
 
     const [show , setShow] = useState(false)
 
+    let [block , setBlock] = useState([])
+
+    let [otherBlock , setOtherBlock] = useState([])
+
     const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 
     const [showGifPicker, setShowGifPicker] = useState(false)
@@ -49,6 +53,18 @@ function AllSearch({tag, mainUser, plan}){
             setFavorites(res.data)
         })
     }, [mainUser?.id])
+
+    useEffect(() => {
+        axios.get(`${API}/block/${mainUser?.id}`)
+        .then((res) => {
+          setBlock(res.data)
+        })
+        axios.get(`${API}/block/${tag.creator.id}`)
+        .then((res) => {
+          setOtherBlock(res.data)
+        })
+      
+      }, [mainUser?.id])
 
     function highlightMentions(content) {
         const mentionPattern = /@(\w+)/g;
@@ -197,7 +213,9 @@ function AllSearch({tag, mainUser, plan}){
     const inFavP = Array.isArray(favorites) ? favorites.map((fav) => fav?.posts_id) : [];
     const inFavR = Array.isArray(favorites) ? favorites.map((fav) => fav?.reply_id) : [];
 
+    const inBlock = Array.isArray(block) ? block.map(block => block.block_id) : []
 
+    const inOtherBlock = Array.isArray(otherBlock) ? otherBlock.map(block => block.block_id) : []
     return(
         <div className="posts_content">
 
@@ -220,6 +238,10 @@ function AllSearch({tag, mainUser, plan}){
     </div>
 
         
+        
+    {inBlock.includes(tag.creator.id) || inOtherBlock.includes(mainUser.id) ? (
+        <h2 className={`${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`} >@{tag.creator.username} Blocked</h2> 
+    ): 
     <div className="posts_content_text_container">
 
         <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_text`}>
@@ -235,13 +257,16 @@ function AllSearch({tag, mainUser, plan}){
         </div> 
     
      </div>
+    
+    }
 
 
      </div>
 
         </div>
 
-        {!tag.reply_id ? (
+        {inBlock.includes(tag.creator.id) || inOtherBlock.includes(mainUser.id) ? null : 
+        !tag.reply_id ? (
     <div className="posts-options-container">
 
 <div className="posts-reply-button">
@@ -331,7 +356,9 @@ onClick={createRepost}><PiArrowsClockwise size={20}/>
 </div>
 
 
-)}
+)
+        
+        }
 
 
      </div>

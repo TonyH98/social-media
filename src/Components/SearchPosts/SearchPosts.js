@@ -5,9 +5,6 @@ import { useEffect , useState } from "react";
 import TagPosts from "./tagPosts";
 import TagReplies from "./tagReplies";
 import AllSearch from "./AllSearch";
-import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
-import {AiFillHeart} from "react-icons/ai"
-import {AiOutlineHeart} from "react-icons/ai"
 import "./SearchPosts.css"
 import axios from "axios";
 
@@ -20,6 +17,8 @@ const {tag_name} = useParams()
 let [option , setOption] = useState(0)
 let options = ["Posts", "Replies", "All"]
 let [allSearch , setAllSearch] = useState([])
+
+
 const dispatch = useDispatch();
 
 const getPosts = useSelector((state) => state.get_search.searchPost);
@@ -40,6 +39,9 @@ axios.get(`${API}/search/all/${tag_name}`)
 
 }, [tag_name])
 
+
+
+
 function optionContent(selected) {
     if (selected === 0) {
       return (
@@ -47,7 +49,7 @@ function optionContent(selected) {
           {getPosts.map((tag) => {
             return (
               <div  className="posts-border-container">
-                <TagPosts tag={tag} mainUser={mainUser} plan={plan}/>
+                <TagPosts  tag={tag} mainUser={mainUser} plan={plan}/>
               </div>
             );
           })}
@@ -84,7 +86,7 @@ function optionContent(selected) {
   }
 
 
-console.log(getReplies)
+  
 
 
     return(

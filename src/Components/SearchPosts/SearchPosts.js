@@ -9,7 +9,10 @@ import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
 import {AiFillHeart} from "react-icons/ai"
 import {AiOutlineHeart} from "react-icons/ai"
 import "./SearchPosts.css"
+import axios from "axios";
 
+
+const API = process.env.REACT_APP_API_URL;
 function SearchPosts({mainUser, plan}){
 
 const {tag_name} = useParams()
@@ -26,10 +29,16 @@ const getReplies = useSelector((state) => state.search2.search)
 useEffect(() => {
 dispatch(getSearchPost(tag_name))
 dispatch(getSearchReplies(tag_name))
-setAllSearch([...getPosts , ...getReplies])
 }, [dispatch, tag_name])
 
 
+useEffect(() => {
+axios.get(`${API}/search/all/${tag_name}`)
+.then((res) => {
+  setAllSearch(res.data)
+})
+
+}, [tag_name])
 
 function optionContent(selected) {
     if (selected === 0) {
@@ -51,7 +60,7 @@ function optionContent(selected) {
           {getReplies.map((tag) => {
             return (
               <div  className="posts-border-container">
-                <TagReplies tag={tag} mainUser={mainUser}/>
+                <TagReplies tag={tag} mainUser={mainUser} plan={plan}/>
               </div>
             );
           })}
@@ -64,7 +73,7 @@ function optionContent(selected) {
         {allSearch.map((tag) => {
           return (
             <div  className="posts-border-container">
-              <AllSearch tag={tag} mainUser={mainUser}/>
+              <AllSearch tag={tag} mainUser={mainUser} plan={plan}/>
             </div>
           );
         })}
@@ -75,14 +84,14 @@ function optionContent(selected) {
   }
 
 
-console.log(getPosts)
+console.log(getReplies)
 
 
     return(
       <div className="search_post_page">
         <div className="search_post_first_section">
             <div className="tag_name_container">
-                <h1 className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>{allSearch[0]?.tag_names}</h1>
+                {/* <h1 className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`}>{allSearch[0]?.tag_names}</h1> */}
             </div>
             <div className="search_option_button">
             {options.map((opt , index) => {

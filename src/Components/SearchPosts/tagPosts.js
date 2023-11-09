@@ -119,13 +119,13 @@ const [showGifPicker, setShowGifPicker] = useState(false)
     }
 
 
-    // function createRepost (e){
-    //     e.preventDefault()
-    //     axios.post(`${API}/users/${mainUser.username}/posts/${mainUser.username}/repost/${posts.id}`, {user_id: posts.user_id})
-    //     .then(() => {
-    //         axios.put(`${API}/users/${posts.creator.username}/posts/${posts.id}`, {repost_counter: posts.repost_counter += 1})
-    //     })
-    // }
+    function createRepost (e){
+        e.preventDefault()
+        axios.post(`${API}/users/${mainUser.username}/posts/${mainUser.username}/repost/${tag.id}`, {user_id: tag.user_id})
+        .then(() => {
+            axios.put(`${API}/users/${tag.creator.username}/posts/${tag.id}`, {repost_counter: tag.repost_counter += 1})
+        })
+    }
 
     const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.id) : [];
     return(
@@ -181,7 +181,12 @@ const [showGifPicker, setShowGifPicker] = useState(false)
 </button>
 </div>
 
-
+<div className="repost-button">
+<button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} 
+onClick={createRepost}><PiArrowsClockwise size={20}/> 
+<span className="hidden-text">Repost</span>
+</button>
+</div>
 
     <div className="favorite_posts_container">
        {mainUser && inFav.includes(tag.id) ? 

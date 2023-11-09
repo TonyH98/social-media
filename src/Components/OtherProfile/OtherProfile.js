@@ -14,7 +14,7 @@ const API = process.env.REACT_APP_API_URL;
 function OtherProfile({user , plan, mainUser}){
 
     let usersFollowing = useSelector((state) => state.follow.fol)
-    let userFavorites = useSelector((state) => state.favorites.fav)
+   
     let options = ["Posts", "Replies", "Favorites"]
 
     let [option , setOption] = useState(0)
@@ -90,10 +90,7 @@ useEffect(() => {
     setFavorites(res.data)
   })
 
-  axios.get(`${API}/favorites/${id}`)
-  .then((res) => {
-    setPostFavorite(res.data)
-  })
+
 
 }, [id])
 
@@ -103,11 +100,17 @@ useEffect(() => {
 
 useEffect(() => {
   dispatch(getFollowing(user?.id))
-  dispatch(getFavorites(user?.id))
+ 
 }, [dispatch, user])
 
 
+useEffect(() => {
+  axios.get(`${API}/favorites/${user?.id}`)
+  .then((res) => {
+    setPostFavorite(res.data)
+  })
 
+}, [user.id])
 
 
     function optionContent(selected) {
@@ -117,7 +120,7 @@ useEffect(() => {
             {posts.map((posts) => {
               return (
                 <div key={posts.id} className="posts-border-container">
-                  <Posts posts={posts} users={user} favorites={userFavorites} plan={plan} mainUser={mainUser}/>
+                  <Posts posts={posts} users={user} favorites={postFavorite} plan={plan} mainUser={mainUser} setPostFavorite={setPostFavorite}/>
                 </div>
               );
             })}

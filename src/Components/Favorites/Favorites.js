@@ -162,7 +162,7 @@ function Favorites({fav , mainUser, users, plan}){
         e.preventDefault()
         axios.post(`${API}/favorites/${mainUser?.id}/favR/${fav.reply_id}`, favs)
         .then(() => {
-            axios.get(`${API}/favorites/${mainUser?.id}`)
+            axios.get(`${API}/favorites/${mainUser?.id}/all`)
         .then((res) => {
             setFavorites(res.data)
         })
@@ -173,7 +173,7 @@ function Favorites({fav , mainUser, users, plan}){
         e.preventDefault()
         axios.delete(`${API}/favorites/${mainUser.id}/deleteR/${fav.reply_id}`)
         .then(() => {
-            axios.get(`${API}/favorites/${mainUser?.id}`)
+            axios.get(`${API}/favorites/${mainUser?.id}/all`)
             .then((res) => {
             setFavorites(res.data)
         })
@@ -191,7 +191,11 @@ function Favorites({fav , mainUser, users, plan}){
     }
 
 
-    const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.fav_id) : [];
+    const inFavP = Array.isArray(favorites) ? favorites.map((fav) => fav?.posts_id) : [];
+    const inFavR = Array.isArray(favorites) ? favorites.map((fav) => fav?.reply_id) : [];
+
+    console.log("replies", inFavR)
+    console.log("posts", inFavP)
 
 return(
     <div className="posts_content">
@@ -259,7 +263,7 @@ onClick={createRepost}><PiArrowsClockwise size={20}/> {fav.repost_counter}
 
 
     <div className="favorite_posts_container">
-       {users && inFav.includes(fav?.fav_id) ? 
+       {users && inFavP.includes(fav?.posts_id) ? 
        <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} onClick={handleDeleteFav}><AiFillHeart size={20} color="red"/>
        <span className="hidden-text">Disike</span>
        </button>
@@ -296,7 +300,7 @@ onClick={createRepost}><PiArrowsClockwise size={20}/> {fav.repost_counter}
 
 
     <div className="favorite_posts_container">
-       {users && inFav.includes(fav?.fav_id) ? 
+       {users && inFavR.includes(fav?.reply_id) ? 
        <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} onClick={handleDeleteFavR}><AiFillHeart size={20} color="red"/>
        <span className="hidden-text">Disike</span>
        </button>

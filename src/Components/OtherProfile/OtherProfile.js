@@ -22,7 +22,7 @@ function OtherProfile({user , plan, mainUser}){
     let [posts , setPosts] = useState([])
     let [userReplies , setUserReplies] = useState([])
     let [show , setShow] = useState(false)
-
+    const [postFavorite , setPostFavorite] = useState([])
     let dispatch = useDispatch()
 
     const {id} = useParams()
@@ -89,6 +89,12 @@ useEffect(() => {
   .then((res) => {
     setFavorites(res.data)
   })
+
+  axios.get(`${API}/favorites/${id}`)
+  .then((res) => {
+    setPostFavorite(res.data)
+  })
+
 }, [id])
 
 

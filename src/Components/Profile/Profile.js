@@ -24,6 +24,8 @@ function Profile({user , plan}){
 
     const [favorites , setFavorites] = useState([])
 
+    const [postFavorite , setPostFavorite] = useState([])
+
     const dispatch = useDispatch();
     const users = useSelector((state) => state.user.users);
     const getPosts = useSelector((state) => state.posts_get.posts)
@@ -63,6 +65,14 @@ function Profile({user , plan}){
 
   }, [user.id])
 
+  useEffect(() => {
+    axios.get(`${API}/favorites/${user.id}`)
+    .then((res) => {
+      setPostFavorite(res.data)
+    })
+
+  }, [user.id])
+
     let options = ["Posts", "Replies", "Favorites"]
 
     function optionContent(selected) {
@@ -71,7 +81,7 @@ function Profile({user , plan}){
           <div className="option-content-holder">
             {getPosts.map((posts) => (
               <div key={posts.id} className="posts-border-container">
-                <Posts posts={posts} users={user} mainUser={users} favorites={favorites} plan={plan} />
+                <Posts posts={posts} users={user} mainUser={users} favorites={postFavorite} setPostFavorite={setPostFavorite} plan={plan} />
               </div>
             ))}
           </div>

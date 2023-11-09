@@ -12,7 +12,7 @@ import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
 import axios from "axios";
 import {PiArrowsClockwise} from "react-icons/pi"
 const API = process.env.REACT_APP_API_URL;
-function Posts ({posts, users, favorites, plan, mainUser}){
+function Posts ({posts, users, favorites, plan, mainUser, setPostFavorite}){
 
 
 
@@ -97,12 +97,24 @@ function highlightMentions(content) {
 
 function handleAddFav(e){
     e.preventDefault()
-    dispatch(addFav(users, posts.id, fav))
+    axios.post(`${API}/favorites/${mainUser?.id}/fav/${posts.id}`, fav)
+    .then(() => {
+        axios.get(`${API}/favorites/${mainUser?.id}`)
+        .then((res) => {
+          setPostFavorite(res.data)
+        })
+    })
 }
 
 function handleDeleteFav(e){
     e.preventDefault()
-    dispatch(deleteFav(users, posts.id))
+    axios.delete(`${API}/favorites/${mainUser?.id}/delete/${posts.id}`)
+    .then(() => {
+        axios.get(`${API}/favorites/${mainUser?.id}`)
+        .then((res) => {
+          setPostFavorite(res.data)
+        })
+    })
 }
 
 

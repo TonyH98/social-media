@@ -13,10 +13,13 @@ function Favorites({fav , mainUser, users, plan}){
 
     const [reaction , setReaction] = useState({})
 
+    const [reactionR, setReactionR] = useState({})
+
     const [show , setShow] = useState(false)
 
     const [showEmojiPicker, setShowEmojiPicker] = useState(false)
     const [showGifPicker, setShowGifPicker] = useState(false)
+
     let [likes] = useState({
         reaction: "like",
         creator_id: fav.creator.id
@@ -35,7 +38,7 @@ function Favorites({fav , mainUser, users, plan}){
     let [favorites, setFavorites] = useState([])
 
     useEffect(() => {
-        axios.get(`${API}/favorites/${mainUser?.id}`)
+        axios.get(`${API}/favorites/${mainUser?.id}/all`)
         .then((res) => {
             setFavorites(res.data)
         })
@@ -68,18 +71,23 @@ function Favorites({fav , mainUser, users, plan}){
     
 
     useEffect(() => {
-        axios.get(`${API}/users/${fav.creator.username}/posts/${fav.id}/reactions`)
+        axios.get(`${API}/users/${fav.creator.username}/posts/${fav.posts_id}/reactions`)
         .then((res) => {
           setReaction(res.data);
         });
-      }, [fav.id]);
+        axios.get(`${API}/users/${fav.creator.username}/posts/${fav.posts_id}/reply/${fav.reply_id}/reactionsR`)
+        .then((res) => {
+          setReactionR(res.data);
+        });
+
+      }, [fav.posts_id, fav.reply_id]);
 
 
     function handleLike(e){
         e.preventDefault()
-        axios.post(`${API}/users/${fav.creator.username}/posts/${mainUser.id}/react/${fav.id}`, likes)
+        axios.post(`${API}/users/${fav.creator.username}/posts/${mainUser.id}/react/${fav.posts_id}`, likes)
         .then(() => {
-            axios.get(`${API}/users/${fav.creator.username}/posts/${fav.id}/reactions`)
+            axios.get(`${API}/users/${fav.creator.username}/posts/${fav.posts_id}/reactions`)
             .then((res) => {
               setReaction(res.data);
             });
@@ -88,18 +96,71 @@ function Favorites({fav , mainUser, users, plan}){
     
     function handleDislike(e){
         e.preventDefault()
-        axios.post(`${API}/users/${fav.creator.username}/posts/${mainUser.id}/react/${fav.id}`, dislike)
+        axios.post(`${API}/users/${fav.creator.username}/posts/${mainUser.id}/react/${fav.posts_id}`, dislike)
         .then(() => {
-            axios.get(`${API}/users/${fav.creator.username}/posts/${fav.id}/reactions`)
+            axios.get(`${API}/users/${fav.creator.username}/posts/${fav.posts_id}/reactions`)
             .then((res) => {
               setReaction(res.data);
             });
         })
     }
     
+
+    function handleLikeR(e){
+        e.preventDefault()
+        axios.post(`${API}/users/${fav.creator.username}/posts/${fav.origin_id}/reply/${mainUser.id}/reactR/${fav.reply_id}`, likes)
+        .then(() => {
+            axios.get(`${API}/users/${fav.creator.username}/posts/${fav.posts_id}/reply/${fav.reply_id}/reactionsR`)
+        .then((res) => {
+          setReactionR(res.data);
+        });
+        })
+    }
+    
+    function handleDislikeR(e){
+        e.preventDefault()
+        axios.post(`${API}/users/${fav.creator.username}/posts/${fav.origin_id}/reply/${mainUser.id}/reactR/${fav.reply_id}`, dislike)
+        .then(() => {
+            axios.get(`${API}/users/${fav.creator.username}/posts/${fav.posts_id}/reply/${fav.reply_id}/reactionsR`)
+        .then((res) => {
+          setReactionR(res.data);
+        });
+        })
+    }
+
+
+
+
     function handleAddFav(e){
         e.preventDefault()
-        axios.post(`${API}/favorites/${mainUser?.id}/fav/${fav.id}`, favs)
+        axios.post(`${API}/favorites/${mainUser?.id}/fav/${fav.posts_id}`, favs)
+        .then(() => {
+            axios.get(`${API}/favorites/${mainUser?.id}/all`)
+        .then((res) => {
+            setFavorites(res.data)
+        })
+        })
+    }
+
+
+
+    
+    function handleDeleteFav(e){
+        e.preventDefault()
+        axios.delete(`${API}/favorites/${mainUser.id}/delete/${fav.posts_id}`)
+        .then(() => {
+            axios.get(`${API}/favorites/${mainUser?.id}/all`)
+        .then((res) => {
+            setFavorites(res.data)
+        })
+        })
+        
+    }
+    
+
+    function handleAddFavR(e){
+        e.preventDefault()
+        axios.post(`${API}/favorites/${mainUser?.id}/favR/${fav.reply_id}`, favs)
         .then(() => {
             axios.get(`${API}/favorites/${mainUser?.id}`)
         .then((res) => {
@@ -108,18 +169,19 @@ function Favorites({fav , mainUser, users, plan}){
         })
     }
 
-    function handleDeleteFav(e){
+    function handleDeleteFavR(e){
         e.preventDefault()
-        axios.delete(`${API}/favorites/${mainUser.id}/delete/${fav.id}`)
+        axios.delete(`${API}/favorites/${mainUser.id}/deleteR/${fav.reply_id}`)
         .then(() => {
             axios.get(`${API}/favorites/${mainUser?.id}`)
-        .then((res) => {
+            .then((res) => {
             setFavorites(res.data)
         })
         })
         
     }
-    
+
+
     function createRepost (e){
         e.preventDefault()
         axios.post(`${API}/users/${mainUser.username}/posts/${mainUser.username}/repost/${fav.id}`, {user_id: fav.creator.id})
@@ -129,7 +191,7 @@ function Favorites({fav , mainUser, users, plan}){
     }
 
 
-    const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.id) : [];
+    const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.fav_id) : [];
 
 return(
     <div className="posts_content">
@@ -175,6 +237,8 @@ return(
  </div>
 
     </div>
+
+{fav.posts_id ? (
     <div className="posts-options-container">
 
 <div className="posts-reply-button">
@@ -195,7 +259,7 @@ onClick={createRepost}><PiArrowsClockwise size={20}/> {fav.repost_counter}
 
 
     <div className="favorite_posts_container">
-       {users && inFav.includes(fav?.id) ? 
+       {users && inFav.includes(fav?.fav_id) ? 
        <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} onClick={handleDeleteFav}><AiFillHeart size={20} color="red"/>
        <span className="hidden-text">Disike</span>
        </button>
@@ -224,6 +288,46 @@ onClick={createRepost}><PiArrowsClockwise size={20}/> {fav.repost_counter}
 
    <ReplyForm open={show} onClose={() => {setShow(false); setShowEmojiPicker(false);  setShowGifPicker(false)}} showGifPicker={showGifPicker} setShowGifPicker={setShowGifPicker} setShowEmojiPicker={setShowEmojiPicker} showEmojiPicker={showEmojiPicker} users={users} posts={fav} plan={plan} mainUser={mainUser}/>
 </div>
+
+
+) : (
+
+    <div className="posts-options-container">
+
+
+    <div className="favorite_posts_container">
+       {users && inFav.includes(fav?.fav_id) ? 
+       <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} onClick={handleDeleteFavR}><AiFillHeart size={20} color="red"/>
+       <span className="hidden-text">Disike</span>
+       </button>
+
+       : <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} onClick={handleAddFavR}><AiOutlineHeart size={20}/>
+       <span className="hidden-text">Like</span>
+       </button>}
+
+   </div> 
+
+   
+   <div className="like-container">
+   <button className={`${reactionR?.dislikeId?.includes(mainUser?.id) ? 'green_option_btn' : `${mainUser.dark_mode ? "light_outline" : "dark_outline"}`} no_br react_btn`} onClick={handleLikeR}><AiOutlineLike size={20} /> {reactionR.likes}
+   <span className="hidden-text">Like</span>
+   </button>
+  
+   </div>
+   
+   
+
+   <div className="dislike-container">
+   <button className={`${reactionR?.dislikeId?.includes(mainUser?.id) ? 'red_option_btn' : `${mainUser.dark_mode ? "light_outline" : "dark_outline"}`} no_br react_btn`} onClick={handleDislikeR}><AiOutlineDislike size={20}/> {reactionR.dislikes}
+   <span className="hidden-text">Dislike</span>
+   </button>
+   </div> 
+
+</div>
+
+
+)}
+
  
  </div>
 
@@ -232,3 +336,4 @@ onClick={createRepost}><PiArrowsClockwise size={20}/> {fav.repost_counter}
 }
 
 export default Favorites
+

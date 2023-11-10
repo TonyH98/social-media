@@ -18,6 +18,8 @@ let [otherBlock , setOtherBlock] = useState([])
 let [show , setShow] = useState(false)
 const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 const [showGifPicker, setShowGifPicker] = useState(false)
+const [repliesCount, setRepliesCount] = useState([])
+
 
     useEffect(() => {
         axios.get(`${API}/users/${tag.creator.username}/posts/${tag.id}/reactions`)
@@ -26,6 +28,13 @@ const [showGifPicker, setShowGifPicker] = useState(false)
         });
       }, [tag.id]);
 
+
+      useEffect(() => {
+        axios.get(`${API}/users/${tag.creator.username}/posts/${tag.id}/reply`)
+        .then((res) => {
+          setRepliesCount(res.data);
+        });
+    }, [tag.id])
 
       useEffect(() => {
         axios.get(`${API}/block/${mainUser?.id}`)
@@ -199,7 +208,7 @@ const [showGifPicker, setShowGifPicker] = useState(false)
 
 <div className="posts-reply-button">
 <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br reply_btn`} onClick={() => setShow(!show)}>
-<SlBubble size={20} />
+<SlBubble size={20} />{repliesCount.length}
 <span className="hidden-text">Reply</span>
 </button>
 </div>

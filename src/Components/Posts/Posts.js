@@ -7,14 +7,14 @@ import {AiFillHeart} from "react-icons/ai"
 import {AiOutlineHeart} from "react-icons/ai"
 import { useEffect , useState } from "react";
 import { useDispatch} from "react-redux";
-import { addFav , deleteFav} from "../../Store/userActions";
+import {BsFillPinFill} from "react-icons/bs"
 import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
 import axios from "axios";
 import {PiArrowsClockwise} from "react-icons/pi"
 const API = process.env.REACT_APP_API_URL;
 function Posts ({posts, users, favorites, plan, mainUser, setPostFavorite}){
 
-
+console.log(new Date(posts.time))
 
 let [show , setShow] = useState(false)
 
@@ -161,6 +161,7 @@ const inBlock = Array.isArray(block) ? block.map(block => block.block_id) : []
         <div className="posts_content">
 
                 {posts.repost ? <span className="repost_style"><PiArrowsClockwise size={15} color="gray"/> {posts.user_name} reposted</span> : null}
+                {posts.pin ? <span className="repost_style"><BsFillPinFill size={15} color="gray"/> Pinned </span> : null}
             <div className="posts_extra_container">
 
             <div className="post_user_profile_container">

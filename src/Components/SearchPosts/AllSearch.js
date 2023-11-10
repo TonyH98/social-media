@@ -29,6 +29,8 @@ function AllSearch({tag, mainUser, plan}){
 
     const [showGifPicker, setShowGifPicker] = useState(false)
 
+    const [repliesCount, setRepliesCount] = useState([])
+
     let [likes] = useState({
         reaction: "like",
         creator_id: tag.creator.id
@@ -53,6 +55,13 @@ function AllSearch({tag, mainUser, plan}){
             setFavorites(res.data)
         })
     }, [mainUser?.id])
+
+    useEffect(() => {
+        axios.get(`${API}/users/${tag.creator.username}/posts/${tag.posts_id}/reply`)
+        .then((res) => {
+          setRepliesCount(res.data);
+        });
+    }, [tag.posts_id])
 
     useEffect(() => {
         axios.get(`${API}/block/${mainUser?.id}`)
@@ -273,7 +282,7 @@ function AllSearch({tag, mainUser, plan}){
 <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br reply_btn`}
 onClick={() => setShow(!show)}
 >
-<SlBubble size={20} /> 
+<SlBubble size={20} /> {repliesCount.length}
 <span className="hidden-text">Reply</span>
 </button>
 </div>

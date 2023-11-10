@@ -28,7 +28,7 @@ function Profile({user , plan}){
 
     const dispatch = useDispatch();
     const users = useSelector((state) => state.user.users);
-    const getPosts = useSelector((state) => state.posts_get.posts)
+  let getPosts = useSelector((state) => state.posts_get.posts)
 
     let following = useSelector((state) => state.follow.fol)
     let follower = useSelector((state) => state.follower.fol)
@@ -74,6 +74,14 @@ function Profile({user , plan}){
   }, [user.id])
 
     let options = ["Posts", "Replies", "Favorites"]
+
+
+  getPosts = getPosts.sort((a , b) => {
+    if(a.pin && !b.pin) return -1
+    if(!a.pin && b.pin) return 1
+
+    return new Date(b.time) - new Date(a.time)
+  })
 
     function optionContent(selected) {
       if (selected === 0) {
@@ -125,7 +133,7 @@ function Profile({user , plan}){
       };
 
  
-      console.log(users)
+    
 
     return(
         <div className="profile">

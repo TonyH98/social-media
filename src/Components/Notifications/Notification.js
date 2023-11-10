@@ -32,6 +32,15 @@ function Notification({users , notes, mainUser, plan}){
     
     let [show , setShow] = useState(false)
 
+    let [repliesCount, setRepliesCount] = useState([])
+
+    useEffect(() => {
+        axios.get(`${API}/users/${notes.creator.username}/posts/${notes.id}/reply`)
+        .then((res) => {
+          setRepliesCount(res.data);
+        });
+    }, [notes.id])
+
     const [reaction , setReaction] = useState({})
     const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 const [showGifPicker, setShowGifPicker] = useState(false)
@@ -222,7 +231,7 @@ const [showGifPicker, setShowGifPicker] = useState(false)
 
         <div className="posts-reply-button">
   <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br reply_btn`}  onClick={(e) => { e.preventDefault(); setShow(true); }}>
-    <SlBubble size={20} /> 
+    <SlBubble size={20} /> {repliesCount.length}
     <span className="hidden-text">Reply</span>
   </button>
 </div>

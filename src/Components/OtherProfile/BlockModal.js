@@ -61,7 +61,8 @@ return(
                 <>
                     <div className={`${mainUser?.dark_mode ? 'light_text' : 'dark_text'} warning_message_container`}>
                         <h2>Block @{users?.username}</h2>
-                        <p className="warning_message">{`They will not be able to follow you or view your posts, and you will not see posts or notifications from ${users?.username}.`}</p>
+                        <p className="warning_message">{`They will not be able to follow you or view your posts, 
+                        and you will not see posts or notifications from ${users?.username}.`}</p>
                     </div>
                     <div className="block_buttons_container">
                         <button className="logout_button lg_btn" onClick={addBlock}>Block</button>

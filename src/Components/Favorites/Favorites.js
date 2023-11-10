@@ -17,6 +17,8 @@ function Favorites({fav , mainUser, users, plan}){
 
     const [show , setShow] = useState(false)
 
+    let [repliesCount , setRepliesCount] = useState([])
+
     const [showEmojiPicker, setShowEmojiPicker] = useState(false)
     const [showGifPicker, setShowGifPicker] = useState(false)
 
@@ -82,6 +84,12 @@ function Favorites({fav , mainUser, users, plan}){
 
       }, [fav.posts_id, fav.reply_id]);
 
+      useEffect(() => {
+        axios.get(`${API}/users/${fav.creator.username}/posts/${fav.posts_id}/reply`)
+        .then((res) => {
+            setRepliesCount(res.data)
+        })
+      }, [fav.creator.username])
 
     function handleLike(e){
         e.preventDefault()
@@ -249,7 +257,7 @@ return(
 <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br reply_btn`}
 onClick={() => setShow(!show)}
 >
-<SlBubble size={20} /> 
+<SlBubble size={20} /> {repliesCount.length} 
 <span className="hidden-text">Reply</span>
 </button>
 </div>

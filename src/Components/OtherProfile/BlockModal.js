@@ -18,11 +18,6 @@ function BlockModal({mainUser , users, open, setOtherBlock, onClose, inBlock, in
         .then((res) => {
           setBlock(res.data)
         })
-        .then(() => {
-            onClose()
-          dispatch(deleteFol(mainUser?.id, users?.id))
-          dispatch(deleteFol(users?.id, mainUser?.id))
-        })
         })
       }
       

@@ -37,7 +37,7 @@ useEffect(() => {
   axios.get(`${API}/block/${user?.id}`)
   .then((res) => {
     setBlock(res.data)
-  })
+  }, [user])
 
   axios.get(`${API}/block/${users?.id}`)
   .then((res) => {

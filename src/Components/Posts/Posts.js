@@ -11,12 +11,16 @@ import {BsFillPinFill} from "react-icons/bs"
 import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
 import axios from "axios";
 import {PiArrowsClockwise} from "react-icons/pi"
+import {AiOutlineEllipsis} from "react-icons/ai"
+import PostOptionModal from "./PostOptionModal";
 const API = process.env.REACT_APP_API_URL;
 function Posts ({posts, users, favorites, plan, mainUser, setPostFavorite}){
 
-console.log(new Date(posts.time))
+
 
 let [show , setShow] = useState(false)
+
+let [show2 , setShow2] = useState(false)
 
 const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 const [showGifPicker, setShowGifPicker] = useState(false)
@@ -66,6 +70,7 @@ useEffect(() => {
 
 
   }, [mainUser?.id])
+
 
 function formatDate(inputDate){
     const months = [
@@ -171,7 +176,7 @@ const inBlock = Array.isArray(block) ? block.map(block => block.block_id) : []
             className="post_user_profile"
             />
             </div>
-
+        <div className="post_options_extra">
         <div className="post_user_info_date_container">
 
         <div  className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_user_profile`} >
@@ -212,6 +217,24 @@ const inBlock = Array.isArray(block) ? block.map(block => block.block_id) : []
          
          </div>
 
+
+
+
+        </div>
+
+        <div className="epllispy_container">
+
+        {show2 ? (null) : 
+         <button className="ellipsis_btn">
+        <AiOutlineEllipsis  className="ellipsis" size={20} onClick={() => setShow2(!show2)}/>
+        </button>   
+        
+        }
+
+        {show2 ? (
+            <PostOptionModal posts={posts} mainUser={mainUser}  onClose={() => {setShow2(false);}} open={show2}/>
+        ) : null}
+        </div>
             </div>
             
         {inBlock.includes(posts.creator.id) ?

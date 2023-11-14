@@ -202,7 +202,7 @@ const inBlock = Array.isArray(block) ? block.map(block => block.block_id) : []
             </div>
 
             {!posts.url ? null : (
-            <div className="embedded_link_container">
+            <div className={`embedded_link_container ${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`}>
             <a href={posts.url} target="_blank">
                 <img src={posts.url_img} className="post_article_img" alt={`${posts.url_title}`} />
             </a>
@@ -238,8 +238,8 @@ const inBlock = Array.isArray(block) ? block.map(block => block.block_id) : []
         <div className="epllispy_container">
 
         {show2 ? (null) : 
-         <button className="ellipsis_btn">
-        <AiOutlineEllipsis  className="ellipsis" size={20} onClick={() => setShow2(!show2)}/>
+         <button className={`ellipsis_btn ${mainUser?.dark_mode ? 'white_border' : 'dark_border'}`}>
+        <AiOutlineEllipsis  className={`${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`} size={20} onClick={() => setShow2(!show2)}/>
         </button>   
         
         }
@@ -262,12 +262,12 @@ const inBlock = Array.isArray(block) ? block.map(block => block.block_id) : []
   </button>
 </div>
 
-<div className="repost-button">
-<button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} 
-onClick={createRepost}><PiArrowsClockwise size={20}/> {posts.repost_counter}
- <span className="hidden-text">Repost</span>
- </button>
-</div>
+        <div className="repost-button">
+        <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} 
+        onClick={createRepost}><PiArrowsClockwise size={20}/> {posts.repost_counter}
+        <span className="hidden-text">Repost</span>
+        </button>
+        </div>
 
 
              <div className="favorite_posts_container">

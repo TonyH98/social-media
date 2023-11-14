@@ -208,7 +208,7 @@ return(
        {highlightMentions(posts.content)}
     </div>
     {!posts.url ? null : (
-            <div className="embedded_link_container">
+            <div className={`embedded_link_container ${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`}>
             <a href={posts.url} target="_blank">
                 <img src={posts.url_img} className="post_article_img" alt={`${posts.url_title}`} />
             </a>

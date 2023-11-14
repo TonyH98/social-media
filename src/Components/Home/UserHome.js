@@ -237,39 +237,17 @@ function UserHome({mainUser, plan, following}){
       setShowGifPicker(false);
     }
   
-    const fetchPosts = async () => {
-      try {
-          const promises = inFol.map((username) => axios.get(`${API}/users/${username}/posts`));
-          const responses = await Promise.all(promises);
-          const posts = responses.flatMap((res) => res.data);
-          setFollowingPosts(posts);
-      } catch (error) {
-          console.error("Error Fetching following posts:", error);
-      }
-  };
-  
-  useEffect(() => {
-      if (inFol.length > 0 && API) {
-          fetchPosts();
-      }
-  }, []);
+    useEffect(() => {
+      axios.get(`${API}/follow/${mainUser?.id}/posts`)
+      .then((res) => {
+        setFollowingPosts(res.data)
+      })
+    }, [mainUser?.id])
   
       
+console.log(followingPosts)
 
-
-    const oneWeekAgo = new Date()
-    oneWeekAgo.setDate(oneWeekAgo.getDate() -7)
-
-    console.log(oneWeekAgo)
-
-    followingPosts = followingPosts.filter((post) => {
-      const postTime = new Date(post.time)
-      return postTime > oneWeekAgo
-    })
-
-
-
-
+  
     return(
         <div className="users_home_page">
           
@@ -390,7 +368,7 @@ function UserHome({mainUser, plan, following}){
 
         <div className="users_following_posts_container">
         <div className="option-content-holder">
-              {followingPosts.map((posts) => {
+              {Array.isArray(followingPosts) && followingPosts.map((posts) => {
                 return (
                   <div key={posts.id} className="posts-border-container">
                     <HomePosts favorites={favorites} posts={posts}  mainUser={mainUser} plan={plan} setFavorites={setFavorites}/>

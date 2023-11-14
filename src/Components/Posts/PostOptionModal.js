@@ -121,6 +121,7 @@ const inFol = Array.isArray(follow) ? follow.map(fol => fol?.following_id) : [];
 
 const inBlock = Array.isArray(block) ? block.map(block => block.block_id) : []
 
+
 return(
     <div className="option-overlay">
     <div ref={modalRef} className={`option-container ${mainUser?.dark_mode ? 'modal_backgrond_dark' : 'modal_backgrond_white'}`}> 
@@ -128,11 +129,11 @@ return(
 
     {!posts.repost && posts.creator.username !== mainUser.username ? (
     inFol.includes(posts.creator.id) ? (
-        <button className="option_modal_btn" onClick={handleDeleteFollow}>
+        <button className={`option_modal_btn ${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`} onClick={handleDeleteFollow}>
         <RiUserUnfollowLine size={20} /> <span className="button_text">Unfollow</span>
         </button>
     ) : (
-        <button className="option_modal_btn" onClick={handleFollow}>
+        <button className={`option_modal_btn ${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`}  onClick={handleFollow}>
         <RiUserFollowFill size={20} /> <span className="button_text">Follow</span>
         </button>
     )
@@ -140,11 +141,11 @@ return(
 
     {!posts.repost && posts.creator.username === mainUser.username ? (
     posts.pin ? (
-        <button className="option_modal_btn" onClick={removePost}>
+        <button className={`option_modal_btn ${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`} onClick={removePost}>
         <BsFillPinFill size={20} /> <span className="button_text">Unpin Post</span>
         </button>
     ) : (
-        <button className="option_modal_btn" onClick={pinPost}>
+        <button className={`option_modal_btn ${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`} onClick={pinPost}>
         <BsFillPinFill size={20} /> <span className="button_text">Pin Post</span>
         </button>
     )
@@ -154,17 +155,19 @@ return(
 
 
     {!posts.repost && posts.creator.username === mainUser.username ? (
-          <button className="option_modal_btn">
-          <PiStarFour size={20} /> <span className="button_text">Highlight on your profile</span>
+          <button className={`option_modal_btn ${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`} >
+          <PiStarFour size={20} /> 
+          <span className="button_text">Highlight on your profile</span>
           </button>
     ): null}    
 
-          <button className="option_modal_btn">
-          <GrNotes size={20} /> <span className="button_text">{`Add/remove @${posts.creator.username} from lists`}</span>
+        <button className={`option_modal_btn ${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`} >
+          <GrNotes size={20} /> 
+          <span className="button_text">{`Add/remove @${posts.creator.username}`}</span>
           </button>
 
           {posts.creator.username !== mainUser.username ? (
-              <button className="option_modal_btn">
+              <button className={`option_modal_btn ${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`} >
               <BsFillVolumeMuteFill size={20} /> <span className="button_text">{`Mute @${posts.creator.username}`}</span>
               </button>
           ): null}
@@ -173,11 +176,11 @@ return(
 
         {!posts.repost && posts.creator.username !== mainUser.username ? (
         inBlock.includes(posts.creator.id) ? (
-            <button className="option_modal_btn" onClick={removeBlock}>
+            <button className={`option_modal_btn ${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`}  onClick={removeBlock}>
             <CgUnblock size={20} /> <span className="button_text">{`Unblock @${posts.creator.username}`}</span>
             </button>
         ) : (
-            <button className="option_modal_btn" onClick={addBlock}>
+            <button className={`option_modal_btn ${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`}  onClick={addBlock}>
             <BiBlock size={20} /> <span className="button_text">{`Block @${posts.creator.username}`}</span>
             </button>
         )
@@ -188,12 +191,12 @@ return(
 
 
           {!posts.repost && posts.creator.username === mainUser.username ? (
-          <button className="option_modal_btn">
+          <button className={`option_modal_btn ${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`}>
           <SlBubble size={20} /> <span className="button_text">Change who can reply</span>
           </button>
         ): null}    
 
-            <button className="option_modal_btn">
+            <button className={`option_modal_btn ${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`}>
           <AiOutlineBarChart size={20} /> <span className="button_text">View posts engagements</span>
           </button>
 

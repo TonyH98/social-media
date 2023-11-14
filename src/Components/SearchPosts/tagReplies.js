@@ -163,6 +163,15 @@ let [otherBlock , setOtherBlock] = useState([])
 
            {highlightMentions(tag.content)}
         </div>
+        {!tag.url ? null : (
+            <div className={`embedded_link_container ${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`}>
+            <a href={tag.url} target="_blank">
+                <img src={tag.url_img} className="post_article_img" alt={`${tag.url_title}`} />
+            </a>
+             <span className="url_title">{tag.url_title}</span>
+            </div>
+                
+            )}
          <div className="posts_img_container">
         {!tag.posts_details?.image ? null : (
 

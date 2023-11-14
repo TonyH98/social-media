@@ -233,6 +233,16 @@ return(
 
        {highlightMentions(fav.content)}
     </div>
+    {!fav.url ? null : (
+            <div className={`embedded_link_container ${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`}>
+            <a href={fav.url} target="_blank">
+                <img src={fav.url_img} className="post_article_img" alt={`${fav.url_title}`} />
+            </a>
+             <span className="url_title">{fav.url_title}</span>
+            </div>
+                
+            )}
+
     <div className="posts_img_container">
     {fav.posts_img === "null" ? null : (
 

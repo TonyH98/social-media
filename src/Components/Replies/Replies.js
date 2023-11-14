@@ -160,7 +160,7 @@ return(
 </div>
 
 {!reply.url ? null : (
-            <div className="embedded_link_container">
+            <div className={`embedded_link_container ${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`}>
             <a href={reply.url} target="_blank">
                 <img src={reply.url_img} className="post_article_img" alt={`${reply.url_title}`} />
             </a>

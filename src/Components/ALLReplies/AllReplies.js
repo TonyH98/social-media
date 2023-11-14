@@ -148,6 +148,15 @@ console.log(posts)
 
                {highlightMentions(posts.content)}
             </div>
+            {!posts.url ? null : (
+            <div className={`embedded_link_container ${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`}>
+            <a href={posts.url} target="_blank">
+                <img src={posts.url_img} className="post_article_img" alt={`${posts.url_title}`} />
+            </a>
+             <span className="url_title">{posts.url_title}</span>
+            </div>
+                
+            )}
             <div className="posts_img_container">
             {posts.posts_img === "null" ? null : (
 

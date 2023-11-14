@@ -216,13 +216,20 @@ border-radius: 50%;
   width: 35px;
 }
 
+.white_border{
+  border: white 1px solid;
+}
+
+.dark_border{
+  border: black 1px solid;
+}
+
 .ellipsis_btn:hover{
   cursor: pointer;
 }
 
 .option-container {
   width: 300px;
-  background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
   border-radius: 10px;
   height: 300px;
@@ -230,6 +237,14 @@ border-radius: 50%;
   position: relative;
   display: flex;
   flex-direction: column;
+}
+
+.modal_background_dark{
+  background-color: black;
+}
+
+.modal_backgrond_white{
+  background-color: white;
 }
 
 .option-overlay {

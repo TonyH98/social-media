@@ -195,9 +195,22 @@ const inBlock = Array.isArray(block) ? block.map(block => block.block_id) : []
         <div className="posts_content_text_container">
 
             <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_text`}>
-
-               {highlightMentions(posts.content)}
+                {posts.content.length === 0 ? null : 
+               highlightMentions(posts.content)
+                
+                }
             </div>
+
+            {!posts.url ? null : (
+            <div className="embedded_link_container">
+            <a href={posts.url} target="_blank">
+                <img src={posts.url_img} className="post_article_img" alt={`${posts.url_title}`} />
+            </a>
+             <span className="url_title">{posts.url_title}</span>
+            </div>
+                
+            )}
+
             <div className="posts_img_container">
             {posts.posts_img === "null" ? null : (
 

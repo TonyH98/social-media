@@ -158,6 +158,16 @@ return(
 
    {highlightMentions(reply.content)}
 </div>
+
+{!reply.url ? null : (
+            <div className="embedded_link_container">
+            <a href={reply.url} target="_blank">
+                <img src={reply.url_img} className="post_article_img" alt={`${reply.url_title}`} />
+            </a>
+             <span className="url_title">{reply.url_title}</span>
+            </div>
+                
+            )}
 <div className="posts_img_container">
             {reply.posts_img === null || reply.posts_img === "null" ? null : (
 

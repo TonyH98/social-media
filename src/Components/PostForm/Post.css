@@ -95,6 +95,26 @@ button[type='submit']:hover {
   transition: background-color 0.3s ease;
 }
 
+
+.textera_list{
+  border: black solid 1px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  background-color: rgb(44, 43, 43);
+  height: 100px;
+  border-radius: 20px;
+}
+
+.textera_display:hover{
+  background-color: rgb(169, 169 , 169, 0.4);
+}
+
+.textera_display{
+  padding: 10px;
+}
+
 @media(min-width: 993px){
   .overlay {
     position: fixed;

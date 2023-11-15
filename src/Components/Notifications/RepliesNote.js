@@ -188,7 +188,7 @@ function RepliesNote({notes , users, mainUser}){
 
             <img src={notes.post_content.post_img} alt={notes.post_content.post_img} className="posts_img"/>
         )}
- {notes.post_content.gif ? <img src={notes.post_content.gif} alt={notes.post_content.gif} className="gif_img"/> : null}
+  {notes.creator.gif ? <img src={notes.creator.gif} alt={notes.creator.gif} className="gif_img"/> : null}
         </div> 
     
      </div>

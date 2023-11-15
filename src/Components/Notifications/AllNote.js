@@ -222,7 +222,7 @@ useEffect(() => {
 
             <img src={notes.creator.posts_img} alt={notes.creator.posts_img} className="posts_img"/>
         )}
- {notes.gif ? <img src={notes.gif} alt={notes.gif} className="gif_img"/> : null}
+  {notes.creator.gif ? <img src={notes.creator.gif} alt={notes.creator.gif} className="gif_img"/> : null}
         </div> 
     
      </div>

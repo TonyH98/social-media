@@ -173,10 +173,11 @@ let [otherBlock , setOtherBlock] = useState([])
                 
             )}
          <div className="posts_img_container">
-        {!tag.posts_details?.image ? null : (
+        {!tag.posts_img ? null : (
 
             <img src={tag.posts_img} alt={tag.posts_img} className="posts_img"/>
         )}
+        {tag.gif ? <img src={tag.gif} alt={tag.gif} className="gif_img"/> : null}
 
         </div> 
     

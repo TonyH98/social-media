@@ -150,6 +150,16 @@ function ReplyForm({open , onClose, users, posts, plan, mainUser, showEmojiPicke
             searchTags.some((hash) => tag.tag_names.toLowerCase().includes(hash.toLowerCase()))
           );
           setFilterTags(filteredTags);
+
+          const hasExactMatch = searchTags.every((hash) =>
+          tags.some((tag) => tag.tag_names.toLowerCase().substring(1) === hash.toLowerCase())
+        );
+
+        if (hasExactMatch) {
+          setFilterTags([]);
+        } else {
+          setFilterTags(filteredTags);
+        }
         } else {
           setFilterTags([]);
         }
@@ -196,6 +206,16 @@ function ReplyForm({open , onClose, users, posts, plan, mainUser, showEmojiPicke
             searchTags.some((hash) => tag.tag_names.toLowerCase().includes(hash.toLowerCase()))
           );
           setFilterTags(filteredTags);
+
+          const hasExactMatch = searchTags.every((hash) =>
+          tags.some((tag) => tag.tag_names.toLowerCase().substring(1) === hash.toLowerCase())
+        );
+
+        if (hasExactMatch) {
+          setFilterTags([]);
+        } else {
+          setFilterTags(filteredTags);
+        }
         } else {
           setFilterTags([]);
         }
@@ -349,9 +369,9 @@ className="post_user_profile"
 </p>
 
 {mentionUsers.length > 0 && (
-    <div>
+    <div className={`textera_list`}>
       {mentionUsers.slice(0 , 10).map((user) => (
-        <div className="search-link dropdown-link" key={user.id} onClick={() => handleMention(user)}>
+        <div className={`textera_display light_text`} key={user.id} onClick={() => handleMention(user)}>
           @{user.username}
         </div>
       ))}
@@ -359,9 +379,9 @@ className="post_user_profile"
   )}
 
 {filterTags.length > 0 && (
-    <div>
+    <div className={`textera_list`}>
       {filterTags.map((tag) => (
-        <div className="search-link dropdown-link" key={tag.id} onClick={() => handleTags(tag)}>
+        <div className={`textera_display light_text`} key={tag.id} onClick={() => handleTags(tag)}>
           {tag.tag_names}
         </div>
       ))}

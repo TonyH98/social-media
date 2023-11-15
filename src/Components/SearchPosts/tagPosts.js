@@ -20,6 +20,7 @@ const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 const [showGifPicker, setShowGifPicker] = useState(false)
 const [repliesCount, setRepliesCount] = useState([])
 
+console.log(tag)
 
     useEffect(() => {
         axios.get(`${API}/users/${tag.creator.username}/posts/${tag.id}/reactions`)
@@ -197,10 +198,11 @@ const [repliesCount, setRepliesCount] = useState([])
             )}
 
          <div className="posts_img_container">
-        {!tag.posts_details?.image ? null : (
+        {!tag.posts_img ? null : (
 
             <img src={tag.posts_img} alt={tag.posts_img} className="posts_img"/>
         )}
+         {tag.gif ? <img src={tag.gif} alt={tag.gif} className="gif_img"/> : null}
 
         </div> 
     

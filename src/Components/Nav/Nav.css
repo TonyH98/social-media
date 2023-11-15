@@ -11,6 +11,9 @@ a{
 
 
 @media(min-width: 993px){
+
+  
+
   .nav_white_border{
     border-right: white solid 1px;
   }
@@ -24,6 +27,7 @@ a{
     padding: 20px; /* Add some padding */
     height: 100%;
     display: flex;
+    width: 250px;
   }
   
   .nav-container {
@@ -36,6 +40,8 @@ a{
   .nav-content-container {
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
     gap: 40px;
   }
 
@@ -54,10 +60,6 @@ a{
   }
   
   
-  
-  
-
-  
   .logout{
     background-color: transparent;
     border: none;
@@ -73,6 +75,10 @@ a{
 
   .nav-search{
     display: none;
+  }
+
+  .nav-container{
+    position: fixed;
   }
 }
 

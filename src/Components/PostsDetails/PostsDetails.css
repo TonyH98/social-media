@@ -37,6 +37,11 @@
    margin-top: 10px;
    margin-bottom: 10px;
  }
+
+ .replies_btn_container{
+  margin-left: auto;
+  margin-right: auto
+ }
  
 @media(min-width:320px) and (max-width:992px){
   .reply_form_container{

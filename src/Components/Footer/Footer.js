@@ -121,12 +121,12 @@ function Footer({user, mainUser}){
                     </div>
                 )}
         <br/>
-        <div className="new_article_container">
-
+        <div className={`new_article_container light_text`}>
+                    <h2>What’s happening</h2>
                 {newArticle.articles && Array.isArray(newArticle.articles) && newArticle.articles.map((article, index) => (
                     <div className="article" key={index}>
                         
-                        <Articles article={article} />
+                        <Articles article={article} mainUser={mainUser} />
                     </div>
                 ))}
         </div>

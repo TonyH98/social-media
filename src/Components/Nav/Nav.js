@@ -66,7 +66,7 @@ function Nav({plan, mainUser, setIsLogged}){
 
 
 return(
-    <nav className={`${mainUser?.dark_mode ? 'nav_white_border' : 'nav_dark_border'}`} >
+    <nav className={`fixed-nav ${mainUser?.dark_mode ? 'nav_white_border' : 'nav_dark_border'}`} >
 
     <div className={`${mainUser?.dark_mode ? 'nav_med_white_border nav-background-med-black' : 'nav_med_dark_border nav-background-med-white'} nav-container`}>
 

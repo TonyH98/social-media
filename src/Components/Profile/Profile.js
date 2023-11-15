@@ -14,7 +14,7 @@ import axios from "axios";
 const API = process.env.REACT_APP_API_URL;
 function Profile({user , plan}){
 
-  console.log(user)
+
 
     let [option , setOption] = useState(0)
     const [modal , setModal] = useState(false)
@@ -45,7 +45,7 @@ function Profile({user , plan}){
     }, [dispatch])
     
 
-    console.log(favorites)
+   
 
     useEffect(() => {
       if (users?.username && users?.id) {

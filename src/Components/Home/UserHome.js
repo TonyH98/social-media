@@ -122,6 +122,16 @@ function UserHome({mainUser, plan, following}){
             mentions.some((mention) => user.username.toLowerCase().includes(mention.toLowerCase()))
             );
             setMentionUsers(filteredUsers);
+
+            const hasExactMatch = mentions.every((mention) =>
+            otherUsers.some((user) => user.username.toLowerCase() === mention.toLowerCase())
+          );
+
+          if (hasExactMatch) {
+            setMentionUsers([]);
+          } else {
+            setMentionUsers(filteredUsers);
+          }
           } else {
             setMentionUsers([]);
           }
@@ -158,6 +168,16 @@ function UserHome({mainUser, plan, following}){
             mentions.some((mention) => user.username.toLowerCase().includes(mention.toLowerCase()))
             );
             setMentionUsers(filteredUsers);
+
+            const hasExactMatch = mentions.every((mention) =>
+            otherUsers.some((user) => user.username.toLowerCase() === mention.toLowerCase())
+          );
+
+          if (hasExactMatch) {
+            setMentionUsers([]);
+          } else {
+            setMentionUsers(filteredUsers);
+          }
           } else {
             setMentionUsers([]);
           }
@@ -178,22 +198,23 @@ function UserHome({mainUser, plan, following}){
     };
     
     const handleMention = (user) => {
-      
+   
       const newContent = `@${user.username}`
-      
-      setPosts({ ...posts, content: newContent });
-      
-      setMentionUsers([]); // Clear mention suggestions
-    };
     
-    const handleTags = (tag) => {
-      
-      const newContent = `${tag.tag_names}`
-      
-      setPosts({ ...posts, content: newContent });
-      
-      setFilterTags([]); // Clear mention suggestions
+      setPosts((prev) => ({...prev, content: prev.content + newContent}))
+    
+      setMentionUsers([]);
     };
+
+    const handleTags = (tag) => {
+   
+      const newContent = `${tag.tag_names}`
+    
+      setPosts((prev) => ({...prev, content: prev.content + newContent}))
+    
+      setFilterTags([]);
+    };
+
     
     const handleEmojiClick = (emoji) => {
       const emojiUnicode = emoji.emoji;
@@ -284,7 +305,7 @@ console.log(followingPosts)
                             {posts?.content.length} / {plan?.images ? 400 : 250} characters
                             </p>
                             {mentionUsers.length > 0 && (
-                <div className="dataResult">
+                <div >
                 {mentionUsers.slice(0 , 10).map((user) => (
                     <div className="search-link dropdown-link" key={user.id} onClick={() => handleMention(user)}>
                     @{user.username}
@@ -294,7 +315,7 @@ console.log(followingPosts)
             )}
 
             {filterTags.length > 0 && (
-                <div className="dataResult">
+                <div>
                 {filterTags.slice(0 , 10).map((tag) => (
                     <div className="search-link dropdown-link" key={tag.id} onClick={() => handleTags(tag)}>
                     {tag.tag_names}

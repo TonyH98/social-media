@@ -3,6 +3,7 @@
   width: 100%;
 }
 
+
 @media(min-width: 993px){
   .App {
     display: flex;

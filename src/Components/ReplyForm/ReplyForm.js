@@ -128,6 +128,17 @@ function ReplyForm({open , onClose, users, posts, plan, mainUser, showEmojiPicke
             mentions.some((mention) => user.username.toLowerCase().includes(mention.toLowerCase()))
           );
           setMentionUsers(filteredUsers);
+
+          const hasExactMatch = mentions.every((mention) =>
+              otherUsers.some((user) => user.username.toLowerCase() === mention.toLowerCase())
+            );
+
+            if (hasExactMatch) {
+              setMentionUsers([]);
+            } else {
+              setMentionUsers(filteredUsers);
+            }
+
         } else {
           setMentionUsers([]);
         }
@@ -163,6 +174,17 @@ function ReplyForm({open , onClose, users, posts, plan, mainUser, showEmojiPicke
             mentions.some((mention) => user.username.toLowerCase().includes(mention.toLowerCase()))
           );
           setMentionUsers(filteredUsers);
+
+
+          const hasExactMatch = mentions.every((mention) =>
+              otherUsers.some((user) => user.username.toLowerCase() === mention.toLowerCase())
+            );
+
+            if (hasExactMatch) {
+              setMentionUsers([]);
+            } else {
+              setMentionUsers(filteredUsers);
+            }
         } else {
           setMentionUsers([]);
         }
@@ -186,18 +208,18 @@ function ReplyForm({open , onClose, users, posts, plan, mainUser, showEmojiPicke
    
       const newContent = `@${user.username}`
     
-      setReplies({ ...replies, content: newContent });
+      setReplies((prev) => ({...prev, content: prev.content + newContent}))
     
-      setMentionUsers([]); // Clear mention suggestions
+      setMentionUsers([]);
     };
 
     const handleTags = (tag) => {
    
       const newContent = `${tag.tag_names}`
     
-      setReplies({ ...replies, content: newContent });
+      setReplies((prev) => ({...prev, content: prev.content + newContent}))
     
-      setFilterTags([]); // Clear mention suggestions
+      setFilterTags([]);
     };
 
     const handleEmojiClick = (emoji) => {
@@ -327,7 +349,7 @@ className="post_user_profile"
 </p>
 
 {mentionUsers.length > 0 && (
-    <div className="dataResult">
+    <div>
       {mentionUsers.slice(0 , 10).map((user) => (
         <div className="search-link dropdown-link" key={user.id} onClick={() => handleMention(user)}>
           @{user.username}
@@ -337,7 +359,7 @@ className="post_user_profile"
   )}
 
 {filterTags.length > 0 && (
-    <div className="dataResult">
+    <div>
       {filterTags.map((tag) => (
         <div className="search-link dropdown-link" key={tag.id} onClick={() => handleTags(tag)}>
           {tag.tag_names}

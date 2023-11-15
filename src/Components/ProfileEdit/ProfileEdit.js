@@ -126,9 +126,6 @@ const handleSubmit = (event) => {
      })
 };
 
-console.log(edit.notifications)
-
-
 
     if(!open2) return null
 

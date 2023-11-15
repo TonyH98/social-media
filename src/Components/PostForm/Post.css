@@ -54,9 +54,11 @@ button[type='submit'] {
   color: white;
   border: none;
   padding: 8px 16px;
-  border-radius: 5px;
+  border-radius: 70px;
   cursor: pointer;
   font-weight: bold;
+  height: 40px;
+  width: 75px;
 }
 
 button[type='submit']:hover {
@@ -72,6 +74,9 @@ button[type='submit']:hover {
   border-radius: 5px;
   cursor: not-allowed; 
   font-weight: bold;
+  height: 40px;
+  width: 75px;
+  border-radius: 70px;
 }
 
 .disabled_btn{

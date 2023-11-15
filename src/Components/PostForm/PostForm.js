@@ -104,15 +104,28 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
             }
             const mentionMatches = value.match(/@(\w+)/g);
 
-            if (mentionMatches) {
-              const mentions = mentionMatches.map((mention) => mention.substring(1));
-              const filteredUsers = otherUsers.filter((user) =>
-                mentions.some((mention) => user.username.toLowerCase().includes(mention.toLowerCase()))
-              );
-              setMentionUsers(filteredUsers);
-            } else {
-              setMentionUsers([]);
-            }
+if (mentionMatches) {
+  const mentions = mentionMatches.map((mention) => mention.substring(1));
+  const filteredUsers = otherUsers.filter((user) =>
+    mentions.some((mention) => user.username.toLowerCase().includes(mention.toLowerCase()))
+  );
+  setMentionUsers(filteredUsers);
+
+
+  const hasExactMatch = mentions.every((mention) =>
+  otherUsers.some((user) => user.username.toLowerCase() === mention.toLowerCase())
+);
+
+if (hasExactMatch) {
+  setMentionUsers([]);
+} else {
+  setMentionUsers(filteredUsers);
+}
+
+} else {
+  setMentionUsers([]);
+}
+
 
             const hashtags = value.match(/#(\w+)/g);
             if (hashtags) {
@@ -121,11 +134,24 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
                 searchTags.some((hash) => tag.tag_names.toLowerCase().includes(hash.toLowerCase()))
               );
               setFilterTags(filteredTags);
+
+              const hasExactMatch = searchTags.every((hash) =>
+              tags.some((tag) => tag.tag_names.toLowerCase() === hash.toLowerCase())
+            );
+
+            if (hasExactMatch) {
+              setFilterTags([]);
+            } else {
+              setFilterTags(filteredTags);
+            }
+
             } else {
               setFilterTags([]);
             }
 
           }
+
+
           else{
             const {value} = event.target
             if(value.length <=250){
@@ -146,6 +172,16 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
                 mentions.some((mention) => user.username.toLowerCase().includes(mention.toLowerCase()))
               );
               setMentionUsers(filteredUsers);
+
+              const hasExactMatch = mentions.every((mention) =>
+              otherUsers.some((user) => user.username.toLowerCase() === mention.toLowerCase())
+            );
+
+            if (hasExactMatch) {
+              setMentionUsers([]);
+            } else {
+              setMentionUsers(filteredUsers);
+            }
             } else {
               setMentionUsers([]);
             }
@@ -157,6 +193,18 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
                 searchTags.some((hash) => tag.tag_names.toLowerCase().includes(hash.toLowerCase()))
               );
               setFilterTags(filteredTags);
+
+              const hasExactMatch = searchTags.every((hash) =>
+              tags.some((tag) => tag.tag_names.toLowerCase() === hash.toLowerCase())
+            );
+
+            if (hasExactMatch) {
+              setFilterTags([]);
+            } else {
+              setFilterTags(filteredTags);
+            }
+
+
             } else {
               setFilterTags([]);
             }
@@ -170,7 +218,7 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
    
       const newContent = `@${user.username}`
     
-      setPosts({ ...posts, content: newContent });
+      setPosts((prev) => ({...prev, content: prev.content + newContent}))
     
       setMentionUsers([]);
     };
@@ -179,7 +227,7 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
    
       const newContent = `${tag.tag_names}`
     
-      setPosts({ ...posts, content: newContent });
+      setPosts((prev) => ({...prev, content: prev.content + newContent}))
     
       setFilterTags([]);
     };
@@ -271,7 +319,7 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
 </p>
 
 {mentionUsers.length > 0 && (
-    <div className="dataResult">
+    <div>
       {mentionUsers.slice(0 , 10).map((user) => (
         <div className="search-link dropdown-link" key={user.id} onClick={() => handleMention(user)}>
           @{user.username}
@@ -281,7 +329,7 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
   )}
 
 {filterTags.length > 0 && (
-    <div className="dataResult">
+    <div >
       {filterTags.slice(0 , 10).map((tag) => (
         <div className="search-link dropdown-link" key={tag.id} onClick={() => handleTags(tag)}>
           {tag.tag_names}

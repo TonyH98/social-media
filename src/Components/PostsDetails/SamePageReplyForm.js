@@ -107,8 +107,20 @@ function SamePageReplyForm({ users, plan, mainUser, posts}){
             const mentions = mentionMatches.map((mention) => mention.substring(1));
             const filteredUsers = otherUsers.filter((user) =>
               mentions.some((mention) => user.username.toLowerCase().includes(mention.toLowerCase()))
+
+              
             );
             setMentionUsers(filteredUsers);
+
+            const hasExactMatch = mentions.every((mention) =>
+            otherUsers.some((user) => user.username.toLowerCase() === mention.toLowerCase())
+          );
+
+          if (hasExactMatch) {
+            setMentionUsers([]);
+          } else {
+            setMentionUsers(filteredUsers);
+          }
           } else {
             setMentionUsers([]);
           }
@@ -145,6 +157,18 @@ function SamePageReplyForm({ users, plan, mainUser, posts}){
               mentions.some((mention) => user.username.toLowerCase().includes(mention.toLowerCase()))
             );
             setMentionUsers(filteredUsers);
+
+            const hasExactMatch = mentions.every((mention) =>
+            otherUsers.some((user) => user.username.toLowerCase() === mention.toLowerCase())
+          );
+
+          if (hasExactMatch) {
+            setMentionUsers([]);
+          } else {
+            setMentionUsers(filteredUsers);
+          }
+
+
           } else {
             setMentionUsers([]);
           }
@@ -165,21 +189,21 @@ function SamePageReplyForm({ users, plan, mainUser, posts}){
       };
   
       const handleMention = (user) => {
-     
+   
         const newContent = `@${user.username}`
       
-        setReplies({ ...replies, content: newContent });
+        setReplies((prev) => ({...prev, content: prev.content + newContent}))
       
-        setMentionUsers([]); // Clear mention suggestions
+        setMentionUsers([]);
       };
   
       const handleTags = (tag) => {
      
         const newContent = `${tag.tag_names}`
       
-        setReplies({ ...replies, content: newContent });
+        setReplies((prev) => ({...prev, content: prev.content + newContent}))
       
-        setFilterTags([]); // Clear mention suggestions
+        setFilterTags([]);
       };
   
       const handleEmojiClick = (emoji) => {
@@ -246,7 +270,7 @@ function SamePageReplyForm({ users, plan, mainUser, posts}){
                             {replies?.content.length} / {plan?.images ? 400 : 250} characters
                             </p>
                             {mentionUsers.length > 0 && (
-                <div className="dataResult">
+                <div>
                 {mentionUsers.slice(0 , 10).map((user) => (
                     <div className="search-link dropdown-link" key={user.id} onClick={() => handleMention(user)}>
                     @{user.username}
@@ -256,7 +280,7 @@ function SamePageReplyForm({ users, plan, mainUser, posts}){
             )}
 
             {filterTags.length > 0 && (
-                <div className="dataResult">
+                <div>
                 {filterTags.slice(0 , 10).map((tag) => (
                     <div className="search-link dropdown-link" key={tag.id} onClick={() => handleTags(tag)}>
                     {tag.tag_names}
@@ -304,12 +328,15 @@ function SamePageReplyForm({ users, plan, mainUser, posts}){
       </div>
   </div>
 
- 
+ <div className='replies_btn_container'>
   {replies.content.length === 0 && replies.posts_img.length === 0 && replies.gif.length === 0?
+  
     <button className="post_submit_button gray_button" disabled>Post</button> :
 
   <button className="post_submit_button" type='submit'>Post</button>
   }
+
+ </div>
 </div>
 
                 </form>

@@ -83,10 +83,14 @@ function App() {
     };
   }, []);
 
-
+  useEffect(() => {
+    const body = document.body;
+    body.classList.remove("dark_background", "light_background");
+    body.classList.add(mainUser.dark_mode ? "dark_background" : "light_background");
+  }, [mainUser?.dark_mode]);
 
   return (
-    <div className={`App ${mainUser?.dark_mode ? "dark_background" : "light_background"}`}>
+    <div className={`App`}>
     <Router>
     <div className="navbar">
         {user ? <Nav user={user} plan={plan} mainUser={mainUser} setIsLogged={setIsLogged}/> : null}

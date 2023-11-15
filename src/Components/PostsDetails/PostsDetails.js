@@ -13,6 +13,8 @@ import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
 import { addReaction} from "../../Store/userActions";
 import SamePageReplyForm from "./SamePageReplyForm";
 import {PiArrowsClockwise} from "react-icons/pi"
+import PostOptionModal from "../Posts/PostOptionModal";
+import {AiOutlineEllipsis} from "react-icons/ai"
 
 import axios from "axios";
 
@@ -24,7 +26,7 @@ const {username , id} = useParams()
 
 let [show , setShow] = useState(false)
 
-
+let [show2 , setShow2] = useState(false)
 
 let [likes] = useState({
     reaction: "like",
@@ -192,6 +194,7 @@ return(
     />
     </div>
 
+    <div className="post_options_extra">
 <div className="post_user_info_date_container">
 
 <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_user_profile`}>
@@ -229,6 +232,24 @@ return(
  </div>
 
     </div>
+
+    </div>
+
+    <div className="epllispy_container">
+
+{show2 ? (null) : 
+ <button className={`ellipsis_btn ${mainUser?.dark_mode ? 'white_border' : 'dark_border'}`}>
+<AiOutlineEllipsis  className={`${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`} size={20} onClick={() => setShow2(!show2)}/>
+</button>   
+
+}
+
+{show2 ? (
+    <PostOptionModal posts={posts} mainUser={mainUser}  onClose={() => {setShow2(false);}} open={show2}/>
+) : null}
+</div>
+
+
 
 </div>
  <div className="posts-options-container post_details_btns">

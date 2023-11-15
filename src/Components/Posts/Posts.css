@@ -232,7 +232,7 @@ border-radius: 50%;
   width: 300px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
   border-radius: 10px;
-  height: 300px;
+  height: 320px;
   overflow-y: auto; /* Enable vertical scrolling if content overflows */
   position: relative;
   display: flex;
@@ -255,6 +255,16 @@ right: 400px;
 .option_modal_btn{
   background-color: transparent;
   border: none;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.option_modal_btn:hover{
+  cursor: pointer;
+  background-color: rgba(169, 169, 169, 0.5);
 }
 
 .option_modal_content{

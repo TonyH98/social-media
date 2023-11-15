@@ -89,7 +89,7 @@ function Profile({user , plan}){
           <div className="option-content-holder">
             {getPosts.map((posts) => (
               <div key={posts.id} className="posts-border-container">
-                <Posts posts={posts} users={user} mainUser={users} favorites={postFavorite} setPostFavorite={setPostFavorite} plan={plan} />
+                <Posts posts={posts}  users={user} mainUser={users} favorites={postFavorite} setPostFavorite={setPostFavorite} plan={plan} />
               </div>
             ))}
           </div>

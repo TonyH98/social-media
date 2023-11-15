@@ -271,6 +271,16 @@ background-color: transparent;
     z-index: 99999;
   }
 
+  .modal_backgrond_dark {
+    background-color: black;
+    border: white 1px solid;
+  }
+
+   .modal_backgrond_white {
+    background-color: white;
+    border: black 1px solid;
+  }
+
   .overlay {
     position: fixed;
     top: 0;
@@ -287,7 +297,6 @@ background-color: transparent;
 
   .modal-container {
    width: 100%;
-    background-color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     height: 500px;

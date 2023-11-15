@@ -10,6 +10,8 @@ import {getFavoriteReplies ,
      addFavR, addReactionR
     } from "../../Store/userActions";
 import axios from "axios"
+import {AiOutlineEllipsis} from "react-icons/ai"
+import PostOptionModal from "../Posts/PostOptionModal"
 
 
 const API = process.env.REACT_APP_API_URL;
@@ -32,6 +34,10 @@ function Replies({reply , user , username, posts, mainUser}){
     let [block , setBlock] = useState([])
 
     let [otherBlock , setOtherBlock] = useState([])
+
+
+let [show2 , setShow2] = useState(false)
+
 
     useEffect(() => {
         axios.get(`${API}/block/${mainUser?.id}`)
@@ -133,6 +139,7 @@ return(
 <div className="posts_content">
 
 <div className="replies">
+    <div className="posts_extra_container">
     <div className="post_user_profile_container">
     <img
     src={reply?.creator?.profile_img}
@@ -140,6 +147,7 @@ return(
     className="post_user_profile"
     />
     </div>
+    <div className="post_options_extra">
 <div className="post_user_info_date_container">
 
 <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_user_profile`}>
@@ -187,6 +195,23 @@ return(
 
 
 </div>
+
+    </div>
+
+    <div className="epllispy_container">
+
+{show2 ? (null) : 
+ <button className={`ellipsis_btn ${mainUser?.dark_mode ? 'white_border' : 'dark_border'}`}>
+<AiOutlineEllipsis  className={`${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`} size={20} onClick={() => setShow2(!show2)}/>
+</button>   
+
+}
+
+{show2 ? (
+    <PostOptionModal posts={reply} mainUser={mainUser}  onClose={() => {setShow2(false);}} open={show2}/>
+) : null}
+</div>
+    </div>
 
 </div>
 {inBlock.includes(reply.creator.id) || inOtherBlock.includes(mainUser.id)? null : 

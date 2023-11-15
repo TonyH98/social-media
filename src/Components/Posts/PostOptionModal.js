@@ -10,7 +10,8 @@ import {RiUserFollowFill, RiUserUnfollowLine} from "react-icons/ri"
 import {BsFillVolumeMuteFill} from "react-icons/bs"
 import {CgUnblock} from "react-icons/cg"
 import {BiBlock} from "react-icons/bi"
-
+import { useDispatch } from "react-redux"
+import { fetchPosts } from "../../Store/userActions"
 
 const API = process.env.REACT_APP_API_URL;
 function PostOptionModal({onClose, open, posts, mainUser}){
@@ -20,6 +21,8 @@ function PostOptionModal({onClose, open, posts, mainUser}){
     let [follow , setFollow] = useState([])
 
     let [block , setBlock] = useState([])
+
+    const dispatch = useDispatch()
 
     useEffect(() => {
         const handleOutsideClick = (event) => {
@@ -43,10 +46,16 @@ function PostOptionModal({onClose, open, posts, mainUser}){
 
       function pinPost(){
         axios.put(`${API}/users/${mainUser.username}/posts/${posts.id}` , pin)
+        .then(() => {
+          dispatch(fetchPosts(mainUser.username))
+        })
       }
 
       function removePost(){
         axios.put(`${API}/users/${mainUser.username}/posts/${posts.id}` , unPin)
+        .then(() => {
+          dispatch(fetchPosts(mainUser.username))
+        })
       }
 
    
@@ -161,10 +170,10 @@ return(
           </button>
     ): null}    
 
-        <button className={`option_modal_btn ${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`} >
-          <GrNotes size={20} /> 
-          <span className="button_text">{`Add/remove @${posts.creator.username}`}</span>
-          </button>
+<button className={`option_modal_btn ${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`}>
+  <GrNotes size={20}/>
+  <span className="button_text">{`Add/remove @${posts.creator.username}`}</span>
+</button>
 
           {posts.creator.username !== mainUser.username ? (
               <button className={`option_modal_btn ${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`} >

@@ -72,17 +72,17 @@ function Footer({user, mainUser}){
     return(
         <div className="profile_search_input_container">
 
-<div className={search.length > 0 ? `search_active search_container` : `search_container`}>
+<div className={`${search.length > 0 ? `search_active search_container` : `search_container`} ${mainUser?.dark_mode ? "dark_background" : "light_background" }`}>
 <div className="searchIcon">
     {search.length === 0 ? (
-      <PiMagnifyingGlassLight size={25} color="black" />
+      <PiMagnifyingGlassLight size={25}  />
     ) : (
-      <MdClear onClick={clear} size={25} color="black" className="clear-bar" />
+      <MdClear onClick={clear} size={25} className="clear-bar" />
     )}
   </div>
   <input
     type="text"
-    className="profile_search_bar"
+    className={`profile_search_bar ${mainUser?.dark_mode ? "search_light" : "search_dark" }`}
     placeholder="Search"
     value={search}
     onChange={handleFilter}

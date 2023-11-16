@@ -181,7 +181,7 @@ function createRepost (e){
 console.log(posts)
 return(
 
-    <div className="posts_content">
+    <div className="details_content">
 
 <div className="posts_main_container">
     <div className="posts_extra_container">
@@ -295,17 +295,19 @@ onClick={createRepost}><PiArrowsClockwise size={20}/> {posts.repost_counter}
             </button>
             </div> 
    
-   <ReplyForm open={show} onClose={() => {setShow(false); setShowEmojiPicker(false); setShowGifPicker(false)}}  setShowGifPicker={setShowGifPicker} showGifPicker={showGifPicker} setShowEmojiPicker={setShowEmojiPicker} showEmojiPicker={showEmojiPicker} users={user}  posts={posts} plan={plan} mainUser={mainUser} />
 </div>
  
  </div>
+   <ReplyForm open={show} onClose={() => {setShow(false); setShowEmojiPicker(false); setShowGifPicker(false)}}  setShowGifPicker={setShowGifPicker} showGifPicker={showGifPicker} setShowEmojiPicker={setShowEmojiPicker} showEmojiPicker={showEmojiPicker} users={user}  posts={posts} plan={plan} mainUser={mainUser} />
 <div className={`reply_form_container ${mainUser.dark_mode ? "border_dark" : "border_light"}`}>
 <SamePageReplyForm users={user} mainUser={mainUser} plan={plan} posts={posts}/>
 </div>
-<div className="replies_container">
+<div className={`option-content-holder ${mainUser.dark_mode ? "light_border_post" : "dark_border_post"}`}>
     {getReplies.map((reply) => {
         return(
-            <Replies reply={reply} user={user} username={username} posts={posts} mainUser={mainUser}/>
+            <div className="posts-border-container">
+                <Replies reply={reply} user={user} username={username} posts={posts} mainUser={mainUser}/>
+            </div>
         )
     })}
 </div>

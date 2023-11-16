@@ -10,13 +10,9 @@
     display: flex;
     flex-direction: row;
   }
-  .users_home_page, 
-  .profile, 
-  .users_following_container,
-  .note_page,
-  .search_post_page,
-  .posts_content{
-    margin-left: 20px;
+ 
+  .profile_second_section, .note_first_section, .following_first_section{
+    padding-left: 20px;
     margin-right: 20px;
   }
 

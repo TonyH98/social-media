@@ -86,7 +86,7 @@ function Profile({user , plan}){
     function optionContent(selected) {
       if (selected === 0) {
         return (
-          <div className="option-content-holder">
+          <div className={`option-content-holder ${users.dark_mode ? "light_border_post" : "dark_border_post"}`}>
             {getPosts.map((posts) => (
               <div key={posts.id} className="posts-border-container">
                 <Posts posts={posts}  users={user} mainUser={users} favorites={postFavorite} setPostFavorite={setPostFavorite} plan={plan} />
@@ -97,7 +97,7 @@ function Profile({user , plan}){
       }
       if (selected === 1) {
         return (
-          <div className="option-content-holder">
+          <div className={`option-content-holder ${users.dark_mode ? "light_border_post" : "dark_border_post"}`}>
             {replies.map((reply) => (
               <div key={reply.id} className="posts-border-container">
                 <AllReplies posts={reply} users={user} mainUser={users} favorites={favorites} plan={plan} />
@@ -108,7 +108,7 @@ function Profile({user , plan}){
       }
       if (selected === 2) {
         return (
-          <div className="option-content-holder">
+          <div className={`option-content-holder ${users.dark_mode ? "light_border_post" : "dark_border_post"}`}>
             {favorites.map((fav) => (
               <div key={fav.id} className="posts-border-container">
                 <Favorites fav={fav} users={user} mainUser={users} plan={plan}  />

@@ -45,7 +45,7 @@ axios.get(`${API}/search/all/${tag_name}`)
 function optionContent(selected) {
     if (selected === 0) {
       return (
-        <div className="search_post_container">
+        <div className={`option-content-holder ${mainUser.dark_mode ? "light_border_post" : "dark_border_post"}`}>
           {getPosts.map((tag) => {
             return (
               <div  className="posts-border-container">
@@ -58,7 +58,7 @@ function optionContent(selected) {
     }
     if(selected === 1){
       return (
-        <div className="search_post_container">
+        <div className={`option-content-holder ${mainUser.dark_mode ? "light_border_post" : "dark_border_post"}`}>
           {getReplies.map((tag) => {
             return (
               <div  className="posts-border-container">
@@ -71,7 +71,7 @@ function optionContent(selected) {
     }
   if(selected === 2){
     return (
-      <div className="search_post_container">
+      <div className={`option-content-holder ${mainUser.dark_mode ? "light_border_post" : "dark_border_post"}`}>
         {allSearch.map((tag) => {
           return (
             <div  className="posts-border-container">

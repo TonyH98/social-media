@@ -171,6 +171,10 @@
         flex-direction: column;
         min-height: 100vh;
     }
+
+    .profile_search_input_container{
+        width: 380px;
+    }
    
     .footer-content{
         flex: 1 0 auto

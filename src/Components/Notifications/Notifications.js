@@ -106,7 +106,7 @@ console.log(noteR)
   function optionContent(selected) {
     if (selected === 0) {
       return (
-        <div>
+        <div className={`option-content-holder ${mainUser.dark_mode ? "light_border_post" : "dark_border_post"}`}>
           {filterNote.map((notes) => {
             return (
               <div  className="posts-border-container">
@@ -119,7 +119,7 @@ console.log(noteR)
     }
     if (selected === 1) {
       return (
-        <div>
+        <div className={`option-content-holder ${mainUser.dark_mode ? "light_border_post" : "dark_border_post"}`}>
           {filterNote2.map((notes) => {
             return (
               <div  className="posts-border-container">
@@ -133,7 +133,7 @@ console.log(noteR)
     }
     if (selected === 2) {
       return (
-        <div>
+        <div className={`option-content-holder ${mainUser.dark_mode ? "light_border_post" : "dark_border_post"}`}>
           {filterNote3.map((notes) => {
             return (
               <div  className="posts-border-container">

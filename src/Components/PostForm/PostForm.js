@@ -218,19 +218,24 @@ if (hasExactMatch) {
     
    
     const handleMention = (user) => {
-   
-      const newContent = `@${user.username}`
+      const newContent = `@${user.username}`;
     
-      setPosts((prev) => ({...prev, content: prev.content + newContent}))
+      setPosts((prev) => ({
+        ...prev,
+        content: prev.content.replace(/@[^\s]+/, newContent),
+      }));
     
       setMentionUsers([]);
     };
 
     const handleTags = (tag) => {
    
-      const newContent = `${tag.tag_names}`
+      const newContent = `${tag.tag_names}`;
     
-      setPosts((prev) => ({...prev, content: prev.content + newContent}))
+      setPosts((prev) => ({
+        ...prev,
+        content: prev.content.replace(/#[^\s]+/, newContent),
+      }));
     
       setFilterTags([]);
     };

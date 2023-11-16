@@ -209,19 +209,24 @@ function SamePageReplyForm({ users, plan, mainUser, posts}){
       };
   
       const handleMention = (user) => {
-   
-        const newContent = `@${user.username}`
+        const newContent = `@${user.username}`;
       
-        setReplies((prev) => ({...prev, content: prev.content + newContent}))
+        setReplies((prev) => ({
+          ...prev,
+          content: prev.content.replace(/@[^\s]+/, newContent),
+        }));
       
         setMentionUsers([]);
       };
   
       const handleTags = (tag) => {
      
-        const newContent = `${tag.tag_names}`
+        const newContent = `${tag.tag_names}`;
       
-        setReplies((prev) => ({...prev, content: prev.content + newContent}))
+        setReplies((prev) => ({
+          ...prev,
+          content: prev.content.replace(/#[^\s]+/, newContent),
+        }));
       
         setFilterTags([]);
       };

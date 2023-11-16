@@ -162,11 +162,13 @@ const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.id) : [];
 
             <Link to={`/posts/${posts.creator.username}/${posts?.id}`} className="link-style">
         <div className="posts_content_text_container">
-
+            {!posts.content ? null : 
             <div className={`${mainUser?.dark_mode ? 'white_text' : 'dark_text'} post_text`}>
 
                {highlightMentions(posts.content)}
             </div>
+            
+            }
 
             {!posts.url ? null : (
             <div className={`embedded_link_container ${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`}>

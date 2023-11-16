@@ -225,19 +225,24 @@ function ReplyForm({open , onClose, users, posts, plan, mainUser, showEmojiPicke
     };
 
     const handleMention = (user) => {
-   
-      const newContent = `@${user.username}`
+      const newContent = `@${user.username}`;
     
-      setReplies((prev) => ({...prev, content: prev.content + newContent}))
+      setReplies((prev) => ({
+        ...prev,
+        content: prev.content.replace(/@[^\s]+/, newContent),
+      }));
     
       setMentionUsers([]);
     };
 
     const handleTags = (tag) => {
    
-      const newContent = `${tag.tag_names}`
+      const newContent = `${tag.tag_names}`;
     
-      setReplies((prev) => ({...prev, content: prev.content + newContent}))
+      setReplies((prev) => ({
+        ...prev,
+        content: prev.content.replace(/#[^\s]+/, newContent),
+      }));
     
       setFilterTags([]);
     };
@@ -317,6 +322,16 @@ className="post_user_profile"
 
    {highlightMentions(posts.content)}
 </div>
+
+    {!posts.url ? null : (
+            <div className={`embedded_link_container ${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`}>
+            <a href={posts.url} target="_blank">
+                <img src={posts.url_img} className="post_article_img" alt={`${posts.url_title}`} />
+            </a>
+             <span className="url_title">{posts.url_title}</span>
+            </div>
+                
+            )}
 <div className="posts_img_container">
 {!posts.posts_img || posts.posts_img === "null" ? null  : (
 

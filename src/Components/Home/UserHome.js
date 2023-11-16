@@ -9,12 +9,18 @@ import EmojiPicker from "emoji-picker-react";
 import {BsEmojiSmile} from "react-icons/bs"
 import {MdOutlineGifBox} from "react-icons/md"
 import ReactGiphySearchbox from 'react-giphy-searchbox'
+import HomeReplies from "./HomeReplies";
+
 
 const API = process.env.REACT_APP_API_URL;
 const GIF = process.env.REACT_APP_API_GIF;
 function UserHome({mainUser, plan, following}){
 
     let [favorites , setFavorites] = useState([])
+
+    let option = ["Following Posts" , "Following Replies"]
+
+    let [options , setOptions] = useState(0)
 
     const [showEmojiPicker, setShowEmojiPicker] = useState(false)
     let [posts, setPosts] = useState({
@@ -34,6 +40,8 @@ function UserHome({mainUser, plan, following}){
     let [mentionUsers , setMentionUsers] = useState([])
 
     let [followingPosts , setFollowingPosts] = useState([])
+
+    let [followingReplies , setFollowingReplies] = useState([])
 
     const [modal , setModal] = useState(false)
 
@@ -75,6 +83,10 @@ function UserHome({mainUser, plan, following}){
       axios.get(`${API}/block/${mainUser?.id}/block`)
       .then((res) => {
         setUsersBlock(res.data)
+      })
+      axios.get(`${API}/follow/${mainUser?.id}/replies`)
+      .then((res) => {
+        setFollowingReplies(res.data)
       })
     }, [API, mainUser?.id])
     
@@ -218,19 +230,24 @@ function UserHome({mainUser, plan, following}){
     };
     
     const handleMention = (user) => {
-   
-      const newContent = `@${user.username}`
+      const newContent = `@${user.username}`;
     
-      setPosts((prev) => ({...prev, content: prev.content + newContent}))
+      setPosts((prev) => ({
+        ...prev,
+        content: prev.content.replace(/@[^\s]+/, newContent),
+      }));
     
       setMentionUsers([]);
     };
 
     const handleTags = (tag) => {
    
-      const newContent = `${tag.tag_names}`
+      const newContent = `${tag.tag_names}`;
     
-      setPosts((prev) => ({...prev, content: prev.content + newContent}))
+      setPosts((prev) => ({
+        ...prev,
+        content: prev.content.replace(/#[^\s]+/, newContent),
+      }));
     
       setFilterTags([]);
     };
@@ -288,6 +305,37 @@ function UserHome({mainUser, plan, following}){
       
 console.log(followingPosts)
 
+
+
+function optionContent(selected){
+  if(selected === 0){
+    return(
+      <div className="option-content-holder">
+      {Array.isArray(followingPosts) && followingPosts.map((posts) => {
+        return (
+          <div key={posts.id} className="posts-border-container">
+            <HomePosts favorites={favorites} posts={posts}  mainUser={mainUser} plan={plan} setFavorites={setFavorites}/>
+          </div>
+        );
+      })}
+    </div>
+    )
+  }
+
+  if(selected === 1){
+    return (
+      <div className="option-content-holder">
+      {Array.isArray(followingReplies) && followingReplies.map((posts) => {
+        return (
+          <div key={posts.id} className="posts-border-container">
+            <HomeReplies posts={posts}  mainUser={mainUser} plan={plan}/>
+          </div>
+        );
+      })}
+    </div>
+    )
+  }
+}
   
     return(
         <div className="users_home_page">
@@ -406,17 +454,16 @@ console.log(followingPosts)
             </div>
             <br/>
             <hr/>
+            <div className="three_options_container">
+        {option.map((opt , index) => {
+            return(
+                <button onClick={() => setOptions(index)} className={`${index === option ? `active options` : 'options'} ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`} key={index}>{opt}</button>
+            )
+        })}
 
+        </div>
         <div className="users_following_posts_container">
-        <div className="option-content-holder">
-              {Array.isArray(followingPosts) && followingPosts.map((posts) => {
-                return (
-                  <div key={posts.id} className="posts-border-container">
-                    <HomePosts favorites={favorites} posts={posts}  mainUser={mainUser} plan={plan} setFavorites={setFavorites}/>
-                  </div>
-                );
-              })}
-            </div>
+        {optionContent(options)}
         </div>
          <button className="home-post-button" 
           onClick={() => setModal(true)}

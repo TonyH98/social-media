@@ -183,6 +183,15 @@ function RepliesNote({notes , users, mainUser}){
 
            {highlightMentions(notes.post_content.content)}
         </div>
+        {!notes.url ? null : (
+            <div className={`embedded_link_container ${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`}>
+            <a href={notes.url} target="_blank">
+                <img src={notes.url_img} className="post_article_img" alt={`${notes.url_title}`} />
+            </a>
+             <span className="url_title">{notes.url_title}</span>
+            </div>
+                
+            )}
          <div className="posts_img_container">
         {notes.post_content.post_img === "null" ? null : (
 

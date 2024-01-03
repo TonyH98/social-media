@@ -112,11 +112,11 @@ function Signup(){
 
 
 
-      console.log(checkCapsLock)
+  
       function getAge(){
-        const dateOfBirth = new Date(user.DOB)
-        const currentDate = new Date();
-        const age = currentDate.getFullYear() - dateOfBirth.getFullYear()
+        let dateOfBirth = new Date(user.DOB)
+        let currentDate = new Date();
+        let age = currentDate.getFullYear() - dateOfBirth.getFullYear()
 
         if (
           currentDate.getMonth() < dateOfBirth.getMonth() ||
@@ -155,7 +155,7 @@ function Signup(){
         }
       }
 
-      console.log(checkCondition())
+     
 
       const handleSubmit = (event) => {
         event.preventDefault();

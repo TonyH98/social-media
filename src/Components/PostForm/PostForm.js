@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { createPost } from "../../Store/userActions";
 import ReactGiphySearchbox from 'react-giphy-searchbox'
 import EmojiPicker from "emoji-picker-react";
-
+import PollForm from "./PollForm"
 
 import axios from "axios";
 const API = process.env.REACT_APP_API_URL;
@@ -27,6 +27,10 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
     let [block , setBlock] = useState([])
 
     const [usersBlock , setUsersBlock] = useState([])
+
+    let [select , setSelect] = useState(0)
+    
+    let options = ["Create Post", "Create Poll"]
 
     const textareaRef = useRef(null);
     
@@ -292,8 +296,16 @@ if (hasExactMatch) {
                 <p className="closeBtn" onClick={onClose}>X</p>
             </div>
            <div className="content">
-            
-            
+               <div className="three_options_container">
+        {options.map((opt , index) => {
+            return(
+                <button onClick={() => setSelect(index)} className={`${index === options ? `active options` : 'options'} ${users?.dark_mode ? 'white_text' : 'dark_text'}`} key={index}>{opt}</button>
+            )
+        })}
+
+        </div>
+            {select === 0 ? (
+            <>
             <form onSubmit={handleSubmit} className="signup-form">
 
 
@@ -409,6 +421,9 @@ if (hasExactMatch) {
           />
 
 )}
+            </>
+
+            ) : <PollForm user={users} onClose={onClose}/>}
 
            </div>
 

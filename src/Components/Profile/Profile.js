@@ -5,6 +5,7 @@ import Favorites from "../Favorites/Favorites"
 import PostForm from "../PostForm/PostForm";
 import ProfileEdit from "../ProfileEdit/ProfileEdit";
 import AllReplies from "../ALLReplies/AllReplies";
+import Poll from "../Poll/Poll";
 import Posts from "../Posts/Posts";
 import { useDispatch , useSelector } from "react-redux";
 import { fetchUsers, fetchPosts, getTags, fetchUser, getFollowing, getFollower, getAllUsersReplies} from "../../Store/userActions";
@@ -73,7 +74,7 @@ function Profile({user , plan}){
 
   }, [user.id])
 
-    let options = ["Posts", "Replies", "Favorites"]
+    let options = ["Posts", "Replies", "Favorites", "Poll"]
 
 
   getPosts = getPosts.sort((a , b) => {
@@ -117,6 +118,17 @@ function Profile({user , plan}){
           </div>
         );
       }
+      // if (selected === 3) {
+      //   return (
+      //     <div className={`option-content-holder ${users.dark_mode ? "light_border_post" : "dark_border_post"}`}>
+      //       {favorites.map((fav) => (
+      //         <div key={fav.id} className="posts-border-container">
+      //           <Favorites fav={fav} users={user} mainUser={users} plan={plan}  />
+      //         </div>
+      //       ))}
+      //     </div>
+      //   );
+      // }
       return null; // Add a default return value if none of the conditions are met
     }
     

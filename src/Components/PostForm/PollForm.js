@@ -12,8 +12,14 @@ function PollForm({user, onClose}){
 
     let [poll, setPoll] = useState({
         question: "",
-        options: [initalOption],
+        options: [initalOption, initalOption],
         user_id: user.id
+    });
+    
+    const [errors, setErrors] = useState({
+      question: '',
+      optionLength: '',
+      option: '',
     });
     
     useEffect(() => {
@@ -53,41 +59,94 @@ function PollForm({user, onClose}){
         setPoll({...poll, options: filter})
       }
     
+
+      function validQuestion(){
+        if(poll.question.length > 0){
+          return true
+        }
+        else{
+          return false
+        }
+      }
+
+      function validOption(){
+        let checkOption = poll.options.every((val) => val.text.length >= 1)
+
+        if(checkOption){
+          return true
+        }
+        else{
+          return false
+        }
+      }
+
+      function checkOptionLength(){
+        if(poll.options.length >=2){
+          return true
+        }
+        else{
+          return false
+        }
+      }
+
       const handleSubmit = (event) => {
         event.preventDefault();
-      
+
+        const questionError = !validQuestion() ? 'Question can\'t be empty' : '';
+        const optionLengthError = !checkOptionLength() ? 'Must have at least two options' : '';
+        const optionError = !validOption() ? 'All options must be filled' : '';
+
+        setErrors({
+          question: questionError,
+          optionLength: optionLengthError,
+          option: optionError,
+        });
+
+        let valid = true
         // Validate input
         if (!poll.question.trim() || poll.options.some((option) => !option.text.trim())) {
           // Handle invalid input (e.g., show an error message)
           return;
         }
-      
+        
+        
         const optionsArray = poll.options.map((option) => ({ text: option.text, count: option.count }));
+        
+        if (questionError || optionLengthError || optionError) {
+          valid = false; 
+        }
+
+        if(valid){
       
-        axios.post(`${API}/poll`, {
-          question: poll.question,
-          options: optionsArray,
-          user_id: poll.user_id
-        })
-        .then(() => {
-          onClose();
-          setPoll({
-            question: "",
-            options: [initalOption],
-            user_id: user.id
-          });
-        })
-        .catch((error) => {
-          // Handle error (e.g., show an error message)
-          console.error(error);
-        });
+            axios.post(`${API}/poll`, {
+              question: poll.question,
+              options: optionsArray,
+              user_id: poll.user_id
+            })
+            .then(() => {
+              onClose();
+              setPoll({
+                question: "",
+                options: [initalOption],
+                user_id: user.id
+              });
+            })
+            .catch((error) => {
+              // Handle error (e.g., show an error message)
+              console.error(error);
+            });
+
+        }
+        else{
+          throw new Error("Poll must have at least 2 or more options")
+        }
       };
       
 
-console.log(poll)
 return(
     <div>
        <form onSubmit={handleSubmit} className="pollForm">
+       {errors.optionLength && <p style={{color:"red"}}>{errors.optionLength}</p>}
         <label htmlFor="question" className="poll_label">
             Question:
             <textarea
@@ -99,6 +158,7 @@ return(
               e.target.style.height = e.target.scrollHeight + 'px';
             }}
           />
+           {errors.question && <p style={{color:"red"}}>{errors.question}</p>}
         </label>
 
         {poll.options.map((option , index) => {
@@ -119,6 +179,7 @@ return(
           />
           <button className="remove_option" onClick={() => removeOption(index)}><FaTrash size={16}/></button>
         </div>
+        {errors.option && <p style={{color:"red"}}>{errors.option}</p>}
       </label>
 
 

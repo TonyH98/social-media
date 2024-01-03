@@ -1,7 +1,8 @@
 
 import axios from "axios";
 import { useState , useEffect, useRef} from 'react';
-
+import { FaTrash } from "react-icons/fa";
+import "./PollForm.css"
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -37,12 +38,20 @@ function PollForm({user, onClose}){
 
       const addOption = (event) => {
           event.preventDefault()
-          setPoll({
-              ...poll,
-              options: [...poll.options, {text: "", count:0}]
-          })
+          if(poll.options.length < 3){
+
+            setPoll({
+                ...poll,
+                options: [...poll.options, {text: "", count:0}]
+            })
+          }
       }
     
+      const removeOption = (option) => {
+
+        const filter = poll.options.filter((val, index) => index !== option)
+        setPoll({...poll, options: filter})
+      }
     
       const handleSubmit = (event) => {
         event.preventDefault();
@@ -78,40 +87,54 @@ function PollForm({user, onClose}){
 console.log(poll)
 return(
     <div>
-       <form onSubmit={handleSubmit}>
-        <label htmlFor="question">
+       <form onSubmit={handleSubmit} className="pollForm">
+        <label htmlFor="question" className="poll_label">
             Question:
-            <input
+            <textarea
             id="question"
-            type="text"
-            onChange={handleTextChange}
             value={poll.question}
-            />
+            onChange={handleTextChange}
+            onInput={(e) => {
+              e.target.style.height = 'auto';
+              e.target.style.height = e.target.scrollHeight + 'px';
+            }}
+          />
         </label>
 
         {poll.options.map((option , index) => {
             return(
             <div key={index}>
-            <label htmlFor={`option-${index}`}>
-              Option {index + 1}:
-              <input
-                id={`option-${index}`}
-                type="text"
-                onChange={(event) => handleOptionChange(index, event)}
-                value={option.text}
-              />
-            </label>
+           
+
+           <label htmlFor={`option-${index}`} className="poll_label">
+  
+          Option {index + 1}
+
+        <div >
+          <input
+            id={`option`}
+            type="text"
+            onChange={(event) => handleOptionChange(index, event)}
+            value={option.text}
+          />
+          <button className="remove_option" onClick={() => removeOption(index)}><FaTrash size={16}/></button>
+        </div>
+      </label>
+
+
             </div>
 
             )
         })}
 
-
-        <button onClick={addOption}>Add Options</button>
+        <div>
+        {poll.options.length === 3 ? null : 
+        
+        <button className="addOption" onClick={addOption}>+</button>
+        }
 
         <button type="submit">Submit</button>
-
-        <button onClick={onClose}>Cancel</button>
+        </div>
 
        </form>
     </div>

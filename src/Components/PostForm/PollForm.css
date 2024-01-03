@@ -1,0 +1,62 @@
+
+.pollForm{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 20px;
+    margin-left: 50px;
+    gap: 10px;
+}
+
+.poll_label{
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+}
+
+
+#question{
+    width: 110%;
+    font-size: 20px;
+    margin-top: 10px;
+    border: black solid 1px
+}
+
+#option{
+    margin-top: 10px;
+    height: 50px;
+    width: 300px;
+    font-size: 25px;
+}
+
+.remove_option{
+    background-color: transparent;
+    border: none;
+    margin-left: 10px
+}
+
+.addOption {
+    position: relative;
+    border: none;
+    background-color: transparent;
+    color: blue;
+    font-size: 30px;
+}
+
+.addOption:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 255, 0.2); /* Transparent blue background */
+    border-radius: 50%; /* Make it round */
+}
+
+.addOption:hover::after {
+    content: 'Add'; /* Text to display on hover */
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    font-size: 14px;
+    transform: translateX(-50%);
+    color: blue;
+}
+

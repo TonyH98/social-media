@@ -75,6 +75,7 @@ function highlightMentions(content) {
     const highlightedContent = content
     .replace(mentionPattern, '<span class="mention">$&</span>')
     .replace(hashtagPattern, `<span class="hashtag" style="color: blue;">$&</span>`)
+    .replace(/\n/g, '<br>')
     return <div dangerouslySetInnerHTML={{ __html: highlightedContent }} />;
 }
 

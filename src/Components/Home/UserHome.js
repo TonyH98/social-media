@@ -310,10 +310,11 @@ console.log(followingPosts)
 function optionContent(selected){
   if(selected === 0){
     return(
-      <div className="option-content-holder">
+      <div className="option-content-holder home_posts">
       {Array.isArray(followingPosts) && followingPosts.map((posts) => {
         return (
           <div key={posts.id} className="posts-border-container">
+            <hr/>
             <HomePosts favorites={favorites} posts={posts}  mainUser={mainUser} plan={plan} setFavorites={setFavorites}/>
           </div>
         );
@@ -324,7 +325,7 @@ function optionContent(selected){
 
   if(selected === 1){
     return (
-      <div className="option-content-holder">
+      <div className="option-content-holder home_posts">
       {Array.isArray(followingReplies) && followingReplies.map((posts) => {
         return (
           <div key={posts.id} className="posts-border-container">
@@ -457,7 +458,8 @@ function optionContent(selected){
             <div className="three_options_container">
         {option.map((opt , index) => {
             return(
-                <button onClick={() => setOptions(index)} className={`${index === option ? `active options` : 'options'} ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`} key={index}>{opt}</button>
+                <button onClick={() => setOptions(index)} className={`${index === options ? `active options` : 'options'} 
+                ${mainUser?.dark_mode ? 'white_text' : 'dark_text'}`} key={index}>{opt}</button>
             )
         })}
 

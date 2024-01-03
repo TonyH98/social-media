@@ -115,6 +115,10 @@ button[type='submit']:hover {
   padding: 10px;
 }
 
+.post_modal_text{
+  white-space: pre-line;
+}
+
 @media(min-width: 993px){
   .overlay {
     position: fixed;

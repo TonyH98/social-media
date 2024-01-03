@@ -111,8 +111,8 @@ function highlightMentions() {
     if (posts && posts?.content) {
         const highlightedContent = posts?.content
             .replace(mentionPattern, '<span class="mention">$&</span>')
-            .replace(hashtagPattern, '<span class="hashtag" style="color: blue;">$&</span>');
-        
+            .replace(hashtagPattern, '<span class="hashtag" style="color: blue;">$&</span>')
+            .replace(/\n/g, '<br>')
         return <div dangerouslySetInnerHTML={{ __html: highlightedContent }} />;
     } else {
         return null; // Return something meaningful, or just return null if content is missing

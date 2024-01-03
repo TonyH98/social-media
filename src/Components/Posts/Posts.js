@@ -13,6 +13,8 @@ import axios from "axios";
 import {PiArrowsClockwise} from "react-icons/pi"
 import {AiOutlineEllipsis} from "react-icons/ai"
 import PostOptionModal from "./PostOptionModal";
+
+
 const API = process.env.REACT_APP_API_URL;
 function Posts ({posts, users, favorites, plan, mainUser, setPostFavorite}){
 
@@ -93,6 +95,7 @@ function highlightMentions(content) {
     const highlightedContent = content
     .replace(mentionPattern, '<span class="mention">$&</span>')
     .replace(hashtagPattern, `<span class="hashtag" style="color: blue;">$&</span>`)
+    .replace(/\n/g, '<br>')
     return <div dangerouslySetInnerHTML={{ __html: highlightedContent }} />;
 }
 

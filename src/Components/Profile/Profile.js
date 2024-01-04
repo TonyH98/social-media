@@ -126,12 +126,13 @@ function Profile({user , plan}){
       if (selected === 3) {
         return (
           <div className={`option-content-holder ${users.dark_mode ? "light_border_post" : "dark_border_post"}`}>
-            {poll.map((poll) => (
-              <div key={poll.id} className="posts-border-container">
-                <Poll poll={poll} users={user} mainUser={users} plan={plan}  />
-              </div>
-            ))}
-          </div>
+          {poll.map((singlePoll) => (
+            <div key={singlePoll.id} className="posts-border-container">
+              <Poll poll={singlePoll} users={user} mainUser={users} plan={plan} setPoll={setPoll} />
+            </div>
+          ))}
+        </div>
+        
         );
       }
       return null; // Add a default return value if none of the conditions are met

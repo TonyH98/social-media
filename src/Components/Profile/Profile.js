@@ -22,7 +22,7 @@ function Profile({user , plan}){
     const [showEmojiPicker, setShowEmojiPicker] = useState(false)
     const [showGifPicker, setShowGifPicker] = useState(false)
     const [modal2 , setModal2] = useState(false)
-
+    const [poll , setPoll] = useState([])
     const [favorites , setFavorites] = useState([])
 
     const [postFavorite , setPostFavorite] = useState([])
@@ -62,6 +62,11 @@ function Profile({user , plan}){
     axios.get(`${API}/favorites/${user.id}/all`)
     .then((res) => {
       setFavorites(res.data)
+    })
+
+    axios.get(`${API}/poll/${user.id}`)
+    .then((res) => {
+      setPoll(res.data)
     })
 
   }, [user.id])
@@ -118,17 +123,17 @@ function Profile({user , plan}){
           </div>
         );
       }
-      // if (selected === 3) {
-      //   return (
-      //     <div className={`option-content-holder ${users.dark_mode ? "light_border_post" : "dark_border_post"}`}>
-      //       {favorites.map((fav) => (
-      //         <div key={fav.id} className="posts-border-container">
-      //           <Favorites fav={fav} users={user} mainUser={users} plan={plan}  />
-      //         </div>
-      //       ))}
-      //     </div>
-      //   );
-      // }
+      if (selected === 3) {
+        return (
+          <div className={`option-content-holder ${users.dark_mode ? "light_border_post" : "dark_border_post"}`}>
+            {poll.map((poll) => (
+              <div key={poll.id} className="posts-border-container">
+                <Poll poll={poll} users={user} mainUser={users} plan={plan}  />
+              </div>
+            ))}
+          </div>
+        );
+      }
       return null; // Add a default return value if none of the conditions are met
     }
     

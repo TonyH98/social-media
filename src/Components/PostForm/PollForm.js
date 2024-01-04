@@ -13,7 +13,9 @@ function PollForm({user, onClose}){
     let [poll, setPoll] = useState({
         question: "",
         options: [initalOption, initalOption],
-        user_id: user.id
+        user_id: user.id,
+        user_name: user.username,
+
     });
     
     const [errors, setErrors] = useState({
@@ -26,7 +28,8 @@ function PollForm({user, onClose}){
         if (user?.id) {
             setPoll((prevPoll) => ({
                 ...prevPoll,
-                user_id: user?.id
+                user_id: user?.id,
+                user_name: user.username
             }));
         }
     }, [user?.id]);
@@ -121,14 +124,17 @@ function PollForm({user, onClose}){
             axios.post(`${API}/poll`, {
               question: poll.question,
               options: optionsArray,
-              user_id: poll.user_id
+              user_id: poll.user_id,
+              user_name: poll.user_name,
+   
             })
             .then(() => {
               onClose();
               setPoll({
                 question: "",
                 options: [initalOption],
-                user_id: user.id
+                user_id: user.id,
+                user_name: user.username
               });
             })
             .catch((error) => {

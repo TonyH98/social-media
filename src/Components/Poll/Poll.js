@@ -21,6 +21,15 @@ function Poll({ poll, mainUser, setPoll }) {
   const [selectedOption, setSelectedOption] = useState("");
   const [voteInfo, setVoteInfo] = useState({});
 
+  const [totalVotes , setTotalVotes] = useState({})
+
+  useEffect(() => {
+    axios.get(`${API}/poll/${poll.id}/votes`)
+    .then((res) => {
+      setTotalVotes(res.data.votes)
+    })
+  }, [poll.id])
+
   useEffect(() => {
     axios.get(`${API}/poll/${mainUser.id}/votes/${poll.id}`)
       .then((res) => {
@@ -50,6 +59,8 @@ function Poll({ poll, mainUser, setPoll }) {
     })
   }
 
+
+
   return (
     <div className="posts_content">
       <div className="posts_extra_container">
@@ -72,22 +83,39 @@ function Poll({ poll, mainUser, setPoll }) {
             {poll.question}
           </div>
 
+
           <div>
-            {poll.options.map((op) => (
-              <div key={op.text} style={{ display: "flex", alignItems: "center" }}>
-                <input
-                  type="radio"
-                  value={op.text}
-                  className="poll_check"
-                  onChange={() => {
-                    setSelectedOption(op.text);
-                  }}
-                  checked={op.text === selectedOption}
-                />
-                <span>{op.text} {selectedOption !== "" ? op.count : null}</span>
-              </div>
-            ))}
-          </div>
+  {poll.options.map((op) => (
+    <div key={op.text} style={{ display: "flex", alignItems: "center" }}>
+      <input
+        type="radio"
+        value={op.text}
+        className="poll_check"
+        onChange={() => {
+          setSelectedOption(op.text);
+        }}
+        checked={op.text === selectedOption}
+      />
+      <span style={{
+        backgroundColor: selectedOption !== "" && totalVotes !== 0 ? `rgba(29, 161, 242, ${(op.count / totalVotes)})` : 'transparent',
+        padding: '4px',
+        borderRadius: '4px',
+        marginRight: '8px',
+        width: '100%'
+      }}>
+        {op.text} 
+      </span>
+      {selectedOption !== "" && totalVotes !== 0 && (
+        <span>
+          ({((op.count / totalVotes) * 100).toFixed(2)}%)
+        </span>
+      )}
+    </div>
+  ))}
+</div>
+
+
+
         </div>
       </div>
     </div>

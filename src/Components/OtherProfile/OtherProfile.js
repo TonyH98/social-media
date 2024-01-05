@@ -9,19 +9,22 @@ import Favorites from "../Favorites/Favorites"
 import Posts from "../Posts/Posts";
 import axios from "axios";
 import BlockModal from "./BlockModal"
+import Poll from "../Poll/Poll";
 const API = process.env.REACT_APP_API_URL;
 
 function OtherProfile({user , plan, mainUser}){
 
+  console.log(mainUser)
     let usersFollowing = useSelector((state) => state.follow.fol)
    
-    let options = ["Posts", "Replies", "Favorites"]
+    let options = ["Posts", "Replies", "Favorites", "Poll"]
 
     let [option , setOption] = useState(0)
     let [users , setUsers] = useState([])
     let [posts , setPosts] = useState([])
     let [userReplies , setUserReplies] = useState([])
     let [show , setShow] = useState(false)
+    const [poll , setPoll] = useState([])
     const [postFavorite , setPostFavorite] = useState([])
     let dispatch = useDispatch()
 
@@ -73,7 +76,11 @@ useEffect(() => {
   .then((res) => {
     setUserReplies(res.data)
   })
-} , [users.username , id])
+  axios.get(`${API}/poll/${users.id}`)
+  .then((res) => {
+    setPoll(res.data)
+  })
+} , [users.username , id, users.id])
 
 
 useEffect(() => {
@@ -151,6 +158,18 @@ useEffect(() => {
               );
             })}
           </div>
+        );
+      }
+      if (selected === 3) {
+        return (
+          <div className={`option-content-holder ${users.dark_mode ? "light_border_post" : "dark_border_post"}`}>
+          {poll.map((singlePoll) => (
+            <div key={singlePoll.id} className="posts-border-container">
+              <Poll poll={singlePoll}  mainUser={mainUser} plan={plan} setPoll={setPoll} />
+            </div>
+          ))}
+        </div>
+        
         );
       }
     }

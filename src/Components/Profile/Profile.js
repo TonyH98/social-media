@@ -128,7 +128,7 @@ function Profile({user , plan}){
           <div className={`option-content-holder ${users.dark_mode ? "light_border_post" : "dark_border_post"}`}>
           {poll.map((singlePoll) => (
             <div key={singlePoll.id} className="posts-border-container">
-              <Poll poll={singlePoll} users={user} mainUser={users} plan={plan} setPoll={setPoll} />
+              <Poll poll={singlePoll} mainUser={user} plan={plan} setPoll={setPoll} />
             </div>
           ))}
         </div>

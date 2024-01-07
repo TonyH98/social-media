@@ -13,6 +13,7 @@ function PollForm({user, onClose}){
     let [poll, setPoll] = useState({
         question: "",
         options: [initalOption, initalOption],
+        answer: "",
         user_id: user.id,
         user_name: user.username,
 
@@ -46,6 +47,18 @@ function PollForm({user, onClose}){
           else{
             event.target.value = value.substr(0,100)
           }
+       }
+       if(event.target.id === "answer"){
+        const {value} = event.target
+        if(value.length <= 300){
+          setPoll((prevPoll) => ({
+            ...prevPoll,
+            answer: value,
+          }));
+        }
+        else{
+          event.target.value = value.substr(0,300)
+        }
        }
       };
 
@@ -143,6 +156,7 @@ function PollForm({user, onClose}){
             axios.post(`${API}/poll`, {
               question: poll.question,
               options: optionsArray,
+              answer: poll.answer,
               user_id: poll.user_id,
               user_name: poll.user_name,
    
@@ -152,12 +166,12 @@ function PollForm({user, onClose}){
               setPoll({
                 question: "",
                 options: [initalOption],
+                answer: "",
                 user_id: user.id,
                 user_name: user.username
               });
             })
             .catch((error) => {
-              // Handle error (e.g., show an error message)
               console.error(error);
             });
 
@@ -189,8 +203,21 @@ return(
             {poll.question.length } / 100 Characters
         </p>
 
-
-
+        <label htmlFor="answer" className="poll_label">
+            {`Answer (Optional)`}:
+            <textarea
+            id="answer"
+            value={poll.answer}
+            onChange={handleTextChange}
+            onInput={(e) => {
+              e.target.style.height = 'auto';
+              e.target.style.height = e.target.scrollHeight + 'px';
+            }}
+          />
+        </label>
+        <p className={poll.answer.length >= 300 ? "text-red-700" : null}>
+            {poll.answer.length } / 300 Characters
+        </p>
         {poll.options.map((option , index) => {
             return(
             <div key={index}>

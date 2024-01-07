@@ -20,7 +20,7 @@ function Poll({ poll, mainUser, setPoll }) {
 
   const [selectedOption, setSelectedOption] = useState("");
   const [voteInfo, setVoteInfo] = useState({});
-
+  const [hidden , setHidden] = useState(false)
   const [totalVotes , setTotalVotes] = useState({})
 
   useEffect(() => {
@@ -59,7 +59,9 @@ function Poll({ poll, mainUser, setPoll }) {
     })
   }
 
-
+  function handleAnswer(){
+    setHidden(!hidden)
+  }
 
   return (
     <div className="posts_content">
@@ -114,7 +116,22 @@ function Poll({ poll, mainUser, setPoll }) {
   ))}
 </div>
 
+<div>
+{poll.answer.length === "" ? null : (
+  selectedOption !== "" ? (
+    hidden ? null : (
+      <>
+      <p>{poll.answer}</p>
+      </>
+    ) 
+    ): null
+    )}
 
+</div>
+{poll.answer.length !== "" && selectedOption !== "" ? 
+<button onClick={handleAnswer}>Show Answer</button>
+: null
+}
 
         </div>
       </div>

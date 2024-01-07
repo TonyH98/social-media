@@ -60,3 +60,15 @@
     color: blue;
 }
 
+.gray_button{
+    background-color: rgba(0, 123, 255, 0.5); 
+    color: white; 
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: not-allowed; 
+    font-weight: bold;
+    height: 40px;
+    width: 75px;
+    border-radius: 70px;
+  }

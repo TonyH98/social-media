@@ -35,15 +35,34 @@ function PollForm({user, onClose}){
     }, [user?.id]);
     
     const handleTextChange = (event) => {
-        setPoll({ ...poll, [event.target.id]: event.target.value });
+       if(event.target.id === "question"){
+          const {value} = event.target
+          if(value.length <= 100){
+            setPoll((prevPoll) => ({
+              ...prevPoll,
+              question: value,
+            }));
+          }
+          else{
+            event.target.value = value.substr(0,100)
+          }
+       }
       };
 
       const handleOptionChange = (index, event) => {
-          event.preventDefault()
+        event.preventDefault();
         const newOptions = [...poll.options];
-        newOptions[index] = { ...newOptions[index], text: event.target.value };
-        setPoll({ ...poll, options: newOptions });
+        if (event.target.value.length <= 30) {
+          newOptions[index] = { ...newOptions[index], text: event.target.value };
+          setPoll((prevPoll) => ({
+            ...prevPoll,
+            options: newOptions,
+          }));
+        } else {
+          event.target.value = event.target.value.substr(0, 30);
+        }
       };
+      
 
       const addOption = (event) => {
           event.preventDefault()
@@ -166,6 +185,11 @@ return(
           />
            {errors.question && <p style={{color:"red"}}>{errors.question}</p>}
         </label>
+        <p className={poll.question.length >= 100 ? "text-red-700" : null}>
+            {poll.question.length } / 100 Characters
+        </p>
+
+
 
         {poll.options.map((option , index) => {
             return(
@@ -183,12 +207,21 @@ return(
             onChange={(event) => handleOptionChange(index, event)}
             value={option.text}
           />
-          <button className="remove_option" onClick={() => removeOption(index)}><FaTrash size={16}/></button>
+
+          {poll.options.length === 2 ? null : 
+          
+          <button className="remove_option"
+           onClick={() => removeOption(index)}>
+            <FaTrash size={16} color={user.dark_mode ? "white" : "black"}/>
+            </button>
+          }
         </div>
         {errors.option && <p style={{color:"red"}}>{errors.option}</p>}
       </label>
 
-
+      <p className={option.text.length >= 30 ? "text-red-700" : null}>
+            {option.text.length } / 30 Characters
+        </p>
             </div>
 
             )
@@ -200,7 +233,12 @@ return(
         <button className="addOption" onClick={addOption}>+</button>
         }
 
-        <button type="submit">Submit</button>
+        {poll.options.every((val) => val.text.length === 0) && poll.question.length === 0 && poll.options.length < 2 ? 
+          <button className="post_submit_button gray_button" disabled>Post</button> :
+          <button type="submit">Submit</button>
+        }
+
+
         </div>
 
        </form>

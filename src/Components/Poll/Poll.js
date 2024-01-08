@@ -63,6 +63,8 @@ function Poll({ poll, mainUser, setPoll }) {
     setHidden(!hidden)
   }
 
+
+
   return (
     <div className="posts_content">
       <div className="posts_extra_container">
@@ -117,7 +119,7 @@ function Poll({ poll, mainUser, setPoll }) {
 </div>
 
 <div>
-{poll.answer.length === "" ? null : (
+{poll.answer.length === 0 ? null : (
   selectedOption !== "" ? (
     hidden ? null : (
       <>
@@ -128,7 +130,7 @@ function Poll({ poll, mainUser, setPoll }) {
     )}
 
 </div>
-{poll.answer.length !== "" && selectedOption !== "" ? 
+{poll.answer.length !== 0 && selectedOption !== ""? 
 <button onClick={handleAnswer}>Show Answer</button>
 : null
 }

@@ -23,6 +23,7 @@ function PollForm({user, onClose}){
       question: '',
       optionLength: '',
       option: '',
+      optionAnswer: ''
     });
     
     useEffect(() => {
@@ -34,6 +35,21 @@ function PollForm({user, onClose}){
             }));
         }
     }, [user?.id]);
+
+    let optionsText = poll.options.map((val) => val.text)
+
+    let setOptionsUnique = new Set(optionsText)
+
+    function checkOptionAnswer(){
+      if(setOptionsUnique.size === poll.options.length){
+        return true
+      }
+      else{
+        return false
+      }
+    }
+
+
     
     const handleTextChange = (event) => {
        if(event.target.id === "question"){
@@ -79,7 +95,7 @@ function PollForm({user, onClose}){
 
       const addOption = (event) => {
           event.preventDefault()
-          if(poll.options.length < 3){
+          if(poll.options.length < 4){
 
             setPoll({
                 ...poll,
@@ -130,11 +146,12 @@ function PollForm({user, onClose}){
         const questionError = !validQuestion() ? 'Question can\'t be empty' : '';
         const optionLengthError = !checkOptionLength() ? 'Must have at least two options' : '';
         const optionError = !validOption() ? 'All options must be filled' : '';
-
+        const optionUniqueError = !checkOptionAnswer() ? "All the options must be unqiue" : ""
         setErrors({
           question: questionError,
           optionLength: optionLengthError,
           option: optionError,
+          optionAnswer: optionUniqueError
         });
 
         let valid = true
@@ -147,7 +164,7 @@ function PollForm({user, onClose}){
         
         const optionsArray = poll.options.map((option) => ({ text: option.text, count: option.count }));
         
-        if (questionError || optionLengthError || optionError) {
+        if (questionError || optionLengthError || optionError || optionUniqueError) {
           valid = false; 
         }
 
@@ -186,6 +203,7 @@ return(
     <div>
        <form onSubmit={handleSubmit} className="pollForm">
        {errors.optionLength && <p style={{color:"red"}}>{errors.optionLength}</p>}
+       {errors.optionAnswer && <p style={{color:"red"}}>{errors.optionAnswer}</p>}
         <label htmlFor="question" className="poll_label">
             Question:
             <textarea
@@ -255,7 +273,7 @@ return(
         })}
 
         <div>
-        {poll.options.length === 3 ? null : 
+        {poll.options.length === 4 ? null : 
         
         <button className="addOption" onClick={addOption}>+</button>
         }

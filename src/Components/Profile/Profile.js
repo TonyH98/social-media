@@ -46,8 +46,6 @@ function Profile({user , plan}){
     }, [dispatch])
     
 
-   
-
     useEffect(() => {
       if (users?.username && users?.id) {
           dispatch(fetchPosts(users.username));

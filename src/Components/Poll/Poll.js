@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import {SlBubble} from "react-icons/sl"
+import ReplyPollForm from "./ReplyPollForm";
 import axios from "axios";
 import "./Poll.css";
 
 const API = process.env.REACT_APP_API_URL;
 
-function Poll({ poll, mainUser, setPoll }) {
+function Poll({ poll, mainUser, setPoll, plan }) {
   function formatDate(inputDate) {
     const months = [
       "Jan", "Feb", "Mar", "Apr", "May", "Jun",
@@ -22,6 +24,9 @@ function Poll({ poll, mainUser, setPoll }) {
   const [voteInfo, setVoteInfo] = useState({});
   const [hidden , setHidden] = useState(false)
   const [totalVotes , setTotalVotes] = useState({})
+  let [show , setShow] = useState(false)
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false)
+const [showGifPicker, setShowGifPicker] = useState(false)
 
   useEffect(() => {
     axios.get(`${API}/poll/${poll.id}/votes`)
@@ -137,6 +142,62 @@ function Poll({ poll, mainUser, setPoll }) {
 
         </div>
       </div>
+      <div className="posts-options-container">
+
+<div className="posts-reply-button">
+<button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br reply_btn`}  onClick={(e) => { e.preventDefault(); setShow(true); }}>
+<SlBubble size={20} /> 
+<span className="hidden-text">Reply</span>
+</button>
+</div>
+
+{/* <div className="repost-button">
+<button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} 
+onClick={createRepost}><PiArrowsClockwise size={20}/> {posts.repost_counter}
+<span className="hidden-text">Repost</span>
+</button>
+</div>
+
+
+    <div className="favorite_posts_container">
+       {users && inFav.includes(posts?.id) ? 
+       <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} onClick={handleDeleteFav}><AiFillHeart size={20} color="red"/>
+       <span className="hidden-text">Disike</span>
+       </button>
+
+       : <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} onClick={handleAddFav}><AiOutlineHeart size={20}/>
+       <span className="hidden-text">Like</span>
+       </button>}
+
+   </div> 
+
+   
+   <div className="like-container">
+   <button className={`${reaction?.dislikeId?.includes(mainUser?.id) ? 'green_option_btn' : `${mainUser.dark_mode ? "light_outline" : "dark_outline"}`} no_br react_btn`} onClick={handleLike}><AiOutlineLike size={20} /> {reaction.likes}
+   <span className="hidden-text">Like</span>
+   </button>
+  
+   </div>
+   
+   
+
+   <div className="dislike-container">
+   <button className={`${reaction?.dislikeId?.includes(mainUser?.id) ? 'red_option_btn' : `${mainUser.dark_mode ? "light_outline" : "dark_outline"}`} no_br react_btn`} onClick={handleDislike}><AiOutlineDislike size={20}/> {reaction.dislikes}
+   <span className="hidden-text">Dislike</span>
+   </button>
+   </div>  */}
+
+   <ReplyPollForm
+    open={show} 
+    onClose={() => {setShow(false); setShowEmojiPicker(false);  setShowGifPicker(false)}}
+     showGifPicker={showGifPicker}
+      setShowGifPicker={setShowGifPicker} 
+      setShowEmojiPicker={setShowEmojiPicker}
+       showEmojiPicker={showEmojiPicker}
+        poll={poll}
+        plan={plan}
+         mainUser={mainUser}/>
+</div>
     </div>
   );
 }

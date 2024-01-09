@@ -10,6 +10,10 @@ function PollForm({user, onClose}){
 
     const initalOption = {text: "", count: 0}
 
+    let [tags , setTags] = useState([])
+
+    let[filterTags , setFilterTags] = useState([])
+
     let [poll, setPoll] = useState({
         question: "",
         options: [initalOption, initalOption],
@@ -34,6 +38,11 @@ function PollForm({user, onClose}){
                 user_name: user.username
             }));
         }
+
+        axios.get(`${API}/tags`)
+        .then((res) => {
+          setTags(res.data)
+        })
     }, [user?.id]);
 
     let optionsText = poll.options.map((val) => val.text)
@@ -63,6 +72,29 @@ function PollForm({user, onClose}){
           else{
             event.target.value = value.substr(0,100)
           }
+          const hashtags = value.match(/#(\w+)/g);
+
+          if (hashtags) {
+            const searchTags = hashtags.map((tags) => tags.substring(1));
+            const filteredTags = tags.filter((tag) =>
+              searchTags.some((hash) => tag.tag_names.toLowerCase().includes(hash.toLowerCase()))
+            );
+            setFilterTags(filteredTags);
+
+            const hasExactMatch = searchTags.every((hash) =>
+            tags.some((tag) => tag.tag_names.toLowerCase().substring(1) === hash.toLowerCase())
+          );
+
+          if (hasExactMatch) {
+            setFilterTags([]);
+          } else {
+            setFilterTags(filteredTags);
+          }
+
+          } else {
+            setFilterTags([]);
+          }
+
        }
        if(event.target.id === "answer"){
         const {value} = event.target
@@ -76,6 +108,20 @@ function PollForm({user, onClose}){
           event.target.value = value.substr(0,300)
         }
        }
+      };
+
+
+
+      const handleTags = (tag) => {
+   
+        const newContent = `${tag.tag_names}`;
+      
+        setPoll((prev) => ({
+          ...prev,
+          question: prev.question.replace(/#[^\s]+/, newContent),
+        }));
+      
+        setFilterTags([]);
       };
 
       const handleOptionChange = (index, event) => {
@@ -215,6 +261,15 @@ return(
               e.target.style.height = e.target.scrollHeight + 'px';
             }}
           />
+          {filterTags.length > 0 && (
+    <div className="textera_list">
+      {filterTags.slice(0 , 10).map((tag) => (
+        <div className={`textera_display light_text`} key={tag.id} onClick={() => handleTags(tag)}>
+          {tag.tag_names}
+        </div>
+      ))}
+    </div>
+  )}
            {errors.question && <p style={{color:"red"}}>{errors.question}</p>}
         </label>
         <p className={poll.question.length >= 100 ? "text-red-700" : null}>

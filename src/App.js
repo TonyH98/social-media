@@ -15,6 +15,7 @@ import Notifications from './Components/Notifications/Notifications';
 import Footer from './Components/Footer/Footer';
 import Verification from './Components/Registration/Verification';
 import UserHome from './Components/Home/UserHome';
+import PollDetails from './Components/PollDetails/PollDetails';
 import axios from 'axios';
 import { useDispatch , useSelector } from "react-redux";
 import { fetchUsers, getFollowing} from "./Store/userActions";
@@ -103,6 +104,7 @@ function App() {
           <Route path={`/profile/${user?.id}`} element={<Profile user={user} plan={plan}/>} />
           <Route path="/posts/:tag_name" element={<SearchPosts mainUser={mainUser} plan={plan}/>}/>
           <Route path={`/posts/:username/:id`} element={<PostsDetails user={user} plan={plan} mainUser={mainUser}/>}/>
+          <Route path={`/poll/:username/:id`} element={<PollDetails user={user} plan={plan} mainUser={mainUser}/>}/>
           <Route path={`/profiles/:id`} element={<OtherProfile user={user} plan={plan} mainUser={mainUser}/>}/>
           <Route path={`/:id/following`} element={<Followings user={user} mainUser={mainUser}/>}/>
           <Route path={`/:id/follower`} element={<Followers user={user} mainUser={mainUser}/>}/>

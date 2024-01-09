@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {SlBubble} from "react-icons/sl"
+import { Link } from "react-router-dom";
 import ReplyPollForm from "./ReplyPollForm";
 import axios from "axios";
 import "./Poll.css";
@@ -87,12 +88,10 @@ const [showGifPicker, setShowGifPicker] = useState(false)
             {poll.creator.profile_name} | @{poll.creator.username} | {formatDate(poll.time)}
 
           </div>
-
+    <Link to={`/poll/${poll.creator.username}/${poll?.id}`} className="link-style">
           <div>
             {poll.question}
           </div>
-
-
           <div>
   {poll.options.map((op) => (
     <div key={op.text} style={{ display: "flex", alignItems: "center" }}>
@@ -139,6 +138,10 @@ const [showGifPicker, setShowGifPicker] = useState(false)
 <button onClick={handleAnswer}>Show Answer</button>
 : null
 }
+    
+    </Link>
+
+
 
         </div>
       </div>

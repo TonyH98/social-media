@@ -9,6 +9,7 @@ import axios from "axios";
 
 const API = process.env.REACT_APP_API_URL;
 const GIF = process.env.REACT_APP_API_GIF;
+
 function ReplyPollForm({open , onClose, plan, poll, mainUser  }){
     const textareaRef = useRef(null);
     let [tags , setTags] = useState([])
@@ -51,12 +52,12 @@ function ReplyPollForm({open , onClose, plan, poll, mainUser  }){
         .then((res) => {
           setTags(res.data)
         })
-        axios.get(`${API}/block/${mainUser?.id?.id}`)
+        axios.get(`${API}/block/${mainUser?.id}`)
         .then((res) => {
           setBlock(res.data)
         })
   
-        axios.get(`${API}/block/${mainUser?.id?.id}/block`)
+        axios.get(`${API}/block/${mainUser?.id}/block`)
         .then((res) => {
           setUsersBlock(res.data)
         })
@@ -248,6 +249,7 @@ function ReplyPollForm({open , onClose, plan, poll, mainUser  }){
           formData.append("gif", replies.gif)
           axios.post(`${API}/poll/${poll.id}/reply`, formData)
         .then((res) => {
+          onClose()
           setReplies({
             content: ""
           })
@@ -359,7 +361,7 @@ e.target.style.height = e.target.scrollHeight + 'px';
 </div>
 </div>
 
-{replies.content.length === 0 && replies.posts_img.length === 0 && replies.gif.length === 0?
+{(replies.content?.length ?? 0) === 0 && (replies.posts_img?.length ?? 0) === 0 && (replies.gif?.length ?? 0) === 0 ?
 <button className="post_submit_button gray_button" disabled>Post</button> :
 
 <button className="post_submit_button" type='submit'>Post</button>

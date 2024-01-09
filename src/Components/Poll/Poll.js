@@ -88,10 +88,11 @@ const [showGifPicker, setShowGifPicker] = useState(false)
             {poll.creator.profile_name} | @{poll.creator.username} | {formatDate(poll.time)}
 
           </div>
-    <Link to={`/poll/${poll.creator.username}/${poll?.id}`} className="link-style">
+          <Link to={`/poll/${poll?.id}`} className="link-style">
           <div>
             {poll.question}
           </div>
+            </Link>
           <div>
   {poll.options.map((op) => (
     <div key={op.text} style={{ display: "flex", alignItems: "center" }}>
@@ -139,7 +140,6 @@ const [showGifPicker, setShowGifPicker] = useState(false)
 : null
 }
     
-    </Link>
 
 
 

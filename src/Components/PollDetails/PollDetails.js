@@ -10,54 +10,67 @@ function PollDetails({user , plan, mainUser}){
 
    
     
-const {username , id} = useParams()
-const [selectedOption, setSelectedOption] = useState("");
+  const { id } = useParams();
+  const [selectedOption, setSelectedOption] = useState("");
   const [voteInfo, setVoteInfo] = useState({});
-  const [hidden , setHidden] = useState(false)
-  const [totalVotes , setTotalVotes] = useState({})
-const [poll , setPoll] = useState({})
-let [show , setShow] = useState(false)
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false)
-const [showGifPicker, setShowGifPicker] = useState(false)
+  const [hidden, setHidden] = useState(false);
+  const [totalVotes, setTotalVotes] = useState({});
+  const [poll, setPoll] = useState({});
+  let [show, setShow] = useState(false);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [showGifPicker, setShowGifPicker] = useState(false);
 
-
-function formatDate(inputDate) {
+  function formatDate() {
     const months = [
       "Jan", "Feb", "Mar", "Apr", "May", "Jun",
       "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     ];
 
-    const [month, day, year] = inputDate.split("/").map(Number);
-    const formattedMonth = months[month - 1];
-    const formattedYear = year.toString().slice(-2);
+    // Check if poll and poll.time exist before attempting to split
+    if (poll && poll?.time) {
+      const splitDate = poll.time.split("/");
 
-    return `${formattedMonth} ${day}, ${formattedYear}`;
+      // Make sure splitDate has at least 3 elements before destructuring
+      if (splitDate.length >= 3) {
+        const [month, day, year] = splitDate.map(Number);
+
+        let formatMonth = months[month - 1];
+        const formattedYear = year.toString();
+
+        return `${formatMonth} ${day}, ${formattedYear}`;
+      }
+    }
   }
 
-
-useEffect(() => {
-axios.get(`${API}/poll/${id}/details`)
-.then((res) => {
-setPoll(res.data)
-})
-}, [id])
-
-useEffect(() => {
-    axios.get(`${API}/poll/${poll.id}/votes`)
-    .then((res) => {
-      setTotalVotes(res.data.votes)
-    })
-  }, [poll.id])
-
-useEffect(() => {
-    axios.get(`${API}/poll/${mainUser.id}/votes/${poll.id}`)
+  useEffect(() => {
+    axios.get(`${API}/poll/${id}/details`)
       .then((res) => {
-        setVoteInfo(res.data);
-        setSelectedOption(res.data.selected_option || "");
+        setPoll(res.data || {}); 
       })
       .catch((error) => {
-        console.error("Error fetching vote info:", error);
+        console.error("Error fetching poll details:", error);
       });
+  }, [id]);
+
+  useEffect(() => {
+    if (poll.id) { 
+      axios.get(`${API}/poll/${poll.id}/votes`)
+        .then((res) => {
+          setTotalVotes(res.data.votes || {}); 
+        })
+        .catch((error) => {
+          console.error("Error fetching total votes:", error);
+        });
+
+      axios.get(`${API}/poll/${mainUser.id}/votes/${id}`)
+        .then((res) => {
+          setVoteInfo(res.data);
+          setSelectedOption(res.data.selected_option || "");
+        })
+        .catch((error) => {
+          console.error("Error fetching vote info:", error);
+        });
+    }
   }, [mainUser.id, poll.id]);
 
   useEffect(() => {
@@ -66,21 +79,30 @@ useEffect(() => {
     }
   }, [selectedOption]);
 
-function handleVote() {
+  function handleVote() {
     axios.put(`${API}/poll/${poll.id}/check/${mainUser.id}`, {
       selected_option: selectedOption,
     })
-    .then(() => {
-        axios.get(`${API}/poll/${poll.creator.user_id}`)
-        .then((res) => {
-            setPoll(res.data)
-        })
-    })
+      .then(() => {
+        axios.get(`${API}/poll/${id}/details`)
+          .then((res) => {
+            setPoll(res.data);
+          })
+          .catch((error) => {
+            console.error("Error fetching poll creator info:", error);
+          });
+      })
+      .catch((error) => {
+        console.error("Error handling vote:", error);
+      });
   }
 
-  function handleAnswer(){
-    setHidden(!hidden)
+  function handleAnswer() {
+    setHidden(!hidden);
   }
+
+
+console.log(poll)
 
 
 return(
@@ -105,7 +127,7 @@ return(
           {poll.question}
         </div>
         <div>
-{poll.options.map((op) => (
+{poll.options && poll.options.map((op) => (
   <div key={op.text} style={{ display: "flex", alignItems: "center" }}>
     <input
       type="radio"
@@ -135,7 +157,7 @@ return(
 </div>
 
 <div>
-{poll.answer.length === 0 ? null : (
+{poll.answer && poll.answer.length === 0 ? null : (
 selectedOption !== "" ? (
   hidden ? null : (
     <>
@@ -146,7 +168,7 @@ selectedOption !== "" ? (
   )}
 
 </div>
-{poll.answer.length !== 0 && selectedOption !== ""? 
+{poll.answer &&poll.answer.length !== 0 && selectedOption !== ""? 
 <button onClick={handleAnswer}>Show Answer</button>
 : null
 }

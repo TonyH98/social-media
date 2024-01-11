@@ -26,6 +26,7 @@ let [show2 , setShow2] = useState(false)
 
 const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 const [showGifPicker, setShowGifPicker] = useState(false)
+
 let [fav] = useState({
     creator_id: posts.creator.id
 })

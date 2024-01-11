@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import {SlBubble} from "react-icons/sl"
 import { Link } from "react-router-dom";
+import {AiFillHeart} from "react-icons/ai"
+import {AiOutlineHeart} from "react-icons/ai"
 import ReplyPollForm from "./ReplyPollForm";
 import axios from "axios";
 import "./Poll.css";
@@ -28,13 +30,24 @@ function Poll({ poll, mainUser, setPoll, plan }) {
   let [show , setShow] = useState(false)
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 const [showGifPicker, setShowGifPicker] = useState(false)
+const [favoriteP , setFavoriteP] = useState([])
+
+const [fav] = useState({
+  creator_id: poll.creator.user_id
+})
 
   useEffect(() => {
     axios.get(`${API}/poll/${poll.id}/votes`)
     .then((res) => {
       setTotalVotes(res.data.votes)
     })
-  }, [poll.id])
+
+    axios.get(`${API}/favorites/${mainUser.id}/polls`)
+    .then((res) => {
+      setFavoriteP(res.data)
+    })
+
+  }, [poll.id, mainUser.id])
 
   useEffect(() => {
     axios.get(`${API}/poll/${mainUser.id}/votes/${poll.id}`)
@@ -69,8 +82,35 @@ const [showGifPicker, setShowGifPicker] = useState(false)
     setHidden(!hidden)
   }
 
+  function handleAddFavPoll(){
+    axios.post(`${API}/favorites/${mainUser.id}/favP/${poll.id}`, fav)
+    .then(() => {
+      axios.get(`${API}/poll/${poll.creator.user_id}`)
+      .then((res) => {
+          setPoll(res.data)
+      })
+  })
+    .catch((error) => {
+      console.log(error); 
+    })
+  }
 
+  function handleRemoveFavPoll(){
+    axios.delete(`${API}/favorites/${mainUser.id}/deleteP/${poll.id}`)
+    .then(() => {
+      axios.get(`${API}/poll/${poll.creator.user_id}`)
+      .then((res) => {
+          setPoll(res.data)
+      })
+  })
+  .catch((error) => {
+    console.log(error); 
+  })
+  }
 
+  const inFav = Array.isArray(favoriteP) ? favoriteP.map((fav) => fav?.poll_id) : [];
+
+ 
   return (
     <div className="posts_content">
       <div className="posts_extra_container">
@@ -159,36 +199,36 @@ const [showGifPicker, setShowGifPicker] = useState(false)
 onClick={createRepost}><PiArrowsClockwise size={20}/> {posts.repost_counter}
 <span className="hidden-text">Repost</span>
 </button>
-</div>
+</div> */}
 
 
     <div className="favorite_posts_container">
-       {users && inFav.includes(posts?.id) ? 
-       <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} onClick={handleDeleteFav}><AiFillHeart size={20} color="red"/>
+       {mainUser && inFav.includes(poll?.id) ? 
+       <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} onClick={handleRemoveFavPoll}><AiFillHeart size={20} color="red"/>
        <span className="hidden-text">Disike</span>
        </button>
 
-       : <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} onClick={handleAddFav}><AiOutlineHeart size={20}/>
+       : <button className={`${mainUser?.dark_mode ? 'white_option_btn' : 'dark_option_btn'} no_br fav_btn`} onClick={handleAddFavPoll}><AiOutlineHeart size={20}/>
        <span className="hidden-text">Like</span>
        </button>}
 
    </div> 
 
    
-   <div className="like-container">
+   {/* <div className="like-container">
    <button className={`${reaction?.dislikeId?.includes(mainUser?.id) ? 'green_option_btn' : `${mainUser.dark_mode ? "light_outline" : "dark_outline"}`} no_br react_btn`} onClick={handleLike}><AiOutlineLike size={20} /> {reaction.likes}
    <span className="hidden-text">Like</span>
    </button>
   
-   </div>
+   </div> */}
    
    
 
-   <div className="dislike-container">
+   {/* <div className="dislike-container">
    <button className={`${reaction?.dislikeId?.includes(mainUser?.id) ? 'red_option_btn' : `${mainUser.dark_mode ? "light_outline" : "dark_outline"}`} no_br react_btn`} onClick={handleDislike}><AiOutlineDislike size={20}/> {reaction.dislikes}
    <span className="hidden-text">Dislike</span>
    </button>
-   </div>  */}
+   </div>   */}
 
    <ReplyPollForm
     open={show} 

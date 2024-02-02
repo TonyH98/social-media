@@ -14,7 +14,7 @@ function PollDetails({user , plan, mainUser}){
   const [selectedOption, setSelectedOption] = useState("");
   const [voteInfo, setVoteInfo] = useState({});
   const [hidden, setHidden] = useState(false);
-  const [totalVotes, setTotalVotes] = useState({});
+
   const [poll, setPoll] = useState({});
   let [show, setShow] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
@@ -54,14 +54,7 @@ function PollDetails({user , plan, mainUser}){
 
   useEffect(() => {
     if (poll.id) { 
-      axios.get(`${API}/poll/${poll.id}/votes`)
-        .then((res) => {
-          setTotalVotes(res.data.votes || {}); 
-        })
-        .catch((error) => {
-          console.error("Error fetching total votes:", error);
-        });
-
+     
       axios.get(`${API}/poll/${mainUser.id}/votes/${id}`)
         .then((res) => {
           setVoteInfo(res.data);
@@ -139,7 +132,7 @@ return(
       checked={op.text === selectedOption}
     />
     <span style={{
-      backgroundColor: selectedOption !== "" && totalVotes !== 0 ? `rgba(29, 161, 242, ${(op.count / totalVotes)})` : 'transparent',
+      backgroundColor: selectedOption !== "" && poll.totalVotes !== 0 ? `rgba(29, 161, 242, ${(op.count / poll.totalVotes)})` : 'transparent',
       padding: '4px',
       borderRadius: '4px',
       marginRight: '8px',
@@ -147,9 +140,9 @@ return(
     }}>
       {op.text} 
     </span>
-    {selectedOption !== "" && totalVotes !== 0 && (
+    {selectedOption !== "" && poll.totalVotes !== 0 && (
       <span>
-        ({((op.count / totalVotes) * 100).toFixed(2)}%)
+        ({((op.count / poll.totalVotes) * 100).toFixed(2)}%)
       </span>
     )}
   </div>

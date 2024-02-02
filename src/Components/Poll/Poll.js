@@ -26,7 +26,7 @@ function Poll({ poll, mainUser, setPoll, plan }) {
   const [selectedOption, setSelectedOption] = useState("");
   const [voteInfo, setVoteInfo] = useState({});
   const [hidden , setHidden] = useState(false)
-  const [totalVotes , setTotalVotes] = useState({})
+
   let [show , setShow] = useState(false)
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 const [showGifPicker, setShowGifPicker] = useState(false)
@@ -37,17 +37,14 @@ const [fav] = useState({
 })
 
   useEffect(() => {
-    axios.get(`${API}/poll/${poll.id}/votes`)
-    .then((res) => {
-      setTotalVotes(res.data.votes)
-    })
+   
 
     axios.get(`${API}/favorites/${mainUser.id}/polls`)
     .then((res) => {
       setFavoriteP(res.data)
     })
 
-  }, [poll.id, mainUser.id])
+  }, [mainUser.id])
 
   useEffect(() => {
     axios.get(`${API}/poll/${mainUser.id}/votes/${poll.id}`)
@@ -146,7 +143,7 @@ const [fav] = useState({
         checked={op.text === selectedOption}
       />
       <span style={{
-        backgroundColor: selectedOption !== "" && totalVotes !== 0 ? `rgba(29, 161, 242, ${(op.count / totalVotes)})` : 'transparent',
+        backgroundColor: selectedOption !== "" && poll.totalVotes !== 0 ? `rgba(29, 161, 242, ${(op.count / poll.totalVotes)})` : 'transparent',
         padding: '4px',
         borderRadius: '4px',
         marginRight: '8px',
@@ -154,9 +151,9 @@ const [fav] = useState({
       }}>
         {op.text} 
       </span>
-      {selectedOption !== "" && totalVotes !== 0 && (
+      {selectedOption !== "" && poll.totalVotes !== 0 && (
         <span>
-          ({((op.count / totalVotes) * 100).toFixed(2)}%)
+          ({((op.count / poll.totalVotes) * 100).toFixed(2)}%)
         </span>
       )}
     </div>

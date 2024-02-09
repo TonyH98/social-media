@@ -31,7 +31,7 @@ function Poll({ poll, mainUser, setPoll, plan }) {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 const [showGifPicker, setShowGifPicker] = useState(false)
 const [favoriteP , setFavoriteP] = useState([])
-
+let [block , setBlock] = useState([])
 const [fav] = useState({
   creator_id: poll.creator.user_id
 })
@@ -45,6 +45,15 @@ const [fav] = useState({
     })
 
   }, [mainUser.id])
+
+
+  useEffect(() => {
+    axios.get(`${API}/block/${mainUser?.id}`)
+    .then((res) => {
+      setBlock(res.data)
+    })
+  }, [mainUser?.id])
+
 
   useEffect(() => {
     axios.get(`${API}/poll/${mainUser.id}/votes/${poll.id}`)
@@ -107,7 +116,7 @@ const [fav] = useState({
 
   const inFav = Array.isArray(favoriteP) ? favoriteP.map((fav) => fav?.poll_id) : [];
 
- 
+  const inBlock = Array.isArray(block) ? block.map(block => block.block_id) : []
   return (
     <div className="posts_content">
       <div className="posts_extra_container">
@@ -125,6 +134,10 @@ const [fav] = useState({
             {poll.creator.profile_name} | @{poll.creator.username} | {formatDate(poll.time)}
 
           </div>
+
+          {inBlock.includes(poll.creator.id) ? 
+          <h2 className={`${mainUser?.dark_mode ? 'light_text' : 'dark_text'}`}>@{poll.creator.username} Blocked</h2> :
+          <>
           <Link to={`/poll/${poll?.id}`} className="link-style">
           <div>
             {poll.question}
@@ -176,12 +189,18 @@ const [fav] = useState({
 <button onClick={handleAnswer} className="answer_btn">Show Answer</button>
 : null
 }
+
+          </>
+
+          }
     
 
 
 
         </div>
       </div>
+
+      {inBlock.includes(poll.creator.id) ? null :
       <div className="posts-options-container">
 
 <div className="posts-reply-button">
@@ -238,6 +257,8 @@ onClick={createRepost}><PiArrowsClockwise size={20}/> {posts.repost_counter}
         plan={plan}
          mainUser={mainUser}/>
 </div>
+      
+      }
     </div>
   );
 }

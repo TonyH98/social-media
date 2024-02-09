@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect , useState} from "react";
 import {SlBubble} from "react-icons/sl"
 import ReplyPollForm from "../Poll/ReplyPollForm";
-
+import PollReplies from "./PollReplies";
 import axios from "axios";
 
 const API = process.env.REACT_APP_API_URL;
@@ -14,7 +14,7 @@ function PollDetails({user , plan, mainUser}){
   const [selectedOption, setSelectedOption] = useState("");
   const [voteInfo, setVoteInfo] = useState({});
   const [hidden, setHidden] = useState(false);
-
+  const [replies , setReplies] = useState([])
   const [poll, setPoll] = useState({});
   let [show, setShow] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
@@ -51,6 +51,13 @@ function PollDetails({user , plan, mainUser}){
         console.error("Error fetching poll details:", error);
       });
   }, [id]);
+
+  useEffect(() => {
+    axios.get(`${API}/poll/${id}/reply`)
+    .then((res) => {
+      setReplies(res.data)
+    })
+  }, [id])
 
   useEffect(() => {
     if (poll.id) { 
@@ -224,6 +231,16 @@ onClick={createRepost}><PiArrowsClockwise size={20}/> {posts.repost_counter}
       poll={poll}
       plan={plan}
        mainUser={mainUser}/>
+</div>
+
+<div className={`option-content-holder ${mainUser.dark_mode ? "light_border_post" : "dark_border_post"}`}>
+    {replies.map((reply) => {
+        return(
+            <div className="posts-border-container">
+                <PollReplies mainUser={mainUser} reply={reply}/>
+            </div>
+        )
+    })}
 </div>
   </div>
 )

@@ -90,8 +90,6 @@ function PollReplies({reply, mainUser}){
 </div>
 
 
-
-
 </div>
 
     </div>

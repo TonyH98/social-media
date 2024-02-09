@@ -173,7 +173,7 @@ const [fav] = useState({
 
 </div>
 {poll.answer.length !== 0 && selectedOption !== ""? 
-<button onClick={handleAnswer}>Show Answer</button>
+<button onClick={handleAnswer} className="answer_btn">Show Answer</button>
 : null
 }
     

@@ -34,15 +34,15 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
 
     const textareaRef = useRef(null);
     
-    const imageObj = {text: ""}
+    const imageObj = { text: "" };
 
-    let [posts, setPosts] = useState({
-        user_name: "",
-        content: "",
-        user_id: "",
-        posts_img: [imageObj],
-        gif: ""
-    });
+let [posts, setPosts] = useState({
+    user_name: "",
+    content: "",
+    user_id: "",
+    posts_img: [],
+    gif: ""
+});
     
     useEffect(() => {
         if (users?.id) {
@@ -84,23 +84,22 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
 
     
     const handleTextChange = (event) => {
-        if(event.target.id === "posts_img"){
-           const files = event.target.files
-           const newImages = [...posts.posts_img]
-
-            for(let i = 0 ; i < files.length; i++){
-              const file = files[i]
-
-              const reader = new FileReader()
-
-              reader.onload = () => {
-                newImages.push({...imageObj, text:file.name})
-                setPosts({...posts, posts_img: newImages})
-              }
-
-              reader.readAsDataURL(file)
-            }
+      if (event.target.id === "posts_img") {
+        const files = event.target.files;
+        const newImages = [...posts.posts_img];
+    
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          const reader = new FileReader();
+    
+          reader.onload = () => {
+            newImages.push({ ...imageObj, text: reader.result });
+            setPosts((prevPosts) => ({ ...prevPosts, posts_img: newImages }));
+          };
+    
+          reader.readAsDataURL(file);
         }
+      }
         
         else if(event.target.id === "content"){
           if(plan?.images){
@@ -287,31 +286,31 @@ if (hasExactMatch) {
       setPosts((prevPost) => ({ ...prevPost, gif: gifUrl }));
       setShowGifPicker(false);
     }
-      const handleSubmit = (event) => {
-        event.preventDefault();
-        const formData = new FormData();
-        formData.append("content", posts?.content);
-        formData.append("posts_img", posts.posts_img === "" ? null : posts.posts_img);
-        formData.append("user_id", users?.id);
-        formData.append("user_name", users?.username)
-        formData.append("gif", posts.gif)
-        dispatch(createPost(users, formData))
-          .then(
-            (response) => {
-              onClose()
-              setPosts({
-                user_name: "",
-                content: "",
-                user_id: "",
-                posts_img: [imageObj]
-              })
-            },
-            (error) => console.error(error)
-          )
-          .catch((c) => console.warn("catch", c)); 
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      const formData = new FormData();
+      formData.append("content", posts?.content);
+      posts.posts_img.forEach((image) => {
+        formData.append("posts_img", image.file); 
+      });
+      formData.append("user_id", users?.id);
+      formData.append("user_name", users?.username);
+      formData.append("gif", posts.gif);
+      dispatch(createPost(users, formData)).then(
+        (response) => {
+          onClose();
+          setPosts({
+            user_name: "",
+            content: "",
+            user_id: "",
+            posts_img: [],
+          });
+        },
+        (error) => console.error(error)
+      ).catch((c) => console.warn("catch", c)); 
     };
 
-
+    console.log(posts.posts_img)
     if(!open) return null
   
   
@@ -355,8 +354,17 @@ if (hasExactMatch) {
   {posts.gif ? <button onClick={() => setPosts({...posts, gif: ""})} className="remove_gif_btn">X</button> : null}
 </div>
 <div className="gif_form">
- {posts.posts_img ?  <img src={posts.posts_img} alt="posts.images" className="image_preview"/> : null }
-  {posts.posts_img ? <button onClick={() => setPosts({...posts, posts_img: ""})} className="remove_gif_btn">X</button> : null}
+  {posts.posts_img.length !== 0 ? (
+
+    posts.posts_img.map((img) => {
+      return(
+        <>
+        <img src={img.text} alt="posts.images" className="image_preview"/> 
+        </>
+      )
+    })
+  ): null}
+ 
 </div>
   <p className={`${plan?.images ? 
     (posts?.content.length >= 400 ? 'text-red-700' : null) 
@@ -391,14 +399,15 @@ if (hasExactMatch) {
           <div className="media_button">
           <GoFileMedia size={22} color="blue"/>
           <input
-            key={posts.imageKey}
-            id="posts_img"
-            name="posts_img"
-            type="file"
-            className="file-input"
-            accept=".png, .jpg, .jpeg"
-            onChange={handleTextChange}
-          />
+          key={posts.imageKey}
+          id="posts_img"
+          name="posts_img"
+          type="file"
+          className="file-input"
+          accept=".png, .jpg, .jpeg"
+          multiple  // Add this attribute
+          onChange={handleTextChange}
+        />
       <span className="hidden-text">Photos</span>
           </div>
         </label>

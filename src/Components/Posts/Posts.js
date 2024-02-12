@@ -159,7 +159,7 @@ function createRepost (e){
     })
 }
 
-
+console.log(posts.posts_img)
 
 
 const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.id) : [];

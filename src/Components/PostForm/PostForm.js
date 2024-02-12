@@ -34,13 +34,13 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
 
     const textareaRef = useRef(null);
     
-
+    const imageObj = {text: ""}
 
     let [posts, setPosts] = useState({
         user_name: "",
         content: "",
         user_id: "",
-        posts_img: "",
+        posts_img: [imageObj],
         gif: ""
     });
     
@@ -85,13 +85,21 @@ function PostForm ({open, onClose, users, plan, showEmojiPicker, setShowEmojiPic
     
     const handleTextChange = (event) => {
         if(event.target.id === "posts_img"){
-            const file = event.target.files[0];
-            const reader = new FileReader();
-            
-            reader.onload = () => {
-                setPosts({...posts, posts_img: reader.result})
+           const files = event.target.files
+           const newImages = [...posts.posts_img]
+
+            for(let i = 0 ; i < files.length; i++){
+              const file = files[i]
+
+              const reader = new FileReader()
+
+              reader.onload = () => {
+                newImages.push({...imageObj, text:file.name})
+                setPosts({...posts, posts_img: newImages})
+              }
+
+              reader.readAsDataURL(file)
             }
-            reader.readAsDataURL(file)
         }
         
         else if(event.target.id === "content"){
@@ -220,6 +228,24 @@ if (hasExactMatch) {
         }
     };
     
+
+    const addNewImage = (event) => {
+      event.preventDefault()
+
+      if(posts.posts_img.length < 4){
+
+        setPosts({
+            ...posts,
+            posts_img: [...posts.posts_img, {text: ""}]
+        })
+      }
+    }
+
+    const removeImage = (option) => {
+
+      const filter = posts.posts_img.filter((val, index) => index !== option)
+      setPosts({...posts, posts_img: filter})
+    }
    
     const handleMention = (user) => {
       const newContent = `@${user.username}`;
@@ -277,7 +303,7 @@ if (hasExactMatch) {
                 user_name: "",
                 content: "",
                 user_id: "",
-                posts_img: null
+                posts_img: [imageObj]
               })
             },
             (error) => console.error(error)

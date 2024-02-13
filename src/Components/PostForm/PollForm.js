@@ -208,8 +208,7 @@ function PollForm({user, onClose}){
         }
         
         
-        const optionsArray = poll.options.map((option) => ({ text: option.text, count: option.count }));
-        
+     
         if (questionError || optionLengthError || optionError || optionUniqueError) {
           valid = false; 
         }
@@ -218,7 +217,7 @@ function PollForm({user, onClose}){
       
             axios.post(`${API}/poll`, {
               question: poll.question,
-              options: optionsArray,
+              options: poll.options,
               answer: poll.answer,
               user_id: poll.user_id,
               user_name: poll.user_name,
@@ -244,7 +243,7 @@ function PollForm({user, onClose}){
         }
       };
       
-
+console.log(poll)
 return(
     <div>
        <form onSubmit={handleSubmit} className="pollForm">

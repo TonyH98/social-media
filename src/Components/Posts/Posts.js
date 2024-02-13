@@ -159,7 +159,7 @@ function createRepost (e){
     })
 }
 
-console.log(posts.posts_img)
+
 
 
 const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.id) : [];
@@ -216,9 +216,13 @@ const inBlock = Array.isArray(block) ? block.map(block => block.block_id) : []
             )}
 
             <div className="posts_img_container">
-            {posts.posts_img === "null" ? null : (
+            {posts.posts_img.length === 0 ? null : (
+               posts.posts_img.map((img) => {
+                    return(
+                        <img src={img.text} alt={img.text} className="posts_img"/>
 
-                <img src={posts.posts_img} alt={posts.posts_img} className="posts_img"/>
+                    )
+                })
             )}
 
             {posts.gif ? <img src={posts.gif} alt={posts.gif} className="gif_img"/> : null}

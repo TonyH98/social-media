@@ -289,14 +289,14 @@ if (hasExactMatch) {
     const handleSubmit = (event) => {
       event.preventDefault();
       const formData = new FormData();
-      formData.append("content", posts?.content);
-      posts.posts_img.forEach((image) => {
-        formData.append("posts_img", image.file); 
-      });
+      formData.append("content", posts?.content); 
+      formData.append("posts_img", JSON.stringify(posts.posts_img));
       formData.append("user_id", users?.id);
       formData.append("user_name", users?.username);
       formData.append("gif", posts.gif);
-      dispatch(createPost(users, formData)).then(
+
+      dispatch(createPost(users, formData))
+      .then(
         (response) => {
           onClose();
           setPosts({
@@ -310,7 +310,9 @@ if (hasExactMatch) {
       ).catch((c) => console.warn("catch", c)); 
     };
 
-    console.log(posts.posts_img)
+
+    console.log(posts)
+
     if(!open) return null
   
   
@@ -405,7 +407,7 @@ if (hasExactMatch) {
           type="file"
           className="file-input"
           accept=".png, .jpg, .jpeg"
-          multiple  // Add this attribute
+          multiple
           onChange={handleTextChange}
         />
       <span className="hidden-text">Photos</span>

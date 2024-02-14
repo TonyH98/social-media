@@ -92,14 +92,12 @@ border-radius: 50%;
 }
 
 .posts_img {
-  max-width: 100%; /* Ensure images don't exceed their container's width */
+  max-width: 100%; 
   height: auto;
 }
 
 
 
-
-/* Apply styles to the link itself */
 .link-style {
     color: inherit; /* Inherit color from parent element */
     text-decoration: none; /* Remove default underline */

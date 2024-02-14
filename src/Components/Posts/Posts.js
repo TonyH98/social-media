@@ -215,19 +215,19 @@ const inBlock = Array.isArray(block) ? block.map(block => block.block_id) : []
                 
             )}
 
-            <div className="posts_img_container">
-            {posts.posts_img.length === 0 ? null : (
-               posts.posts_img.map((img) => {
-                    return(
-                        <img src={img.text} alt={img.text} className="posts_img"/>
-
-                    )
-                })
-            )}
+            <div class="posts_img_container">
+                {posts.posts_img.length === 0 ? null : (
+                    <div class="posts_img_wrapper">
+                        {posts.posts_img.map((img, index) => {
+                            return (
+                                <img key={index} src={img.text} alt={img.text} className="posts_img" />
+                            );
+                        })}
+                    </div>
+                )}
+            </div>
 
             {posts.gif ? <img src={posts.gif} alt={posts.gif} className="gif_img"/> : null}
-
-            </div>
         
          </div>
         </Link>

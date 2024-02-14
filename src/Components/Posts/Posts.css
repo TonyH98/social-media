@@ -80,10 +80,23 @@ border-radius: 50%;
     color: blue;
 }
 
-.posts_img{
-    max-width: 70%;
-    height: auto;
+.posts_img_container {
+  display: flex;
+  justify-content: center; 
 }
+
+.posts_img_wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+  grid-gap: 10px; 
+}
+
+.posts_img {
+  max-width: 100%; /* Ensure images don't exceed their container's width */
+  height: auto;
+}
+
+
 
 
 /* Apply styles to the link itself */

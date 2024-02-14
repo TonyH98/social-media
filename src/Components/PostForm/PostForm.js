@@ -87,17 +87,20 @@ let [posts, setPosts] = useState({
       if (event.target.id === "posts_img") {
         const files = event.target.files;
         const newImages = [...posts.posts_img];
-    
-        for (let i = 0; i < files.length; i++) {
-          const file = files[i];
-          const reader = new FileReader();
-    
-          reader.onload = () => {
-            newImages.push({ ...imageObj, text: reader.result });
-            setPosts((prevPosts) => ({ ...prevPosts, posts_img: newImages }));
-          };
-    
-          reader.readAsDataURL(file);
+        if(newImages.length < 4){
+          for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const reader = new FileReader();
+      
+            reader.onload = () => {
+  
+              newImages.push({ ...imageObj, text: reader.result });
+              setPosts((prevPosts) => ({ ...prevPosts, posts_img: newImages }));
+            };
+      
+            reader.readAsDataURL(file);
+          }
+
         }
       }
         

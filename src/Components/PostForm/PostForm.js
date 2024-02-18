@@ -231,24 +231,13 @@ if (hasExactMatch) {
     };
     
 
-    const addNewImage = (event) => {
-      event.preventDefault()
-
-      if(posts.posts_img.length < 4){
-
-        setPosts({
-            ...posts,
-            posts_img: [...posts.posts_img, {text: ""}]
-        })
-      }
-    }
-
     const removeImage = (option) => {
-
       const filter = posts.posts_img.filter((val, index) => index !== option)
       setPosts({...posts, posts_img: filter})
     }
    
+
+
     const handleMention = (user) => {
       const newContent = `@${user.username}`;
     
@@ -329,7 +318,11 @@ if (hasExactMatch) {
                <div className="three_options_container">
         {options.map((opt , index) => {
             return(
-                <button onClick={() => setSelect(index)} className={`${index === options ? `active options` : 'options'} ${users?.dark_mode ? 'white_text' : 'dark_text'}`} key={index}>{opt}</button>
+              <>
+              <button onClick={() => setSelect(index)} className={`${index === options ? `active options` : 'options'} ${users?.dark_mode ? 'white_text' : 'dark_text'}`} key={index}>{opt}</button>
+              
+              
+              </>
             )
         })}
 
@@ -361,10 +354,11 @@ if (hasExactMatch) {
 <div className="gif_form">
   {posts.posts_img.length !== 0 ? (
 
-    posts.posts_img.map((img) => {
+    posts.posts_img.map((img , i) => {
       return(
         <>
         <img src={img.text} alt="posts.images" className="image_preview"/> 
+        <button onClick={() => removeImage(i)}>Remove</button>
         </>
       )
     })

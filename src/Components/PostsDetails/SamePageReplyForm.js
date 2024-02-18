@@ -243,6 +243,13 @@ function SamePageReplyForm({ users, plan, mainUser, posts}){
         setFilterTags([]);
       };
   
+
+      const removeImage = (option) => {
+        const filter = replies.posts_img.filter((val, index) => index !== option)
+        setReplies({...replies, posts_img: filter})
+      }
+
+
       const handleEmojiClick = (emoji) => {
         const emojiUnicode = emoji.emoji;
         const startPos = textareaRef.current.selectionStart;
@@ -300,10 +307,11 @@ function SamePageReplyForm({ users, plan, mainUser, posts}){
                           <div className="gif_form">
                           {replies.posts_img.length !== 0 ? (
 
-                            replies.posts_img.map((img) => {
+                            replies.posts_img.map((img, i) => {
                               return(
                                 <>
                                 <img src={img.text} alt="posts.images" className="image_preview"/> 
+                                <button onClick={() => removeImage(i)}>Remove</button>
                                 </>
                               )
                             })

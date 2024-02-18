@@ -253,6 +253,13 @@ function UserHome({mainUser, plan, following}){
       setMentionUsers([]);
     };
 
+
+    const removeImage = (option) => {
+      const filter = posts.posts_img.filter((val, index) => index !== option)
+      setPosts({...posts, posts_img: filter})
+    }
+
+
     const handleTags = (tag) => {
    
       const newContent = `${tag.tag_names}`;
@@ -380,10 +387,11 @@ function optionContent(selected){
 <div className="gif_form">
   {posts.posts_img.length !== 0 ? (
 
-    posts.posts_img.map((img) => {
+    posts.posts_img.map((img, i) => {
       return(
         <>
         <img src={img.text} alt="posts.images" className="image_preview"/> 
+        <button onClick={() => removeImage(i)}>Remove</button>
         </>
       )
     })

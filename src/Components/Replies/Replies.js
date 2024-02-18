@@ -177,14 +177,18 @@ return(
             </div>
                 
             )}
-<div className="posts_img_container">
-            {reply.posts_img === null || reply.posts_img === "null" ? null : (
-
-                <img src={reply.posts_img} alt={reply.posts_img} className="posts_img"/>
-            )}
-        {reply.gif ? <img src={reply.gif} alt={reply.gif} className="gif_img"/> : null}
-
+ <div class="posts_img_container">
+                {reply.posts_img.length === 0 ? null : (
+                    <div class="posts_img_wrapper">
+                        {reply.posts_img.map((img, index) => {
+                            return (
+                                <img key={index} src={img.text} alt={img.text} className="posts_img" />
+                            );
+                        })}
+                    </div>
+                )}
             </div>
+        {reply.gif ? <img src={reply.gif} alt={reply.gif} className="gif_img"/> : null}
 
 </div>
 

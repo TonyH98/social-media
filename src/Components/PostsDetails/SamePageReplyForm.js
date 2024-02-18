@@ -32,9 +32,11 @@ function SamePageReplyForm({ users, plan, mainUser, posts}){
 
     const [showGifPicker, setShowGifPicker] = useState(false)
   
+    const imageObj = { text: "" }
+
     let [replies, setReplies] = useState({
       content: "",
-      posts_img: "",
+      posts_img: [],
       gif: "",
       user_id: users?.id,
       posts_id: posts.id, 
@@ -81,15 +83,25 @@ function SamePageReplyForm({ users, plan, mainUser, posts}){
 
 
       const handleTextChange = (event) => {
-        if(event.target.id === "posts_img"){
-          const file = event.target.files[0];
-          const reader = new FileReader();
-          
-          reader.onload = () => {
-              setReplies({...replies, posts_img: reader.result})
+        if (event.target.id === "posts_img") {
+          const files = event.target.files;
+          const newImages = [...replies.posts_img];
+          if(newImages.length < 4){
+            for (let i = 0; i < files.length; i++) {
+              const file = files[i];
+              const reader = new FileReader();
+        
+              reader.onload = () => {
+    
+                newImages.push({ ...imageObj, text: reader.result });
+                setReplies((prevPosts) => ({ ...prevPosts, posts_img: newImages }));
+              };
+        
+              reader.readAsDataURL(file);
+            }
+  
           }
-          reader.readAsDataURL(file)
-      }
+        }
         else if(plan?.images){
           const {value} = event.target
           if(value.length <=400){
@@ -250,7 +262,7 @@ function SamePageReplyForm({ users, plan, mainUser, posts}){
         event.preventDefault()
         const formData = new FormData();
           formData.append("content", replies?.content);
-          formData.append("posts_img", replies.posts_img === "" ? null : replies.posts_img);
+          formData.append("posts_img", JSON.stringify(replies.posts_img));
           formData.append("user_id", users?.id);
           formData.append("posts_id", posts.id)
           formData.append("gif", replies.gif)
@@ -286,9 +298,18 @@ function SamePageReplyForm({ users, plan, mainUser, posts}){
                             {replies.gif ? <button onClick={() => setReplies({...replies, gif: ""})} className="remove_gif_btn">X</button> : null}
                           </div>
                           <div className="gif_form">
-                          {replies.posts_img ?  <img src={replies.posts_img} alt="posts.images" className="image_preview"/> : null }
-                            {replies.posts_img ? <button onClick={() => setReplies({...replies, posts_img: ""})} className="remove_gif_btn">X</button> : null}
-                          </div>
+                          {replies.posts_img.length !== 0 ? (
+
+                            replies.posts_img.map((img) => {
+                              return(
+                                <>
+                                <img src={img.text} alt="posts.images" className="image_preview"/> 
+                                </>
+                              )
+                            })
+                          ): null}
+                        
+                        </div>
                             <p className={`${plan?.images ? 
                                 (replies?.content.length >= 400 ? 'text-red-700' : null) 
                                 : (replies?.content.length >= 250 ? 'text-red-700' : null)}`}>
@@ -325,6 +346,7 @@ function SamePageReplyForm({ users, plan, mainUser, posts}){
             type="file"
             className="file-input"
             accept=".png, .jpg, .jpeg"
+            multiple
             onChange={handleTextChange}
           />
       <span className="hidden-text">Photos</span>

@@ -219,15 +219,19 @@ return(
             </div>
                 
             )}
-    <div className="posts_img_container">
-    {posts.posts_img === "null" ? null : (
+   <div class="posts_img_container">
+                {posts.posts_img.length === 0 ? null : (
+                    <div class="posts_img_wrapper">
+                        {posts.posts_img.map((img, index) => {
+                            return (
+                                <img key={index} src={img.text} alt={img.text} className="posts_img" />
+                            );
+                        })}
+                    </div>
+                )}
+            </div>
 
-        <img src={posts.posts_img} alt={posts.posts_img} className="posts_img"/>
-    )}
-
-{posts.gif ? <img src={posts.gif} alt={posts.gif} className="gif_img"/> : null}
-
-    </div>
+            {posts.gif ? <img src={posts.gif} alt={posts.gif} className="gif_img"/> : null}
 
  </div>
 

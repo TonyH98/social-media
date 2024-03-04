@@ -14,6 +14,10 @@ function PollForm({user, onClose}){
 
     let[filterTags , setFilterTags] = useState([])
 
+    let [mentionUsers , setMentionUsers] = useState([])
+
+    let [otherUsers , setOtherUsers] = useState([])
+
     let [poll, setPoll] = useState({
         question: "",
         options: [initalOption, initalOption],
@@ -42,6 +46,11 @@ function PollForm({user, onClose}){
         axios.get(`${API}/tags`)
         .then((res) => {
           setTags(res.data)
+        })
+
+        axios.get(`${API}/users`)
+        .then((res) => {
+          setOtherUsers(res.data)
         })
     }, [user?.id]);
 
@@ -95,6 +104,30 @@ function PollForm({user, onClose}){
             setFilterTags([]);
           }
 
+          const mentionMatches = value.match(/@(\w+)/g);
+
+          if (mentionMatches) {
+            const mentions = mentionMatches.map((mention) => mention.substring(1));
+            const filteredUsers = otherUsers.filter((user) =>
+              mentions.some((mention) => user.username.toLowerCase().includes(mention.toLowerCase()))
+            );
+            setMentionUsers(filteredUsers);
+          
+          
+            const hasExactMatch = mentions.every((mention) =>
+            otherUsers.some((user) => user.username.toLowerCase() === mention.toLowerCase())
+          );
+          
+          if (hasExactMatch) {
+            setMentionUsers([]);
+          } else {
+            setMentionUsers(filteredUsers);
+          }
+          
+          } else {
+            setMentionUsers([]);
+          }
+
        }
        if(event.target.id === "answer"){
         const {value} = event.target
@@ -123,6 +156,18 @@ function PollForm({user, onClose}){
       
         setFilterTags([]);
       };
+
+      const handleMention = (user) => {
+        const newContent = `@${user.username}`;
+      
+        setPoll((prev) => ({
+          ...prev,
+          question: prev.question.replace(/@[^\s]+/, newContent),
+        }));
+      
+        setMentionUsers([]);
+      };
+  
 
       const handleOptionChange = (index, event) => {
         event.preventDefault();
@@ -265,6 +310,16 @@ return(
       {filterTags.slice(0 , 10).map((tag) => (
         <div className={`textera_display light_text`} key={tag.id} onClick={() => handleTags(tag)}>
           {tag.tag_names}
+        </div>
+      ))}
+    </div>
+  )}
+
+{mentionUsers.length > 0 && (
+    <div className={`textera_list`}>
+      {mentionUsers.slice(0 , 10).map((user) => (
+        <div className={`textera_display light_text`} key={user.id} onClick={() => handleMention(user)}>
+          @{user.username}
         </div>
       ))}
     </div>

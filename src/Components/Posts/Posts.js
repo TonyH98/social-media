@@ -5,7 +5,7 @@ import {SlBubble} from "react-icons/sl"
 import ReplyForm from "../ReplyForm/ReplyForm";
 import {AiFillHeart} from "react-icons/ai"
 import {AiOutlineHeart} from "react-icons/ai"
-import { useEffect , useState } from "react";
+import { useEffect , useState, useRef } from "react";
 import { useDispatch} from "react-redux";
 import {BsFillPinFill} from "react-icons/bs"
 import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai"
@@ -18,11 +18,13 @@ import PostOptionModal from "./PostOptionModal";
 const API = process.env.REACT_APP_API_URL;
 function Posts ({posts, users, favorites, plan, mainUser, setPostFavorite}){
 
-
+const postViews = useRef(null)
 
 let [show , setShow] = useState(false)
 
 let [show2 , setShow2] = useState(false)
+
+let [isVisible , setIsVisible] = useState(false)
 
 const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 const [showGifPicker, setShowGifPicker] = useState(false)
@@ -159,6 +161,46 @@ function createRepost (e){
     })
 }
 
+
+function marketRead (){
+    axios.put(`${API}/users/${posts.creator.username}/posts/${posts.id}`, {views: posts.views += 1})
+    .then((res) => {
+        console.log("response from the api,", res.data)
+    })
+    .catch((err) => {
+        console.log('error', err)
+    })
+}
+
+
+useEffect(() => {
+    const options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.5
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      }, options);
+
+
+     if(postViews.current){
+        observer.observe(postViews.current)
+     }
+     
+     return () => {
+        if(postViews.current){
+            observer.unobserve(postViews.current)
+        }
+     }
+})
+
+useEffect(() => {
+    if (isVisible) {
+      marketRead();
+    }
+  }, [isVisible]);
 
 
 

@@ -13,18 +13,19 @@ import axios from "axios";
 import {PiArrowsClockwise} from "react-icons/pi"
 import {AiOutlineEllipsis} from "react-icons/ai"
 import PostOptionModal from "./PostOptionModal";
+import { MdOutlineBarChart } from "react-icons/md";
 
 
 const API = process.env.REACT_APP_API_URL;
 function Posts ({posts, users, favorites, plan, mainUser, setPostFavorite}){
 
-const postViews = useRef(null)
-
-let [show , setShow] = useState(false)
-
-let [show2 , setShow2] = useState(false)
-
-let [isVisible , setIsVisible] = useState(false)
+    
+    let [show , setShow] = useState(false)
+    
+    let [show2 , setShow2] = useState(false)
+    
+    let [isVisible , setIsVisible] = useState(false)
+    const postViews = useRef(null)
 
 const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 const [showGifPicker, setShowGifPicker] = useState(false)
@@ -58,7 +59,7 @@ let [block , setBlock] = useState([])
 
 
 
-let dispatch = useDispatch()
+
 
 useEffect(() => {
     axios.get(`${API}/users/${posts.creator.username}/posts/${posts.id}/reactions`)
@@ -194,7 +195,8 @@ useEffect(() => {
             observer.unobserve(postViews.current)
         }
      }
-})
+     
+}, [postViews.current])
 
 useEffect(() => {
     if (isVisible) {
@@ -208,8 +210,10 @@ const inFav = Array.isArray(favorites) ? favorites.map((fav) => fav?.id) : [];
 
 const inBlock = Array.isArray(block) ? block.map(block => block.block_id) : []
 
+
+
     return(
-        <div className="posts_content">
+        <div className="posts_content" ref={postViews}>
 
                 {posts.repost ? <span className="repost_style"><PiArrowsClockwise size={15} color="gray"/> {posts.user_name} reposted</span> : null}
                 {posts.pin ? <span className="repost_style"><BsFillPinFill size={15} color="gray"/> Pinned </span> : null}
@@ -346,6 +350,10 @@ const inBlock = Array.isArray(block) ? block.map(block => block.block_id) : []
             <button className={`${reaction?.dislikeId?.includes(mainUser?.id) ? 'red_option_btn' : `${mainUser.dark_mode ? "light_outline" : "dark_outline"}`} no_br react_btn`} onClick={handleDislike}><AiOutlineDislike size={20}/> {reaction.dislikes}
             <span className="hidden-text">Dislike</span>
             </button>
+            </div> 
+
+            <div>
+            <MdOutlineBarChart size={20}/> {posts.views}
             </div> 
 
             <ReplyForm open={show} onClose={() => {setShow(false); setShowEmojiPicker(false);  setShowGifPicker(false)}} showGifPicker={showGifPicker} setShowGifPicker={setShowGifPicker} setShowEmojiPicker={setShowEmojiPicker} showEmojiPicker={showEmojiPicker} users={users} posts={posts} plan={plan} mainUser={mainUser}/>
